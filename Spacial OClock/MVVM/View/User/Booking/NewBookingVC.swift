@@ -1,0 +1,187 @@
+//
+//  NewBookingVC.swift
+//  Spacial OClock
+//
+//  Created by cql211 on 30/06/23.
+//
+
+import UIKit
+import FSCalendar
+
+class NewBookingVC: UIViewController {
+    
+    //MARK: Outlet
+    @IBOutlet weak var viewCalendar : UIView!
+    @IBOutlet weak var viewFSCalendar : FSCalendar!
+    @IBOutlet weak var viewSelectTime : UIView!
+    @IBOutlet weak var tfSelectTime : UITextField!
+    @IBOutlet weak var viewSelectPeople : UIView!
+    @IBOutlet weak var tfSelectPeople : UITextField!
+    @IBOutlet weak var lblMonth : UILabel!
+    
+    //MARK: Variable
+    var pickerSelectPeople = UIPickerView()
+    var pickerSelectTime = UIPickerView()
+    var arrNumberOfPeople : [Int] = []
+    var arrTimmer : [String] = []
+    private var currentPage: Date?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        for i in 0...50{
+            arrNumberOfPeople.append(i)
+        }
+        initialLoad()
+        viewFSCalendar.scope = .month
+        viewFSCalendar.placeholderType = .none
+        TimeSelection()
+        pickerSelectPeople.delegate = self
+        pickerSelectPeople.dataSource = self
+        pickerSelectTime.delegate = self
+        pickerSelectTime.dataSource = self
+        viewFSCalendar.delegate = self
+        viewFSCalendar.dataSource = self
+    }
+    
+    //MARK: Buttton Action
+    @IBAction func btnContinueAct(sender : UIButton){
+        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
+        screen.callBack = {
+            let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
+            super.navigationController?.pushViewController(screen, animated: true)
+        }
+        self.navigationController?.present(screen, animated: true)
+    }
+    
+    @IBAction func btnBackAct(sender : UIButton){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK: Calendar Private Function
+    private func updateMonthAndYearLabels(for date: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM"
+        let monthString = dateFormatter.string(from: date)
+        
+        dateFormatter.dateFormat = "yyyy"
+        let yearString = dateFormatter.string(from: date)
+        let heading = monthString + yearString
+        lblMonth.text = heading
+    }
+    
+    private func moveCurrentPage(moveUp: Bool) {
+            let calendar = Calendar.current
+            var dateComponents = DateComponents()
+            dateComponents.month = moveUp ? 1 : -1
+            self.currentPage = calendar.date(byAdding: dateComponents, to: self.currentPage ?? self.today)
+            self.viewFSCalendar.setCurrentPage(self.currentPage!, animated: true)
+        }
+
+    private var currDate: Date?
+        private lazy var today: Date = {
+            return Date()
+        }()
+    
+    //Calendar button action
+    @IBAction func btnBackAct(_ sender : UIButton){
+        self.moveCurrentPage(moveUp: false)
+    }
+    @IBAction func btnNextAct(_ sender : UIButton){
+        self.moveCurrentPage(moveUp: true)
+    }
+}
+extension NewBookingVC {
+    func CalendarDesign(){
+        debugPrint("")
+    }
+}
+extension NewBookingVC : FSCalendarDelegate , FSCalendarDataSource {
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        let displayedMonth = calendar.currentPage
+        updateMonthAndYearLabels(for: displayedMonth)
+    }
+}
+extension NewBookingVC : UIPickerViewDelegate , UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        if pickerView == pickerSelectTime{
+            return 1
+        }else{
+            return 1
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == pickerSelectTime{
+            return arrTimmer.count
+        }else {
+            return arrNumberOfPeople.count
+        }
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == pickerSelectTime{
+            return arrTimmer[row]
+        }else{
+            return arrNumberOfPeople[row].description
+        }
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == pickerSelectPeople{
+            tfSelectPeople.text = arrNumberOfPeople[row].description
+        }else{
+            tfSelectTime.text = arrTimmer[row]
+        }
+    }
+}
+extension NewBookingVC  {
+    func TimeSelection(){
+        var timeArray: [String] = []
+        var timeEndArray : [String] = []
+        let interval = 60
+        let endInterval = 30
+        for h in 8..<24 {
+            for m in 0..<(60/interval) {
+                if m * interval == 0 {
+                    timeArray.append("\(String(format: "%02d", h)):00")
+                } else {
+                    timeArray.append("\(String(format: "%02d", h)):\(String(format: "%02d", m * interval)) ")
+                }
+            }
+        }
+        for e in 8..<24 {
+            for m in 0..<(60/endInterval) {
+                if m * endInterval == 0 {
+                  // timeEndArray.append("\(String(format: "%02d", e)):00")
+                } else {
+                    timeEndArray.append("\(String(format: "%02d", e)):\(String(format: "%02d", m * endInterval)) ")
+                }
+            }
+        }
+        let zip = zip(timeArray, timeEndArray)
+        let resultTimmer = zip.map { $0.0 + " to " + $0.1 }
+        arrTimmer.append(contentsOf: resultTimmer)
+//        debugPrint(arrTimmer)
+    }
+}
+
+extension NewBookingVC{
+    func initialLoad(){
+        viewFSCalendar.layer.cornerRadius = 15.0
+        viewFSCalendar.calendarHeaderView.backgroundColor = UIColor.systemGray5
+        viewFSCalendar.calendarWeekdayView.backgroundColor = UIColor(named: "themeGreen")
+        viewFSCalendar.calendarWeekdayView.clipsToBounds = true
+        viewFSCalendar.appearance.headerMinimumDissolvedAlpha = 0
+        tfSelectPeople.setupRightImage(imageName: "dropDown" , width: 7, height: 5)
+        tfSelectPeople.inputView = pickerSelectPeople
+        tfSelectTime.inputView = pickerSelectTime
+        
+        //Current Year and current month
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM"
+        let monthString = dateFormatter.string(from: Date())
+        
+        dateFormatter.dateFormat = "yyyy"
+        let yearString = dateFormatter.string(from: Date())
+        let heading = monthString + yearString
+        lblMonth.text = heading
+    }
+}

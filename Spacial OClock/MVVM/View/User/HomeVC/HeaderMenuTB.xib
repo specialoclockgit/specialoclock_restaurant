@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-SemiBold.ttf">
+            <string>Poppins-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HeaderTBMenu" customModule="Spacial_OClock" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="574" height="145"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V25-5F-P5M">
+                    <rect key="frame" x="0.0" y="0.0" width="574" height="145"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vodka" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FpT-Bu-IOV">
+                            <rect key="frame" x="20" y="62.5" width="46.5" height="20"/>
+                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YzN-DE-eEp">
+                            <rect key="frame" x="540" y="61.5" width="14" height="22"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="arrowIcon"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="YzN-DE-eEp" secondAttribute="trailing" constant="20" id="Ql0-hS-7Bn"/>
+                        <constraint firstItem="FpT-Bu-IOV" firstAttribute="leading" secondItem="V25-5F-P5M" secondAttribute="leading" constant="20" id="S1w-kc-T6l"/>
+                        <constraint firstItem="YzN-DE-eEp" firstAttribute="centerY" secondItem="FpT-Bu-IOV" secondAttribute="centerY" id="Suy-0e-8Mj"/>
+                        <constraint firstItem="FpT-Bu-IOV" firstAttribute="centerY" secondItem="V25-5F-P5M" secondAttribute="centerY" id="Th0-zG-b7C"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="V25-5F-P5M" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="IRc-sa-Rbp"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="V25-5F-P5M" secondAttribute="trailing" id="PrE-hc-Bxr"/>
+                <constraint firstItem="V25-5F-P5M" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="W3g-Z6-a55"/>
+                <constraint firstAttribute="bottom" secondItem="V25-5F-P5M" secondAttribute="bottom" id="rYI-B2-EJR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="btn" destination="YzN-DE-eEp" id="uTe-vn-DuU"/>
+                <outlet property="lbl" destination="FpT-Bu-IOV" id="gZm-mY-10c"/>
+            </connections>
+            <point key="canvasLocation" x="-122" y="-155"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrowIcon" width="13.5" height="8"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
