@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
 import SwiftMessages
+
 class CheckValidations: NSObject{
     
 //     MARK: - SIGNUP -  VALDATION BAR Resturant
@@ -50,12 +50,30 @@ class CheckValidations: NSObject{
         }else if password != confirmpassword{
             CommonUtilities.shared.showAlert(message: "Password and confirm password should be same", isSuccess: .error)
             return false
-        }else if !(isselected){
+        }else if isselected == false {
             CommonUtilities.shared.showAlert(message: "Please select term & condition", isSuccess: .error)
             return false
         }
         return true
     }
+    
+    
+    //MARK: Login VALIDATION
+        class func loginValidation(email:UITextField,password:UITextField)-> Bool {
+            if email.text!.isBlank {
+                CommonUtilities.shared.showAlert(message: "Please enter email", isSuccess: .error)
+                return false
+            }
+            else if !email.text!.isValidemail {
+                CommonUtilities.shared.showAlert(message: "Please enter a valid Email", isSuccess: .error)
+                return false
+            }
+            else if password.text!.isBlank {
+                CommonUtilities.shared.showAlert(message: "Please enter password", isSuccess: .error)
+                return false
+            }
+            return true
+        }
     
 //    class func validateSignUp(name : String, email: String, country_code: String , contact: String, password: String, confirmPassword: String, profile : UIImageView, gender: String, isSelected: Bool) -> Bool{
 //        if (profile.image?.isEqualToImage(image: UIImage(named: "")!))!{
@@ -134,7 +152,10 @@ class CheckValidations: NSObject{
 //        }
 //        return true
 //    }
-//
+
+    
+        
+    
 //    //MARK: - FORGOT PASSWORD - VALIDATION
 //    class func validateForgot(email: String) -> Bool{
 //        if email.trimmingCharacters(in: .whitespaces).isEmpty {
@@ -287,3 +308,4 @@ class CheckValidations: NSObject{
     //        return true
     //    }
 }
+

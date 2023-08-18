@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F5BCD320D897B60AB15D8E1 /* Pods_Spacial_OClock_Spacial_OClockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4F733E6A5F0D951ABCC3C8 /* Pods_Spacial_OClock_Spacial_OClockUITests.framework */; };
+		29A19A3A2A8FA7C9008193A4 /* commonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A19A392A8FA7C9008193A4 /* commonModel.swift */; };
 		8B0BDF192A80F04400A28BD2 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BDF182A80F04400A28BD2 /* AuthViewModel.swift */; };
 		8B0BDF242A80F10E00A28BD2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BDF1B2A80F10E00A28BD2 /* Constants.swift */; };
 		8B0BDF252A80F10E00A28BD2 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BDF1C2A80F10E00A28BD2 /* UIImageViewExtension.swift */; };
@@ -30,9 +31,7 @@
 		8B9CF07C2A81F10B006C90E9 /* forgotpasswordmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CF07B2A81F10B006C90E9 /* forgotpasswordmodel.swift */; };
 		8B9CF07E2A81F221006C90E9 /* TermsandconditionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CF07D2A81F221006C90E9 /* TermsandconditionModel.swift */; };
 		8B9CF0802A8212FE006C90E9 /* Fileupload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CF07F2A8212FE006C90E9 /* Fileupload.swift */; };
-		8B9CF0822A822767006C90E9 /* comonmodelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CF0812A822767006C90E9 /* comonmodelModel.swift */; };
 		8BEFA24A2A8496F400FE1E35 /* ContactUsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEFA2492A8496F400FE1E35 /* ContactUsModel.swift */; };
-		8BEFA24C2A8499D600FE1E35 /* ResendOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEFA24B2A8499D600FE1E35 /* ResendOTP.swift */; };
 		8BEFA24E2A84A05000FE1E35 /* NotificationStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEFA24D2A84A05000FE1E35 /* NotificationStatusModel.swift */; };
 		8BF5ED802A84E82700F2EA8C /* helpandFaqModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5ED7F2A84E82700F2EA8C /* helpandFaqModel.swift */; };
 		91DD4ED151791339DA54B8FD /* Pods_Spacial_OClockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95FD0385785925C8C1DFF55 /* Pods_Spacial_OClockTests.framework */; };
@@ -211,6 +210,7 @@
 
 /* Begin PBXFileReference section */
 		1D8829FBB65284E45A8D8219 /* Pods_Spacial_OClock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spacial_OClock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29A19A392A8FA7C9008193A4 /* commonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commonModel.swift; sourceTree = "<group>"; };
 		5A4F733E6A5F0D951ABCC3C8 /* Pods_Spacial_OClock_Spacial_OClockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spacial_OClock_Spacial_OClockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7890F764E9209186A89F3DB4 /* Pods-Spacial OClockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.release.xcconfig"; sourceTree = "<group>"; };
 		8B0BDF182A80F04400A28BD2 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -235,9 +235,7 @@
 		8B9CF07B2A81F10B006C90E9 /* forgotpasswordmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = forgotpasswordmodel.swift; sourceTree = "<group>"; };
 		8B9CF07D2A81F221006C90E9 /* TermsandconditionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsandconditionModel.swift; sourceTree = "<group>"; };
 		8B9CF07F2A8212FE006C90E9 /* Fileupload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fileupload.swift; sourceTree = "<group>"; };
-		8B9CF0812A822767006C90E9 /* comonmodelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comonmodelModel.swift; sourceTree = "<group>"; };
 		8BEFA2492A8496F400FE1E35 /* ContactUsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsModel.swift; sourceTree = "<group>"; };
-		8BEFA24B2A8499D600FE1E35 /* ResendOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendOTP.swift; sourceTree = "<group>"; };
 		8BEFA24D2A84A05000FE1E35 /* NotificationStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStatusModel.swift; sourceTree = "<group>"; };
 		8BF5ED7F2A84E82700F2EA8C /* helpandFaqModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helpandFaqModel.swift; sourceTree = "<group>"; };
 		8BFA78E8C7009EB110C67DFD /* Pods-Spacial OClock-Spacial OClockUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClock-Spacial OClockUITests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -516,9 +514,7 @@
 				8B9CF07B2A81F10B006C90E9 /* forgotpasswordmodel.swift */,
 				8B9CF07D2A81F221006C90E9 /* TermsandconditionModel.swift */,
 				8B9CF07F2A8212FE006C90E9 /* Fileupload.swift */,
-				8B9CF0812A822767006C90E9 /* comonmodelModel.swift */,
 				8BEFA2492A8496F400FE1E35 /* ContactUsModel.swift */,
-				8BEFA24B2A8499D600FE1E35 /* ResendOTP.swift */,
 				8BEFA24D2A84A05000FE1E35 /* NotificationStatusModel.swift */,
 				8BF5ED7F2A84E82700F2EA8C /* helpandFaqModel.swift */,
 				8B9154692A85EC5000CCB83E /* ThemeModel.swift */,
@@ -527,6 +523,7 @@
 				8B91546F2A860D0600CCB83E /* AddBusinessModel.swift */,
 				8B9154712A86224F00CCB83E /* EditProfileModel.swift */,
 				8B9154732A86372800CCB83E /* ResendOtpModel.swift */,
+				29A19A392A8FA7C9008193A4 /* commonModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1392,6 +1389,7 @@
 				A5FD2E7F2A53FF8500682FFA /* ImagePicker (3).swift in Sources */,
 				C284FB742A402E3E006949B4 /* RestoHomeTVC.swift in Sources */,
 				A5222B972A628C3800C2E962 /* String.swift in Sources */,
+				29A19A3A2A8FA7C9008193A4 /* commonModel.swift in Sources */,
 				8B0BDF302A80FFFD00A28BD2 /* SignUpModel.swift in Sources */,
 				C2661A952A4B179800EEE266 /* DetailItemViewVC.swift in Sources */,
 				A58CCCA52A5EB50D00DFA478 /* RestoWalkThroughVC.swift in Sources */,
@@ -1422,7 +1420,6 @@
 				8B0BDF282A80F10E00A28BD2 /* Validation.swift in Sources */,
 				A58CCCA82A5ECAE000DFA478 /* UserDefault.swift in Sources */,
 				A5E837122A56DA6000C2D16A /* ChangePasswordRestoVC.swift in Sources */,
-				8BEFA24C2A8499D600FE1E35 /* ResendOTP.swift in Sources */,
 				C284FB7F2A402EE8006949B4 /* UISwitchCustom.swift in Sources */,
 				C284FB812A402EE8006949B4 /* CustomView.swift in Sources */,
 				A529D2D72A5FBB5800E416CD /* BarMenuVC.swift in Sources */,
@@ -1444,7 +1441,6 @@
 				C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */,
 				C284FB732A402E3E006949B4 /* RestoHomeVC.swift in Sources */,
 				A5B1873C2A669C1600C3E0A7 /* BookingLocationVC.swift in Sources */,
-				8B9CF0822A822767006C90E9 /* comonmodelModel.swift in Sources */,
 				A5E8370A2A56C92B00C2D16A /* CellHelpFAQTB.swift in Sources */,
 				8B0BDF262A80F10E00A28BD2 /* Extensions.swift in Sources */,
 				A5A8CF432A58115C006F23ED /* RestoVerificationVC.swift in Sources */,

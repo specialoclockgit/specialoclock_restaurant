@@ -16,4 +16,10 @@ extension String {
                    range:NSMakeRange(0,attributeString.length))
         return attributeString
     }
+    var isValidemail: Bool {
+              let emailRegex = try? NSRegularExpression(pattern: "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\s*$")
+              let range = NSRange(location: 0, length: self.count)
+              return emailRegex?.firstMatch(in: self, options: [], range: range) != nil
+          }
+    
 }

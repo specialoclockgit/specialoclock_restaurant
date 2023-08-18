@@ -29,7 +29,7 @@ class RestoLoginVC: UIViewController {
    
     //MARK: - ACTIONS
     @IBAction func btnBack(_ sender: UIButton){
-        SceneDelegate().RestoHome()
+        //SceneDelegate().RestoHome()
     }
 
     @IBAction func btnSignIn(_ sender: UIButton){
@@ -41,6 +41,7 @@ class RestoLoginVC: UIViewController {
     }
     
     @IBAction func btnSignUp(_ sender: UIButton){
+        
         let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.RestoSignUPVC)as! RestoSignUPVC
         self.navigationController?.pushViewController(vc, animated: true)
     }

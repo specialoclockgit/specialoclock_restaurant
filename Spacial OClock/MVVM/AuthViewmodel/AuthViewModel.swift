@@ -14,14 +14,14 @@ class AuthViewModel : NSObject {
     var eventImgString = String()
     
     //MARK: - SIGN UP API
-    func signUpapi(isImageSelected:Bool, name : String, email: String,country_code: String, phone:String,password:String, confirmpassword: String,devicetype: Int, image: String, isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
+    func signUpapi(isImageSelected:Bool, name : String, email: String,country_code: String, phone: String ,password:String, confirmpassword: String,devicetype: Int, image: String, isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
         if CheckValidations.validationSignUp(isImageSelected: isImageSelected, name: name, email: email, country_code: country_code, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , img: image, isselected: isselected){
-            let param : parameters = [ "image":image,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":2, "device_type":1]
-            print(param)
+            let param : parameters = [ "image":image,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":2, "device_type":1] as [String : Any]
+         
             WebService.service(API.signup,  param: param, service: .post){
-                (modeldata: SignUpModel, data, json) in
-                Store.userDetails = modeldata
-                Store.authKey = modeldata.body.token ?? ""
+                (modeldata: SignupModel, data, json) in
+                Store.authKey = modeldata.body?.token ?? ""
+                Store.userDetails = modeldata.body
                 onsuccess()
             }
         }
@@ -64,12 +64,12 @@ class AuthViewModel : NSObject {
             
             let param: parameters = ["email":email,
                                      "password":password,"device_token":DEVICE_TOKEN,"device_type":device_type ]
-            print(param)
+
             
             WebService.service(API.login, param: param, service: .post){
-                (modaldata: SignUpModel , Data, Json) in
-                Store.userDetails = modaldata
-                Store.authKey = modaldata.body.token ?? ""
+                (modaldata: SignupModel , Data, Json) in
+                Store.userDetails = modaldata.body
+                Store.authKey = modaldata.body?.token ?? ""
                 Store.autoLogin = true
                 onSuccess()
             }
@@ -82,15 +82,28 @@ class AuthViewModel : NSObject {
             CommonUtilities.shared.showAlert(message: "Please enter otp", isSuccess: .error)
         }else{
             let param : parameters = ["otp":otp]
-            print(param)
+           
             WebService.service(API.verify_otp, param: param, service: .post){
-                (modaldata : comonmodelModel , data, json) in
+                (modaldata : CommonModel , data, json) in
                 onSuccess()
             }
-            
+        }
+    }
+    
+    
+    //MARK: RESEND OTP
+    func resendOtp(phone: String ,onSuccess : @escaping (()->())) {
+        
+        let params = ["phone": phone] as [String : Any]
+        
+        WebService.service(API.resend_otp, param: params , service: .post, showHud: true) {
+            (modaldata : ResendOtpModel , Data, Json) in
+         //   CommonUtilities.shared.showAlert(message: "Your OTP is \(modaldata.body?.otp ?? 0)", isSuccess: .success)
+            onSuccess()
         }
     }
 
+    
     //MARK: Forgot Password
     func ForgotPassword(email: String, onSuccess : @escaping (()->())){
         if  email.trimmingCharacters(in: .whitespaces).isEmpty{
@@ -128,7 +141,7 @@ class AuthViewModel : NSObject {
     //    MARK: -  DELETE ACCOUNT
     func deleteAccountApi(onsuccess:@escaping (()->())){
         WebService.service(API.delete_account, service: .post) {
-            (modaldata: comonmodelModel , Data, Json) in
+            (modaldata: CommonModel , Data, Json) in
             Store.userDetails = nil
             Store.autoLogin = false
             onsuccess()
@@ -154,7 +167,7 @@ class AuthViewModel : NSObject {
                                       "confirm_password":confirmpassword]
             print(param)
             WebService.service(API.change_password, param: param, service: .post){
-                (modaldata : comonmodelModel , data, json) in
+                (modaldata : CommonModel , data, json) in
                 onsuccess()
             }
         }
@@ -194,7 +207,7 @@ class AuthViewModel : NSObject {
     //    MARK: - LOGOUT API CALL
     func logoutapicall(onsuccess: @escaping (()->())){
         WebService.service(API.logout, service: .post) {
-            (modaldata: comonmodelModel, Data , json) in
+            (modaldata: CommonModel, Data , json) in
             onsuccess()
         }
         
@@ -280,14 +293,6 @@ class AuthViewModel : NSObject {
             
         }
     }
-    //MARK: RESEND OTP
-    func resendOtp(onSuccess : @escaping (()->())){
-        WebService.service(API.resend_otp,  service: .post) {
-            (modaldata: ResendotpModel , Data, Json) in
-            onSuccess()
-        }
-    }
-    
    
 }
 

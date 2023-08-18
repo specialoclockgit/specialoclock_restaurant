@@ -6,36 +6,36 @@
 //
 import Foundation
 
-// MARK: - ResendotpModel
-struct ResendotpModel: Codable {
-    var success: Bool
-    var code: Int
-    var message: String
-    var body: ResendotpModelBody
+// MARK: - ResendOtpModel
+struct ResendOtpModel: Codable {
+    var success: Bool?
+    var code: Int?
+    var message: String?
+   
 }
 
-// MARK: - Body
-struct ResendotpModelBody: Codable {
-    var id: Int
-    var name, aboutMe, nickName, dob: String
-    var gender: Int
-    var email: String
-    var type, role: Int
-    var countryCode: String
-    var phone: Int
-    var password, socialID: String
-    var socialType, otp: Int
-    var deviceToken: String
-    var deviceType: Int
-    var selfieImage: String
-    var isSelfieStatus, isOtpVerified: Int
-    var image, verifyImage: String
-    var isImageVerified: Int
-    var location, latitude, longitude: String
-    var loginTime: Int
-    var notes, interests: String
-    var status, loginStep, isCompleted, notificationStatus: Int
-    var createdAt, updatedAt: String
+// MARK: - ResendOtpBody
+struct ResendOtpBody: Codable {
+    var id: Int?
+    var name, aboutMe, nickName, dob: String?
+    var gender: Int?
+    var email: String?
+    var type, role: Int?
+    var countryCode: String?
+    var phone: String?
+    var password, socialID: String?
+    var socialType, otp: Int?
+    var deviceToken: String?
+    var deviceType: Int?
+    var selfieImage: String?
+    var isSelfieStatus, isOtpVerified: Int?
+    var image, verifyImage: String?
+    var isImageVerified: Int?
+    var location, latitude, longitude: String?
+    var loginTime: Int?
+    var notes, interests: String?
+    var status, loginStep, isCompleted, notificationStatus: Int?
+    var createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name
@@ -64,3 +64,4 @@ struct ResendotpModelBody: Codable {
         case createdAt, updatedAt
     }
 }
+

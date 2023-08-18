@@ -31,9 +31,10 @@ class RestoWalkThroughVC: UIViewController {
     //MARK: - ACTIONS
     @IBAction func btnNext(_ sender: UIButton) {
         if sender.titleLabel?.text == "Next"{
-            let vc = self.storyboard?.instantiateViewController(identifier: ViewController.RestoLoginVC) as! RestoLoginVC
-            self.navigationController?.pushViewController(vc, animated: true)
-            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let secondViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC {
+                self.navigationController?.pushViewController(secondViewController, animated: true)
+            }
         }else{
             collectionView.isPagingEnabled = false
             let visibleItems: NSArray = self.collectionView.indexPathsForVisibleItems as NSArray

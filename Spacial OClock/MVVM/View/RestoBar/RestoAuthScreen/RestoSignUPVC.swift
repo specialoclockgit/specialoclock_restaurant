@@ -37,7 +37,7 @@ class RestoSignUPVC: UIViewController{
     var lat : Double?
     var long : Double?
     var imgString:String?
-    var  Location = String()
+    var Location = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,24 +106,24 @@ class RestoSignUPVC: UIViewController{
     }
     
     @IBAction func btnUser(_ sender: UIButton) {
-        userBtn.setTitleColor(UIColor.white, for: .normal)
-        restaurantBtn.setTitleColor(UIColor.black, for: .normal)
-        userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
-        //        restaurantBtn.backgroundColor = UIColor(red: 213/255, green: 213/255, blue: 213/255, alpha: 1)
-        restaurantBtn.backgroundColor = UIColor.systemGray6
-        viewButton.isHidden = true
+//        userBtn.setTitleColor(UIColor.white, for: .normal)
+//        restaurantBtn.setTitleColor(UIColor.black, for: .normal)
+//        userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
+//        //        restaurantBtn.backgroundColor = UIColor(red: 213/255, green: 213/255, blue: 213/255, alpha: 1)
+//        restaurantBtn.backgroundColor = UIColor.systemGray6
+//        viewButton.isHidden = true
     }
     
     @IBAction func btnRestaurant(_ sender: UIButton) {
-        restaurantBtn.setTitleColor(UIColor.white, for: .normal)
-        userBtn.setTitleColor(UIColor.black, for: .normal)
-        restaurantBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
-        userBtn.backgroundColor = UIColor.systemGray6
-        if sender.isSelected == false{
-            //debugPrint("Not Selected")
-            stackViewRestaurant.isHidden = false
-            viewButton.isHidden = false
-        }
+//        restaurantBtn.setTitleColor(UIColor.white, for: .normal)
+//        userBtn.setTitleColor(UIColor.black, for: .normal)
+//        restaurantBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
+//        userBtn.backgroundColor = UIColor.systemGray6
+//        if sender.isSelected == false{
+//            //debugPrint("Not Selected")
+//            stackViewRestaurant.isHidden = false
+//            viewButton.isHidden = false
+//        }
     }
     
     @IBAction func btnSelectBar(_ sender : UIButton){

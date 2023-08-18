@@ -64,15 +64,15 @@ class Store {
             return Store.getValue(.autoLogin) as? Bool ?? false
         }
     }
-    class var userDetails: SignUpModel? {
+    class var userDetails: SignupBody? {
         set{
             Store.saveUserDetails(newValue, .userDetails)
-            
         }
         get{
             return Store.getUserDetails(.userDetails)
         }
     }
+
     class var isfromsecure: String?{
            set {
                Store.saveValue(newValue, .loginvalue)

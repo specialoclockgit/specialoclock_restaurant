@@ -8,14 +8,14 @@
 import UIKit
 
 class SettingsVC: UIViewController {
-
+    
     //MARK: - Outlets
     @IBOutlet weak var settingTV: UITableView!
     
     //MARK: - Variables
     var arrImg = ["notification","unlock","question","books","outline","phone","delete-user-1","logout-1"]
     var arrName = ["Notification","Change Password","Privacy Policy","Terms and Conditions","Help & FAQ's","Contact Us","Delete Account","Logout"]
-    
+    var viewModel = AuthViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class SettingsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
     }
-
+    
 }
 
 //MARK: - UITableViewDelegateUITableViewDataSource
@@ -47,7 +47,7 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
         }
         cell.itemNamelbl.text = arrName[indexPath.row]
         cell.itemImg.image = UIImage(named: arrImg[indexPath.row])
-
+        
         return cell
         
     }
@@ -82,15 +82,27 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 0
             vc.callBack = {
-                SceneDelegate().LoginRoot()
+                self.viewModel.deleteAccountApi(onsuccess: { [weak self] in
+                    SceneDelegate().LoginRoot()
+//                    self?.dismiss(animated: true, completion: nil)
+//                    let stry = UIStoryboard(name: "Main", bundle: nil)
+//                    let vc = stry.instantiateViewController(identifier: "LoginVC") as! LoginVC
+//                    let nav1 = UINavigationController()
+//                    nav1.navigationBar.isHidden = true
+//                    nav1.viewControllers = [vc]
+//                    self?.view.window?.rootViewController = nav1
+                })
             }
             self.navigationController?.present(vc, animated: true)
+            
         }else if indexPath.row == 7{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DeleteAccountPopUp")as! DeleteAccountPopUp
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 1
             vc.callBack = {
-                SceneDelegate().LoginRoot()
+                self.viewModel.logoutapicall { [weak self] in
+                    SceneDelegate().LoginRoot()
+                }
             }
             self.navigationController?.present(vc, animated: true)
         }
