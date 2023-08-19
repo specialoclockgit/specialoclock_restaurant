@@ -13,21 +13,25 @@ class CheckValidations: NSObject{
     
 //     MARK: - SIGNUP -  VALDATION BAR Resturant
     
-    class  func validationSignUp(isImageSelected:Bool, name : String, email: String,country_code: String, phone:String,password:String, confirmpassword: String,devicetype: Int, img: String, isselected:Bool) -> Bool{
+    class  func validationSignUp(name : String, email: String,country_code: String, phone:String,password:String, confirmpassword: String,devicetype: Int, img: UIImage, isselected:Bool) -> Bool{
         
-        if !(isImageSelected) {
-            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
+//        if !(isImageSelected) {
+//            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
+//            return false
+//        } else
+        if img.isEqualToImage(image: UIImage(named: "profile")!){
+            CommonUtilities.shared.showAlert(message: "EmptyPhoto", isSuccess: .error)
             return false
         } else if name.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter your name", isSuccess: .error)
             return false
-        }else if email.trimmingCharacters(in: .whitespaces).isEmpty{
+        } else if email.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter your email", isSuccess: .error)
             return false
-        }else if email.isValidEmail{
+        } else if email.isValidEmail{
             CommonUtilities.shared.showAlert(message: "Please enter valid email", isSuccess: .error)
             return false
-        }else if country_code.trimmingCharacters(in: .whitespaces).isEmpty{
+        } else if country_code.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Selet your country code", isSuccess: .error)
             return false
         }

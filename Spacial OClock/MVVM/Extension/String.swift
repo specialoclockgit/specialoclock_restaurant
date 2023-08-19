@@ -7,19 +7,19 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 extension String {
     func strikeThrough() -> NSAttributedString {
         let attributeString =  NSMutableAttributedString(string: self)
         attributeString.addAttribute(
             NSAttributedString.Key.strikethroughStyle,
-               value: NSUnderlineStyle.single.rawValue,
-                   range:NSMakeRange(0,attributeString.length))
+            value: NSUnderlineStyle.single.rawValue,
+            range:NSMakeRange(0,attributeString.length))
         return attributeString
     }
     var isValidemail: Bool {
-              let emailRegex = try? NSRegularExpression(pattern: "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\s*$")
-              let range = NSRange(location: 0, length: self.count)
-              return emailRegex?.firstMatch(in: self, options: [], range: range) != nil
-          }
-    
+        let emailRegex = try? NSRegularExpression(pattern: "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\s*$")
+        let range = NSRange(location: 0, length: self.count)
+        return emailRegex?.firstMatch(in: self, options: [], range: range) != nil
+    }
 }

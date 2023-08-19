@@ -37,7 +37,7 @@ class LoginVC: UIViewController {
 
     @IBAction func btnSignIn(_ sender: UIButton){
         self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 1) {
-            if Store.userDetails?.isOtpVerified == 2 {
+            if Store.userDetails?.isOtpVerified == 1 {
                Store.autoLogin = true
               // self.userHomeRoot()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC

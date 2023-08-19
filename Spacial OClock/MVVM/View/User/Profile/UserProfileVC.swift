@@ -11,6 +11,7 @@ class UserProfileVC: UIViewController {
     
     //MARK: Outlets
     //@IBOutlet weak var btnViewProfile : UIButton!
+    @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var btnEditProfile : UIButton!
     @IBOutlet weak var lblName : UILabel!
     @IBOutlet weak var lblPhoneNumber : UILabel!
@@ -18,9 +19,18 @@ class UserProfileVC: UIViewController {
   
     //MARK: Varibale
     var btnCheckStatus = Int()
-    
+    var viewModel = AuthViewModel()
+    var profileBody : GetProfileBody?
+   
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewModel.ProfileAPI { data in
+            self.profileBody = data.body
+            self.lblName.text = data.body?.name ?? ""
+            self.lblEmail.text = data.body?.email ?? ""
+            self.lblPhoneNumber.text = "\(data.body?.phone ?? 0)"
+            self.profileImg.showIndicator(baseUrl: imageURL, imageUrl: data.body?.image ?? "")
+        }
         tabBarController?.tabBar.isHidden = false
         // Do any additional setup after loading the view.
     }

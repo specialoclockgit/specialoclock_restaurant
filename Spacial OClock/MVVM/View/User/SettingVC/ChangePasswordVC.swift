@@ -10,16 +10,19 @@ import UIKit
 class ChangePasswordVC: UIViewController {
     
     //MARK: - Outlets
+    @IBOutlet weak var txtOldPassword: CustomTextField!
     @IBOutlet weak var txtNewPassword: CustomTextField!
     @IBOutlet weak var txtConfirmPassword: CustomTextField!
     @IBOutlet weak var btnEyeOP : UIButton!
     
+    var viewmodel = AuthViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         btnEyeOP.isHidden = true
         self.tabBarController?.tabBar.isHidden = true
     }
-    
 
     // MARK: - Actions
     @IBAction func btnBack(_ sender: UIButton) {
@@ -27,7 +30,9 @@ class ChangePasswordVC: UIViewController {
     }
     
     @IBAction func btnUpdate(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        self.viewmodel.changePasswordapicall(oldpassword: txtOldPassword.text ?? "", newpassword: txtNewPassword.text ?? "", confirmpassword: txtConfirmPassword.text ?? "") {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
      
     @IBAction func btnEyeAct (_ sender : UIButton){

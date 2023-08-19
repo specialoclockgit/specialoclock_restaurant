@@ -98,10 +98,10 @@ class RestoSignUPVC: UIViewController{
     }
     
     @IBAction func btnSignUp(_ sender: UIButton){
-        self.viewmodel.signUpapi(isImageSelected: self.isImageSelected , name: tfName.text ?? "", email: tfEmail.text ?? "", country_code: tfCountry.text ?? "", phone: tfPhone.text ?? "", password: tfPassword.text ?? "", confirmpassword: tfConfirmpassword.text ?? "", devicetype: 1, image: imgString ?? "" , isselected: self.isselected, longitude:Double( long ?? 0) , latitude: Double(lat ?? 0), location: Location ?? "") {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewController.RestoVerificationVC)as! RestoVerificationVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+//        self.viewmodel.signUpapi(isImageSelected: self.isImageSelected , name: tfName.text ?? "", email: tfEmail.text ?? "", country_code: tfCountry.text ?? "", phone: tfPhone.text ?? "", password: tfPassword.text ?? "", confirmpassword: tfConfirmpassword.text ?? "", devicetype: 1, image: imgString ?? "" , isselected: self.isselected, longitude:Double( long ?? 0) , latitude: Double(lat ?? 0), location: Location ?? "") {
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewController.RestoVerificationVC)as! RestoVerificationVC
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
         
     }
     

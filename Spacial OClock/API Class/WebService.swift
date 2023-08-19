@@ -297,7 +297,6 @@ extension UIImage{
     }
 }
 
-
 struct ImageStructInfo {
     var fileName: String
     var type: String = "image/jpg"

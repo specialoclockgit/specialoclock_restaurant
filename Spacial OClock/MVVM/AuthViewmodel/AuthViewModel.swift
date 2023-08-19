@@ -14,9 +14,11 @@ class AuthViewModel : NSObject {
     var eventImgString = String()
     
     //MARK: - SIGN UP API
-    func signUpapi(isImageSelected:Bool, name : String, email: String,country_code: String, phone: String ,password:String, confirmpassword: String,devicetype: Int, image: String, isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
-        if CheckValidations.validationSignUp(isImageSelected: isImageSelected, name: name, email: email, country_code: country_code, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , img: image, isselected: isselected){
-            let param : parameters = [ "image":image,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":2, "device_type":1] as [String : Any]
+    func signUpapi(name : String, email: String,country_code: String, phone: String ,password:String, confirmpassword: String,devicetype: Int, image: UIImage, isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
+        
+        if CheckValidations.validationSignUp(name: name, email: email, country_code: country_code, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , img: image, isselected: isselected){
+            
+            let param : parameters = [ "image":imageData,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":2, "device_type":1] as [String : Any]
          
             WebService.service(API.signup,  param: param, service: .post){
                 (modeldata: SignupModel, data, json) in
@@ -37,11 +39,10 @@ class AuthViewModel : NSObject {
         imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpeg", type: "image/jpeg", data: image.toData(), key: "image", image: image)
         
         let param = ["type": type, "folder": "users", "image": imageInfo] as [String : Any]
-        print(param)
         
         WebService.service(API.file_upload, param: param, service: .post, showHud: true) {
             (userData: FileuploadModel , data, json) in
-            
+            self.imageData = ""
             for indx in 0..<(userData.body.count ?? 0){
                 let image = userData.body[indx].image
                 let thumbnail = userData.body[indx].thumbnail
@@ -52,8 +53,12 @@ class AuthViewModel : NSObject {
                 self.selectedImageArr.append(newDict)
             }
             onSuccess(self.selectedImageArr.toJSONString())
+            self.eventImgString = self.selectedImageArr.toJSONString()
+            self.imageData = self.selectedImageArr.toJSONString()
         }
     }
+    
+
     //MARK: - LOGIN API
     func loginApicall(email:String, password:String,device_type:Int ,onSuccess: @escaping (()->())) {
         if email.trimmingCharacters(in: .whitespaces).isEmpty{
@@ -64,7 +69,6 @@ class AuthViewModel : NSObject {
             
             let param: parameters = ["email":email,
                                      "password":password,"device_token":DEVICE_TOKEN,"device_type":device_type ]
-
             
             WebService.service(API.login, param: param, service: .post){
                 (modaldata: SignupModel , Data, Json) in
@@ -76,6 +80,8 @@ class AuthViewModel : NSObject {
         }
         
     }
+    
+    
     //    MARK: - VERIFICATION OTP
     func otpverification(otp:String, onSuccess :@escaping()->()){
         if otp.count < 4 {
@@ -165,7 +171,7 @@ class AuthViewModel : NSObject {
             let param : parameters = ["old_password":oldpassword,
                                       "new_password":newpassword,
                                       "confirm_password":confirmpassword]
-            print(param)
+           
             WebService.service(API.change_password, param: param, service: .post){
                 (modaldata : CommonModel , data, json) in
                 onsuccess()
@@ -277,6 +283,8 @@ class AuthViewModel : NSObject {
         }
         return true
     }
+    
+    
     //MARK: - EDITPROFILE API
     func editprofile(name:String, phone: String, email: String, image:UIImageView, OnSuccess: @escaping (()->())){
 //        let formatter = DateFormatter()
@@ -294,6 +302,15 @@ class AuthViewModel : NSObject {
         }
     }
    
+    
+    //MARK: Profile
+    func ProfileAPI(onSuccess:@escaping ((GetProfileModel)->())) {
+        
+        WebService.service(.get_profile, service: .get, showHud: true) {
+            (userData: GetProfileModel ,data, json) in
+            onSuccess(userData)
+        }
+    }
 }
 
 

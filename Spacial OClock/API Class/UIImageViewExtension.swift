@@ -24,12 +24,13 @@ extension UIImageView {
     }
     
     
-    func showIndicator(imageUrl:String,color:SDWebImageActivityIndicator = .gray){
-            self.sd_imageIndicator = color
+    func showIndicator(baseUrl:String,imageUrl:String){
+        self.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.sd_imageIndicator?.startAnimatingIndicator()
-            print("image \(imageUrl)")
-            self.sd_setImage(with: URL(string:imageUrl),placeholderImage: UIImage(named: "account")) { (img, err, type, urll) in
+            print("image \(baseUrl + imageUrl)")
+            self.sd_setImage(with: URL(string:baseUrl + imageUrl),placeholderImage: UIImage(named: "Group 9309")) { (img, err, type, urll) in
                 if img == nil{
+                    print("Error is",err)
                     self.backgroundColor = .gray
                 }
                 self.sd_imageIndicator?.stopAnimatingIndicator()

@@ -10,6 +10,9 @@ import UIKit
 class ForgotPasswordVC: UIViewController {
 
     @IBOutlet weak var tfEmail: CustomTextField!
+    
+    var viewmodel = AuthViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,7 +21,9 @@ class ForgotPasswordVC: UIViewController {
 
     // MARK: - Actions
      @IBAction func btnSubmit(_ sender: UIButton){
-         self.navigationController?.popViewController(animated: true)
+         self.viewmodel.ForgotPassword(email: tfEmail.text ?? "") {
+             self.navigationController?.popViewController(animated: true)
+         }
      }
     @IBAction func btnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)

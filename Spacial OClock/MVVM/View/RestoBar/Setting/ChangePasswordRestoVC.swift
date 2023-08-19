@@ -24,10 +24,11 @@ class ChangePasswordRestoVC: UIViewController {
     
     //MARK: Button Action
     @IBAction func btnUpdate(_ sender: Any) {
-        self.viewmodel.changePasswordapicall(oldpassword: tfoldPassword.text ?? "", newpassword: tfNewPass.text ?? "", confirmpassword: tfConfirmPass.text ?? "") {
-            self.navigationController?.popViewController(animated: true)
-        }
+//        self.viewmodel.changePasswordapicall(oldpassword: tfoldPassword.text ?? "", newpassword: tfNewPass.text ?? "", confirmpassword: tfConfirmPass.text ?? "") {
+//            self.navigationController?.popViewController(animated: true)
+//        }
     }
+    
     @IBAction func btnBackAct(_ sender : UIButton){
         self.navigationController?.popViewController(animated: true)
     }

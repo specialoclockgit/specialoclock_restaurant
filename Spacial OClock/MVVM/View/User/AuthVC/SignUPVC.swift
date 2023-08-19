@@ -90,6 +90,8 @@ class SignUPVC: UIViewController {
         ImagePicker().pickImage(self) { (image) in
             self.imgProfile.image = image
           self.isImageSelected = true
+            self.viewmodel.fileUploadedAPI(type: "image", image: image) { data in
+            }
         }
     }
     
@@ -112,7 +114,7 @@ class SignUPVC: UIViewController {
     @IBAction func btnSignUp(_ sender: UIButton){
         self.viewmodel.fileUploadedAPI(type: "image", image: imgProfile.image!) { img in
             self.imgString = img
-            self.viewmodel.signUpapi(isImageSelected: self.isImageSelected , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "", phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, image: self.imgString ?? "" , isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
+            self.viewmodel.signUpapi(name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "", phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, image: self.imgProfile.image ?? UIImage(), isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }

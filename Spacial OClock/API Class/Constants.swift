@@ -105,6 +105,7 @@ enum API: String{
     case cuisine_list
     case add_business
     case edit_profile
+    case get_profile
     
 
 //    MARK: - USER
