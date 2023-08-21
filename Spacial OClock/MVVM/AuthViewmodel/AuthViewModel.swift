@@ -14,9 +14,9 @@ class AuthViewModel : NSObject {
     var eventImgString = String()
     
     //MARK: - SIGN UP API
-    func signUpapi(name : String, email: String,country_code: String, phone: String ,password:String, confirmpassword: String,devicetype: Int, image: UIImage, isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
+    func signUpapi(image: UIImage, name : String, email: String,country_code: String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
         
-        if CheckValidations.validationSignUp(name: name, email: email, country_code: country_code, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , img: image, isselected: isselected){
+        if CheckValidations.validationSignUp(name: name, email: email, country_code: country_code, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , image: image, isselected: isselected){
             
             let param : parameters = [ "image":imageData,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":2, "device_type":1] as [String : Any]
          
@@ -28,6 +28,8 @@ class AuthViewModel : NSObject {
             }
         }
     }
+    
+
     // MARK: - Image Upload
     func fileUploadedAPI(type: String, image:UIImage,onSuccess:@escaping((String)->())) {
         
@@ -35,7 +37,6 @@ class AuthViewModel : NSObject {
         formatter.dateFormat = dateFormat.fullDate.rawValue
         let date = formatter.string(from: Date())
         let imageInfo : ImageStructInfo
-        
         imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpeg", type: "image/jpeg", data: image.toData(), key: "image", image: image)
         
         let param = ["type": type, "folder": "users", "image": imageInfo] as [String : Any]
@@ -123,20 +124,30 @@ class AuthViewModel : NSObject {
             }
         }
     }
-    //MARK: - PRIVACY POLICY
-    func privacypolicyApi(onSuccess : @escaping ((TermsconditionModelBody?)->())){
-        WebService.service(API.privacypolicy ,service: .get, showHud: true) {
-            (modaldata: TermsconditionModel , Data, Json) in
-            onSuccess(modaldata.body)
+    
+    //MARK: cms
+    func cmsAPI(type: Int, onSuccess:@escaping ((CMSModel)->())) {
+        
+        WebService.service(.get_content,urlAppendId: type, service: .get, showHud: true) {
+            (userData: CMSModel, data, json) in
+            onSuccess(userData)
         }
     }
-    //MARK: - TERMS & CONDITION
-    func termsandconditionApi(onSuccess : @escaping ((TermsconditionModelBody?)->())){
-        WebService.service(API.termsAndCondition ,service: .get, showHud: true) {
-            (modaldata: TermsconditionModel , Data, Json) in
-            onSuccess(modaldata.body)
-        }
-    }
+
+//    //MARK: - PRIVACY POLICY
+//    func privacypolicyApi(onSuccess : @escaping ((TermsconditionModelBody?)->())){
+//        WebService.service(API.privacypolicy ,service: .get, showHud: true) {
+//            (modaldata: TermsconditionModel , Data, Json) in
+//            onSuccess(modaldata.body)
+//        }
+//    }
+//    //MARK: - TERMS & CONDITION
+//    func termsandconditionApi(onSuccess : @escaping ((TermsconditionModelBody?)->())){
+//        WebService.service(API.termsAndCondition ,service: .get, showHud: true) {
+//            (modaldata: TermsconditionModel , Data, Json) in
+//            onSuccess(modaldata.body)
+//        }
+//    }
     func helpandFaq(onSuccess : @escaping (([HelpandFAQModelBody]?)->())){
         WebService.service(API.faq ,service: .get, showHud: true) {
             (modaldata: HelpandFAQModel , Data, Json) in
@@ -210,6 +221,8 @@ class AuthViewModel : NSObject {
             
         }
     }
+    
+    
     //    MARK: - LOGOUT API CALL
     func logoutapicall(onsuccess: @escaping (()->())){
         WebService.service(API.logout, service: .post) {
@@ -218,6 +231,8 @@ class AuthViewModel : NSObject {
         }
         
     }
+    
+    
     //MARK: - THEME API CALL
     func themeapicall(onsuccess: @escaping (([ThemeModelBody]?)->())){
         WebService.service(API.theme_list, service: .get) {
@@ -225,6 +240,8 @@ class AuthViewModel : NSObject {
             onsuccess(modaldata.body)
         }
     }
+    
+    
     //MARK: - CATEGORY GET LIST
     func Categoryapicall(onsuccess: @escaping (([CategoryListingModelBody]?)->())){
         WebService.service(API.category_list, service: .get) {
@@ -232,6 +249,8 @@ class AuthViewModel : NSObject {
             onsuccess(modaldata.body)
         }
     }
+    
+    
     //MARK: - CUISINE GET LIST
     func Cuisineapicall(onsuccess: @escaping (([CuisineListingModelBody]?)->())){
         WebService.service(API.cuisine_list, service: .get) {
@@ -239,6 +258,8 @@ class AuthViewModel : NSObject {
             onsuccess(modaldata.body)
         }
     }
+    
+    
     //    NARK: - ADDBUSINESS
     func addbusinessApi(isImageSelected:Bool,Profileimage:UIImageView,type:Int,  name:String, image: [String], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String, onsuccess:@escaping (()->())) -> Bool{
         if !(isImageSelected) {
@@ -286,14 +307,14 @@ class AuthViewModel : NSObject {
     
     
     //MARK: - EDITPROFILE API
-    func editprofile(name:String, phone: String, email: String, image:UIImageView, OnSuccess: @escaping (()->())){
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = dateFormat.fullDate.rawValue
-//        let date = formatter.string(from: Date())
-//        let imageInfo : ImageStructInfo
-//     imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpg", type: "image/jpg", data: image.toData() ?? Data(), key: "image", image: image)
+    func editprofile(name:String, phone: String, email: String, image: UIImage, OnSuccess: @escaping (()->())){
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat.fullDate.rawValue
+        let date = formatter.string(from: Date())
+        let imageInfo : ImageStructInfo
+     imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpg", type: "image/jpg", data: image.toData() ?? Data(), key: "image", image: image)
 
-        let param: parameters = ["name":name,  "phone":phone, "email":email, "image":image]
+        let param: parameters = ["name":name, "phone":phone, "email":email, "image":imageInfo]
         print(param)
         WebService.service(API.edit_profile, param: param,service: .post) {
             (modaldata: EditProfileModel, data, json) in

@@ -13,13 +13,18 @@ class CheckValidations: NSObject{
     
 //     MARK: - SIGNUP -  VALDATION BAR Resturant
     
-    class  func validationSignUp(name : String, email: String,country_code: String, phone:String,password:String, confirmpassword: String,devicetype: Int, img: UIImage, isselected:Bool) -> Bool{
+    class  func validationSignUp(name : String, email: String,country_code: String, phone:String,password:String, confirmpassword: String,devicetype: Int, image: UIImage, isselected:Bool) -> Bool{
         
 //        if !(isImageSelected) {
 //            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
 //            return false
 //        } else
-        if img.isEqualToImage(image: UIImage(named: "profile")!){
+        
+//        if image.isEqualToImage(image: UIImage(named: "Group 16274")!){
+//            CommonUtilities.shared.showSwiftAlert(message: RegexMessage.emptyPhoto.rawValue, isSuccess: .error)
+//            return false
+//        }
+        if image.isEqualToImage(image: UIImage(named: "profile")!){
             CommonUtilities.shared.showAlert(message: "EmptyPhoto", isSuccess: .error)
             return false
         } else if name.trimmingCharacters(in: .whitespaces).isEmpty{

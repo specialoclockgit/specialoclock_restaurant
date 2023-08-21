@@ -21,7 +21,6 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
         
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
     }
@@ -65,11 +64,13 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
             self.navigationController?.pushViewController(vc, animated: true)
         }else if indexPath.row == 2{
             let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
-            vc.status = 1
+            vc.status = 2
+            vc.titleLbl = "Terms & Conditions"
             self.navigationController?.pushViewController(vc, animated: true)
         }else if indexPath.row == 3{
             let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
-            vc.status = 2
+            vc.status = 1
+            vc.titleLbl = "Privacy policy"
             self.navigationController?.pushViewController(vc, animated: true)
         }else if indexPath.row == 4{
             let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.HelpQAVC) as! HelpQAVC

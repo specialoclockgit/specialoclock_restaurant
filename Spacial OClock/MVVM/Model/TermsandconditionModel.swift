@@ -8,17 +8,15 @@
 
 import Foundation
 
-// MARK: - TermsconditionModel
-struct TermsconditionModel: Codable {
-    var success: Bool
-    var code: Int
-    var message: String
-    var body: TermsconditionModelBody
+// MARK: - CMSModel
+struct CMSModel: Codable {
+    var success: Bool?
+    var code: Int?
+    var message: String?
+    var body: CMSBody?
 }
 
-// MARK: - Body
-struct TermsconditionModelBody: Codable {
-    var title, description: String
+// MARK: - CMSBody
+struct CMSBody: Codable {
+    var title, description: String?
 }
-
-

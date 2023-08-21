@@ -23,17 +23,17 @@ class PrivacyVC: UIViewController {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
         lblHeading.text = heading
-        if self.lblHeading.text == "Privacy Policy" {
-            viewmodel.privacypolicyApi { data in
-                self.lblcms.text = data?.description.htmlToString
-            }
-        } else {
-            self.lblHeading.text == "Terms and condition"; do {
-                self.viewmodel.termsandconditionApi { data in
-                    self.lblcms.text = data?.description.htmlToString
-                }
-            }
-        }
+//        if self.lblHeading.text == "Privacy Policy" {
+//            viewmodel.privacypolicyApi { data in
+//                self.lblcms.text = data?.description.htmlToString
+//            }
+//        } else {
+//            self.lblHeading.text == "Terms and condition"; do {
+//                self.viewmodel.termsandconditionApi { data in
+//                    self.lblcms.text = data?.description.htmlToString
+//                }
+//            }
+//        }
         // Do any additional setup after loading the view.
     }
     

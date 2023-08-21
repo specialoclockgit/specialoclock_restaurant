@@ -28,7 +28,7 @@ class UserProfileVC: UIViewController {
             self.profileBody = data.body
             self.lblName.text = data.body?.name ?? ""
             self.lblEmail.text = data.body?.email ?? ""
-            self.lblPhoneNumber.text = "\(data.body?.phone ?? 0)"
+            self.lblPhoneNumber.text = "\(data.body?.countryCode ?? "")\(data.body?.phone ?? 0)"
             self.profileImg.showIndicator(baseUrl: imageURL, imageUrl: data.body?.image ?? "")
         }
         tabBarController?.tabBar.isHidden = false

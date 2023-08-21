@@ -106,6 +106,7 @@ enum API: String{
     case add_business
     case edit_profile
     case get_profile
+    case get_content
     
 
 //    MARK: - USER

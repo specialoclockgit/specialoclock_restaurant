@@ -17,20 +17,27 @@ class UserEditProfileVC: UIViewController {
     @IBOutlet weak var tfEmail : UITextField!
     @IBOutlet weak var viewProfile : UIView!
     
-    //MARK: Variables
-//    var heading = String()
-//    var name = ""
-//    var email = ""
-//    var phoneNumber = ""
+    var viewmodel = AuthViewModel()
+    var profileBody : GetProfileBody?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
         viewProfile.layer.cornerRadius = viewProfile.frame.height / 2
         imgProfile.layer.cornerRadius = imgProfile.frame.height / 2
-        // Do any additional setup after loading the view.
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        setData()
+    }
+    private func setData() {
+        self.viewmodel.ProfileAPI { data in
+            self.profileBody = data.body
+            self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: data.body?.image ?? "")
+            self.tfName.text = data.body?.name ?? ""
+            self.tfEmail.text = data.body?.email ?? ""
+            self.tfPhoneNumber.text = "\(data.body?.countryCode ?? "")\(data.body?.phone ?? 0)"
+        }
+    }
     //MARK: Button Action
     @IBAction func btnProfileAct(_ sender : UIButton){
         ImagePicker().pickImage(self) { (image) in
@@ -42,6 +49,8 @@ class UserEditProfileVC: UIViewController {
     }
     
     @IBAction func btnSaveAct(_ sender : UIButton){
-        self.navigationController?.popViewController(animated: true)
+        viewmodel.editprofile(name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "", email: tfEmail.text ?? "", image: imgProfile.image ?? UIImage()) {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }

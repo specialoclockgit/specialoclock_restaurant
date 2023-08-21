@@ -22,20 +22,14 @@ class EditProfileVC: UIViewController {
     var name = ""
     var email = ""
     var phoneNumber = ""
-    var viewmodel = AuthViewModel()
     var getdataApi : EditProfileModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
         initialLoad()
-        // Do any additional setup after loading the view.
-    }
-//    func setupApi(){ data in
-//        self.getdataApi = Data
-//        self.tfName.text = Data
-//    }
-    
+        }
+
     
     //MARK: Button Action
     @IBAction func btnBackAct(sender : UIButton){
@@ -48,12 +42,11 @@ class EditProfileVC: UIViewController {
         }
     }
     @IBAction func btnSaveAct(_ sender : UIButton){
-        viewmodel.editprofile(name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "", email: tfEmail.text ?? "", image: imgProfile) {
             self.navigationController?.popViewController(animated: true)
-        }
-       
+        
     }
 }
+
 extension EditProfileVC{
     func initialLoad(){
         tfName.text = name

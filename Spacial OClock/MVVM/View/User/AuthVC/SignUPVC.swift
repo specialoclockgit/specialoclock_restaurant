@@ -69,7 +69,7 @@ class SignUPVC: UIViewController {
     func uiSet(){
         tapGesture()
         view.hideKeyboardWhenTappedAround()
-        userBtn.isHidden = true
+        //userBtn.isHidden = true
         
     }
     //MARK: - Function
@@ -112,22 +112,21 @@ class SignUPVC: UIViewController {
     }
     
     @IBAction func btnSignUp(_ sender: UIButton){
-        self.viewmodel.fileUploadedAPI(type: "image", image: imgProfile.image!) { img in
-            self.imgString = img
-            self.viewmodel.signUpapi(name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "", phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, image: self.imgProfile.image ?? UIImage(), isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
+       // self.viewmodel.fileUploadedAPI(type: "image", image: imgProfile.image!) { img in
+           
+            self.viewmodel.signUpapi(image: self.imgProfile.image ?? UIImage(), name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "", phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
-    }
     
-    @IBAction func btnUser(_ sender: UIButton) {
+   // @IBAction func btnUser(_ sender: UIButton) {
 //        userBtn.setTitleColor(UIColor.white, for: .normal)
 //        restaurantBtn.setTitleColor(UIColor.black, for: .normal)
 //        userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
        // restaurantBtn.backgroundColor = UIColor(red: 213/255, green: 213/255, blue: 213/255, alpha: 1)
         
-    }
+  //  }
     
 //    @IBAction func btnSelectBar(_ sender : UIButton){
 //        if sender.isSelected == false{
