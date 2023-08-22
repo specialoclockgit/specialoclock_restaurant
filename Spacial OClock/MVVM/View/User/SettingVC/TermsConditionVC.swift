@@ -20,12 +20,13 @@ class TermsConditionVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if status == 0{
+        if status == 0 {
             cms(type: 1)
+            headerlbl.text = "Term & Conditions"
         }else if status == 1{
             cms(type: 2)
+            headerlbl.text = titleLbl
         }
-        headerlbl.text = titleLbl
         self.tabBarController?.tabBar.isHidden = true
     }
     

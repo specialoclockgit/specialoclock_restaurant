@@ -135,7 +135,7 @@
 		A5F18B8D2A545505006979DD /* CellMyOfferTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F18B8B2A545505006979DD /* CellMyOfferTB.swift */; };
 		A5F18B8E2A545505006979DD /* CellMyOfferTB.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B8C2A545505006979DD /* CellMyOfferTB.xib */; };
 		A5F7091E2A4EE65900CD26B1 /* CancelBookingReasonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F7091D2A4EE65900CD26B1 /* CancelBookingReasonVC.swift */; };
-		A5FD2E7F2A53FF8500682FFA /* ImagePicker (3).swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2E7E2A53FF8500682FFA /* ImagePicker (3).swift */; };
+		A5FD2E7F2A53FF8500682FFA /* ImagePicker(3).swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2E7E2A53FF8500682FFA /* ImagePicker(3).swift */; };
 		C25738132A4ACC50002BA6A7 /* RestoProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25738122A4ACC50002BA6A7 /* RestoProfileVC.swift */; };
 		C2661A762A4AFBA600EEE266 /* AddMenuVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2661A752A4AFBA600EEE266 /* AddMenuVc.swift */; };
 		C2661A792A4AFE0600EEE266 /* RestoSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2661A782A4AFE0600EEE266 /* RestoSettingVC.swift */; };
@@ -334,7 +334,7 @@
 		A5F18B8B2A545505006979DD /* CellMyOfferTB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellMyOfferTB.swift; sourceTree = "<group>"; };
 		A5F18B8C2A545505006979DD /* CellMyOfferTB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CellMyOfferTB.xib; sourceTree = "<group>"; };
 		A5F7091D2A4EE65900CD26B1 /* CancelBookingReasonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBookingReasonVC.swift; sourceTree = "<group>"; };
-		A5FD2E7E2A53FF8500682FFA /* ImagePicker (3).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImagePicker (3).swift"; sourceTree = "<group>"; };
+		A5FD2E7E2A53FF8500682FFA /* ImagePicker(3).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImagePicker(3).swift"; sourceTree = "<group>"; };
 		B1E514FE72129C20959157BB /* Pods-Spacial OClock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClock.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClock/Pods-Spacial OClock.release.xcconfig"; sourceTree = "<group>"; };
 		B95FD0385785925C8C1DFF55 /* Pods_Spacial_OClockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spacial_OClockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C25738122A4ACC50002BA6A7 /* RestoProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoProfileVC.swift; sourceTree = "<group>"; };
@@ -709,7 +709,7 @@
 		A5FD2E792A53FB6D00682FFA /* ImagePicker */ = {
 			isa = PBXGroup;
 			children = (
-				A5FD2E7E2A53FF8500682FFA /* ImagePicker (3).swift */,
+				A5FD2E7E2A53FF8500682FFA /* ImagePicker(3).swift */,
 			);
 			path = ImagePicker;
 			sourceTree = "<group>";
@@ -1389,7 +1389,7 @@
 				A5046FEA2A4D9A9200C23627 /* UILabel.swift in Sources */,
 				C284FB7C2A402EE8006949B4 /* CustomTextField.swift in Sources */,
 				A5F18B8D2A545505006979DD /* CellMyOfferTB.swift in Sources */,
-				A5FD2E7F2A53FF8500682FFA /* ImagePicker (3).swift in Sources */,
+				A5FD2E7F2A53FF8500682FFA /* ImagePicker(3).swift in Sources */,
 				C284FB742A402E3E006949B4 /* RestoHomeTVC.swift in Sources */,
 				A5222B972A628C3800C2E962 /* String.swift in Sources */,
 				29A19A3A2A8FA7C9008193A4 /* commonModel.swift in Sources */,
@@ -1650,9 +1650,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4XVQBWH9QF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spacial OClock/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock";
@@ -1690,9 +1690,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4XVQBWH9QF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spacial OClock/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock";

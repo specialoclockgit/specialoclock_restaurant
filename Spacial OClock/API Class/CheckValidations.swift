@@ -13,7 +13,7 @@ class CheckValidations: NSObject{
     
 //     MARK: - SIGNUP -  VALDATION BAR Resturant
     
-    class  func validationSignUp(name : String, email: String,country_code: String, phone:String,password:String, confirmpassword: String,devicetype: Int, image: UIImage, isselected:Bool) -> Bool{
+    class  func validationSignUp(name : String, email: String,country_code: String,countrySymbol:String, phone:String,password:String, confirmpassword: String,devicetype: Int, image: UIImage, isselected:Bool) -> Bool{
         
 //        if !(isImageSelected) {
 //            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
@@ -25,36 +25,39 @@ class CheckValidations: NSObject{
 //            return false
 //        }
         if image.isEqualToImage(image: UIImage(named: "profile")!){
-            CommonUtilities.shared.showAlert(message: "EmptyPhoto", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please select image", isSuccess: .error)
             return false
         } else if name.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Enter your name", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your name", isSuccess: .error)
             return false
         } else if email.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Enter your email", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your email", isSuccess: .error)
             return false
-        } else if email.isValidEmail{
+        } else if email.isValidEmail {
             CommonUtilities.shared.showAlert(message: "Please enter valid email", isSuccess: .error)
             return false
         } else if country_code.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Selet your country code", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please select your country code", isSuccess: .error)
+            return false
+        }else if phone.trimmingCharacters(in: .whitespaces).isEmpty{
+            CommonUtilities.shared.showAlert(message: "Please enter mobile number", isSuccess: .error)
+            return false
+        }else if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol){
+            CommonUtilities.shared.showAlert(message: "Please enter valid mobile number",isSuccess: .error)
             return false
         }
-//        else if phone.trimmingCharacters(in: .whitespaces).isEmpty{
-//            CommonUtilities.shared.showAlert(message: "Enter your phone", isSuccess: .error)
+//        else if phone.count <= 9{
+//            CommonUtilities.shared.showAlert(message: "Please enter phone number minimum 10 characters", isSuccess: .error)
 //            return false
 //        }
-        else if phone.count <= 9{
-            CommonUtilities.shared.showAlert(message: "Please enter phone number minimum 10 characters", isSuccess: .error)
-            return false
-        }else if password.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Enter your passord", isSuccess: .error)
+        else if password.trimmingCharacters(in: .whitespaces).isEmpty{
+            CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
             return false
         }else if password.count <= 5{
             CommonUtilities.shared.showAlert(message: "Please enter password minimum 6 characters", isSuccess: .error)
             return false
         }else if confirmpassword.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Enter your confirm password", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your confirm password", isSuccess: .error)
             return false
         }else if password != confirmpassword{
             CommonUtilities.shared.showAlert(message: "Password and confirm password should be same", isSuccess: .error)

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import PhoneNumberKit
 
 class AuthViewModel : NSObject {
     var selectedImageArr = [parameters]()
@@ -14,9 +15,9 @@ class AuthViewModel : NSObject {
     var eventImgString = String()
     
     //MARK: - SIGN UP API
-    func signUpapi(image: UIImage, name : String, email: String,country_code: String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
+    func signUpapi(image: UIImage, name : String, email: String,country_code: String,countrySymbol:String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
         
-        if CheckValidations.validationSignUp(name: name, email: email, country_code: country_code, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , image: image, isselected: isselected){
+        if CheckValidations.validationSignUp(name: name, email: email, country_code: country_code,countrySymbol:countrySymbol, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , image: image, isselected: isselected){
             
             let param : parameters = [ "image":imageData,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":2, "device_type":1] as [String : Any]
          
@@ -63,9 +64,11 @@ class AuthViewModel : NSObject {
     //MARK: - LOGIN API
     func loginApicall(email:String, password:String,device_type:Int ,onSuccess: @escaping (()->())) {
         if email.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Enter your email", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your email", isSuccess: .error)
+        }else if !email.isValidemail {
+            CommonUtilities.shared.showAlert(message: "Please enter a valid Email", isSuccess: .error)
         }else if password.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Enter your password", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
         }else{
             
             let param: parameters = ["email":email,
@@ -307,19 +310,26 @@ class AuthViewModel : NSObject {
     
     
     //MARK: - EDITPROFILE API
-    func editprofile(name:String, phone: String, email: String, image: UIImage, OnSuccess: @escaping (()->())){
-        let formatter = DateFormatter()
-        formatter.dateFormat = dateFormat.fullDate.rawValue
-        let date = formatter.string(from: Date())
-        let imageInfo : ImageStructInfo
-     imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpg", type: "image/jpg", data: image.toData() ?? Data(), key: "image", image: image)
-
-        let param: parameters = ["name":name, "phone":phone, "email":email, "image":imageInfo]
-        print(param)
-        WebService.service(API.edit_profile, param: param,service: .post) {
-            (modaldata: EditProfileModel, data, json) in
-            OnSuccess()
-            
+    func editprofile(name:String, phone: String,countrySymbol: String,countryCode: String, email: String, image: UIImage, OnSuccess: @escaping (()->())) {
+        
+        if name.trimmingCharacters(in: .whitespaces).isEmpty {
+            CommonUtilities.shared.showAlert(message: "Please enter your name", isSuccess: .error)
+        }else if phone.trimmingCharacters(in: .whitespaces).isEmpty{
+            CommonUtilities.shared.showAlert(message: "Please enter mobile number", isSuccess: .error)
+        }else if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol){
+            CommonUtilities.shared.showAlert(message: "Please enter valid mobile number",isSuccess: .error)
+        }else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = dateFormat.fullDate.rawValue
+            let date = formatter.string(from: Date())
+            let imageInfo : ImageStructInfo
+            imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpg", type: "image/jpg", data: image.toData() ?? Data(), key: "image", image: image)
+            let param: parameters = ["name":name, "phone":phone, "email":email, "image":imageInfo,"country_code":countryCode]
+            print(param)
+            WebService.service(API.edit_profile, param: param,service: .post) {
+                (modaldata: EditProfileModel, data, json) in
+                OnSuccess()
+            }
         }
     }
    
@@ -332,6 +342,17 @@ class AuthViewModel : NSObject {
             onSuccess(userData)
         }
     }
+    
+    class func getCountryBasedMobileNumberRange(code:String) -> Int {
+        let phoneNumberKit = PhoneNumberKit()
+        let sample = phoneNumberKit.metadata(for: code)?.mobile?.possibleLengths // 412345678
+        var range = sample?.national ?? ""
+        if range.contains(","){
+            range = range.components(separatedBy: ",").last ?? "\(String.init(range.first!))"
+        }
+        return Int(range) ?? 0
+    }
+    
 }
 
 

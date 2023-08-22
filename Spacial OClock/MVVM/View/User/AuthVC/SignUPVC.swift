@@ -38,10 +38,15 @@ class SignUPVC: UIViewController {
     var long : Double?
     var imgString:String?
     var Location = String()
+    var countryCode = String()
     
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        tfName.delegate = self
+        tfPhone.delegate = self
+        tfPassword.delegate = self
+        tfConfirmPass.delegate = self
         uiSet()
         
         DispatchQueue.global().async {
@@ -61,8 +66,6 @@ class SignUPVC: UIViewController {
         
         btnCheckStatus = 0
         uiSet()
-        //stackViewRestaurant.isHidden = true
-       
     }
     
     //MARK: - Function
@@ -103,6 +106,8 @@ class SignUPVC: UIViewController {
         let countryController = CountryPickerWithSectionViewController.presentController(on: self) { [weak self] (country: Country) in
             guard let self = self else { return }
             self.tfCountry.text = country.dialingCode
+            self.countryCode = country.countryCode
+            print(self.countryCode)
         }
     }
     
@@ -114,7 +119,7 @@ class SignUPVC: UIViewController {
     @IBAction func btnSignUp(_ sender: UIButton){
        // self.viewmodel.fileUploadedAPI(type: "image", image: imgProfile.image!) { img in
            
-            self.viewmodel.signUpapi(image: self.imgProfile.image ?? UIImage(), name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "", phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
+        self.viewmodel.signUpapi(image: self.imgProfile.image ?? UIImage(), name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -211,5 +216,36 @@ extension SignUPVC : CLLocationManagerDelegate{
             }
         }
         locationManager.stopUpdatingLocation()
+    }
+}
+
+extension SignUPVC: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == self.tfPhone{
+            let maxLength = AuthViewModel.getCountryBasedMobileNumberRange(code: self.countryCode)
+            let currentString: NSString = (textField.text ?? "") as NSString
+            let newString: String =
+            currentString.replacingCharacters(in: range, with: string) as String
+            if newString.first == "0"{
+                return false
+            }
+            return newString.count <= maxLength
+        }else if textField == self.tfName{
+            let currentString: NSString = (textField.text ?? "") as NSString
+            let newString: String =
+            currentString.replacingCharacters(in: range, with: string) as String
+            return string.containsValidCharacter && newString.length() <= 30
+        }else if textField == self.tfEmail{
+            let currentString: NSString = (textField.text ?? "") as NSString
+            let newString: String =
+            currentString.replacingCharacters(in: range, with: string) as String
+            return newString.length() <= 30
+        }else if textField == self.tfPassword || textField == self.tfConfirmPass {
+            let currentString: NSString = (textField.text ?? "") as NSString
+            let newString: String =
+            currentString.replacingCharacters(in: range, with: string) as String
+            return newString.length() <= 30
+        }
+        return true
     }
 }

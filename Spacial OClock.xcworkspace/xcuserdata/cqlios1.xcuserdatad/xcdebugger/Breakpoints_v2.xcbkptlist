@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "CAF696B3-2807-45A9-940E-6D728B6B098B"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4BBFEF65-3A69-441F-9217-62C970F453D5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Spacial OClock/MVVM/View/User/SettingVC/TermsConditionVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "cms(type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1A77CA4B-A13B-49B3-B51F-275AE688A841"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Spacial OClock/MVVM/AuthViewmodel/AuthViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
+            landmarkName = "getCountryBasedMobileNumberRange(code:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "246DC2F2-2410-4910-9AEF-E23A36C0818C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Spacial OClock/API Class/CheckValidations.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "validationSignUp(name:email:country_code:countrySymbol:phone:password:confirmpassword:devicetype:image:isselected:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "246DC2F2-2410-4910-9AEF-E23A36C0818C - f8973c37f20224e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Spacial_OClock.CheckValidations.validationSignUp(name: Swift.String, email: Swift.String, country_code: Swift.String, phone: Swift.String, password: Swift.String, confirmpassword: Swift.String, devicetype: Swift.Int, image: __C.UIImage, isselected: Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/API%20Class/CheckValidations.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "2104">
+               </Location>
+               <Location
+                  uuid = "246DC2F2-2410-4910-9AEF-E23A36C0818C - fd0aa4a71d7bbdb2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Spacial_OClock.CheckValidations.validationSignUp(name: Swift.String, email: Swift.String, country_code: Swift.String, countrySymbol: Swift.String, phone: Swift.String, password: Swift.String, confirmpassword: Swift.String, devicetype: Swift.Int, image: __C.UIImage, isselected: Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/API%20Class/CheckValidations.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "2148">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "94716927-61C9-4559-98EF-E81CF5D74577"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Spacial OClock/API Class/CheckValidations.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "validationSignUp(name:email:country_code:countrySymbol:phone:password:confirmpassword:devicetype:image:isselected:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "94716927-61C9-4559-98EF-E81CF5D74577 - f8973c37f20224c6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Spacial_OClock.CheckValidations.validationSignUp(name: Swift.String, email: Swift.String, country_code: Swift.String, phone: Swift.String, password: Swift.String, confirmpassword: Swift.String, devicetype: Swift.Int, image: __C.UIImage, isselected: Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/API%20Class/CheckValidations.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "2040">
+               </Location>
+               <Location
+                  uuid = "94716927-61C9-4559-98EF-E81CF5D74577 - fd0aa4a71d7bbd93"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Spacial_OClock.CheckValidations.validationSignUp(name: Swift.String, email: Swift.String, country_code: Swift.String, countrySymbol: Swift.String, phone: Swift.String, password: Swift.String, confirmpassword: Swift.String, devicetype: Swift.Int, image: __C.UIImage, isselected: Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/API%20Class/CheckValidations.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "2084">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "348C3BF2-CDD4-4A4C-950E-170F4F3BFA4D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Spacial OClock/MVVM/AuthViewmodel/AuthViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "getCountryBasedMobileNumberRange(code:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

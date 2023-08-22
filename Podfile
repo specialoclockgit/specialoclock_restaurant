@@ -21,6 +21,7 @@ target 'Spacial OClock' do
   pod 'FacebookLogin'
   pod 'SwiftMessages'
   pod 'DropDown'
+  pod 'PhoneNumberKit'
 
   
     target 'Spacial OClockTests' do

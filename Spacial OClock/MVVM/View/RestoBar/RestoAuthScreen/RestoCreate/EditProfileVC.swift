@@ -24,26 +24,28 @@ class EditProfileVC: UIViewController {
     var phoneNumber = ""
     var getdataApi : EditProfileModel?
     
+    //MARK: VIEW LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
         initialLoad()
-        }
+    }
 
     
     //MARK: Button Action
-    @IBAction func btnBackAct(sender : UIButton){
+    @IBAction func btnBackAct(sender : UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnCameraAct(_ sender: UIButton){
+    @IBAction func btnCameraAct(_ sender: UIButton) {
         ImagePicker().pickImage(self) { (image) in
             self.imgProfile.image = image
         }
     }
-    @IBAction func btnSaveAct(_ sender : UIButton){
-            self.navigationController?.popViewController(animated: true)
-        
+    
+   
+    @IBAction func btnSaveAct(_ sender : UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

@@ -22,4 +22,16 @@ extension String {
         let range = NSRange(location: 0, length: self.count)
         return emailRegex?.firstMatch(in: self, options: [], range: range) != nil
     }
+    
+    var containsValidCharacter: Bool {
+      guard self != "" else { return true }
+      let hexSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ")
+      let newSet = CharacterSet(charactersIn: self)
+      return hexSet.isSuperset(of: newSet)
+    }
+    
+    func length() -> Int {
+        return count
+    }
+
 }

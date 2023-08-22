@@ -38,6 +38,12 @@ PODS:
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
+  - PhoneNumberKit (3.6.7):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.6.7)
+    - PhoneNumberKit/UIKit (= 3.6.7)
+  - PhoneNumberKit/PhoneNumberKitCore (3.6.7)
+  - PhoneNumberKit/UIKit (3.6.7):
+    - PhoneNumberKit/PhoneNumberKitCore
   - SDWebImage (5.16.0):
     - SDWebImage/Core (= 5.16.0)
   - SDWebImage/Core (5.16.0)
@@ -58,6 +64,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - MBProgressHUD
   - NVActivityIndicatorView
+  - PhoneNumberKit
   - SDWebImage
   - SKCountryPicker
   - SVPinView (~> 1.0)
@@ -81,6 +88,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - MBProgressHUD
     - NVActivityIndicatorView
+    - PhoneNumberKit
     - SDWebImage
     - SKCountryPicker
     - SVPinView
@@ -103,12 +111,13 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
+  PhoneNumberKit: 43b5169526cc417398c8f13f77c97552c1c6ed76
   SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
   SKCountryPicker: 9d4921503cad7224a14a150802bb71228adbd90f
   SVPinView: 9b538d0ba68cdb092afe4f0f67ec84cbed079466
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
 
-PODFILE CHECKSUM: 21b2e7f57d6831fa74066a5bb76cc1ffb1d0b288
+PODFILE CHECKSUM: 2bb3a82e7218dbce5747ce545c0e0a6e5efc5a44
 
 COCOAPODS: 1.12.1

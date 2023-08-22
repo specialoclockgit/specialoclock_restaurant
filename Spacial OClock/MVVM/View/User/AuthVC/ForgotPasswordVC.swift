@@ -8,14 +8,16 @@
 import UIKit
 
 class ForgotPasswordVC: UIViewController {
-
+    
+    //MARK: PROPERTIES
     @IBOutlet weak var tfEmail: CustomTextField!
     
+    //MARK: VARIABLE
     var viewmodel = AuthViewModel()
     
+    //MARK: VIEW LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
 
@@ -25,6 +27,7 @@ class ForgotPasswordVC: UIViewController {
              self.navigationController?.popViewController(animated: true)
          }
      }
+    
     @IBAction func btnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
