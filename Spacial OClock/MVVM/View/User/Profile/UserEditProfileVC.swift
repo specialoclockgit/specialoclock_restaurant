@@ -23,6 +23,8 @@ class UserEditProfileVC: UIViewController {
     var viewmodel = AuthViewModel()
     var profileBody : GetProfileBody?
     var countryCode = String()
+    var image = [FileuploadModelBody]()
+    var isImage = false
     
     //MARK: VIEW LIFE CYCLE
     override func viewDidLoad() {
@@ -53,6 +55,10 @@ class UserEditProfileVC: UIViewController {
     @IBAction func btnProfileAct(_ sender : UIButton) {
         ImagePicker().pickImage(self) { (image) in
             self.imgProfile.image = image
+            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
+                self?.image = imageData ?? [FileuploadModelBody]()
+                self?.isImage = true
+            }
         }
     }
     
@@ -70,7 +76,7 @@ class UserEditProfileVC: UIViewController {
     }
     
     @IBAction func btnSaveAct(_ sender : UIButton) {
-        viewmodel.editprofile(name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "",countrySymbol: self.countryCode,countryCode: self.tfCountryCode.text ?? "", email: tfEmail.text ?? "", image: imgProfile.image ?? UIImage()) {
+        viewmodel.editprofile(isImage:self.isImage, name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "",countrySymbol: self.countryCode,countryCode: self.tfCountryCode.text ?? "", email: tfEmail.text ?? "", image: self.image) {
             self.navigationController?.popViewController(animated: true)
         }
     }

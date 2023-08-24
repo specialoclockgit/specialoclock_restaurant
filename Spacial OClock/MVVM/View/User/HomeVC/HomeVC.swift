@@ -27,6 +27,7 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     @IBOutlet weak var tfSearch : UITextField!
     @IBOutlet weak var lblDrinks: UILabel!
     @IBOutlet weak var imgViewDrinks: UIImageView!
+    @IBOutlet weak var imgProfile: UIImageView!
     @IBOutlet weak var lblDineIn: UILabel!
     @IBOutlet weak var imgViewDinein: UIImageView!
     @IBOutlet weak var scrollView : UIScrollView!
@@ -103,6 +104,7 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
+        self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
     }
     
     
@@ -285,5 +287,6 @@ extension HomeVC {
         self.tbHomeData.register(nib, forCellReuseIdentifier: Cell.CellHomeTB)
         let nibImgView = UINib(nibName: Cell.CellImageViewTB, bundle: nil)
         self.tbHomeData.register(nibImgView, forCellReuseIdentifier: Cell.CellImageViewTB)
+        
     }
 }

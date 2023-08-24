@@ -39,6 +39,7 @@ class SignUPVC: UIViewController {
     var imgString:String?
     var Location = String()
     var countryCode = String()
+    var image = [FileuploadModelBody]()
     
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
@@ -92,9 +93,10 @@ class SignUPVC: UIViewController {
     @IBAction func btnProfile(_ sender : UIButton){
         ImagePicker().pickImage(self) { (image) in
             self.imgProfile.image = image
-          self.isImageSelected = true
-            self.viewmodel.fileUploadedAPI(type: "image", image: image) { data in
+            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
+                self?.image = imageData ?? [FileuploadModelBody]()
             }
+            self.isImageSelected = true
         }
     }
     
@@ -111,40 +113,17 @@ class SignUPVC: UIViewController {
         }
     }
     
-    @IBAction func btnSignIn(_ sender: UIButton){
+    @IBAction func btnSignIn(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
         
     }
     
-    @IBAction func btnSignUp(_ sender: UIButton){
-       // self.viewmodel.fileUploadedAPI(type: "image", image: imgProfile.image!) { img in
-           
-        self.viewmodel.signUpapi(image: self.imgProfile.image ?? UIImage(), name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
+    @IBAction func btnSignUp(_ sender: UIButton) {
+        self.viewmodel.signUpapi(isImage: self.isImageSelected, image: self.image , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-    
-   // @IBAction func btnUser(_ sender: UIButton) {
-//        userBtn.setTitleColor(UIColor.white, for: .normal)
-//        restaurantBtn.setTitleColor(UIColor.black, for: .normal)
-//        userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
-       // restaurantBtn.backgroundColor = UIColor(red: 213/255, green: 213/255, blue: 213/255, alpha: 1)
-        
-  //  }
-    
-//    @IBAction func btnSelectBar(_ sender : UIButton){
-//        if sender.isSelected == false{
-//            btnMainRB.setTitle("Bar ▼", for: .normal)
-//            stackViewRestaurant.isHidden = true
-//        }
-//    }
-//    @IBAction func btnSelectRestorant(_ sender : UIButton){
-//        if sender.isSelected == false{
-//            btnMainRB.setTitle("Restaurant ▼", for: .normal)
-//            stackViewRestaurant.isHidden = true
-//        }
-//    }
+    }
     
     @IBAction func termSConditionsBtn(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC

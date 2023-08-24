@@ -24,6 +24,17 @@ class UserProfileVC: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setData()
+    }
+    
+    
+    func setData() {
         self.viewModel.ProfileAPI { data in
             self.profileBody = data.body
             self.lblName.text = data.body?.name ?? ""
@@ -31,11 +42,6 @@ class UserProfileVC: UIViewController {
             self.lblPhoneNumber.text = "\(data.body?.countryCode ?? "") \(data.body?.phone ?? 0)"
             self.profileImg.showIndicator(baseUrl: imageURL, imageUrl: data.body?.image ?? "")
         }
-        tabBarController?.tabBar.isHidden = false
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     //MARK: Button Actions

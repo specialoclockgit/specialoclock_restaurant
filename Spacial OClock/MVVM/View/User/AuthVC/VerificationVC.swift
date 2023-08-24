@@ -23,7 +23,7 @@ class VerificationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         CommonUtilities.shared.showAlert(Title: "Please enter otp 1111", message:  "\(String(describing: ""))", isSuccess: .success, duration: 2)
-        numberLbl.text = "+\(Store.userDetails?.countryCode ?? "") \(Store.userDetails?.phone ?? 0)"
+        numberLbl.text = "\(Store.userDetails?.countryCode ?? "") \(Store.userDetails?.phone ?? 0)"
     }
     
     @IBAction func btnSendAgain(_ sender: Any) {

@@ -72,13 +72,13 @@ class RestoSignUPVC: UIViewController{
     
     // MARK: - Actions
     @IBAction func btnProfile(_ sender : UIButton){
-        ImagePicker().pickImage(self) { (image) in
-            self.imgProfile.image = image
-            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
-                self?.imgString = imageData
-            }
-            self.isImageSelected = true
-        }
+//        ImagePicker().pickImage(self) { (image) in
+//            self.imgProfile.image = image
+//            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
+//                self?.imgString = imageData
+//            }
+//            self.isImageSelected = true
+//        }
     }
     
     @IBAction func btnBack(_ sender: UIButton){

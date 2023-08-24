@@ -18,11 +18,11 @@ struct FileuploadModel: Codable {
 // MARK: - Body
 struct FileuploadModelBody: Codable {
     var image, thumbnail, fileName, folder: String
-    var fileType: String
+    var file_type: String
 
     enum CodingKeys: String, CodingKey {
         case image, thumbnail, fileName, folder
-        case fileType = "file_type"
+        case file_type
     }
 }
 

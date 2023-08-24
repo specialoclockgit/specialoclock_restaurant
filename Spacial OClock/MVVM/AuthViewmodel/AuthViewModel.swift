@@ -15,65 +15,68 @@ class AuthViewModel : NSObject {
     var eventImgString = String()
     
     //MARK: - SIGN UP API
-    func signUpapi(image: UIImage, name : String, email: String,country_code: String,countrySymbol:String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))){
+    func signUpapi(isImage:Bool,image: [FileuploadModelBody], name : String, email: String,country_code: String,countrySymbol:String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))) {
         
-        if CheckValidations.validationSignUp(name: name, email: email, country_code: country_code,countrySymbol:countrySymbol, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , image: image, isselected: isselected){
-            
-            let param : parameters = [ "image":imageData,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":2, "device_type":1] as [String : Any]
-         
-            WebService.service(API.signup,  param: param, service: .post){
-                (modeldata: SignupModel, data, json) in
-                Store.authKey = modeldata.body?.token ?? ""
-                Store.userDetails = modeldata.body
-                onsuccess()
+        if CheckValidations.validationSignUp(isImage:isImage,name: name, email: email, country_code: country_code,countrySymbol:countrySymbol, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , isselected: isselected){
+            let jsonEncoder = JSONEncoder()
+            do {
+                let jsonData = try jsonEncoder.encode(image)
+                let jsonString = String(data: jsonData, encoding: .utf8)
+                guard let json = jsonString else{return}
+                let param : parameters = [ "image":json,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":1, "device_type":1] as [String : Any]
+                
+                WebService.service(API.signup,  param: param, service: .post){
+                    (modeldata: SignupModel, data, json) in
+                    Store.authKey = modeldata.body?.token ?? ""
+                    Store.userDetails = modeldata.body
+                    onsuccess()
+                }
+            } catch {
+                print("error--\(error.localizedDescription)")
             }
         }
     }
     
 
-    // MARK: - Image Upload
-    func fileUploadedAPI(type: String, image:UIImage,onSuccess:@escaping((String)->())) {
+    func fileUploadedAPI(type: String, image:UIImage,onSuccess:@escaping(([FileuploadModelBody]?)->())) {
         
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat.fullDate.rawValue
         let date = formatter.string(from: Date())
         let imageInfo : ImageStructInfo
-        imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpeg", type: "image/jpeg", data: image.toData(), key: "image", image: image)
+        
+        imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpeg", file_type: "image/jpeg", data: image.toData(), key: "image", image: image)
         
         let param = ["type": type, "folder": "users", "image": imageInfo] as [String : Any]
+        print(param)
         
         WebService.service(API.file_upload, param: param, service: .post, showHud: true) {
             (userData: FileuploadModel , data, json) in
-            self.imageData = ""
+            
             for indx in 0..<(userData.body.count ?? 0){
                 let image = userData.body[indx].image
                 let thumbnail = userData.body[indx].thumbnail
                 let fileName = userData.body[indx].fileName
                 let folder = userData.body[indx].folder
-                let file_type = userData.body[indx].fileType
+                let file_type = userData.body[indx].file_type
                 let newDict : parameters = ["image":image,"thumbnail":thumbnail,"fileName":fileName,"folder":folder,"file_type":file_type]
                 self.selectedImageArr.append(newDict)
             }
-            onSuccess(self.selectedImageArr.toJSONString())
-            self.eventImgString = self.selectedImageArr.toJSONString()
-            self.imageData = self.selectedImageArr.toJSONString()
+            onSuccess(userData.body)
         }
     }
     
 
     //MARK: - LOGIN API
     func loginApicall(email:String, password:String,device_type:Int ,onSuccess: @escaping (()->())) {
-        if email.trimmingCharacters(in: .whitespaces).isEmpty{
+        if email.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your email", isSuccess: .error)
         }else if !email.isValidemail {
             CommonUtilities.shared.showAlert(message: "Please enter a valid Email", isSuccess: .error)
-        }else if password.trimmingCharacters(in: .whitespaces).isEmpty{
+        }else if password.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
-        }else{
-            
-            let param: parameters = ["email":email,
-                                     "password":password,"device_token":DEVICE_TOKEN,"device_type":device_type ]
-            
+        }else {
+            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type,"role":1]
             WebService.service(API.login, param: param, service: .post){
                 (modaldata: SignupModel , Data, Json) in
                 Store.userDetails = modaldata.body
@@ -82,7 +85,6 @@ class AuthViewModel : NSObject {
                 onSuccess()
             }
         }
-        
     }
     
     
@@ -115,7 +117,7 @@ class AuthViewModel : NSObject {
 
     
     //MARK: Forgot Password
-    func ForgotPassword(email: String, onSuccess : @escaping (()->())){
+    func ForgotPassword(email: String, onSuccess : @escaping (()->())) {
         if  email.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Please enter  email", isSuccess: .error)
         }else{
@@ -188,6 +190,7 @@ class AuthViewModel : NSObject {
            
             WebService.service(API.change_password, param: param, service: .post){
                 (modaldata : CommonModel , data, json) in
+                CommonUtilities.shared.showAlert(message: modaldata.message ?? "", isSuccess: .success)
                 onsuccess()
             }
         }
@@ -310,7 +313,7 @@ class AuthViewModel : NSObject {
     
     
     //MARK: - EDITPROFILE API
-    func editprofile(name:String, phone: String,countrySymbol: String,countryCode: String, email: String, image: UIImage, OnSuccess: @escaping (()->())) {
+    func editprofile(isImage:Bool, name:String, phone: String,countrySymbol: String,countryCode: String, email: String, image: [FileuploadModelBody], OnSuccess: @escaping (()->())) {
         
         if name.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your name", isSuccess: .error)
@@ -319,16 +322,25 @@ class AuthViewModel : NSObject {
         }else if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol){
             CommonUtilities.shared.showAlert(message: "Please enter valid mobile number",isSuccess: .error)
         }else {
-            let formatter = DateFormatter()
-            formatter.dateFormat = dateFormat.fullDate.rawValue
-            let date = formatter.string(from: Date())
-            let imageInfo : ImageStructInfo
-            imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpg", type: "image/jpg", data: image.toData() ?? Data(), key: "image", image: image)
-            let param: parameters = ["name":name, "phone":phone, "email":email, "image":imageInfo,"country_code":countryCode]
-            print(param)
-            WebService.service(API.edit_profile, param: param,service: .post) {
-                (modaldata: EditProfileModel, data, json) in
-                OnSuccess()
+            let jsonEncoder = JSONEncoder()
+            do {
+                let jsonData = try jsonEncoder.encode(image)
+                let jsonString = String(data: jsonData, encoding: .utf8)
+                guard let json = jsonString else{return}
+                var param: parameters = ["name":name, "phone":phone, "email":email,"country_code":countryCode]
+                
+                if isImage == true {
+                   param["image"] = json
+                }
+                
+                print(param)
+                WebService.service(API.edit_profile, param: param,service: .post) {
+                    (modaldata: EditProfileModel, data, json) in
+                    Store.userDetails?.image = modaldata.body.image
+                    OnSuccess()
+                }
+            } catch {
+                print("error--\(error.localizedDescription)")
             }
         }
     }

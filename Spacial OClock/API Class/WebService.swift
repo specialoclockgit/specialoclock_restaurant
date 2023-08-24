@@ -117,7 +117,7 @@ struct WebService {
                                 if let imageInfo = Value as? ImageStructInfo{
                                     body.append("--\(boundary)\r\n")
                                     body.append("Content-Disposition: form-data; name=\"\(imageInfo.key)\"; filename=\"\(imageInfo.fileName)\"\r\n")
-                                    body.append("Content-Type: \(imageInfo.type)\r\n\r\n")
+                                    body.append("Content-Type: \(imageInfo.file_type)\r\n\r\n")
                                     body.append(imageInfo.data)
                                     body.append("\r\n")
                                     request.httpBody = body
@@ -127,7 +127,7 @@ struct WebService {
                                     for value in images{
                                         body.append("--\(boundary)\r\n")
                                         body.append("Content-Disposition: form-data; name=\"\(value.key)\"; filename=\"\(value.fileName)\"\r\n")
-                                        body.append("Content-Type: \(value.type)\r\n\r\n")
+                                        body.append("Content-Type: \(value.file_type)\r\n\r\n")
                                         body.append(value.data)
                                         body.append("\r\n")
                                         request.httpBody = body
@@ -146,13 +146,11 @@ struct WebService {
                             assertionFailure("Parameter must be Dictionary or String.")
                         }
                     }
-                    
                 }
             }
             
             let sessionConfiguration = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfiguration)
-            
             
             session.dataTask(with: request) { (data, jsonResponse, error) in
                 if showHud{
@@ -299,7 +297,7 @@ extension UIImage{
 
 struct ImageStructInfo {
     var fileName: String
-    var type: String = "image/jpg"
+    var file_type: String = "image/jpg"
     var data: Data
     var key:String
     var image: UIImage

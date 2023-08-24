@@ -33,7 +33,14 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
         return arrName.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "settingCell")as!settingCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "settingCell") as! settingCell
+        cell.swichBtn.addTarget(self, action: #selector(notificationbtn), for: .valueChanged)
+        cell.swichBtn.tag = indexPath.row
+        if Store.userDetails?.notificationStatus == 1 {
+            cell.swichBtn.isOn = true
+        } else {
+            cell.swichBtn.isOn = false
+        }
         if indexPath.row == 0{
             cell.swichBtn.isHidden = false
             cell.arrowImg.isHidden = true
@@ -64,21 +71,23 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
             self.navigationController?.pushViewController(vc, animated: true)
         }else if indexPath.row == 2{
             let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
-            vc.status = 2
-            vc.titleLbl = "Terms & Conditions"
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 3{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
             vc.status = 1
             vc.titleLbl = "Privacy policy"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 4{
-            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.HelpQAVC) as! HelpQAVC
-            self.navigationController?.pushViewController(screen, animated: true)
-        }else if indexPath.row == 5{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ContactUsVC")as! ContactUsVC
+        }else if indexPath.row == 3{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
+            vc.status = 0
+            vc.titleLbl = "Terms & Conditions"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 6{
+        }else if indexPath.row == 4 {
+            let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+            let vc = storyBoard.instantiateViewController(withIdentifier: ViewController.HelpFAQRestoVC) as! HelpFAQRestoVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if indexPath.row == 5 {
+            let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+            let vc = storyBoard.instantiateViewController(withIdentifier: "ContactUsRestoVC") as! ContactUsRestoVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if indexPath.row == 6 {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DeleteAccountPopUp")as! DeleteAccountPopUp
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 0
@@ -106,6 +115,25 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
                 }
             }
             self.navigationController?.present(vc, animated: true)
+        }
+    }
+    
+    @objc func notificationbtn(_ sender : UISwitch){
+        let cell = settingTV.cellForRow(at: IndexPath.init(row: 0, section: 0)) as! settingCell
+        if cell.swichBtn.isOn {
+            setNotification()
+        }else {
+            setNotification()
+        }
+        
+    }
+    
+    func setNotification() {
+        let val = Store.userDetails?.notificationStatus == 0 ? 1 : 0
+            self.viewModel.NotificationStatus(notistatus: val) {
+                Store.userDetails?.notificationStatus = val
+                CommonUtilities.shared.showAlert(message: "Notification status update successfully", isSuccess: .success)
+                self.settingTV.reloadData()
         }
     }
 }

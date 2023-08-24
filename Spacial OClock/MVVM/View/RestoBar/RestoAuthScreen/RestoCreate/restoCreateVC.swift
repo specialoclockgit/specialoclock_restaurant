@@ -96,14 +96,15 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         }
      
     }
-    @IBAction func btnRestoProfileAct(_ sender : UIButton){
-        ImagePicker().pickImage(self) { (image) in
-            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
-                self?.imgString = imageData
-            }
-            self.imgProfileResto.image = image
-        }
-    }
+//    @IBAction func btnRestoProfileAct(_ sender : UIButton){
+//        ImagePicker().pickImage(self) { (image) in
+//            self.imgProfile.image = image
+//            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
+//                self?.image = imageData ?? [FileuploadModelBody]()
+//            }
+//            self.isImageSelected = true
+//        }
+//    }
     @IBAction func btnTheme(_ sender: UIButton) {
         let data = dataTheme
         dropDown.dataSource = dataTheme?.map({$0.productName}) ?? []
