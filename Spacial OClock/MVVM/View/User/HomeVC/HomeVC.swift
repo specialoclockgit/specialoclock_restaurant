@@ -112,8 +112,9 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     @IBAction func btnLocationAct(_ sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: "BookingLocationVC") as! BookingLocationVC
         self.navigationController?.pushViewController(screen, animated: true)
-        
     }
+    
+    
     @IBAction func btnDine(_ sender: UIButton) {
         if sender.isSelected == false{
             imgViewDinein.image = UIImage(named: "DiningGreen")

@@ -10,6 +10,7 @@
 		0F5BCD320D897B60AB15D8E1 /* Pods_Spacial_OClock_Spacial_OClockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4F733E6A5F0D951ABCC3C8 /* Pods_Spacial_OClock_Spacial_OClockUITests.framework */; };
 		29A19A3A2A8FA7C9008193A4 /* commonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A19A392A8FA7C9008193A4 /* commonModel.swift */; };
 		29A8E4A92A90AECE0062E142 /* getProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A8E4A82A90AECE0062E142 /* getProfileModel.swift */; };
+		2ACA091E2A9DDE1D00FDD9E0 /* LocationListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACA091D2A9DDE1D00FDD9E0 /* LocationListModel.swift */; };
 		8B0BDF192A80F04400A28BD2 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BDF182A80F04400A28BD2 /* AuthViewModel.swift */; };
 		8B0BDF242A80F10E00A28BD2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BDF1B2A80F10E00A28BD2 /* Constants.swift */; };
 		8B0BDF252A80F10E00A28BD2 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BDF1C2A80F10E00A28BD2 /* UIImageViewExtension.swift */; };
@@ -213,6 +214,7 @@
 		1D8829FBB65284E45A8D8219 /* Pods_Spacial_OClock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spacial_OClock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A19A392A8FA7C9008193A4 /* commonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commonModel.swift; sourceTree = "<group>"; };
 		29A8E4A82A90AECE0062E142 /* getProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getProfileModel.swift; sourceTree = "<group>"; };
+		2ACA091D2A9DDE1D00FDD9E0 /* LocationListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListModel.swift; sourceTree = "<group>"; };
 		5A4F733E6A5F0D951ABCC3C8 /* Pods_Spacial_OClock_Spacial_OClockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spacial_OClock_Spacial_OClockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7890F764E9209186A89F3DB4 /* Pods-Spacial OClockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.release.xcconfig"; sourceTree = "<group>"; };
 		8B0BDF182A80F04400A28BD2 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				29A8E4A82A90AECE0062E142 /* getProfileModel.swift */,
 				8B9154732A86372800CCB83E /* ResendOtpModel.swift */,
 				29A19A392A8FA7C9008193A4 /* commonModel.swift */,
+				2ACA091D2A9DDE1D00FDD9E0 /* LocationListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1410,6 +1413,7 @@
 				8B0BDF252A80F10E00A28BD2 /* UIImageViewExtension.swift in Sources */,
 				8B9154722A86224F00CCB83E /* EditProfileModel.swift in Sources */,
 				A55779D12A557A2D002B2FC2 /* SelectCardVC.swift in Sources */,
+				2ACA091E2A9DDE1D00FDD9E0 /* LocationListModel.swift in Sources */,
 				C29B045A2A49B7E2000DF014 /* AddRatingVC.swift in Sources */,
 				A5AB0E2E2A569C1900BB2BF4 /* CellBookingDetailTB.swift in Sources */,
 				8B0BDF242A80F10E00A28BD2 /* Constants.swift in Sources */,
