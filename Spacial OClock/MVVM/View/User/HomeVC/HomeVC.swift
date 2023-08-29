@@ -110,8 +110,11 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     
     //MARK: - ACTIONS
     @IBAction func btnLocationAct(_ sender : UIButton){
-        let screen = storyboard?.instantiateViewController(withIdentifier: "BookingLocationVC") as! BookingLocationVC
-        self.navigationController?.pushViewController(screen, animated: true)
+        let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+        let vc = serviceStoryboard.instantiateViewController(withIdentifier: "MyOfferVC") as! MyOfferVC
+        self.navigationController?.pushViewController(vc, animated: true)
+//        let screen = storyboard?.instantiateViewController(withIdentifier: "BookingLocationVC") as! BookingLocationVC
+//        self.navigationController?.pushViewController(screen, animated: true)
     }
     
     

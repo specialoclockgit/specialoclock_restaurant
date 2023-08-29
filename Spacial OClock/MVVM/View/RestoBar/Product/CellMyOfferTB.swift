@@ -11,12 +11,8 @@ class CellMyOfferTB: UITableViewCell {
     
     //MARK: Outlets
     @IBOutlet weak var stackView : UIStackView!
-    @IBOutlet weak var imgItem : UIImageView!
     @IBOutlet weak var lblItemTitle : UILabel!
-    @IBOutlet weak var lblItemPrevPrice : UILabel!
-    @IBOutlet weak var lblItemNewPRice : UILabel!
-    @IBOutlet weak var btnEdit : UIButton!
-    @IBOutlet weak var btnDelete : UIButton!
+ 
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,7 +29,7 @@ class CellMyOfferTB: UITableViewCell {
 }
 extension CellMyOfferTB {
     func initialLoad(){
-        btnDelete.btnShadow(cornerRadius: btnDelete.frame.height / 2, shadowColor: UIColor.lightGray, opacity: 1, x: 1, y: 1)
-        btnEdit.btnShadow(cornerRadius: btnEdit.frame.height / 2, shadowColor: UIColor.lightGray, opacity: 1, x: 1, y: 1)
+//        btnDelete.btnShadow(cornerRadius: btnDelete.frame.height / 2, shadowColor: UIColor.lightGray, opacity: 1, x: 1, y: 1)
+//        btnEdit.btnShadow(cornerRadius: btnEdit.frame.height / 2, shadowColor: UIColor.lightGray, opacity: 1, x: 1, y: 1)
     }
 }

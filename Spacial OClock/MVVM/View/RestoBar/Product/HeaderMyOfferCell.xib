@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -37,16 +37,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcV-2U-YN4">
-                                <rect key="frame" x="10" y="35" width="31.5" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcV-2U-YN4">
+                                <rect key="frame" x="10" y="35" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(08:00 am to 09:00 am)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPr-9d-MVt">
-                                <rect key="frame" x="171.5" y="18" width="122.5" height="14"/>
-                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="10"/>
-                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAa-Sk-EDe">
@@ -59,17 +53,27 @@
                                 <state key="normal" image="arrowDefault"/>
                                 <state key="selected" image="arrowIcon"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S5k-Hf-Fys">
+                                <rect key="frame" x="0.0" y="0.0" width="329" height="59"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="oAa-Sk-EDe" secondAttribute="trailing" constant="10" id="0Vw-cm-P7l"/>
-                            <constraint firstItem="gPr-9d-MVt" firstAttribute="centerY" secondItem="oAa-Sk-EDe" secondAttribute="centerY" id="8JT-je-MkO"/>
+                            <constraint firstItem="S5k-Hf-Fys" firstAttribute="top" secondItem="BE8-nf-ZHO" secondAttribute="top" id="4Lc-mR-g9o"/>
                             <constraint firstItem="xcV-2U-YN4" firstAttribute="leading" secondItem="BE8-nf-ZHO" secondAttribute="leading" constant="10" id="BUn-Qg-nib"/>
                             <constraint firstItem="oAa-Sk-EDe" firstAttribute="centerY" secondItem="55v-U1-DzH" secondAttribute="centerY" id="Bai-AW-C37"/>
-                            <constraint firstItem="oAa-Sk-EDe" firstAttribute="leading" secondItem="gPr-9d-MVt" secondAttribute="trailing" constant="5" id="Gag-oc-FAm"/>
                             <constraint firstItem="55v-U1-DzH" firstAttribute="leading" secondItem="BE8-nf-ZHO" secondAttribute="leading" constant="10" id="QL4-HB-DSS"/>
                             <constraint firstItem="55v-U1-DzH" firstAttribute="top" secondItem="BE8-nf-ZHO" secondAttribute="top" constant="15" id="TbO-ro-tSx"/>
                             <constraint firstItem="xcV-2U-YN4" firstAttribute="top" secondItem="55v-U1-DzH" secondAttribute="bottom" id="Tvl-gz-VML"/>
+                            <constraint firstItem="S5k-Hf-Fys" firstAttribute="leading" secondItem="BE8-nf-ZHO" secondAttribute="leading" id="hB1-dm-7b1"/>
+                            <constraint firstAttribute="trailing" secondItem="S5k-Hf-Fys" secondAttribute="trailing" id="jcR-9H-LGp"/>
+                            <constraint firstAttribute="bottom" secondItem="S5k-Hf-Fys" secondAttribute="bottom" id="wM9-6x-aqh"/>
                             <constraint firstAttribute="height" constant="59" id="zbi-GS-st0"/>
                         </constraints>
                     </view>
@@ -83,10 +87,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="btnHeader" destination="oAa-Sk-EDe" id="fKi-2V-Glt"/>
+                <outlet property="btnHeader" destination="S5k-Hf-Fys" id="Fu5-oF-TeC"/>
                 <outlet property="lblHeading" destination="55v-U1-DzH" id="9P1-Kv-jJ0"/>
                 <outlet property="lblSubHeading" destination="xcV-2U-YN4" id="GtP-yi-hgi"/>
-                <outlet property="lblTimming" destination="gPr-9d-MVt" id="fQ7-Fq-ZFm"/>
                 <outlet property="viewHeader" destination="BE8-nf-ZHO" id="ylY-BN-O6I"/>
             </connections>
             <point key="canvasLocation" x="136.95652173913044" y="59.933035714285708"/>

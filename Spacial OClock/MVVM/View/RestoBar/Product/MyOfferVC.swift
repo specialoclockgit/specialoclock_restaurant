@@ -36,9 +36,13 @@ class MyOfferVC: UIViewController {
                                             ModelMyOffer(titleName: "Diner Special 30%", subTitle: "", timming: "(16:00 to 22:00)", img: [], itemName: [""], prevPrice: [""], newPrice: [""]) ,
                                             ModelMyOffer(titleName: "Kids Special 40%", subTitle: "", timming: "(16:00 to 22:00)", img: [], itemName: [""], prevPrice: [""], newPrice: [""])]
     var arrCheck : [Bool] = []
+//    var viewmodel =
+    var datagetApi : [LocationListBody]?
+    var viewmodel = AuthViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SetupApi()
         tabBarController?.tabBar.isHidden = true
         check()
         let nib = UINib(nibName: Cell.CellMyOfferTB, bundle: nil)
@@ -51,6 +55,14 @@ class MyOfferVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+    }
+    //MARK: - API SETUP
+    func SetupApi(){
+        viewmodel.locationGetapicall { data in
+            self.datagetApi = data
+            self.check()
+            self.tbMyOffer.reloadData()
+        }
     }
     
     //MARK: Button Action
@@ -66,18 +78,17 @@ class MyOfferVC: UIViewController {
 
 extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  arrModelMyOffer[section].img.count
+        return self.datagetApi?[section].states?.count ?? 0
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return arrModelMyOffer.count
+        return datagetApi?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cellHeader = tbMyOffer.dequeueReusableCell(withIdentifier: Cell.HeaderMyOfferCell) as! HeaderMyOfferCell
-        cellHeader.lblHeading.text = arrModelMyOffer[section].titleName
-        cellHeader.lblSubHeading.text = arrModelMyOffer[section].subTitle
-        cellHeader.lblTimming.text = arrModelMyOffer[section].timming
+        cellHeader.lblHeading.text =  self.datagetApi?[section].country ?? ""
         cellHeader.viewHeader.layer.cornerRadius = 10.0
         cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
         cellHeader.btnHeader.tag = section
@@ -100,25 +111,19 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tbMyOffer.dequeueReusableCell(withIdentifier: Cell.CellMyOfferTB) as! CellMyOfferTB
         let section = arrModelMyOffer[indexPath.section]
-        cell.imgItem.image = UIImage(named: section.img[indexPath.row])
-        cell.lblItemTitle.text = section.itemName[indexPath.row]
-        //cell.lblItemPrevPrice.text = section.prevPrice[indexPath.row]
-        cell.lblItemPrevPrice.attributedText = section.prevPrice[indexPath.row].strikeThrough()
-        cell.lblItemNewPRice.text = section.newPrice[indexPath.row]
+        cell.lblItemTitle.text = self.datagetApi?[indexPath.section].states?[indexPath.row].state ?? ""
+        
         //MARK: Hide And View Cell
         if arrCheck[indexPath.section] == false{
             cell.stackView.isHidden = true
         }else{
             cell.stackView.isHidden = false
         }
-        cell.btnEdit.addTarget(self, action: #selector(btnEditTarget), for: .touchUpInside)
-        cell.btnEdit.tag = indexPath.section
-        cell.btnDelete.addTarget(self, action: #selector(btnDeleteTarget), for: .touchUpInside)
-        cell.btnDelete.tag = indexPath.section
+
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (arrCheck[indexPath.section]) == true ? 60.0 : 0.0
+        return (arrCheck[indexPath.section]) == true ? 30.0 : 0.0
     }
 }
 
@@ -153,9 +158,11 @@ extension MyOfferVC{
 //MARK: InitialLoad
 extension MyOfferVC {
     func check(){
-        for _ in 0...arrModelMyOffer.count{
+        
+        for _ in 0...(self.datagetApi?.count ?? 0){
             arrCheck.append(false)
         }
-        debugPrint(arrCheck)
+        print(arrCheck)
+        
     }
 }

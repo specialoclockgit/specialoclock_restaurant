@@ -364,7 +364,13 @@ class AuthViewModel : NSObject {
         }
         return Int(range) ?? 0
     }
-    
+    //MARK: - LOCATION GET LIST
+    func locationGetapicall(onsuccess: @escaping (([LocationListBody]?)->())){
+        WebService.service(API.location_list, service: .get) {
+            (modaldata: LocationList, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
 }
 
 
