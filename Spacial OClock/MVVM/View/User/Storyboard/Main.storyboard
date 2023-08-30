@@ -99,7 +99,7 @@
                                                 </connections>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem lpsum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4bq-P7-iT4">
-                                                <rect key="frame" x="238" y="515" width="146" height="30"/>
+                                                <rect key="frame" x="237.5" y="515" width="146.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="koZ-Os-T6Z"/>
                                                 </constraints>
@@ -3993,7 +3993,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help &amp; FAQ's" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7tL-XT-kXG">
-                                                <rect key="frame" x="150" y="77.5" width="114" height="25.5"/>
+                                                <rect key="frame" x="150.5" y="77.5" width="113.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -5181,7 +5181,7 @@ EBBJdGVtcw
                                 <color key="textColor" name="whiteFont"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Central Cape Town" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPW-AH-Gk3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPW-AH-Gk3">
                                 <rect key="frame" x="57" y="86" width="251" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="CXi-ey-7iB"/>
@@ -5507,6 +5507,7 @@ EBBJdGVtcw
                         <outlet property="imgViewDrinks" destination="AVH-UC-C2d" id="JXa-99-wIi"/>
                         <outlet property="lblDineIn" destination="RnD-ia-nML" id="td7-Ry-11y"/>
                         <outlet property="lblDrinks" destination="hiC-7n-Koz" id="rJJ-Rh-vZU"/>
+                        <outlet property="lblLocation" destination="GPW-AH-Gk3" id="sDA-RF-RzF"/>
                         <outlet property="mapView" destination="pAJ-fO-veS" id="CdP-rY-kBA"/>
                         <outlet property="scrollView" destination="DK3-xx-80d" id="Dhu-My-Lnw"/>
                         <outlet property="tbHomeData" destination="k3U-tk-8bI" id="l9A-Rp-idt"/>

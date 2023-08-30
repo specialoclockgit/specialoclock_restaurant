@@ -9,6 +9,7 @@ import UIKit
 import AVFAudio
 import MapKit
 import CoreLocation
+import GooglePlaces
 
 struct Header{
     var heading : String
@@ -24,6 +25,7 @@ var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Ce
 class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
 
     //MARK: - OUTLETS
+    @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var tfSearch : UITextField!
     @IBOutlet weak var lblDrinks: UILabel!
     @IBOutlet weak var imgViewDrinks: UIImageView!
@@ -38,6 +40,9 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     @IBOutlet weak var btnDrinks : UIButton!
     
     //MARK: - VARIABELS
+    var lat : Double?
+    var long : Double?
+    let locationManager = CLLocationManager()
     var arrHeading  : [Header] = [Header(heading: "Locations", img: "PIN")  ,
                                   Header(heading: "Cuisines", img: "soup") ,
                                   Header(heading: "", img: "" ),
@@ -71,13 +76,21 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let nib = UINib(nibName: Cell.CellHomeTB, bundle: nil)
-//        self.tbHomeData.register(nib, forCellReuseIdentifier: Cell.CellHomeTB)
-//        let nibImgView = UINib(nibName: Cell.CellImageViewTB, bundle: nil)
-//        self.tbHomeData.register(nibImgView, forCellReuseIdentifier: Cell.CellImageViewTB)
+        
+        //MARK: - CURRENT LOCATIONS
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+        locationManager.requestWhenInUseAuthorization()
+        
         initialLoad()
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
+//        self.lblLocation.text = Store.userDetails?.location ?? ""
         isSelected = true
         
         //MARK: Dine or Drink UserDefault for itemDetailOffer
@@ -158,7 +171,37 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.UserProfileVC) as! UserProfileVC
         self.navigationController?.pushViewController(screen, animated: true)
     }
+    //FUNCTION CURRENT LOCATIONS
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        self.lat = locValue.latitude
+        self.long = locValue.longitude
+        let location = locations.last! as CLLocation
+        //  self.locationLbl.text = location
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if (error != nil){
+                print("error in reverseGeocode")
+            }
+            let placemark = placemarks as? [CLPlacemark]
+            if placemark?.count ?? 0>0{
+                let placemark = placemarks![0]
+                print(placemark.locality!)
+                print(placemark.administrativeArea!)
+                print(placemark.country!)
+                
+                self.lblLocation.text = "\(placemark.locality!)"
+            }
+        }
+        locationManager.stopUpdatingLocation()
+    }
 }
 
 //MARK: - EXETNSIONS
@@ -292,5 +335,11 @@ extension HomeVC {
         let nibImgView = UINib(nibName: Cell.CellImageViewTB, bundle: nil)
         self.tbHomeData.register(nibImgView, forCellReuseIdentifier: Cell.CellImageViewTB)
         
+       
     }
 }
+////MARK: - CURRENT LOCATION
+//extension HomeVC : CLLocationManagerDelegate{
+//
+//
+//}

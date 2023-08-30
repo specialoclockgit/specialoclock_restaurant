@@ -123,7 +123,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (arrCheck[indexPath.section]) == true ? 30.0 : 0.0
+        return (arrCheck[indexPath.section]) == true ? 45.0 : 0.0
     }
 }
 
