@@ -22,6 +22,8 @@ var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Ce
                                       HomeTBModel(heading: "", name: [""], img: [""], restoClub: [""]),
                                       HomeTBModel(heading: "Theme", name: ["OceanView","Hotel" ], img:  ["Theme1","theme2" ], restoClub:  ["32 Restaurants" , "7 Restaurants"])]
 
+var arrHome = ["Location","Cuisines","","Theme"]
+
 class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
 
     //MARK: - OUTLETS
@@ -71,7 +73,7 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     
     let manager = CLLocationManager()
     var isSelected  = Bool()
-    
+    var viewModel = HomeViewModel()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
@@ -92,7 +94,7 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
         tbHomeData.dataSource = self
 //        self.lblLocation.text = Store.userDetails?.location ?? ""
         isSelected = true
-        
+        setDine()
         //MARK: Dine or Drink UserDefault for itemDetailOffer
         UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
         //MARK: Map kit view
@@ -114,10 +116,21 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
             mapView.setCenter(coor, animated: true)
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
+    }
+    
+    
+    func setData(type: Int, country: String, state: String) {
+        self.viewModel.homeApi(type: type, country: country, state: state) { (objData) in
+            self.viewModel.homeData = objData
+            self.tabBarController?.tabBar.isHidden  = false
+            self.tbHomeData.layoutSubviews()
+            self.tbHomeData.reloadData()
+        }
     }
     
     
@@ -133,38 +146,50 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     
     @IBAction func btnDine(_ sender: UIButton) {
         if sender.isSelected == false{
-            imgViewDinein.image = UIImage(named: "DiningGreen")
-            imgViewDrinks.image = UIImage(named: "greyDrink")
-            lblDrinks.textColor = UIColor.lightGray
-            lblDineIn.textColor = UIColor.black
+            setDine()
             sender.isSelected = false
-            isSelected = true
-            arrHomeTBModel.removeAll()
-            arrHomeTBModel.append(contentsOf: arrDineIN)
-            //Table cell Heading Array Data
-            arrHeading.removeAll()
-            arrHeading.append(contentsOf: arrDineHeader)
-            tbHomeData.reloadData()
         }
-        UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
     }
     
     @IBAction func btnDrinks(_ sender: UIButton) {
         if sender.isSelected == false{
-            imgViewDrinks.image = UIImage(named: "greenDrink")
-            imgViewDinein.image = UIImage(named: "DiningGray")
-            lblDineIn.textColor = UIColor.lightGray
-            lblDrinks.textColor = UIColor.black
+            setDrink()
             sender.isSelected = false
-            isSelected = false
-            arrHomeTBModel.removeAll()
-            arrHomeTBModel.append(contentsOf: arrDrinks)
-            //Table Cell Heading Array Data
-            arrHeading.removeAll()
-            arrHeading.append(contentsOf: arrDrinkHeading)
-            tbHomeData.reloadData()
         }
+    }
+    
+    func setDine() {
+        imgViewDinein.image = UIImage(named: "DiningGreen")
+        imgViewDrinks.image = UIImage(named: "greyDrink")
+        lblDrinks.textColor = UIColor.lightGray
+        lblDineIn.textColor = UIColor.black
+        isSelected = true
+//        arrHomeTBModel.removeAll()
+//        arrHomeTBModel.append(contentsOf: arrDineIN)
+        //Table cell Heading Array Data
+        arrHeading.removeAll()
+        arrHeading.append(contentsOf: arrDineHeader)
+        
+        UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
+        setData(type: 1, country: "India", state: "Punjab")
+        self.tbHomeData.layoutSubviews()
+    }
+    
+    func setDrink() {
+        imgViewDrinks.image = UIImage(named: "greenDrink")
+        imgViewDinein.image = UIImage(named: "DiningGray")
+        lblDineIn.textColor = UIColor.lightGray
+        lblDrinks.textColor = UIColor.black
+        isSelected = false
+//        arrHomeTBModel.removeAll()
+//        arrHomeTBModel.append(contentsOf: arrDrinks)
+        //Table Cell Heading Array Data
+        arrHeading.removeAll()
+        arrHeading.append(contentsOf: arrDrinkHeading)
+        tbHomeData.reloadData()
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
+        setData(type: 2, country: "India", state: "Punjab")
+        self.tbHomeData.layoutSubviews()
     }
     
     @IBAction func btnProfileAct(_ sender : UIButton){
@@ -205,14 +230,16 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
 }
 
 //MARK: - EXETNSIONS
-extension HomeVC : UITableViewDelegate , UITableViewDataSource{
+extension HomeVC : UITableViewDelegate , UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  1
-        
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return arrHomeTBModel.count
+        return arrHome.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 2 {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellImageViewTB, for: indexPath) as! CellImageViewTB
@@ -224,9 +251,19 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource{
             cell.btnSeeMore.addTarget(self, action: #selector(btnSeeMoreAct), for: .touchUpInside)
             cell.btnSeeMore.tag = indexPath.section
             cell.collView.tag = indexPath.section
-            cell.collView.reloadData()
+            
             cell.iconString = arrHeading[indexPath.section].img
             cell.heading = arrHeading[indexPath.section].heading
+            if indexPath.section == 0 {
+                cell.location = self.viewModel.homeData?.location ?? [HomeListLocation]()
+                cell.collView.reloadData()
+            }else if indexPath.section == 1 {
+                cell.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
+                cell.collView.reloadData()
+            }else {
+                cell.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
+                cell.collView.reloadData()
+            }
             if isSelected == true {
                 cell.isCellSelected = true
             }else{
@@ -243,6 +280,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource{
             return CGFloat(250.0)
         }
     }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             self.heightTBHomeData.constant = self.tbHomeData.contentSize.height
@@ -251,7 +289,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource{
 }
 
 //MARK: Table Button Objective function
-extension HomeVC{
+extension HomeVC {
     @objc func btnSeeMoreAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
         screen.iconImage = arrHeading[sender.tag].img
@@ -308,7 +346,6 @@ extension HomeVC{
         default:
             debugPrint("default btnSeeMoreAct")
         }
-        
     }
 }
 
@@ -328,18 +365,11 @@ extension HomeVC : UITextFieldDelegate{
 
 //MARK: InitialLoad
 extension HomeVC {
-    func initialLoad(){
+    func initialLoad() {
         //Cell Nib
         let nib = UINib(nibName: Cell.CellHomeTB, bundle: nil)
         self.tbHomeData.register(nib, forCellReuseIdentifier: Cell.CellHomeTB)
         let nibImgView = UINib(nibName: Cell.CellImageViewTB, bundle: nil)
         self.tbHomeData.register(nibImgView, forCellReuseIdentifier: Cell.CellImageViewTB)
-        
-       
     }
 }
-////MARK: - CURRENT LOCATION
-//extension HomeVC : CLLocationManagerDelegate{
-//
-//
-//}

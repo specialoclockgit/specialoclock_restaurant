@@ -29,6 +29,8 @@ let baseURL = "http://202.164.42.227:9999/api/"
 
 let imageURL = "http://202.164.42.227:9999"
 
+let imageBaseURL =  "http://202.164.42.227:9999/assets/images/"
+
 
 //let imagePickerSources = ImagePickerClass()
 
@@ -141,7 +143,7 @@ enum API: String{
     case rejectAcceptQuiz    = "quiz_accept_reject"
     case roomLeaderboad      = "leaderboard"
     case leaderboard         = "userQuizResult"
-    
+    case home                = "home"
    
 }
 
@@ -176,9 +178,9 @@ enum DefaultKeys: String
 
 
 enum Services: String{
-    case get = "GET"
-    case post = "POST"
-    case put = "PUT"
+    case get    = "GET"
+    case post   = "POST"
+    case put    = "PUT"
     case delete = "DELETE"
 }
 

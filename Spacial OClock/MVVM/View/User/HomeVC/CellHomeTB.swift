@@ -11,6 +11,7 @@ struct CellModel {
     var locationNmae  : String
     var totalRestaurant : String
 }
+
 class CellHomeTB: UITableViewCell {
     
     //MARK: Outlets
@@ -23,6 +24,8 @@ class CellHomeTB: UITableViewCell {
     var isCellSelected = Bool()
     var iconString = String()
     var heading = String()
+    var location = [HomeListLocation]()
+    var cuisine = [Cuisine]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,31 +43,47 @@ class CellHomeTB: UITableViewCell {
     }
     
 }
-extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
+extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return arrHomeTBModel[collView.tag].img.count
+        if collView.tag == 0 {
+            return location.count
+        }else if collView.tag == 1 {
+            return cuisine.count
+        }else {
+            return cuisine.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellHomeCV, for: indexPath) as! CellHomeCV
-        cell.imgLocaiton.image = UIImage(named: arrHomeTBModel[collView.tag].img[indexPath.row]) //arrLocation[indexPath.row].image
-        cell.lblLocationName.text = arrHomeTBModel[collView.tag].name[indexPath.row]
-        cell.lblTotalRestaurant.text = arrHomeTBModel[collView.tag].restoClub[indexPath.row]
+        if collView.tag == 0 {
+            cell.imgLocaiton.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
+//            cell.lblLocationName.text = self.location[collView.tag].city
+            cell.lblTotalRestaurant.text = "\(self.location[indexPath.row].restroCount ?? 0) Restaurants"
+        }else if collView.tag == 1 {
+            cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: self.cuisine[indexPath.row].image ?? "")
+//            cell.lblLocationName.text = self.cuisine[collView.tag].city
+            cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
+        }else {
+            cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: self.cuisine[indexPath.row].image ?? "")
+//            cell.lblLocationName.text = self.cuisine[collView.tag].city
+            cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
+        }
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 195.0, height: 208.0)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let tag = collView.tag
-        //debugPrint(tag)
         openDetailVC()
     }
-    
-    
 }
+
 extension CellHomeTB {
-    func openDetailVC(){
+    func openDetailVC() {
         let tag = collView.tag
         let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
        

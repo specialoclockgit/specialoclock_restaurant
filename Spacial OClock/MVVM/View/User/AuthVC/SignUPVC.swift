@@ -95,8 +95,9 @@ class SignUPVC: UIViewController {
             self.imgProfile.image = image
             self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
                 self?.image = imageData ?? [FileuploadModelBody]()
+                self?.isImageSelected = true
             }
-            self.isImageSelected = true
+            
         }
     }
     

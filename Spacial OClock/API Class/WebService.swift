@@ -178,13 +178,14 @@ struct WebService {
 ////                                    code = "\(httpResponse.statusCode)"
 ////                                }
 //                            }
-                            if code == "401"{
+                            if code == "403"{
                                 DispatchQueue.main.async {
                                     if UIApplication.shared.isRegisteredForRemoteNotifications
                                     {
                                         UIApplication.shared.unregisterForRemoteNotifications()
                                         UIApplication.shared.registerForRemoteNotifications()
                                     }
+                                    SceneDelegate().LoginRoot()
 //                                    Store.userDetails = nil
 //                                    Store.autoLogin = false
 //                                    let mainStoryBoard = UIStoryboard(name: "Login", bundle: nil)

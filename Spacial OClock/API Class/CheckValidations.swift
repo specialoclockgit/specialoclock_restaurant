@@ -24,7 +24,7 @@ class CheckValidations: NSObject{
 //            CommonUtilities.shared.showSwiftAlert(message: RegexMessage.emptyPhoto.rawValue, isSuccess: .error)
 //            return false
 //        }
-        if isselected == false {
+        if isImage == false {
             CommonUtilities.shared.showAlert(message: "Please select image", isSuccess: .error)
             return false
         } else if name.trimmingCharacters(in: .whitespaces).isEmpty{
