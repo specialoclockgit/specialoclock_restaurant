@@ -74,21 +74,11 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     let manager = CLLocationManager()
     var isSelected  = Bool()
     var viewModel = HomeViewModel()
+    var locationUpdated = Bool()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //MARK: - CURRENT LOCATIONS
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
-        }
-        locationManager.requestWhenInUseAuthorization()
-        
         initialLoad()
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
@@ -97,24 +87,7 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
         setDine()
         //MARK: Dine or Drink UserDefault for itemDetailOffer
         UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
-        //MARK: Map kit view
-        manager.requestAlwaysAuthorization()
-        manager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            DispatchQueue.main.async {
-                self.manager.delegate = self
-                self.manager.desiredAccuracy = kCLLocationAccuracyBest
-                self.manager.startUpdatingLocation()
-                self.mapView.delegate = self
-                self.mapView.mapType = .standard
-                
-                self.mapView.showsUserLocation = true // if you want to show default pin
-            }
-        }
-        if let coor = mapView.userLocation.location?.coordinate {
-            mapView.setCenter(coor, animated: true)
-        }
+        self.getUpdatedLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,6 +95,65 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
         self.tbHomeData.layoutSubviews()
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
     }
+    
+    
+    func getUpdatedLocation(){
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager.delegate = self
+         //   locationManager.distanceFilter = 100.0
+            if #available(iOS 14.0, *) {
+                locationManager.desiredAccuracy = kCLLocationAccuracyReduced
+            } else {
+                // Fallback on earlier versions
+            }
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+        //MARK:- Enable Location Services
+        if !hasLocationPermission() {
+            let alertController = UIAlertController(title: "Enable Location Services", message: "Special o'clock wants to access your location only to provide better experience to you.", preferredStyle: UIAlertController.Style.alert)
+            
+            let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
+                //Redirect to Settings app
+                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
+            alertController.addAction(cancelAction)
+            
+            alertController.addAction(okAction)
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            if CLLocationManager.locationServicesEnabled() {
+                locationUpdated = true
+                locationManager.delegate = self
+             //   locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                    locationManager.startUpdatingLocation()
+            }else{
+                locationUpdated = false
+            }
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func hasLocationPermission() -> Bool {
+        var hasPermission = false
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                hasPermission = false
+            case .authorizedAlways, .authorizedWhenInUse:
+                hasPermission = true
+            @unknown default:
+                fatalError()
+            }
+        } else {
+            hasPermission = false
+        }
+        return hasPermission
+    }
+    
     
     
     func setData(type: Int, country: String, state: String) {
@@ -260,8 +292,8 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             }else if indexPath.section == 1 {
                 cell.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
                 cell.collView.reloadData()
-            }else {
-                cell.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
+            }else if indexPath.section == 2 {
+                cell.location = self.viewModel.homeData?.location ?? [HomeListLocation]()
                 cell.collView.reloadData()
             }
             if isSelected == true {

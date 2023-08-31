@@ -114,6 +114,23 @@ struct HomeListModel: Codable {
 struct HomeListBody: Codable {
     var location: [HomeListLocation]?
     var cuisine: [Cuisine]?
+    var themeArr: [ThemeData]?
+}
+
+// MARK: - Theme
+struct ThemeData: Codable {
+    var id: Int?
+    var productName, image: String?
+    var restroCount: Int?
+    var restrorants: [CuisineRestrorant]?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case productName = "product_name"
+        case image
+        case restroCount = "restro_count"
+        case restrorants
+    }
 }
 
 // MARK: - Cuisine

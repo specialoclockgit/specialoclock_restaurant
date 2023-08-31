@@ -218,6 +218,7 @@
 		29A8E4A82A90AECE0062E142 /* getProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getProfileModel.swift; sourceTree = "<group>"; };
 		2A1C50612A9F167300FBE41A /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		2A1C50642A9F1DD000FBE41A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		2AB8FFE32AA0523600A856B5 /* Spacial OClock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Spacial OClock.entitlements"; sourceTree = "<group>"; };
 		2ACA091D2A9DDE1D00FDD9E0 /* LocationListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListModel.swift; sourceTree = "<group>"; };
 		5A4F733E6A5F0D951ABCC3C8 /* Pods_Spacial_OClock_Spacial_OClockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spacial_OClock_Spacial_OClockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7890F764E9209186A89F3DB4 /* Pods-Spacial OClockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -813,6 +814,7 @@
 		C284FB372A402A0D006949B4 /* Spacial OClock */ = {
 			isa = PBXGroup;
 			children = (
+				2AB8FFE32AA0523600A856B5 /* Spacial OClock.entitlements */,
 				8B0BDF1A2A80F10E00A28BD2 /* API Class */,
 				C29CDAEE2A42B8E20035E03D /* MVVM */,
 				C284FB752A402EDA006949B4 /* CustomClass */,
@@ -1669,13 +1671,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = "Spacial OClock/Spacial OClock.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XVQBWH9QF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spacial OClock/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock";
+				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock User";
 				INFOPLIST_KEY_NSCameraUsageDescription = "need camera access.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = allow;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = allow;
@@ -1686,14 +1689,13 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.specialOClock.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cqlsys.specialOClockUser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1709,13 +1711,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = "Spacial OClock/Spacial OClock.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XVQBWH9QF;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spacial OClock/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock";
+				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock User";
 				INFOPLIST_KEY_NSCameraUsageDescription = "need camera access.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = allow;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = allow;
@@ -1726,14 +1729,13 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.specialOClock.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cqlsys.specialOClockUser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

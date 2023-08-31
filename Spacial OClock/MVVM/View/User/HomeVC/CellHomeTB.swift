@@ -26,6 +26,7 @@ class CellHomeTB: UITableViewCell {
     var heading = String()
     var location = [HomeListLocation]()
     var cuisine = [Cuisine]()
+    var themeArr = [ThemeData]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,25 +51,29 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             return location.count
         }else if collView.tag == 1 {
             return cuisine.count
-        }else {
-            return cuisine.count
+        }else if collView.tag == 2 {
+            return themeArr.count
         }
+        return Int()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellHomeCV, for: indexPath) as! CellHomeCV
         if collView.tag == 0 {
             cell.imgLocaiton.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
-//            cell.lblLocationName.text = self.location[collView.tag].city
+            cell.lblLocationName.text = self.location[indexPath.row].city
             cell.lblTotalRestaurant.text = "\(self.location[indexPath.row].restroCount ?? 0) Restaurants"
         }else if collView.tag == 1 {
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: self.cuisine[indexPath.row].image ?? "")
-//            cell.lblLocationName.text = self.cuisine[collView.tag].city
+            cell.lblLocationName.text = self.cuisine[indexPath.row].name ?? ""
             cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
-        }else {
-            cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: self.cuisine[indexPath.row].image ?? "")
-//            cell.lblLocationName.text = self.cuisine[collView.tag].city
-            cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
+        }else if collView.tag == 2 {
+            let image = "\(self.themeArr[indexPath.row].image ?? "")"
+            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            
+            cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
+            cell.lblLocationName.text = self.themeArr[indexPath.row].productName ?? ""
+            cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].restroCount ?? 0) Restaurants"
         }
         return cell
     }

@@ -347,8 +347,8 @@
             filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "collectionView(_:numberOfItemsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -363,10 +363,42 @@
             filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "collectionView(_:numberOfItemsInSection:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "27D1D68D-D1D8-4EDC-9ADA-E5EAE67E7D5F - d2a5e8bead75f27b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, numberOfItemsInSection: Swift.Int) -&gt; Swift.Int"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "656">
+               </Location>
+               <Location
+                  uuid = "27D1D68D-D1D8-4EDC-9ADA-E5EAE67E7D5F - d2a5e8bead75f27b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, numberOfItemsInSection: Swift.Int) -&gt; Swift.Int"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "864">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -379,8 +411,8 @@
             filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
             <Locations>
@@ -414,6 +446,36 @@
                   endingLineNumber = "61"
                   offsetFromSymbolStart = "732">
                </Location>
+               <Location
+                  uuid = "8870B994-1FE0-4518-A77E-6A9965A0331B - 9857f19acbd617e0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62"
+                  offsetFromSymbolStart = "1216">
+               </Location>
+               <Location
+                  uuid = "8870B994-1FE0-4518-A77E-6A9965A0331B - 9857f19acbd617c1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "1216">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -427,8 +489,8 @@
             filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
             <Locations>
@@ -462,6 +524,36 @@
                   endingLineNumber = "66"
                   offsetFromSymbolStart = "2336">
                </Location>
+               <Location
+                  uuid = "89391A29-2FF3-4F93-9940-269F01BB69C4 - 9857f19acbd61764"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "3120">
+               </Location>
+               <Location
+                  uuid = "89391A29-2FF3-4F93-9940-269F01BB69C4 - 9857f19acbd61745"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "67"
+                  endingLineNumber = "67"
+                  offsetFromSymbolStart = "3120">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -475,8 +567,8 @@
             filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
             <Locations>
@@ -510,6 +602,51 @@
                   endingLineNumber = "71"
                   offsetFromSymbolStart = "3788">
                </Location>
+               <Location
+                  uuid = "A1A2B323-D214-4EE8-9180-49ACD469BBEE - 9857f19acbd6147f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "5532">
+               </Location>
+               <Location
+                  uuid = "A1A2B323-D214-4EE8-9180-49ACD469BBEE - 9857f19acbd6147f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "5748">
+               </Location>
+               <Location
+                  uuid = "A1A2B323-D214-4EE8-9180-49ACD469BBEE - 9857f19acbd6145c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "5748">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -523,8 +660,8 @@
             filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
             <Locations>
@@ -557,6 +694,114 @@
                   startingLineNumber = "79"
                   endingLineNumber = "79"
                   offsetFromSymbolStart = "5096">
+               </Location>
+               <Location
+                  uuid = "6DF84D23-4D72-4597-896B-4003F4157762 - 9857f19acbd615f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "6932">
+               </Location>
+               <Location
+                  uuid = "6DF84D23-4D72-4597-896B-4003F4157762 - 9857f19acbd615f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "7156">
+               </Location>
+               <Location
+                  uuid = "6DF84D23-4D72-4597-896B-4003F4157762 - 9857f19acbd615d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "7156">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CCDB063E-D5D3-448D-BB7F-A2CA8A2ADEB3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CCDB063E-D5D3-448D-BB7F-A2CA8A2ADEB3 - 9857f19acbd614d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "4804">
+               </Location>
+               <Location
+                  uuid = "CCDB063E-D5D3-448D-BB7F-A2CA8A2ADEB3 - 9857f19acbd614d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "5020">
+               </Location>
+               <Location
+                  uuid = "CCDB063E-D5D3-448D-BB7F-A2CA8A2ADEB3 - 9857f19acbd61439"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.CellHomeTB.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios1/Documents/git%20/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellHomeTB.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "5020">
                </Location>
             </Locations>
          </BreakpointContent>

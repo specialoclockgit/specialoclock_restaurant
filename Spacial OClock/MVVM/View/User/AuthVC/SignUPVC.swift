@@ -9,6 +9,7 @@ import UIKit
 import SKCountryPicker
 import GooglePlaces
 import CoreLocation
+import AVFoundation
 
 class SignUPVC: UIViewController {
     
@@ -28,7 +29,6 @@ class SignUPVC: UIViewController {
     @IBOutlet weak var btnRestaurant : UIButton!
     
     //MARK: Variables
-   
     var viewmodel = AuthViewModel()
     let locationManager = CLLocationManager()
     var btnCheckStatus = Int()
@@ -41,6 +41,7 @@ class SignUPVC: UIViewController {
     var countryCode = String()
     var image = [FileuploadModelBody]()
     
+
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +50,6 @@ class SignUPVC: UIViewController {
         tfPassword.delegate = self
         tfConfirmPass.delegate = self
         uiSet()
-        
         DispatchQueue.global().async {
             if (CLLocationManager.locationServicesEnabled()){
                 self.locationManager.delegate = self
@@ -64,7 +64,6 @@ class SignUPVC: UIViewController {
 #endif
             }
         }
-        
         btnCheckStatus = 0
         uiSet()
     }
@@ -75,6 +74,10 @@ class SignUPVC: UIViewController {
         view.hideKeyboardWhenTappedAround()
         //userBtn.isHidden = true
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+       
     }
     //MARK: - Function
 //    func uiSet(){
@@ -91,20 +94,20 @@ class SignUPVC: UIViewController {
     
     // MARK: - Actions
     @IBAction func btnProfile(_ sender : UIButton){
+        self.checkCameraAccess()
         ImagePicker().pickImage(self) { (image) in
             self.imgProfile.image = image
             self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
                 self?.image = imageData ?? [FileuploadModelBody]()
                 self?.isImageSelected = true
             }
-            
         }
     }
     
     @IBAction func btnBack(_ sender: UIButton){
         self.navigationController?.popViewController(animated: true)
-        
     }
+    
     @IBAction func btnCountryPicker(_ sender : UIButton){
         let countryController = CountryPickerWithSectionViewController.presentController(on: self) { [weak self] (country: Country) in
             guard let self = self else { return }
@@ -116,7 +119,6 @@ class SignUPVC: UIViewController {
     
     @IBAction func btnSignIn(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
-        
     }
     
     @IBAction func btnSignUp(_ sender: UIButton) {
@@ -159,8 +161,8 @@ extension SignUPVC {
         let mytapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.view.addGestureRecognizer(mytapGestureRecognizer)
         view.isUserInteractionEnabled = true
-        
     }
+    
     @objc func handleTap(_ sender:UITapGestureRecognizer){
         //viewButton.isHidden = true
     }
@@ -173,6 +175,7 @@ extension SignUPVC : CLLocationManagerDelegate{
             locationManager.startUpdatingLocation()
         }
     }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         print("locations = \(locValue.latitude) \(locValue.longitude)")
@@ -227,5 +230,44 @@ extension SignUPVC: UITextFieldDelegate {
             return newString.length() <= 30
         }
         return true
+    }
+}
+//MARK: - CAMERA ACCSESS
+extension SignUPVC {
+    func checkCameraAccess() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .denied:
+            print("Denied, request permission from settings")
+            presentCameraSettings()
+        case .restricted:
+            print("Restricted, device owner must approve")
+        case .authorized:
+            print("Authorized, proceed")
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { success in
+                if success {
+                    print("Permission granted, proceed")
+                } else {
+                    print("Permission denied")
+                }
+            }
+        default: print("kkkkk")
+        }
+    }
+    
+    func presentCameraSettings() {
+        let alertController = UIAlertController(title: "Enable Camera Permission",
+                                                message: "Camera access is denied",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
+        alertController.addAction(UIAlertAction(title: "Settings", style: .cancel) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: { _ in
+                    // Handle
+                })
+            }
+        })
+        
+        present(alertController, animated: true)
     }
 }
