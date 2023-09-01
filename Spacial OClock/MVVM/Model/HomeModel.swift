@@ -114,7 +114,9 @@ struct HomeListModel: Codable {
 struct HomeListBody: Codable {
     var location: [HomeListLocation]?
     var cuisine: [Cuisine]?
-    var themeArr: [ThemeData]?
+    var theme: [ThemeData]?
+    var banners: [Banner]?
+    var category: [Category]?
 }
 
 // MARK: - Theme
@@ -122,6 +124,7 @@ struct ThemeData: Codable {
     var id: Int?
     var productName, image: String?
     var restroCount: Int?
+    var barCount: Int?
     var restrorants: [CuisineRestrorant]?
 
     enum CodingKeys: String, CodingKey {
@@ -129,7 +132,38 @@ struct ThemeData: Codable {
         case productName = "product_name"
         case image
         case restroCount = "restro_count"
+        case barCount = "bar_count"
         case restrorants
+    }
+}
+
+
+// MARK: - Category
+struct Category: Codable {
+    var id: Int?
+    var title, description: String?
+    var status: Int?
+    var image: String?
+    var clubCount: Int?
+    var clubs: [CuisineRestrorant]?
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, description, status, image
+        case clubCount = "club_count"
+        case clubs
+    }
+}
+
+// MARK: - Banner vc]
+struct Banner: Codable {
+    var id: Int?
+    var title, image, description: String?
+    var isBlocked, status: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, image, description
+        case isBlocked = "is_blocked"
+        case status
     }
 }
 

@@ -162,6 +162,7 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
             self.tabBarController?.tabBar.isHidden  = false
             self.tbHomeData.layoutSubviews()
             self.tbHomeData.reloadData()
+            print("themeArr",self.viewModel.homeData?.theme?.count)
         }
     }
     
@@ -290,17 +291,20 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
                 cell.location = self.viewModel.homeData?.location ?? [HomeListLocation]()
                 cell.collView.reloadData()
             }else if indexPath.section == 1 {
-                cell.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
-                cell.collView.reloadData()
-            }else if indexPath.section == 2 {
-                cell.location = self.viewModel.homeData?.location ?? [HomeListLocation]()
+                if isSelected == true {
+                    cell.isCellSelected = true
+                    cell.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
+                    cell.collView.reloadData()
+                }else{
+                    cell.category = self.viewModel.homeData?.category ?? [Category]()
+                    cell.collView.reloadData()
+                    cell.isCellSelected = false
+                }
+            }else if indexPath.section == 3 {
+                cell.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
                 cell.collView.reloadData()
             }
-            if isSelected == true {
-                cell.isCellSelected = true
-            }else{
-                cell.isCellSelected = false
-            }
+            
             return cell
         }
     }

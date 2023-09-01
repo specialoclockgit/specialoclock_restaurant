@@ -27,6 +27,7 @@ class CellHomeTB: UITableViewCell {
     var location = [HomeListLocation]()
     var cuisine = [Cuisine]()
     var themeArr = [ThemeData]()
+    var category = [Category]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,8 +51,13 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         if collView.tag == 0 {
             return location.count
         }else if collView.tag == 1 {
-            return cuisine.count
-        }else if collView.tag == 2 {
+            if self.isCellSelected == true {
+                return cuisine.count
+            }else {
+                return category.count
+            }
+            
+        }else if collView.tag == 3{
             return themeArr.count
         }
         return Int()
@@ -64,16 +70,29 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblLocationName.text = self.location[indexPath.row].city
             cell.lblTotalRestaurant.text = "\(self.location[indexPath.row].restroCount ?? 0) Restaurants"
         }else if collView.tag == 1 {
-            cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: self.cuisine[indexPath.row].image ?? "")
-            cell.lblLocationName.text = self.cuisine[indexPath.row].name ?? ""
-            cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
-        }else if collView.tag == 2 {
+            if self.isCellSelected == true {
+                let image = "\(self.cuisine[indexPath.row].image ?? "")"
+                let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
+                cell.lblLocationName.text = self.cuisine[indexPath.row].name ?? ""
+                cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
+            }else {
+                let image = "\(self.category[indexPath.row].image ?? "")"
+                let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
+                cell.lblLocationName.text = self.category[indexPath.row].title ?? ""
+                cell.lblTotalRestaurant.text = "\(self.category[indexPath.row].clubCount ?? 0) Restaurants"
+            }
+        }else if collView.tag == 3{
             let image = "\(self.themeArr[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblLocationName.text = self.themeArr[indexPath.row].productName ?? ""
-            cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].restroCount ?? 0) Restaurants"
+            if self.isCellSelected == true {
+                cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].restroCount ?? 0) Restaurants"
+            }else {
+                cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].barCount ?? 0) Restaurants"
+            }
         }
         return cell
     }
