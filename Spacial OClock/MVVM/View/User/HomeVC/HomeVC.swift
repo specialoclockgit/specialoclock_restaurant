@@ -59,17 +59,9 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
                                       Header(heading: "", img: "" ),
                                       Header(heading: "Theme", img: "mask")]
     //Drink Data
-    let arrDrinks : [HomeTBModel] = [HomeTBModel(heading: "Location", name: ["Central Cape Town" ,"Rondebosch"
-                                      ],  img: ["location1","location2"], restoClub: ["32 Restaurants", "7 Restaurants"]) ,
-                                     HomeTBModel(heading: "Category", name: ["Wise Crax","Bangin Brews"], img: ["drinkImg1","drinkImg2"], restoClub: ["32 Clubs", "7 Clubs"]),
-                                     HomeTBModel(heading: "", name: [""], img: [""], restoClub: [""]),
-                                     HomeTBModel(heading: "Theme", name: ["Ocean View","Beach" ], img:  ["drinkTheme1","drinkTheme2" ], restoClub: ["32 Bar", "7 Bar"])]
+    let arrDrinks : [HomeTBModel] = [HomeTBModel(heading: "Location", name: ["Central Cape Town" ,"Rondebosch"],  img: ["location1","location2"], restoClub: ["32 Restaurants", "7 Restaurants"]) ,HomeTBModel(heading: "Category", name: ["Wise Crax","Bangin Brews"], img: ["drinkImg1","drinkImg2"], restoClub: ["32 Clubs", "7 Clubs"]),HomeTBModel(heading: "", name: [""], img: [""], restoClub: [""]),HomeTBModel(heading: "Theme", name: ["Ocean View","Beach" ], img:  ["drinkTheme1","drinkTheme2" ], restoClub: ["32 Bar", "7 Bar"])]
     //Dine In Data
-    let arrDineIN : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Central Cape Town","Rondebosch" ],
-                                    img: ["location1" ,"location2"],  restoClub: ["32 Restaurants" , "7 Restaurants"]) ,
-                                     HomeTBModel(heading: "Cuisines", name: ["Grill","Grill" ], img: ["image3" ,"image2"], restoClub:  ["32 Restaurants" , "7 Restaurants"]),
-                                     HomeTBModel(heading: "", name: [""], img: [""], restoClub: [""]),
-                                     HomeTBModel(heading: "Theme", name: ["OceanView","Hotel" ], img:  ["theme1","theme2" ], restoClub:  ["32 Restaurants" , "7 Restaurants"])]
+    let arrDineIN : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Central Cape Town","Rondebosch" ],img: ["location1" ,"location2"],  restoClub: ["32 Restaurants" , "7 Restaurants"]) ,HomeTBModel(heading: "Cuisines", name: ["Grill","Grill" ], img: ["image3" ,"image2"], restoClub:  ["32 Restaurants" , "7 Restaurants"]),HomeTBModel(heading: "", name: [""], img: [""], restoClub: [""]),HomeTBModel(heading: "Theme", name: ["OceanView","Hotel" ], img:  ["theme1","theme2" ], restoClub:  ["32 Restaurants" , "7 Restaurants"])]
     
     let manager = CLLocationManager()
     var isSelected  = Bool()
@@ -105,7 +97,7 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
             if #available(iOS 14.0, *) {
                 locationManager.desiredAccuracy = kCLLocationAccuracyReduced
             } else {
-                // Fallback on earlier versions
+                // Fallback on earlier versions0000
             }
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
@@ -154,8 +146,6 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
         return hasPermission
     }
     
-    
-    
     func setData(type: Int, country: String, state: String) {
         self.viewModel.homeApi(type: type, country: country, state: state) { (objData) in
             self.viewModel.homeData = objData
@@ -165,7 +155,6 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
             print("themeArr",self.viewModel.homeData?.theme?.count)
         }
     }
-    
     
     //MARK: - ACTIONS
     @IBAction func btnLocationAct(_ sender : UIButton){

@@ -6,7 +6,9 @@
 //
 
 import UIKit
+import SDWebImage
 import IQKeyboardManagerSwift
+
 struct ModelMenuCollView {
     var name : [String]
     var time :[String]
@@ -38,22 +40,29 @@ class ItemDetailsVC: UIViewController {
     @IBOutlet weak var viewM : UIView!
     @IBOutlet weak var viewR : UIView!
     @IBOutlet weak var viewSV : UIView!
+    @IBOutlet weak var lblNameREsto: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
+    @IBOutlet weak var lblLocationOne: UILabel!
+    @IBOutlet weak var lblOpenCloseTime: UILabel!
     @IBOutlet weak var imgBottomView : UIImageView!
     //MENU Outlets
     @IBOutlet weak var collViewMenu : UICollectionView!
     @IBOutlet weak var tbMenu : UITableView!
     @IBOutlet weak var heightTBMenu : NSLayoutConstraint!
+    @IBOutlet weak var lblRating: UILabel!
     @IBOutlet weak var heightTBReview : NSLayoutConstraint!
     @IBOutlet weak var imgFav : UIImageView!
     @IBOutlet weak var btnFav : UIButton!
     @IBOutlet weak var btnBook : UIButton!
     @IBOutlet weak var viewButton : UIView!
     
-    
     //MARK: Variable
+    var ProductID = Int()
+    var viewmodal = HomeViewModel()
+    var modal : productDetailModalBody?
+    
 //    var arrCollMenu : [ModelMenuCollView] = [ModelMenuCollView(name: ["Tonight" , "Happy Hour" , "Today" , "Tommorow"], time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
     var arrCollMenu : [ModelMenuCollView] = []
-    
     var arrTBMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Sandwich", image: ["goose" , "belveder",                                            "Ciroc" ],
                                         itemName: ["Plain Sandwich" , "Grilled Sandwich" ,                                   "Club Sandwich"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00",  "R20.00" ,"R30.00"]) ,
                                          
@@ -68,6 +77,7 @@ class ItemDetailsVC: UIViewController {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        product_detail()
         initialLoad()
         img.image = imgName
         collView.delegate = self
@@ -90,6 +100,20 @@ class ItemDetailsVC: UIViewController {
         tbMenu.dataSource = self
         for _ in 0...arrTBMenu.count{
             arrCheck.append(false)
+        }
+    }
+    
+    //MARK: - FUNCTION
+    func product_detail(){
+        viewmodal.productDetialAPI(product_id: ProductID) { data in
+            self.modal = data
+            let imageIndex = (imageBaseURL) + (self.modal?.image ?? "")
+            self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+            self.lblNameREsto.text = self.modal?.restrorant?.name ?? ""
+            self.lblOpenCloseTime.text = (self.modal?.restrorant?.openTime ?? "") + "-" + (self.modal?.restrorant?.closeTime ?? "")
+            self.lblLocation.text = self.modal?.restrorant?.location ?? ""
+            self.collViewMenu.reloadData()
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -193,16 +217,26 @@ class ItemDetailsVC: UIViewController {
 }
 extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == collViewMenu
-        {
-            return arrCollMenu[section].name.count
+        if collectionView == collView{
+            return modal?.restrorant?.restaurantImages?.count ?? 0
         }
-        return 3
+        else if collectionView == collViewMenu
+        {
+            return modal?.restrorant?.offers?.count ?? 0
+        }else{
+            return 3
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if collectionView == collViewMenu{
+        if collectionView == collView{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellItemDetailVC", for: indexPath) as! CellItemDetailVC
+            let imageIndex = (imageBaseURL) + (modal?.restrorant?.restaurantImages?[indexPath.row] ?? "")
+            self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+            return cell
+        }
+        else if collectionView == collViewMenu{
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
             if ((indexPath.row % 2 ) == 0)  {
                 cell.img.image = UIImage(named: "greenRectangle")
@@ -210,13 +244,19 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 cell.lblTime.text = ""
                 cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
             }
-            cell.lblTime.text = arrCollMenu[indexPath.section].time[indexPath.row]
-            cell.lblMenuSchedule.text = arrCollMenu[indexPath.section].name[indexPath.row]
+            let data = modal?.restrorant?.offers
+            
+//            cell.lblTime.text = arrCollMenu[indexPath.section].time[indexPath.row]
+            cell.lblTime.text = "\(data?[indexPath.row].openTime ?? "") - " + "\(data?[indexPath.row].closeTime ?? "")"
+            cell.lblMenuSchedule.text = data?[indexPath.row].offerName ?? ""
+//            cell.lblMenuSchedule.text = arrCollMenu[indexPath.section].name[indexPath.row]
+            return cell
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.CellItemDetailVC, for: indexPath) as! CellItemDetailVC
+            cell.img.image = imgName
             return cell
         }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.CellItemDetailVC, for: indexPath) as! CellItemDetailVC
-        cell.img.image = imgName
-        return cell
+        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {

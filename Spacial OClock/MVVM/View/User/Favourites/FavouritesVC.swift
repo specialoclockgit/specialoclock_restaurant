@@ -10,6 +10,7 @@ import UIKit
 class FavouritesVC: UIViewController {
 
     //MARK: - Outlets
+    @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var favouriteCV: UICollectionView!
     @IBOutlet weak var btnBack : UIButton!
     

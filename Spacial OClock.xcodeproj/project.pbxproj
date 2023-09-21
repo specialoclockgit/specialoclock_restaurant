@@ -193,6 +193,10 @@
 		C2B891232A4AEC820066E753 /* MyMenuTvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B891222A4AEC810066E753 /* MyMenuTvc.swift */; };
 		C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */; };
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
+		EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */; };
+		ECA3544F2AB4394500D4ABF8 /* CussinesRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */; };
+		ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */; };
+		ECC5BCEF2ABC281F00143940 /* productDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -421,6 +425,10 @@
 		C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailVC.swift; sourceTree = "<group>"; };
 		C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailTVC.swift; sourceTree = "<group>"; };
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemCVC.swift; sourceTree = "<group>"; };
+		ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CussinesRestoModal.swift; sourceTree = "<group>"; };
+		ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themeListModal.swift; sourceTree = "<group>"; };
+		ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productDetailModal.swift; sourceTree = "<group>"; };
 		FFB2FFBD55D1FD8B4740B383 /* Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -544,6 +552,9 @@
 				29A19A392A8FA7C9008193A4 /* commonModel.swift */,
 				2ACA091D2A9DDE1D00FDD9E0 /* LocationListModel.swift */,
 				2A1C50612A9F167300FBE41A /* HomeModel.swift */,
+				ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */,
+				ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */,
+				ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -766,6 +777,7 @@
 				A5046FE02A4D6EEB00C23627 /* CellMenuTV.xib */,
 				A5046FE32A4D81F700C23627 /* HeaderTBMenu.swift */,
 				A5046FE52A4D838900C23627 /* HeaderMenuTB.xib */,
+				EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -1354,6 +1366,7 @@
 			files = (
 				8B9154742A86372800CCB83E /* ResendOtpModel.swift in Sources */,
 				C29CDB062A42BB930035E03D /* SettingsVC.swift in Sources */,
+				EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */,
 				C29CDB092A42BB930035E03D /* DeleteAccountPopUp.swift in Sources */,
 				C25738132A4ACC50002BA6A7 /* RestoProfileVC.swift in Sources */,
 				8B9154702A860D0600CCB83E /* AddBusinessModel.swift in Sources */,
@@ -1410,6 +1423,7 @@
 				A5F18B8D2A545505006979DD /* CellMyOfferTB.swift in Sources */,
 				A5FD2E7F2A53FF8500682FFA /* ImagePicker(3).swift in Sources */,
 				C284FB742A402E3E006949B4 /* RestoHomeTVC.swift in Sources */,
+				ECA3544F2AB4394500D4ABF8 /* CussinesRestoModal.swift in Sources */,
 				A5222B972A628C3800C2E962 /* String.swift in Sources */,
 				29A19A3A2A8FA7C9008193A4 /* commonModel.swift in Sources */,
 				8B0BDF302A80FFFD00A28BD2 /* SignUpModel.swift in Sources */,
@@ -1501,6 +1515,8 @@
 				A5046FEF2A4DACB800C23627 /* CellNotificationVC.swift in Sources */,
 				C29CDB132A42BC4C0035E03D /* TabbarVC.swift in Sources */,
 				C284FB802A402EE8006949B4 /* CustomImageView.swift in Sources */,
+				ECC5BCEF2ABC281F00143940 /* productDetailModal.swift in Sources */,
+				ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */,
 				8B0BDF2B2A80F10E00A28BD2 /* CheckValidations.swift in Sources */,
 				8B0BDF2C2A80F10E00A28BD2 /* CommonUtilities.swift in Sources */,
 			);

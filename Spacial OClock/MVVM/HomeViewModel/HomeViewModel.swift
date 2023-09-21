@@ -21,4 +21,31 @@ class HomeViewModel : NSObject {
             onsuccess(modaldata.body)
         }
     }
+    
+    //MARK: - CUISINE RESTO LIST
+    func cusinsRestoAPI(cuisineid:Int,onsuccess: @escaping (([CussinesRestoModalBody]?)->())){
+        let param:parameters = ["cuisine_id":cuisineid]
+        WebService.service(API.menu_product_listing, param: param, service: .post) {
+            (modaldata: CussinesRestoModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    //MARK: - THEME LIST GET
+    func themeGetList(themeID:Int,onsuccess: @escaping (([themeListModalBody]?)->())){
+        let param:parameters = ["themes_restrorant_id":themeID]
+        WebService.service(API.theme_UserRestro, param: param, service: .post) {
+            (modaldata: themeListModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    //MARK: - PRODUCT DETIALS
+    func productDetialAPI(product_id:Int,onsuccess: @escaping ((productDetailModalBody?)->())){
+        let param:parameters = ["product_id":product_id ]
+        WebService.service(API.product_details, param: param, service: .post) {
+            (modaldata: productDetailModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
 }
