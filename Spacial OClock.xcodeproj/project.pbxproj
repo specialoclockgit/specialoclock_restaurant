@@ -197,6 +197,8 @@
 		ECA3544F2AB4394500D4ABF8 /* CussinesRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */; };
 		ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */; };
 		ECC5BCEF2ABC281F00143940 /* productDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */; };
+		ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE802682ABD83F3004CC589 /* favListModal.swift */; };
+		ECE8026B2ABDBD7F004CC589 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = ECE8026A2ABDBD7F004CC589 /* nodataFound.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -429,6 +431,8 @@
 		ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CussinesRestoModal.swift; sourceTree = "<group>"; };
 		ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themeListModal.swift; sourceTree = "<group>"; };
 		ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productDetailModal.swift; sourceTree = "<group>"; };
+		ECE802682ABD83F3004CC589 /* favListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favListModal.swift; sourceTree = "<group>"; };
+		ECE8026A2ABDBD7F004CC589 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		FFB2FFBD55D1FD8B4740B383 /* Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -555,6 +559,7 @@
 				ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */,
 				ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */,
 				ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */,
+				ECE802682ABD83F3004CC589 /* favListModal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -803,6 +808,7 @@
 		C284FB2C2A402A0D006949B4 = {
 			isa = PBXGroup;
 			children = (
+				ECE8026A2ABDBD7F004CC589 /* nodataFound.gif */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
 				C284FB372A402A0D006949B4 /* Spacial OClock */,
 				C284FB4E2A402A0E006949B4 /* Spacial OClockTests */,
@@ -1196,6 +1202,7 @@
 				A58CCC9A2A5EAB8000DFA478 /* Poppins-SemiBold.ttf in Resources */,
 				C284FB422A402A0E006949B4 /* Assets.xcassets in Resources */,
 				A5AB0E2B2A56842B00BB2BF4 /* CellBookingRestoTB.xib in Resources */,
+				ECE8026B2ABDBD7F004CC589 /* nodataFound.gif in Resources */,
 				A55779D92A559159002B2FC2 /* HeaderMyOfferCell.xib in Resources */,
 				A5046FE62A4D838900C23627 /* HeaderMenuTB.xib in Resources */,
 				A51DBFF62A5292E1007535D7 /* CellBreakfastTB.xib in Resources */,
@@ -1375,6 +1382,7 @@
 				A53B4A922A4EC46F00E79265 /* UITextField.swift in Sources */,
 				A52576F52A54402300464E1B /* RestoSelectCardVC.swift in Sources */,
 				8B91546E2A85F06E00CCB83E /* CuisineListingModel.swift in Sources */,
+				ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */,
 				A5E837142A56DDE500C2D16A /* PrivacyVC.swift in Sources */,
 				C29CDAFE2A42BB1D0035E03D /* VerifypopUpVC.swift in Sources */,
 				A5F18B882A545149006979DD /* AddProductVC.swift in Sources */,

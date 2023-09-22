@@ -48,4 +48,22 @@ class HomeViewModel : NSObject {
             onsuccess(modaldata.body)
         }
     }
+    
+    //MARK: - FAV LIST
+    func favListAPI(onsuccess: @escaping (([favListModalBody]?)->())){
+        WebService.service(API.liked_listing, service: .post) {
+            (modaldata: favListModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    //MARK: - RESTO LIKE
+    func resto_likeAPI(Restoid:Int,status:Int,onsuccess: @escaping ((CommonBody?)->())){
+        let param = ["product_id":Restoid, "value":status]
+        WebService.service(API.restoLIke,param: param, service: .post) {
+            (modaldata: CommonModel, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
 }

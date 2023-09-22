@@ -22,6 +22,9 @@ target 'Spacial OClock' do
   pod 'SwiftMessages'
   pod 'DropDown'
   pod 'PhoneNumberKit'
+  pod 'ShimmerSwift'
+  pod 'SkeletonView'
+  pod 'SwiftGifOrigin'
 
   
     target 'Spacial OClockTests' do

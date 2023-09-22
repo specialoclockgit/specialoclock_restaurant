@@ -77,7 +77,6 @@ class ItemDetailsVC: UIViewController {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        product_detail()
         initialLoad()
         img.image = imgName
         collView.delegate = self
@@ -103,6 +102,7 @@ class ItemDetailsVC: UIViewController {
         }
     }
     
+    
     //MARK: - FUNCTION
     func product_detail(){
         viewmodal.productDetialAPI(product_id: ProductID) { data in
@@ -113,11 +113,17 @@ class ItemDetailsVC: UIViewController {
             self.lblNameREsto.text = self.modal?.restrorant?.name ?? ""
             self.lblOpenCloseTime.text = (self.modal?.restrorant?.openTime ?? "") + "-" + (self.modal?.restrorant?.closeTime ?? "")
             self.lblLocation.text = self.modal?.restrorant?.location ?? ""
+            if self.modal?.isLiked == 0{
+                self.imgFav.image = UIImage(named: "white h")
+            }else{
+                self.imgFav.image = UIImage(named: "red h")
+            }
             self.collViewMenu.reloadData()
         }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        product_detail()
         tabBarController?.tabBar.isHidden = true
     }
     //MARK: Button Action
@@ -208,9 +214,13 @@ class ItemDetailsVC: UIViewController {
     
     @IBAction func btnFavAct(_ sender : UIButton){
         if sender.isSelected == false{
-            imgFav.image = UIImage(named: "red h")
+            viewmodal.resto_likeAPI(Restoid: ProductID, status: 0) { data in
+                self.imgFav.image = UIImage(named: "red h")
+            }
         }else{
-            imgFav.image = UIImage(named: "white h")
+            viewmodal.resto_likeAPI(Restoid: ProductID, status: 0) { data in
+                self.imgFav.image = UIImage(named: "white h")
+            }
         }
         sender.isSelected = !sender.isSelected
     }

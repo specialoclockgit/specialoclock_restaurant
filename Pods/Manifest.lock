@@ -47,7 +47,9 @@ PODS:
   - SDWebImage (5.16.0):
     - SDWebImage/Core (= 5.16.0)
   - SDWebImage/Core (5.16.0)
+  - ShimmerSwift (2.1.1)
   - SKCountryPicker (2.0.0)
+  - SkeletonView (1.30.4)
   - SVPinView (1.0.11)
   - SwiftGifOrigin (1.7.0)
   - SwiftMessages (9.0.6):
@@ -66,7 +68,9 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - PhoneNumberKit
   - SDWebImage
+  - ShimmerSwift
   - SKCountryPicker
+  - SkeletonView
   - SVPinView (~> 1.0)
   - SwiftGifOrigin
   - SwiftMessages
@@ -90,7 +94,9 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - PhoneNumberKit
     - SDWebImage
+    - ShimmerSwift
     - SKCountryPicker
+    - SkeletonView
     - SVPinView
     - SwiftGifOrigin
     - SwiftMessages
@@ -113,11 +119,13 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PhoneNumberKit: 43b5169526cc417398c8f13f77c97552c1c6ed76
   SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
+  ShimmerSwift: f7ed2daf9c246de8299dfd9e12c6ab465cba9842
   SKCountryPicker: 9d4921503cad7224a14a150802bb71228adbd90f
+  SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
   SVPinView: 9b538d0ba68cdb092afe4f0f67ec84cbed079466
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
 
-PODFILE CHECKSUM: 2bb3a82e7218dbce5747ce545c0e0a6e5efc5a44
+PODFILE CHECKSUM: ff04b57bb71e2adef153cdc9cf9f806d52fbf148
 
 COCOAPODS: 1.12.1

@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 class CellImageViewTB: UITableViewCell {
     
     //MARK: Outlet
     @IBOutlet weak var collView : UICollectionView!
+    var banners : [Banner]?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,7 +21,6 @@ class CellImageViewTB: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         let nib = UINib(nibName: Cell.CellImageViewCB, bundle: nil)
         self.collView.register(nib, forCellWithReuseIdentifier: Cell.CellImageViewCB)
         collView.delegate = self
@@ -30,12 +31,14 @@ class CellImageViewTB: UITableViewCell {
 }
 extension CellImageViewTB : UICollectionViewDelegate , UICollectionViewDataSource  , UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return banners?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellImageViewCB, for: indexPath) as! CellImageViewCB
-        cell.img.image = UIImage(named:  "banner")
+        let imageIndex = (imageBaseURL) + (banners?[indexPath.row].image ?? "")
+        cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

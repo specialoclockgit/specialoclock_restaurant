@@ -147,6 +147,8 @@ enum API: String{
     case menu_product_listing = "menu_product_listing"
     case theme_UserRestro    = "theme_UserRestro"
     case product_details = "product_details"
+    case liked_listing = "liked_listing"
+    case restoLIke = "like_product"
    
 }
 
