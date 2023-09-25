@@ -195,6 +195,8 @@
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
 		EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */; };
 		ECA3544F2AB4394500D4ABF8 /* CussinesRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */; };
+		ECAF1D092AC18857006E20FB /* homeSeeMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */; };
+		ECAF1D0B2AC1887B006E20FB /* homeSeeMoreCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D0A2AC1887B006E20FB /* homeSeeMoreCVC.swift */; };
 		ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */; };
 		ECC5BCEF2ABC281F00143940 /* productDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */; };
 		ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE802682ABD83F3004CC589 /* favListModal.swift */; };
@@ -429,6 +431,8 @@
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemCVC.swift; sourceTree = "<group>"; };
 		ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CussinesRestoModal.swift; sourceTree = "<group>"; };
+		ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreVC.swift; sourceTree = "<group>"; };
+		ECAF1D0A2AC1887B006E20FB /* homeSeeMoreCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreCVC.swift; sourceTree = "<group>"; };
 		ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themeListModal.swift; sourceTree = "<group>"; };
 		ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productDetailModal.swift; sourceTree = "<group>"; };
 		ECE802682ABD83F3004CC589 /* favListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favListModal.swift; sourceTree = "<group>"; };
@@ -783,6 +787,8 @@
 				A5046FE32A4D81F700C23627 /* HeaderTBMenu.swift */,
 				A5046FE52A4D838900C23627 /* HeaderMenuTB.xib */,
 				EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */,
+				ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */,
+				ECAF1D0A2AC1887B006E20FB /* homeSeeMoreCVC.swift */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -1420,6 +1426,7 @@
 				A5947B022A554A3700519039 /* MyInvoiceCellDetailVC.swift in Sources */,
 				A5A8CF3A2A5800F3006F23ED /* PaymentCenterAlertVC.swift in Sources */,
 				A51DBFF22A5292A4007535D7 /* BreakfastVC.swift in Sources */,
+				ECAF1D092AC18857006E20FB /* homeSeeMoreVC.swift in Sources */,
 				A5E837082A56C10B00C2D16A /* CellNotificationRestoTB.swift in Sources */,
 				C29CDB112A42BC350035E03D /* FavouritesVC.swift in Sources */,
 				8BEFA24E2A84A05000FE1E35 /* NotificationStatusModel.swift in Sources */,
@@ -1506,6 +1513,7 @@
 				8B0BDF2E2A80F68B00A28BD2 /* HomeVM.swift in Sources */,
 				C2661A912A4B163200EEE266 /* Constant.swift in Sources */,
 				C2B891212A4AEC090066E753 /* MyMenuVC.swift in Sources */,
+				ECAF1D0B2AC1887B006E20FB /* homeSeeMoreCVC.swift in Sources */,
 				A529D2D92A5FBC1900E416CD /* CellBarMenuTV.swift in Sources */,
 				A5E8370E2A56D24000C2D16A /* ContactUsRestoVC.swift in Sources */,
 				A51DBFF82A5296C3007535D7 /* UIButton.swift in Sources */,

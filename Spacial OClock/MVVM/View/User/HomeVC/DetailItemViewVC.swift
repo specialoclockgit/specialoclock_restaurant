@@ -7,13 +7,16 @@
 
 import UIKit
 import SDWebImage
+import SwiftGifOrigin
+import SkeletonView
 
 //MARK: Variable image3
 var arrModel : [ItemsModel] = []
 
-class DetailItemViewVC: UIViewController  {
+class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate {
     
     //MARK: Outlets
+    @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var CollectionView: UICollectionView!
     @IBOutlet weak var lblTwo: UILabel!
     @IBOutlet weak var lblOne: UILabel!
@@ -21,10 +24,13 @@ class DetailItemViewVC: UIViewController  {
     
     //MARK: Variables
     var iconImage = String()
+    
+    
     var heading = String()
     var locationName = "India"
     var cusinessID = Int()
     var themeID = Int()
+    var cuisine = [Cuisine]()
     var viewmodal = HomeViewModel()
     var modal: [CussinesRestoModalBody]?
     var thememodla : [themeListModalBody]?
@@ -34,6 +40,7 @@ class DetailItemViewVC: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        CollectionView.showAnimatedGradientSkeleton()
         print(cusinessID)
         lblTwo.text = lblName
         lblOne.text = "\(setValue)> "
@@ -54,6 +61,9 @@ class DetailItemViewVC: UIViewController  {
     func get_resto_list(){
         viewmodal.cusinsRestoAPI(cuisineid: cusinessID) { [weak self] fetchdata in
             self?.modal = fetchdata
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.CollectionView.hideSkeleton()
+            }
             self?.CollectionView.reloadData()
         }
     }
@@ -62,8 +72,19 @@ class DetailItemViewVC: UIViewController  {
     func theme_Resto_API(){
         viewmodal.themeGetList(themeID: themeID) { [weak self] dataa in
             self?.thememodla = dataa
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.CollectionView.hideSkeleton()
+            }
             self?.CollectionView.reloadData()
         }
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "DetailItemCVC"
+    }
+
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 30
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,11 +97,24 @@ class DetailItemViewVC: UIViewController  {
 extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setValue == "Cuisines"{
-            return modal?.count ?? 0
+            if modal?.count == 0 {
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return modal?.count ?? 0
+            }
+            
         }else {
-            return thememodla?.count ?? 0
+            if thememodla?.count == 0{
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return thememodla?.count ?? 0
+            }
         }
-       
+       return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -107,6 +141,10 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         if setValue == "Cuisines"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = modal?[indexPath.row].id ?? 0
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+            vc.ProductID = thememodla?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -318,41 +318,50 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
 //MARK: Table Button Objective function
 extension HomeVC {
     @objc func btnSeeMoreAct(sender : UIButton){
-        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
-        screen.iconImage = arrHeading[sender.tag].img
+        let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
         switch sender.tag {
         case 0 :
-            arrModel = [ItemsModel(img: UIImage(named: "location1") ?? UIImage(), name: "Central Cape Town", totalRestaurant: "32 Restaurants"),
-                        ItemsModel(img: UIImage(named: "location2") ?? UIImage(), name: "Rondebosch", totalRestaurant: "32 Restaurants") ,
-                        ItemsModel(img: UIImage(named: "location1") ?? UIImage(), name: "Central Cape Town", totalRestaurant: "7 Restaurants")
-                       ]
-            screen.heading = arrHeading[sender.tag].heading
+//            arrModel = [ItemsModel(img: UIImage(named: "location1") ?? UIImage(), name: "Central Cape Town", totalRestaurant: "32 Restaurants"),
+//                        ItemsModel(img: UIImage(named: "location2") ?? UIImage(), name: "Rondebosch", totalRestaurant: "32 Restaurants") ,
+//                        ItemsModel(img: UIImage(named: "location1") ?? UIImage(), name: "Central Cape Town", totalRestaurant: "7 Restaurants")
+//                       ]
+            screen.setvalue = "Location"
+            screen.location = self.viewModel.homeData?.location ?? [HomeListLocation]()
             self.navigationController?.pushViewController(screen, animated: true)
             debugPrint("Case 0 btnSeeMoreAct")
+            
         case 1:
             debugPrint("Case 1")
             if isSelected == true {
                 debugPrint("Not Selected")
-                arrModel = [ItemsModel(img: UIImage(named: "image3") ?? UIImage(), name: "Pies N’ Thighs", totalRestaurant: "10:00- 22:00 30%") ,
-                            ItemsModel(img: UIImage(named: "image4") ?? UIImage(), name: "Killer Pizza", totalRestaurant: "10:00- 22:00 30%") ,
-                            ItemsModel(img: UIImage(named: "image1") ?? UIImage(), name: "Killer Pizza", totalRestaurant: "10:00- 22:00 30%") ,
-                            ItemsModel(img: UIImage(named: "yummy") ?? UIImage(), name: "Yummy In The Tummy", totalRestaurant: "10:00- 22:00 30%"),
-                            ItemsModel(img: UIImage(named: "tanic") ?? UIImage(), name: "Thai Tanic", totalRestaurant: "10:00- 22:00 30%") ,
-                            ItemsModel(img: UIImage(named: "mozarella") ?? UIImage(), name: "Bella Bella Mozzarella", totalRestaurant: "10:00- 22:00 30%")]
-                screen.locationName = "India"
+                screen.setvalue = "Cuisine"
+                screen.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
+              //  screen.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
+//                arrModel = [ItemsModel(img: UIImage(named: "image3") ?? UIImage(), name: "Pies N’ Thighs", totalRestaurant: "10:00- 22:00 30%") ,
+//                            ItemsModel(img: UIImage(named: "image4") ?? UIImage(), name: "Killer Pizza", totalRestaurant: "10:00- 22:00 30%") ,
+//                            ItemsModel(img: UIImage(named: "image1") ?? UIImage(), name: "Killer Pizza", totalRestaurant: "10:00- 22:00 30%") ,
+//                            ItemsModel(img: UIImage(named: "yummy") ?? UIImage(), name: "Yummy In The Tummy", totalRestaurant: "10:00- 22:00 30%"),
+//                            ItemsModel(img: UIImage(named: "tanic") ?? UIImage(), name: "Thai Tanic", totalRestaurant: "10:00- 22:00 30%") ,
+//                            ItemsModel(img: UIImage(named: "mozarella") ?? UIImage(), name: "Bella Bella Mozzarella", totalRestaurant: "10:00- 22:00 30%")]
+                
+                //screen.locationName = "India"
             }else{
                 debugPrint("Selected")
+                screen.setvalue = "Category"
+                screen.category = self.viewModel.homeData?.category ?? [Category]()
                 arrModel = [ItemsModel(img: UIImage(named: "drinkImg1") ?? UIImage(), name: "Wise Crax’ Brews", totalRestaurant: "10:00- 22:00 30%") ,
                             ItemsModel(img: UIImage(named: "drinkImg2") ?? UIImage(), name: "Bangin’ Brews", totalRestaurant: "10:00- 22:00 30%"),
                             ItemsModel(img: UIImage(named: "drink1") ?? UIImage(), name: "Killer Pizza", totalRestaurant: "710:00- 22:00 30%") ,
                 ]
-                screen.locationName = "Cocktail bar"
+            //    screen.locationName = "Cocktail bar"
             }
-            screen.heading = arrHeading[sender.tag].heading
+           // screen.heading = arrHeading[sender.tag].heading
             self.navigationController?.pushViewController(screen, animated: true)
            
         case 3:
             if isSelected == true {
+                screen.setvalue = "Theme"
+                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
                 arrModel = [ItemsModel(img: UIImage(named: "theme1") ?? UIImage(), name: "Pies N’ Thighs", totalRestaurant: "32 Restaurants") ,
                             ItemsModel(img: UIImage(named: "image4") ?? UIImage(), name: "Killer Pizza", totalRestaurant: "32 Restaurants") ,
                             ItemsModel(img: UIImage(named: "image1") ?? UIImage(), name: "Killer Pizza", totalRestaurant: "7 Restaurants") ,
@@ -367,7 +376,7 @@ extension HomeVC {
                             ItemsModel(img: UIImage(named: "drink2") ?? UIImage(), name: "Dry DockDry Dock", totalRestaurant: "32 Restaurants"),
                             ]
             }
-            screen.heading = arrHeading[sender.tag].heading
+          //  screen.heading = arrHeading[sender.tag].heading
             self.navigationController?.pushViewController(screen, animated: true)
             debugPrint("case 3")
         default:
