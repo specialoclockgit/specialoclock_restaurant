@@ -30,6 +30,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     var locationName = "India"
     var cusinessID = Int()
     var themeID = Int()
+    
     var cuisine = [Cuisine]()
     var viewmodal = HomeViewModel()
     var modal: [CussinesRestoModalBody]?

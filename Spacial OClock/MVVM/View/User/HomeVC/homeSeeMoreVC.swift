@@ -27,13 +27,25 @@ class homeSeeMoreVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if setvalue == "Location"{
+            lblHeader.text = "Location"
+            imgViewHeader.image = UIImage(named: "pinPerson")
+        }else if setvalue == "Cuisine"{
+            lblHeader.text = "Cuisine"
+            imgViewHeader.image = UIImage(named: "soup")
+        }else if setvalue == "Category"{
+            lblHeader.text = "Category"
+            imgViewHeader.image = UIImage(named: "menu 1")
+        }else{
+            lblHeader.text = "Theme"
+            imgViewHeader.image = UIImage(named: "mask")
+        }
     }
     //MARK: - ACTIONS
 
 }
 //MARK: - EXTENSIONS
-extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource{
+extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setvalue == "Location"{
             return location.count
@@ -49,26 +61,50 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeSeeMoreCVC", for: indexPath) as! homeSeeMoreCVC
         if setvalue == "Location"{
-            let imageIndex = (imageURL) + (self.location[indexPath.row].image ?? "")
+            let imageIndex = (imageBaseURL) + (self.location[indexPath.row].image ?? "")
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = self.location[indexPath.row].city ?? ""
+            cell.lblDis.text = "Restaurant \(self.location[indexPath.row].restroCount ?? 0)"
         }else if setvalue == "Cuisine"{
-            let imageIndex = (imageURL) + (self.cuisine[indexPath.row].image ?? "")
+            let imageIndex = (imageBaseURL) + (self.cuisine[indexPath.row].image ?? "")
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.lblDis.text = "Restaurant \(self.cuisine[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.cuisine[indexPath.row].name ?? ""
         }else if setvalue == "Category"{
-            let imageIndex = (imageURL) + (self.category[indexPath.row].image ?? "")
+            let imageIndex = (imageBaseURL) + (self.category[indexPath.row].image ?? "")
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.lblDis.text = "Restaurant \(self.category[indexPath.row].clubCount ?? 0)"
             cell.lblName.text = self.category[indexPath.row].title ?? ""
         }else{
-            let imageIndex = (imageURL) + (self.themeArr[indexPath.row].image ?? "")
+            let imageIndex = (imageBaseURL) + (self.themeArr[indexPath.row].image ?? "")
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblName.text = "\(self.themeArr[indexPath.row].restroCount ?? 0)"
+            cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
+            cell.lblName.text = self.themeArr[indexPath.row].productName ?? ""
         }
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collection.frame.width / 2.1, height: 200)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
+        if setvalue == "Location"{
+            
+        }else if setvalue == "Cuisine"{
+            vc.cusinessID = self.cuisine[indexPath.row].id ?? 0
+            vc.lblName = self.cuisine[indexPath.row].name ?? ""
+            vc.setValue = "Cuisines"
+        }else if setvalue == "Category"{
+            //vc.cuisine = category[indexPath.row]
+        }else{
+            vc.themeID = themeArr[indexPath.row].id ?? 0
+            vc.lblName = self.themeArr[indexPath.row].productName ?? ""
+            vc.setValue = "Theme"
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
