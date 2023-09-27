@@ -13,11 +13,12 @@ class HomeViewModel : NSObject {
     var homeData: HomeListBody?
     
     //MARK: - CUISINE GET LIST
-    func homeApi(type:Int, country: String, state:String, onsuccess: @escaping ((HomeListBody?)->())){
-        let param:parameters = ["type":type, "country":country, "state": state]
-        
+    func homeApi(type:Int, country: String, state:String, lat:Double, long:Double, onsuccess: @escaping ((HomeListBody?)->())){
+        let param:parameters = ["type":type, "country":country, "state": state, "latitude":lat, "longitude":long]
+        print(param)
         WebService.service(API.home, param: param, service: .post) {
             (modaldata: HomeListModel, Data , json) in
+            self.homeData = modaldata.body
             onsuccess(modaldata.body)
         }
     }
@@ -66,4 +67,12 @@ class HomeViewModel : NSObject {
         }
     }
     
+    //MARK: - HOME THEME RESTO LIST API
+    func restoThemelistAPI(restoid:Int,onsuccess: @escaping (([themeRestolistModalBody]?)->())){
+        let param = ["theme_id":restoid]
+        WebService.service(API.fetch_restos_by_theme, param: param, service: .post) {
+            (modaldata: themeRestolistModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
 }

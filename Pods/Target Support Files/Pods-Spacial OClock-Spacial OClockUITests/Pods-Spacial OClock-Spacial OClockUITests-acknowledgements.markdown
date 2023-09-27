@@ -778,6 +778,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    limitations under the License.
 
 
+## GoogleMaps
+
+Copyright 2023 Google
+
 ## GooglePlaces
 
 Copyright 2023 Google

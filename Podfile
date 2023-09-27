@@ -25,6 +25,7 @@ target 'Spacial OClock' do
   pod 'ShimmerSwift'
   pod 'SkeletonView'
   pod 'SwiftGifOrigin'
+  pod 'GoogleMaps'
 
   
     target 'Spacial OClockTests' do

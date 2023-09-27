@@ -34,7 +34,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     var cuisine = [Cuisine]()
     var viewmodal = HomeViewModel()
     var modal: [CussinesRestoModalBody]?
-    var thememodla : [themeListModalBody]?
+    var thememodla : [themeRestolistModalBody]?
     var lblName = ""
     var setimage = ""
     var setValue = ""
@@ -71,13 +71,14 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     
     //MARK: - THEME RESTO
     func theme_Resto_API(){
-        viewmodal.themeGetList(themeID: themeID) { [weak self] dataa in
+        viewmodal.restoThemelistAPI(restoid: themeID) { [weak self] dataa in
             self?.thememodla = dataa
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
             }
             self?.CollectionView.reloadData()
         }
+           
     }
     
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {

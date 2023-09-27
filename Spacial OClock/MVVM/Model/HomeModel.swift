@@ -117,6 +117,7 @@ struct HomeListBody: Codable {
     var theme: [ThemeData]?
     var banners: [Banner]?
     var category: [Category]?
+    var nearby_restaurants: [NearbyRestaurant]?
 }
 
 // MARK: - Theme
@@ -137,6 +138,41 @@ struct ThemeData: Codable {
     }
 }
 
+// MARK: - NearbyRestaurant
+struct NearbyRestaurant: Codable {
+    let id: Int?
+    let name, location, country: String?
+    let state: String?
+    let city: String?
+    let latitude, longitude: String?
+    let userID: Int?
+    let shortDescription: String?
+    let status: Int?
+    let openTime, closeTime: String?
+    let type, categoryID, cuisineID, themesRestrorantID: Int?
+    let isBlocked: Int?
+    let profileImage, commission: String?
+    let isLiked: Int?
+    let distance: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, location, country, state, city, latitude, longitude
+        case userID = "user_id"
+        case shortDescription = "short_description"
+        case status
+        case openTime = "open_time"
+        case closeTime = "close_time"
+        case type
+        case categoryID = "category_id"
+        case cuisineID = "cuisine_id"
+        case themesRestrorantID = "themes_restrorant_id"
+        case isBlocked = "is_blocked"
+        case profileImage = "profile_image"
+        case commission
+        case isLiked = "is_liked"
+        case distance
+    }
+}
 
 // MARK: - Category
 struct Category: Codable {

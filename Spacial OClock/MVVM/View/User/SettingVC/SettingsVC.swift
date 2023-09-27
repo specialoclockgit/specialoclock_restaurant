@@ -13,8 +13,8 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var settingTV: UITableView!
     
     //MARK: - Variables
-    var arrImg = ["notification","unlock","question","books","outline","phone","delete-user-1","logout-1"]
-    var arrName = ["Notification","Change Password","Privacy Policy","Terms and Conditions","Help & FAQ's","Contact Us","Delete Account","Logout"]
+    var arrImg = ["notification","unlock","Group 7127","question","books","outline","phone","delete-user-1","logout-1"]
+    var arrName = ["Notification","Change Password","Chat with Admin","Privacy Policy","Terms and Conditions","Help & FAQ's","Contact Us","Delete Account","Logout"]
     var viewModel = AuthViewModel()
     
     override func viewDidLoad() {
@@ -44,7 +44,7 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
         if indexPath.row == 0{
             cell.swichBtn.isHidden = false
             cell.arrowImg.isHidden = true
-        }else if indexPath.row == 7 {
+        }else if indexPath.row == 8 {
             cell.swichBtn.isHidden = true
             cell.arrowImg.isHidden = true
         }else{
@@ -70,24 +70,28 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ChangePasswordVC")as! ChangePasswordVC
             self.navigationController?.pushViewController(vc, animated: true)
         }else if indexPath.row == 2{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if indexPath.row == 3{
             let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
             vc.status = 1
             vc.titleLbl = "Privacy policy"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 3{
+        }else if indexPath.row == 4{
             let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
             vc.status = 0
             vc.titleLbl = "Terms & Conditions"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 4 {
+        }else if indexPath.row == 5 {
             let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let vc = storyBoard.instantiateViewController(withIdentifier: ViewController.HelpFAQRestoVC) as! HelpFAQRestoVC
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 5 {
+        }else if indexPath.row == 6 {
             let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let vc = storyBoard.instantiateViewController(withIdentifier: "ContactUsRestoVC") as! ContactUsRestoVC
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 6 {
+        }else if indexPath.row == 7 {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DeleteAccountPopUp")as! DeleteAccountPopUp
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 0
@@ -105,7 +109,7 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
             }
             self.navigationController?.present(vc, animated: true)
             
-        }else if indexPath.row == 7{
+        }else if indexPath.row == 8{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DeleteAccountPopUp")as! DeleteAccountPopUp
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 1

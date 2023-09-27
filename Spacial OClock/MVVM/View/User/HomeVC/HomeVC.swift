@@ -10,6 +10,8 @@ import AVFAudio
 import MapKit
 import CoreLocation
 import GooglePlaces
+import GoogleMaps
+import SDWebImage
 
 struct Header{
     var heading : String
@@ -24,9 +26,11 @@ var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Ce
 
 var arrHome = ["Location","Cuisines","","Theme"]
 
-class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
+class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GMSMapViewDelegate{
 
     //MARK: - OUTLETS
+
+    @IBOutlet weak var gmsMapView: GMSMapView!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var tfSearch : UITextField!
     @IBOutlet weak var lblDrinks: UILabel!
@@ -66,23 +70,68 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     let manager = CLLocationManager()
     var isSelected  = Bool()
     var viewModel = HomeViewModel()
+    var nearBy = [NearbyRestaurant]()
     var locationUpdated = Bool()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        gmsMapView.delegate = self
         initialLoad()
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
 //        self.lblLocation.text = Store.userDetails?.location ?? ""
         isSelected = true
-        setDine()
         //MARK: Dine or Drink UserDefault for itemDetailOffer
         UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
         self.getUpdatedLocation()
+//        setDine()
+       // setupMarker()
     }
     
+    
+    //MARK: - MARK SHOW IN GOOGLE MAP
+    func getalllocations() {
+            for index in 0..<nearBy.count {
+                if let returnedPlace = nearBy[index] as? NearbyRestaurant {
+                    
+                    var percentage = ""
+                    var latitude = "0.0"
+                    var longitude = "0.0"
+                    
+                    if let name = returnedPlace.profileImage {
+                        percentage = name as String
+                    }
+                    
+                    if let latis = returnedPlace.latitude {
+                        latitude = latis
+                    }
+                    
+                    if let longis = returnedPlace.longitude {
+                        longitude = longis
+                    }
+
+                    let marker = GMSMarker()
+                    
+                    let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 15)
+                  
+                    print("=====map loc",latitude,longitude)
+                    gmsMapView.animate(to: camera)
+                    marker.position = CLLocationCoordinate2DMake(Double(latitude) ?? 0.0, Double(longitude) ?? 0.0)
+                   let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
+        
+                    view.providerImageView.image = UIImage(named: "favourite")
+        
+                    marker.iconView = view
+                    marker.map = self.gmsMapView
+                    marker.userData = returnedPlace
+                }
+            }
+       
+        }
+    
     override func viewWillAppear(_ animated: Bool) {
+        setDine()
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
@@ -147,8 +196,10 @@ class HomeVC: UIViewController  , CLLocationManagerDelegate,MKMapViewDelegate{
     }
     
     func setData(type: Int, country: String, state: String) {
-        self.viewModel.homeApi(type: type, country: country, state: state) { (objData) in
+        self.viewModel.homeApi(type: type, country: country, state: state,lat: self.lat ?? 0.0, long: self.long ?? 0.0) { (objData) in
             self.viewModel.homeData = objData
+            self.nearBy = objData?.nearby_restaurants ?? []
+            self.getalllocations()
             self.tabBarController?.tabBar.isHidden  = false
             self.tbHomeData.layoutSubviews()
             self.tbHomeData.reloadData()
@@ -335,12 +386,12 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
            
         case 3:
-//            if isSelected == true {
+            if isSelected == true {
                 screen.setvalue = "Theme"
                 screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
-//            }else{
-//                debugPrint("Not Selected")
-//            }
+            }else{
+                debugPrint("Not Selected")
+            }
             self.navigationController?.pushViewController(screen, animated: true)
             debugPrint("case 3")
         default:
@@ -372,4 +423,35 @@ extension HomeVC {
         let nibImgView = UINib(nibName: Cell.CellImageViewTB, bundle: nil)
         self.tbHomeData.register(nibImgView, forCellReuseIdentifier: Cell.CellImageViewTB)
     }
+}
+
+extension HomeVC {
+    func checkIfMutlipleCoordinates(latitude : Float , longitude : Float) -> CLLocationCoordinate2D {
+           
+           var lat = latitude
+           var lng = longitude
+           // arrFilterData is array of model which is giving lat long
+            let arrTemp = nearBy.filter {
+               return (((latitude == Float($0.latitude ?? "")) && (longitude == Float($0.longitude ?? ""))))
+           }
+           // arrTemp giving array of objects with similar lat long
+        if (arrTemp.count ) > 1{
+               // Core Logic giving minor variation to similar lat long
+               let variation = (randomFloat(min: 0.0, max: 2.0) - 0.5) / 1500
+               lat = lat + variation
+               lng = lng + variation
+               let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
+               return  finalPos
+           } else {
+               let variation = (randomFloat(min: 0.0, max: 2.0) - 0.5) / 1500
+               lat = lat + variation
+               lng = lng + variation
+               let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
+               return  finalPos
+           }
+       }
+       
+       func randomFloat(min: Float, max:Float) -> Float {
+           return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
+       }
 }
