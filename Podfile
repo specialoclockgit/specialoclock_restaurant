@@ -26,7 +26,8 @@ target 'Spacial OClock' do
   pod 'SkeletonView'
   pod 'SwiftGifOrigin'
   pod 'GoogleMaps'
-  #pod 'Socket.IO-Client-Swift'
+  pod 'Socket.IO-Client-Swift'
+  pod 'SwiftyJSON', '~> 4.0'
 
   
     target 'Spacial OClockTests' do

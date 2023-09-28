@@ -139,6 +139,7 @@
 		A5F18B8E2A545505006979DD /* CellMyOfferTB.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B8C2A545505006979DD /* CellMyOfferTB.xib */; };
 		A5F7091E2A4EE65900CD26B1 /* CancelBookingReasonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F7091D2A4EE65900CD26B1 /* CancelBookingReasonVC.swift */; };
 		A5FD2E7F2A53FF8500682FFA /* ImagePicker(3).swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2E7E2A53FF8500682FFA /* ImagePicker(3).swift */; };
+		AC4AE5482AC57A2D00E19EF1 /* Socketmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4AE5472AC57A2D00E19EF1 /* Socketmodel.swift */; };
 		C25738132A4ACC50002BA6A7 /* RestoProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25738122A4ACC50002BA6A7 /* RestoProfileVC.swift */; };
 		C2661A762A4AFBA600EEE266 /* AddMenuVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2661A752A4AFBA600EEE266 /* AddMenuVc.swift */; };
 		C2661A792A4AFE0600EEE266 /* RestoSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2661A782A4AFE0600EEE266 /* RestoSettingVC.swift */; };
@@ -358,6 +359,7 @@
 		A5F18B8C2A545505006979DD /* CellMyOfferTB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CellMyOfferTB.xib; sourceTree = "<group>"; };
 		A5F7091D2A4EE65900CD26B1 /* CancelBookingReasonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBookingReasonVC.swift; sourceTree = "<group>"; };
 		A5FD2E7E2A53FF8500682FFA /* ImagePicker(3).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImagePicker(3).swift"; sourceTree = "<group>"; };
+		AC4AE5472AC57A2D00E19EF1 /* Socketmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socketmodel.swift; sourceTree = "<group>"; };
 		B1E514FE72129C20959157BB /* Pods-Spacial OClock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClock.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClock/Pods-Spacial OClock.release.xcconfig"; sourceTree = "<group>"; };
 		B95FD0385785925C8C1DFF55 /* Pods_Spacial_OClockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spacial_OClockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C25738122A4ACC50002BA6A7 /* RestoProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoProfileVC.swift; sourceTree = "<group>"; };
@@ -1111,6 +1113,7 @@
 			children = (
 				ECC5A02A2AC54BE4008E7A72 /* SocketConstants.swift */,
 				ECC5A0292AC54BE4008E7A72 /* SocketIOManager.swift */,
+				AC4AE5472AC57A2D00E19EF1 /* Socketmodel.swift */,
 			);
 			path = Socket;
 			sourceTree = "<group>";
@@ -1476,6 +1479,7 @@
 				A5C036C02A5FFC6C00B038CD /* PreviewVC.swift in Sources */,
 				C2661A8D2A4B156C00EEE266 /* CellHomeTB.swift in Sources */,
 				8B0BDF192A80F04400A28BD2 /* AuthViewModel.swift in Sources */,
+				AC4AE5482AC57A2D00E19EF1 /* Socketmodel.swift in Sources */,
 				A5046FEA2A4D9A9200C23627 /* UILabel.swift in Sources */,
 				C284FB7C2A402EE8006949B4 /* CustomTextField.swift in Sources */,
 				A5F18B8D2A545505006979DD /* CellMyOfferTB.swift in Sources */,

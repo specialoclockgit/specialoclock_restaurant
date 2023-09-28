@@ -21,11 +21,21 @@ class ChatVC: UIViewController, UITextViewDelegate {
     //    MARK: - VARIABLE
     var selectedText: Bool?
     let dropDown = DropDown()
+    var chatmodel :[MessageListModel]?
     
     //     MARK: - LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.scroolTOLast()
         keyboardHandling()
+        if SocketIOManager.sharedInstance.socket.status != .connected
+        {
+            SocketIOManager.sharedInstance.connectMySocket()
+        }
+        SocketIOManager.sharedInstance.connect_user()
+        allsockets()
+        
         IQKeyboardManager.shared.enable = true
         msgTextView.delegate = self
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -39,34 +49,95 @@ class ChatVC: UIViewController, UITextViewDelegate {
         tabBarController?.tabBar.isHidden = true
     }
     
+    func allsockets(){
+        if  SocketIOManager.sharedInstance.socket.status == .connected {
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                self.sockectConnnet()
+            }
+        } else{
+            SocketIOManager.sharedInstance.connectMySocket()
+            SocketIOManager.sharedInstance.connect_user()
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                self.sockectConnnet()
+            }
+        }
+    }
+    // MARK: - socket FUCTIONS
+    func sockectConnnet(){
+        SocketIOManager.sharedInstance.messageListemitter(user2id: 1, limit: 10, offset: 0)
+        fetchMessages()
+        sendMessageListener()
+        clearChatListener()
+      
+        
+        
+        
+    }
+    
     //     MARK: - ACTION
+    
+    @IBAction func btnClearChat(_ sender: UIButton) {
+        if chatmodel?.count == 0 {
+            CommonUtilities.shared.showAlert(message: "There is no message that needs deleting", isSuccess: .error)
+        }
+        else {
+            let alert = UIAlertController(title: "Delete", message: "Are you sure you want to clear all message?", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Yes", style: .default, handler: { action in
+                SocketIOManager.sharedInstance.clearChatemitter(user2id: 1)
+                CommonUtilities.shared.showAlert(message: "Messages clear successfully", isSuccess: .success)
+            })
+            alert.addAction(ok)
+            let cancel = UIAlertAction(title: "No", style: .default, handler: { action in
+                self.dismiss(animated: true)
+            })
+            alert.addAction(cancel)
+            DispatchQueue.main.async(execute: {
+                self.present(alert, animated: true)
+            })
+        }
+        
+        
+       
+    }
+    
     @IBAction func btnAttachment(_ sender: Any) {
     }
     @IBAction func btnMic(_ sender: Any) {
     }
-    @IBAction func btnSend(_ sender: Any) {
+    @IBAction func btnSend(_ sender: UIButton) {
+        let string = self.msgTextView.text?.trimmingCharacters(in: .whitespaces)
+        if string != "" {
+            SocketIOManager.sharedInstance.send_message_emitter(user2Id: 1, msg_type: 1, message: string ?? "")
+            
+            self.msgTextView.text = ""
+            scroolTOLast()
+            chatTbleView.reloadData()
+        }
+        else {
+            CommonUtilities.shared.showAlert(message: "Please write a message to send", isSuccess: .error)
+        }
     }
-//    @IBAction func btnDot(_ sender: UIButton) {
-//        dropDown.anchorView = sender
-//        dropDown.dataSource = ["Report","Block"]
-//        dropDown.show()
-//        dropDown.width = 100
-//        dropDown.cellHeight = 30
-//        dropDown.direction = .bottom
-//        dropDown.backgroundColor = .white
-//        dropDown.cornerRadius = 10
-//        // Top of drop down will be below the anchorView
-//        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-//        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-//            if index == 0 {
-//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "PopUpReportReasonVC") as! PopUpReportReasonVC
-//                vc.modalPresentationStyle = .overFullScreen
-//                self.navigationController?.present(vc, animated: true)
-//            }else {
-//
-//            }
-//        }
-//    }
+    //    @IBAction func btnDot(_ sender: UIButton) {
+    //        dropDown.anchorView = sender
+    //        dropDown.dataSource = ["Report","Block"]
+    //        dropDown.show()
+    //        dropDown.width = 100
+    //        dropDown.cellHeight = 30
+    //        dropDown.direction = .bottom
+    //        dropDown.backgroundColor = .white
+    //        dropDown.cornerRadius = 10
+    //        // Top of drop down will be below the anchorView
+    //        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+    //        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+    //            if index == 0 {
+    //                let vc = self.storyboard?.instantiateViewController(withIdentifier: "PopUpReportReasonVC") as! PopUpReportReasonVC
+    //                vc.modalPresentationStyle = .overFullScreen
+    //                self.navigationController?.present(vc, animated: true)
+    //            }else {
+    //
+    //            }
+    //        }
+    //    }
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
         
@@ -93,17 +164,54 @@ class ChatVC: UIViewController, UITextViewDelegate {
 }
 // MARK: - EXTENSION OF TABLEVIEW
 extension ChatVC: UITableViewDelegate, UITableViewDataSource{
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        if chatmodel?.count == 0 {
+//            chatTbleView.setNoDataMessage("No message found", txtColor: .black)
+//        }
+//        else{
+//            chatTbleView.backgroundView = nil
+//            return chatmodel?.count ?? 0
+//        }
+//        return 0
+//    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 1
+        if chatmodel?.count == 0 {
+            chatTbleView.setNoDataMessage("No message found", txtColor: .black)
+        }
+        else{
+            chatTbleView.backgroundView = nil
+            return chatmodel?.count ?? 0
+        }
+        return 0
         
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "senderTVC", for: indexPath) as! senderTVC
-        return cell
+        if Store.userDetails?.id ?? 0 != chatmodel?[indexPath.row].senderID ?? 0 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "receverTVC", for: indexPath) as! receverTVC
+            cell.lblRecever.text = chatmodel?[indexPath.row].message ?? ""
+            let isoDate =  self.chatmodel?[indexPath.row].createdAt ?? ""
+                   let dateFormatter = DateFormatter()
+                   dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                   let date = dateFormatter.date(from: isoDate ?? "")
+                   cell.lblTime.text = date?.toLocalTime().timeAgoSinceDate()
+            return cell
+            
+            
+        }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "senderTVC", for: indexPath) as! senderTVC
+            cell.lblSenderMsg.text = chatmodel?[indexPath.row].message ?? ""
+            let isoDate =  self.chatmodel?[indexPath.row].createdAt ?? ""
+                   let dateFormatter = DateFormatter()
+                   dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                   let date = dateFormatter.date(from: isoDate ?? "")
+            cell.lblSenderTime.text = date?.toLocalTime().timeAgoSinceDate()
+            return cell
+        }
+        
+        
     }
 }
 //MARK: - KEYBOARD HANDLING
@@ -145,5 +253,126 @@ extension ChatVC {
                 self.chatTbleView.scrollToRow(at: indexPath, at: .bottom, animated: false )
             }
         }
+    }
+}
+
+
+extension ChatVC {
+    private func fetchMessages(){
+        SocketIOManager.sharedInstance.messageListlisner { data in
+            self.chatmodel = data
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                if (self.chatmodel?.count ?? 0 ) > 0 {
+                    let indexPath = IndexPath(row:( self.chatmodel?.count ?? 0 ) - 1, section: 0)
+                    self.chatTbleView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.bottom, animated: true)
+                }
+            }
+            self.chatTbleView.reloadData()
+            
+        }
+    }
+    
+    func scroolTOLast(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if (self.chatmodel?.count ?? 0 ) > 0 {
+                let indexPath = IndexPath(row:( self.chatmodel?.count ?? 0 ) - 1, section: 0)
+                self.chatTbleView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.bottom, animated: true)
+            }
+        }
+    }
+    
+    private func sendMessageListener(){
+        SocketIOManager.sharedInstance.sendMessageLisner { data in
+            
+            let results = self.chatmodel?.filter { $0.id == data.id }
+            if results?.isEmpty == true {
+                self.chatmodel?.append(data)
+                self.msgTextView.text = ""
+                
+                self.chatTbleView.reloadData()
+                
+                self.scroolTOLast()
+            }
+            
+        }
+    }
+    
+    private func clearChatListener(){
+        SocketIOManager.sharedInstance.clearChatListener {
+            self.chatmodel?.removeAll()
+            self.chatTbleView.reloadData()
+        }
+    }
+    
+}
+
+//MARK:- Extensions UITableView view
+extension UITableView {
+    func reloadData(completion: @escaping () -> ()) {
+        UIView.animate(withDuration: 0, animations: { self.reloadData()})
+        {_ in completion() }
+    }
+    
+    func setNoDataMessage(_ message: String,txtColor:UIColor) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = txtColor
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont(name: "Poppins-Medium", size: 20)
+        messageLabel.sizeToFit()
+        self.backgroundView = messageLabel
+    }
+}
+
+// MARK: - EXTENSION FOR DATE
+extension Date {
+    
+    // Convert UTC (or GMT) to local time
+    func toLocalTime() -> Date {
+        let timezone = TimeZone.current
+        let seconds = TimeInterval(timezone.secondsFromGMT(for: self))
+        return Date(timeInterval: seconds, since: self)
+    }
+    
+    func timeAgoSinceDate() -> String {
+        
+        // From Time
+        let fromDate = self
+        
+        // To Time
+        let toDate = Date()
+        
+        // Year
+        if let interval = Calendar.current.dateComponents([.year], from: fromDate, to: toDate).year, interval > 0  {
+            
+            return interval == 1 ? "\(interval)" + " " + "year ago" : "\(interval)" + " " + "years ago"
+        }
+        
+        // Month
+        if let interval = Calendar.current.dateComponents([.month], from: fromDate, to: toDate).month, interval > 0  {
+            
+            return interval == 1 ? "\(interval)" + " " + "mon ago" : "\(interval)" + " " + "mon ago"
+        }
+        
+        // Day
+        if let interval = Calendar.current.dateComponents([.day], from: fromDate, to: toDate).day, interval > 0  {
+            
+            return interval == 1 ? "\(interval)" + " " + "day ago" : "\(interval)" + " " + "days ago"
+        }
+        
+        // Hours
+        if let interval = Calendar.current.dateComponents([.hour], from: fromDate, to: toDate).hour, interval > 0 {
+            
+            return interval == 1 ? "\(interval)" + " " + "hour ago" : "\(interval)" + " " + "hours ago"
+        }
+        
+        // Minute
+        if let interval = Calendar.current.dateComponents([.minute], from: fromDate, to: toDate).minute, interval > 0 {
+            
+            return interval == 1 ? "\(interval)" + " " + "min ago" : "\(interval)" + " " + "min ago"
+        }
+        
+        return "just now"
     }
 }

@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         GMSPlacesClient.provideAPIKey("AIzaSyDG3ftTHL_IMGAd8c8vU-q0Oi-oURgTeKE")
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        SocketIOManager.sharedInstance.connectMySocket()
+        SocketIOManager.sharedInstance.connect_user()
+        SocketIOManager.sharedInstance.connect_user_listen()
         if CLLocationManager.locationServicesEnabled() {
             locationUpdated = true
             locationManager.delegate = self

@@ -55,11 +55,15 @@ PODS:
   - ShimmerSwift (2.1.1)
   - SKCountryPicker (2.0.0)
   - SkeletonView (1.30.4)
+  - Socket.IO-Client-Swift (16.1.0):
+    - Starscream (~> 4.0.6)
+  - Starscream (4.0.6)
   - SVPinView (1.0.11)
   - SwiftGifOrigin (1.7.0)
   - SwiftMessages (9.0.6):
     - SwiftMessages/App (= 9.0.6)
   - SwiftMessages/App (9.0.6)
+  - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
   - Cosmos (~> 23.0)
@@ -77,9 +81,11 @@ DEPENDENCIES:
   - ShimmerSwift
   - SKCountryPicker
   - SkeletonView
+  - Socket.IO-Client-Swift
   - SVPinView (~> 1.0)
   - SwiftGifOrigin
   - SwiftMessages
+  - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   trunk:
@@ -104,9 +110,12 @@ SPEC REPOS:
     - ShimmerSwift
     - SKCountryPicker
     - SkeletonView
+    - Socket.IO-Client-Swift
+    - Starscream
     - SVPinView
     - SwiftGifOrigin
     - SwiftMessages
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
@@ -130,10 +139,13 @@ SPEC CHECKSUMS:
   ShimmerSwift: f7ed2daf9c246de8299dfd9e12c6ab465cba9842
   SKCountryPicker: 9d4921503cad7224a14a150802bb71228adbd90f
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
+  Socket.IO-Client-Swift: ee4b8f80a3db18dd7f32b266ddf273310609443c
+  Starscream: fb2c4510bebf908c62bd383bcf05e673720e91fd
   SVPinView: 9b538d0ba68cdb092afe4f0f67ec84cbed079466
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 09965e860a87fbd7ecb4b5bd6fecd3e4bc07e207
+PODFILE CHECKSUM: 87e75566c45882523e32c60a5dc03e71d34d19b9
 
 COCOAPODS: 1.12.1

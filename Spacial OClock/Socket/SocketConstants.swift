@@ -43,7 +43,7 @@ enum socketListeners : String{
     case getMessagelistner = "get_message_list"
     case chatListinglistner = "chatListing"
     case userDisconnectlistner = "userDisconnect"
-    case clearchatlistener = "clear_chat_listener"
+    case clearchatlistener = "clear_chat"
     case blockuserlistner =  "block_user_listner"
     case isblicklistner = "is_blocked"
     
