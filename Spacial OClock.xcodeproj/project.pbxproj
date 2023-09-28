@@ -203,6 +203,8 @@
 		ECBC37C82AC4182C00ADEDC7 /* receverTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37C72AC4182C00ADEDC7 /* receverTVC.swift */; };
 		ECBC37CC2AC44FE300ADEDC7 /* CustomMarker.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECBC37CA2AC44FE200ADEDC7 /* CustomMarker.xib */; };
 		ECBC37CD2AC44FE300ADEDC7 /* CustomMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37CB2AC44FE200ADEDC7 /* CustomMarker.swift */; };
+		ECC5A02B2AC54BE4008E7A72 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5A0292AC54BE4008E7A72 /* SocketIOManager.swift */; };
+		ECC5A02C2AC54BE4008E7A72 /* SocketConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5A02A2AC54BE4008E7A72 /* SocketConstants.swift */; };
 		ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */; };
 		ECC5BCEF2ABC281F00143940 /* productDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */; };
 		ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE802682ABD83F3004CC589 /* favListModal.swift */; };
@@ -445,6 +447,8 @@
 		ECBC37C72AC4182C00ADEDC7 /* receverTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = receverTVC.swift; sourceTree = "<group>"; };
 		ECBC37CA2AC44FE200ADEDC7 /* CustomMarker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomMarker.xib; sourceTree = "<group>"; };
 		ECBC37CB2AC44FE200ADEDC7 /* CustomMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMarker.swift; sourceTree = "<group>"; };
+		ECC5A0292AC54BE4008E7A72 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		ECC5A02A2AC54BE4008E7A72 /* SocketConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketConstants.swift; sourceTree = "<group>"; };
 		ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themeListModal.swift; sourceTree = "<group>"; };
 		ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productDetailModal.swift; sourceTree = "<group>"; };
 		ECE802682ABD83F3004CC589 /* favListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favListModal.swift; sourceTree = "<group>"; };
@@ -851,6 +855,7 @@
 		C284FB372A402A0D006949B4 /* Spacial OClock */ = {
 			isa = PBXGroup;
 			children = (
+				ECC5A0282AC54B92008E7A72 /* Socket */,
 				2AB8FFE32AA0523600A856B5 /* Spacial OClock.entitlements */,
 				8B0BDF1A2A80F10E00A28BD2 /* API Class */,
 				C29CDAEE2A42B8E20035E03D /* MVVM */,
@@ -1099,6 +1104,15 @@
 				ECBC37CA2AC44FE200ADEDC7 /* CustomMarker.xib */,
 			);
 			path = Markderset;
+			sourceTree = "<group>";
+		};
+		ECC5A0282AC54B92008E7A72 /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				ECC5A02A2AC54BE4008E7A72 /* SocketConstants.swift */,
+				ECC5A0292AC54BE4008E7A72 /* SocketIOManager.swift */,
+			);
+			path = Socket;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1416,6 +1430,7 @@
 				A52576F52A54402300464E1B /* RestoSelectCardVC.swift in Sources */,
 				8B91546E2A85F06E00CCB83E /* CuisineListingModel.swift in Sources */,
 				ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */,
+				ECC5A02B2AC54BE4008E7A72 /* SocketIOManager.swift in Sources */,
 				A5E837142A56DDE500C2D16A /* PrivacyVC.swift in Sources */,
 				C29CDAFE2A42BB1D0035E03D /* VerifypopUpVC.swift in Sources */,
 				A5F18B882A545149006979DD /* AddProductVC.swift in Sources */,
@@ -1524,6 +1539,7 @@
 				C29CDB002A42BB1D0035E03D /* LoginVC.swift in Sources */,
 				A5947B042A55576800519039 /* CellMyInvoiceDetailBookingTB.swift in Sources */,
 				A52576F32A54402300464E1B /* ProAddCardVc.swift in Sources */,
+				ECC5A02C2AC54BE4008E7A72 /* SocketConstants.swift in Sources */,
 				C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */,
 				C284FB732A402E3E006949B4 /* RestoHomeVC.swift in Sources */,
 				A5B1873C2A669C1600C3E0A7 /* BookingLocationVC.swift in Sources */,
@@ -1756,6 +1772,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1799,6 +1816,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
