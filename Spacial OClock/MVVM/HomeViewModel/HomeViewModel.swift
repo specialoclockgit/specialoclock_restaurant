@@ -26,7 +26,7 @@ class HomeViewModel : NSObject {
     //MARK: - CUISINE RESTO LIST
     func cusinsRestoAPI(cuisineid:Int,onsuccess: @escaping (([CussinesRestoModalBody]?)->())){
         let param:parameters = ["cuisine_id":cuisineid]
-        WebService.service(API.menu_product_listing, param: param, service: .post) {
+        WebService.service(API.fetch_restos_by_cusine, param: param, service: .post) {
             (modaldata: CussinesRestoModal, Data , json) in
             onsuccess(modaldata.body)
         }
@@ -41,9 +41,18 @@ class HomeViewModel : NSObject {
         }
     }
     
+    //MARK: - LOCATION BY RESTO API
+    func locationByRestoAPI(country:String,city:String,type:String,onsuccess: @escaping ((locationByRestoModalBody?)->())){
+        let param:parameters = ["country":country, "city":city, "type":"1"]
+        WebService.service(API.fetch_restos_by_location, param: param, service: .post) {
+            (modaldata: locationByRestoModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
     //MARK: - PRODUCT DETIALS
-    func productDetialAPI(product_id:Int,onsuccess: @escaping ((productDetailModalBody?)->())){
-        let param:parameters = ["product_id":product_id ]
+    func restoDetial_API(resto_id:Int,onsuccess: @escaping ((productDetailModalBody?)->())){
+        let param:parameters = ["resto_id":resto_id ]
         WebService.service(API.product_details, param: param, service: .post) {
             (modaldata: productDetailModal, Data , json) in
             onsuccess(modaldata.body)
@@ -72,6 +81,15 @@ class HomeViewModel : NSObject {
         let param = ["theme_id":restoid]
         WebService.service(API.fetch_restos_by_theme, param: param, service: .post) {
             (modaldata: themeRestolistModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    //MARK: - REVIEE ADD API
+    func addReviewAPI(restoid:Int, rating:Double,review:String , onsuccess: @escaping ((createReviewModalBody?)->())){
+        let param = ["restrorant_bar_id":restoid , "rating":rating, "review":review] as [String:Any]
+        WebService.service(API.write_review, param: param, service: .post) {
+            (modaldata: createReviewModal, Data , json) in
             onsuccess(modaldata.body)
         }
     }

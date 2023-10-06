@@ -16,6 +16,9 @@ class AddRatingVC: UIViewController {
     @IBOutlet weak var cosmosView: CosmosView!
     
     //MARK: - VARIABLES
+    var viewmodal = HomeViewModel()
+    var restoID = Int()
+    var ratig = Double()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
@@ -23,11 +26,17 @@ class AddRatingVC: UIViewController {
         tabBarController?.tabBar.isHidden  = true
 
     }
+    
+    //MARK: - FUCNTION
+    func add_Review(){
+        viewmodal.addReviewAPI(restoid: restoID, rating: ratig , review: txtView.text) { dataa in
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
     //MARK: - ACTIONS
     @IBAction func btnSubmit(_ sender: UIButton) {
-//        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.BookingVC) as! BookingVC
-//        self.navigationController?.pushViewController(screen, animated: true)
-        self.navigationController?.popViewController(animated: true)
+        add_Review()
     }
     @IBAction func btnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)

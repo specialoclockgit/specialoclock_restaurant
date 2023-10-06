@@ -99,8 +99,8 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                     var latitude = "0.0"
                     var longitude = "0.0"
                     
-                    if let name = returnedPlace.profileImage {
-                        percentage = name as String
+                    if let name = returnedPlace.offerPercentage {
+                        percentage = name
                     }
                     
                     if let latis = returnedPlace.latitude {
@@ -113,14 +113,14 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
 
                     let marker = GMSMarker()
                     
-                    let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 15)
+                    let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 50)
                   
                     print("=====map loc",latitude,longitude)
                     gmsMapView.animate(to: camera)
                     marker.position = CLLocationCoordinate2DMake(Double(latitude) ?? 0.0, Double(longitude) ?? 0.0)
                    let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-        
-                    view.providerImageView.image = UIImage(named: "favourite")
+                    view.lblPersot.text = "\(percentage)%"
+//                    view.providerImageView.image = UIImage(named: "favourite")
         
                     marker.iconView = view
                     marker.map = self.gmsMapView
@@ -212,8 +212,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
         let vc = serviceStoryboard.instantiateViewController(withIdentifier: "MyOfferVC") as! MyOfferVC
         self.navigationController?.pushViewController(vc, animated: true)
-//        let screen = storyboard?.instantiateViewController(withIdentifier: "BookingLocationVC") as! BookingLocationVC
-//        self.navigationController?.pushViewController(screen, animated: true)
     }
     
     
@@ -390,6 +388,8 @@ extension HomeVC {
                 screen.setvalue = "Theme"
                 screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
             }else{
+                screen.setvalue = "Theme"
+                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
                 debugPrint("Not Selected")
             }
             self.navigationController?.pushViewController(screen, animated: true)

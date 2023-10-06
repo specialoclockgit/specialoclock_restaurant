@@ -25,6 +25,7 @@ var fromTabBar = false
 let iOSplatForm = "1"
 
 //let baseURL  = "http://202.164.42.227:9999"
+
 let baseURL = "http://202.164.42.227:9999/api/"
 
 let imageURL = "http://202.164.42.227:9999/"
@@ -144,12 +145,14 @@ enum API: String{
     case roomLeaderboad      = "leaderboard"
     case leaderboard         = "userQuizResult"
     case home                = "home"
-    case menu_product_listing = "menu_product_listing"
+    case fetch_restos_by_cusine = "fetch_restos_by_cusine"
     case theme_UserRestro    = "theme_UserRestro"
-    case product_details = "product_details"
+    case product_details = "fetch_resto_by_id"
     case liked_listing = "liked_listing"
     case restoLIke = "like_product"
     case fetch_restos_by_theme
+    case fetch_restos_by_location
+    case write_review 
    
 }
 

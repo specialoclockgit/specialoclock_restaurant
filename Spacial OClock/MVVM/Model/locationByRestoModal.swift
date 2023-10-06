@@ -1,20 +1,42 @@
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
 //
-//   let welcome = try? JSONDecoder().decode(Welcome.self, from: jsonData)
+//  locationByRestoModal.swift
+//  Spacial OClock
+//
+//  Created by cqlios on 28/09/23.
+//
 
 import Foundation
 
-// MARK: - CussinesRestoModal
-struct CussinesRestoModal: Codable {
+// MARK: - locationByRestoModal
+struct locationByRestoModal: Codable {
     let success: Bool?
     let code: Int?
     let message: String?
-    let body: [CussinesRestoModalBody]?
+    let body: locationByRestoModalBody?
 }
 
-// MARK: - CussinesRestoModalBody
-struct CussinesRestoModalBody: Codable {
+// MARK: - locationByRestoModalBody
+struct locationByRestoModalBody: Codable {
+    let location: [Locations]?
+}
+
+// MARK: - Locations
+struct Locations: Codable {
+    let id: Int?
+    let country, state, city: String?
+    let image: String?
+    let restroCount: Int?
+    let restrorants: [Restrorantee]?
+
+    enum CodingKeys: String, CodingKey {
+        case id, country, state, city, image
+        case restroCount = "restro_count"
+        case restrorants
+    }
+}
+
+// MARK: - Restrorantee
+struct Restrorantee: Codable {
     let id: Int?
     let name, location, country, state: String?
     let city, latitude, longitude: String?
@@ -47,3 +69,5 @@ struct CussinesRestoModalBody: Codable {
         case availableOffer, offerDescription, offerPercentage, offerOpenTime, offerCloseTime
     }
 }
+
+

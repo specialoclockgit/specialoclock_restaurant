@@ -9,6 +9,7 @@ import UIKit
 
 class senderTVC: UITableViewCell {
 
+    @IBOutlet weak var senderView: UIView!
     @IBOutlet weak var lblSenderTime: UILabel!
     @IBOutlet weak var lblSenderMsg: UILabel!
     @IBOutlet weak var senderImgView: UIImageView!

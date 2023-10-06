@@ -8,6 +8,8 @@
 import UIKit
 import SDWebImage
 import IQKeyboardManagerSwift
+import Cosmos
+import SwiftUI
 
 struct ModelMenuCollView {
     var name : [String]
@@ -24,6 +26,7 @@ class ItemDetailsVC: UIViewController {
     
     //MARK: Outlet
     @IBOutlet weak var img : UIImageView!
+    @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var scrollView : UIScrollView!
 //    @IBOutlet weak var viewSubSV : UIView!
     @IBOutlet weak var collView : UICollectionView!
@@ -60,8 +63,11 @@ class ItemDetailsVC: UIViewController {
     var ProductID = Int()
     var viewmodal = HomeViewModel()
     var modal : productDetailModalBody?
+    var images: [Imaged]?
+    var reviews: [Reviewsd]?
+    var ourMenu: [OurMenud]?
     
-//    var arrCollMenu : [ModelMenuCollView] = [ModelMenuCollView(name: ["Tonight" , "Happy Hour" , "Today" , "Tommorow"], time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
+    //    var arrCollMenu : [ModelMenuCollView] = [ModelMenuCollView(name: ["Tonight" , "Happy Hour" , "Today" , "Tommorow"], time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
     var arrCollMenu : [ModelMenuCollView] = []
     var arrTBMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Sandwich", image: ["goose" , "belveder",                                            "Ciroc" ],
                                         itemName: ["Plain Sandwich" , "Grilled Sandwich" ,                                   "Club Sandwich"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00",  "R20.00" ,"R30.00"]) ,
@@ -105,22 +111,34 @@ class ItemDetailsVC: UIViewController {
     
     //MARK: - FUNCTION
     func product_detail(){
-        viewmodal.productDetialAPI(product_id: ProductID) { data in
+        viewmodal.restoDetial_API(resto_id: ProductID) { data in
             self.modal = data
-            let imageIndex = (imageBaseURL) + (self.modal?.image ?? "")
+            self.images = data?.images ?? []
+            self.reviews = data?.reviews ?? []
+            self.ourMenu = data?.ourMenu ?? []
+            let imageIndex = (imageURL) + (self.modal?.images?.first?.image ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
-            self.lblNameREsto.text = self.modal?.restrorant?.name ?? ""
-            self.lblOpenCloseTime.text = (self.modal?.restrorant?.openTime ?? "") + "-" + (self.modal?.restrorant?.closeTime ?? "")
-            self.lblLocation.text = self.modal?.restrorant?.location ?? ""
+            self.lblNameREsto.text = self.modal?.name ?? ""
+            self.lblOpenCloseTime.text = (self.modal?.openTime ?? "") + "-" + (self.modal?.closeTime ?? "")
+            self.lblLocationOne.text = self.modal?.location ?? ""
+            self.lblLocation.text = self.modal?.city ?? ""
             if self.modal?.isLiked == 0{
                 self.imgFav.image = UIImage(named: "white h")
             }else{
                 self.imgFav.image = UIImage(named: "red h")
             }
+            self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
+            self.cosmosView.rating = Double(self.modal?.avgRating ?? "") ?? 0.0
+            self.lblRating.text = self.modal?.avgRating ?? ""
+            self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
             self.collViewMenu.reloadData()
+            self.collView.reloadData()
+            self.tbReview.reloadData()
+            self.tbMenu.reloadData()
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         product_detail()
@@ -152,6 +170,7 @@ class ItemDetailsVC: UIViewController {
             btnBook.setTitle("Book", for: .normal)
             //MARK: Set Menu tabel Data
             if status == 0 {
+                product_detail()
                 let arrDineMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Sandwich",
                                                                         image: ["planeSanwich" , "grilledSandwich", "clubSandwich" ],
                                                                          itemName: ["Plain Sandwich" , "Grilled Sandwich" ,  "Club Sandwich"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00",  "R20.00" ,"R30.00"]) ,
@@ -162,6 +181,7 @@ class ItemDetailsVC: UIViewController {
                 arrTBMenu.removeAll()
                 arrTBMenu.append(contentsOf: arrDineMenu)
             }else if status == 1 {
+                product_detail()
                 let arrMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
                                                   image: ["goose" , "belveder",  "Ciroc" ],  itemName: ["Grey Goose" , "Belvedere" , "Ciroc"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00" ,  "R20.00" ,"R30.00"]) ,
                                                     ModelMenuTBCell(heading: "Gin", image: ["goose" , "belveder", "Ciroc" ], itemName: ["Grey Goose" , "Belvedere" , "Ciroc"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00" , "R20.00" , "R30.00"]),
@@ -174,6 +194,7 @@ class ItemDetailsVC: UIViewController {
             tbMenu.reloadData()
             
         case 2 :
+            product_detail()
             ChangebgColor(viewSelected: viewReview, viewUnselected: viewAbout, viewUnselected2: viewMenu, labelSelected: lblReview, labelUnselected: lblAbout, labelUnselecte2: lblMenu)
             viewA.isHidden = true
             viewM.isHidden = true
@@ -208,6 +229,7 @@ class ItemDetailsVC: UIViewController {
         }
         else if btnBookStatus == 1{
             let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
+            screenReview.restoID = ProductID
             self.navigationController?.pushViewController(screenReview, animated: true)
         }
     }
@@ -228,11 +250,11 @@ class ItemDetailsVC: UIViewController {
 extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collView{
-            return modal?.restrorant?.restaurantImages?.count ?? 0
+            return images?.count ?? 0
         }
         else if collectionView == collViewMenu
         {
-            return modal?.restrorant?.offers?.count ?? 0
+            return ourMenu?.count ?? 0
         }else{
             return 3
         }
@@ -241,9 +263,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellItemDetailVC", for: indexPath) as! CellItemDetailVC
-            let imageIndex = (imageBaseURL) + (modal?.restrorant?.restaurantImages?[indexPath.row] ?? "")
-            self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+            let imageIndex = (imageURL) + (self.images?[indexPath.row].image ?? "")
+            cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             return cell
         }
         else if collectionView == collViewMenu{
@@ -254,12 +276,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 cell.lblTime.text = ""
                 cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
             }
-            let data = modal?.restrorant?.offers
-            
-//            cell.lblTime.text = arrCollMenu[indexPath.section].time[indexPath.row]
-            cell.lblTime.text = "\(data?[indexPath.row].openTime ?? "") - " + "\(data?[indexPath.row].closeTime ?? "")"
-            cell.lblMenuSchedule.text = data?[indexPath.row].offerName ?? ""
-//            cell.lblMenuSchedule.text = arrCollMenu[indexPath.section].name[indexPath.row]
+            let data = ourMenu?[indexPath.row]
+            cell.lblTime.text = "\(data?.offers?.openTime ?? "") - " + "\(data?.offers?.closeTime ?? "")"
+            cell.lblMenuSchedule.text = data?.offers?.offerName ?? ""
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.CellItemDetailVC, for: indexPath) as! CellItemDetailVC
@@ -302,14 +321,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
 extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tbMenu {
-            return arrTBMenu[section].image.count
+            return ourMenu?.count ?? 0
         }
-        return 2
+        return reviews?.count ?? 0
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         if tableView == tbMenu{
-            return arrTBMenu.count
+            return ourMenu?.count ?? 0
         }
         return 1
     }
@@ -319,7 +338,12 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 sectionV.layer.cornerRadius = 10.0
             
                 let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-150, height: 20) )
-                titleLbl.text = arrTBMenu[section].heading
+            if let menu = ourMenu, section < menu.count {
+                titleLbl.text = menu[section].name // Set the section header title based on your data
+                    } else {
+                        titleLbl.text = "Default Header Title" // Provide a default title if there's no data or if the section is out of bounds
+                    }
+//            titleLbl.text = ourMenu?[indexPath.row].name ?? ""
                 titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             
                 let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-150, y: 10, width: self.view.frame.width - titleLbl.frame.width, height: 30))
@@ -354,11 +378,15 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
-            let arrSection = arrTBMenu[indexPath.section]
-            cell.img.image = UIImage(named: arrSection.image[indexPath.row])
-            cell.lblItemName.text = arrSection.itemName[indexPath.row]
-            cell.lblNewPrice.text = arrSection.newPrice[indexPath.row]
-            cell.lblPrePrice.attributedText = arrSection.prevPrice[indexPath.row].strikeThrough()
+            let arrSection = ourMenu?[indexPath.section]
+           // (arrSection?.menuProducts?.first ?? [])[indexPath.row].image ?? ""
+//            let imageIndex = (imageURL) + (arrSection?.menuProducts?[indexPath.row].first?.image ?? "")
+//            cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+//            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+//            cell.img.image = UIImage(named: arrSection.image[indexPath.row])
+//            cell.lblItemName.text = arrSection.itemName[indexPath.row]
+//            cell.lblNewPrice.text = arrSection.newPrice[indexPath.row]
+//            cell.lblPrePrice.attributedText = arrSection.prevPrice[indexPath.row].strikeThrough()
             if arrCheck[indexPath.section] == true {
                 cell.viewCell.isHidden = false
                 cell.dataStackVW.isHidden = false
@@ -366,9 +394,18 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 cell.viewCell.isHidden = true
                 cell.dataStackVW.isHidden = true
             }
+            
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellItemDetailReviewTB, for: indexPath) as! CellItemDetailReviewTB
+        let imageIndex = (imageURL) + (self.reviews?[indexPath.row].user?.image ?? "")
+        cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+        cell.lblName.text = self.reviews?[indexPath.row].user?.name ?? ""
+        cell.lblReview.text = self.reviews?[indexPath.row].review ?? ""
+        cell.cosmosView.rating = Double(self.reviews?[indexPath.row].rating ?? 0)
+        cell.lblDate.text = string_date_ToDate(reviews?[indexPath.row].createdAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy
+        )
         return cell
     }
     

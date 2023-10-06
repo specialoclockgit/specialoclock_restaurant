@@ -8,9 +8,10 @@
 import UIKit
 import IQKeyboardManagerSwift
 import DropDown
+
 class ChatVC: UIViewController, UITextViewDelegate {
     
-    //    MARK: - OUTLET
+    //MARK: - OUTLET
     @IBOutlet weak var msgTextView: IQTextView!
     @IBOutlet weak var bottomView: NSLayoutConstraint!
     @IBOutlet weak var chatTbleView: UITableView!
@@ -18,12 +19,12 @@ class ChatVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var heightConst: NSLayoutConstraint!
     @IBOutlet weak var viewBottom: UIView!
     
-    //    MARK: - VARIABLE
+    //MARK: - VARIABLE
     var selectedText: Bool?
     let dropDown = DropDown()
     var chatmodel :[MessageListModel]?
     
-    //     MARK: - LIFE CYCLE
+    //MARK: - LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,10 +69,6 @@ class ChatVC: UIViewController, UITextViewDelegate {
         fetchMessages()
         sendMessageListener()
         clearChatListener()
-      
-        
-        
-        
     }
     
     //     MARK: - ACTION
@@ -117,33 +114,13 @@ class ChatVC: UIViewController, UITextViewDelegate {
             CommonUtilities.shared.showAlert(message: "Please write a message to send", isSuccess: .error)
         }
     }
-    //    @IBAction func btnDot(_ sender: UIButton) {
-    //        dropDown.anchorView = sender
-    //        dropDown.dataSource = ["Report","Block"]
-    //        dropDown.show()
-    //        dropDown.width = 100
-    //        dropDown.cellHeight = 30
-    //        dropDown.direction = .bottom
-    //        dropDown.backgroundColor = .white
-    //        dropDown.cornerRadius = 10
-    //        // Top of drop down will be below the anchorView
-    //        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-    //        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-    //            if index == 0 {
-    //                let vc = self.storyboard?.instantiateViewController(withIdentifier: "PopUpReportReasonVC") as! PopUpReportReasonVC
-    //                vc.modalPresentationStyle = .overFullScreen
-    //                self.navigationController?.present(vc, animated: true)
-    //            }else {
-    //
-    //            }
-    //        }
-    //    }
+    
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
         
     }
     
-    //     MARK: - FUNCTION
+    //MARK: - FUNCTION
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView == msgTextView {
             selectedText = true
@@ -164,18 +141,7 @@ class ChatVC: UIViewController, UITextViewDelegate {
 }
 // MARK: - EXTENSION OF TABLEVIEW
 extension ChatVC: UITableViewDelegate, UITableViewDataSource{
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        if chatmodel?.count == 0 {
-//            chatTbleView.setNoDataMessage("No message found", txtColor: .black)
-//        }
-//        else{
-//            chatTbleView.backgroundView = nil
-//            return chatmodel?.count ?? 0
-//        }
-//        return 0
-//    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if chatmodel?.count == 0 {
             chatTbleView.setNoDataMessage("No message found", txtColor: .black)
         }
@@ -188,25 +154,28 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if Store.userDetails?.id ?? 0 != chatmodel?[indexPath.row].senderID ?? 0 {
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: "receverTVC", for: indexPath) as! receverTVC
+            cell.receverView.layer.cornerRadius = 6
+            cell.receverView.clipsToBounds = true
+            cell.receverView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner,.layerMaxXMaxYCorner]
             cell.lblRecever.text = chatmodel?[indexPath.row].message ?? ""
             let isoDate =  self.chatmodel?[indexPath.row].createdAt ?? ""
                    let dateFormatter = DateFormatter()
                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                   let date = dateFormatter.date(from: isoDate ?? "")
+                   let date = dateFormatter.date(from: isoDate)
                    cell.lblTime.text = date?.toLocalTime().timeAgoSinceDate()
             return cell
-            
-            
         }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "senderTVC", for: indexPath) as! senderTVC
             cell.lblSenderMsg.text = chatmodel?[indexPath.row].message ?? ""
+            cell.senderView.layer.cornerRadius = 6
+            cell.senderView.clipsToBounds = true
+            cell.senderView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner,.layerMinXMaxYCorner]
             let isoDate =  self.chatmodel?[indexPath.row].createdAt ?? ""
                    let dateFormatter = DateFormatter()
                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                   let date = dateFormatter.date(from: isoDate ?? "")
+                   let date = dateFormatter.date(from: isoDate)
             cell.lblSenderTime.text = date?.toLocalTime().timeAgoSinceDate()
             return cell
         }

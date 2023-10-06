@@ -61,9 +61,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeSeeMoreCVC", for: indexPath) as! homeSeeMoreCVC
         if setvalue == "Location"{
-            let imageIndex = (imageBaseURL) + (self.location[indexPath.row].image ?? "")
-            cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.imgVirw.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblName.text = self.location[indexPath.row].city ?? ""
             cell.lblDis.text = "Restaurant \(self.location[indexPath.row].restroCount ?? 0)"
         }else if setvalue == "Cuisine"{
@@ -79,9 +77,9 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.lblDis.text = "Restaurant \(self.category[indexPath.row].clubCount ?? 0)"
             cell.lblName.text = self.category[indexPath.row].title ?? ""
         }else{
-            let imageIndex = (imageBaseURL) + (self.themeArr[indexPath.row].image ?? "")
-            cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            let image = "\(self.themeArr[indexPath.row].image ?? "")"
+            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.themeArr[indexPath.row].productName ?? ""
         }
@@ -93,10 +91,14 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
         if setvalue == "Location"{
-            
+            vc.country = self.location[indexPath.row].country ?? ""
+            vc.city = self.location[indexPath.row].city ?? ""
+            vc.setValue = "Location"
+            vc.setimage = "PIN"
         }else if setvalue == "Cuisine"{
             vc.cusinessID = self.cuisine[indexPath.row].id ?? 0
             vc.lblName = self.cuisine[indexPath.row].name ?? ""
+            vc.setimage = "soup"
             vc.setValue = "Cuisines"
         }else if setvalue == "Category"{
             //vc.cuisine = category[indexPath.row]
@@ -104,6 +106,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             vc.themeID = themeArr[indexPath.row].id ?? 0
             vc.lblName = self.themeArr[indexPath.row].productName ?? ""
             vc.setValue = "Theme"
+            vc.setimage = "mask"
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }

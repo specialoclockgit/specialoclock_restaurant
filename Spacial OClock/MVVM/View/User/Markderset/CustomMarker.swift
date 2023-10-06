@@ -10,7 +10,9 @@ import UIKit
 
 class CustomMarker: UIView {
 
-   
+    @IBOutlet weak var lblPersot: UILabel!
+    @IBOutlet weak var bgView: UIView!
+    
     @IBOutlet weak var providerImageView: UIImageView!
     
     

@@ -20,11 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         IQKeyboardManager.shared.enable = true
         GMSServices.provideAPIKey("AIzaSyA-Ga7BvTYtT6KGYYoMWfolfoPj7CswuL0")
         GMSPlacesClient.provideAPIKey("AIzaSyDG3ftTHL_IMGAd8c8vU-q0Oi-oURgTeKE")
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
         SocketIOManager.sharedInstance.connectMySocket()
         SocketIOManager.sharedInstance.connect_user()
         SocketIOManager.sharedInstance.connect_user_listen()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
             locationUpdated = true
             locationManager.delegate = self

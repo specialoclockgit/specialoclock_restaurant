@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Cosmos
 
 class CellItemDetailReviewTB: UITableViewCell {
     
     //MARK: Outlets
+    @IBOutlet weak var cosmosView: CosmosView!
+    @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var lblReview : UILabel!
     @IBOutlet weak var lblName : UILabel!
