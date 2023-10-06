@@ -66,6 +66,7 @@ class ItemDetailsVC: UIViewController {
     var images: [Imaged]?
     var reviews: [Reviewsd]?
     var ourMenu: [OurMenud]?
+    var productModal : menuProductModalBody?
     
     //    var arrCollMenu : [ModelMenuCollView] = [ModelMenuCollView(name: ["Tonight" , "Happy Hour" , "Today" , "Tommorow"], time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
     var arrCollMenu : [ModelMenuCollView] = []
@@ -136,6 +137,16 @@ class ItemDetailsVC: UIViewController {
             self.collView.reloadData()
             self.tbReview.reloadData()
             self.tbMenu.reloadData()
+            //self.menuProductAPI()
+        }
+    }
+    
+    //MARK: - MENU PRODUCT API
+    func menuProductAPI(id: Int){
+        viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id) { dataa in
+            self.productModal = dataa
+            self.tbMenu.reloadData()
+            self.collViewMenu.reloadData()
         }
     }
     
@@ -294,10 +305,15 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             return CGSize(width: 120.0, height: 80.0)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if collectionView == collView{
+//
+//        }
         debugPrint(indexPath.row)
         let index = indexPath.row
         if index == 0{
             if status == 0 {
+                menuProductAPI(id: ourMenu?[indexPath.row].id ?? 0)
+                
                 let breakfastArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Breakfast",
                                                                         image: ["clubSandwich" , "grilledSandwich", "planeSanwich" ],
                                                                         itemName: ["Grey Goose" , "Grilled Sandwich" , "Sandwich"],
@@ -321,14 +337,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
 extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tbMenu {
-            return ourMenu?.count ?? 0
+            return productModal?.categories?[section].products?.count ?? 0
         }
         return reviews?.count ?? 0
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         if tableView == tbMenu{
-            return ourMenu?.count ?? 0
+            return productModal?.categories?.count ?? 0
         }
         return 1
     }
@@ -338,11 +354,12 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 sectionV.layer.cornerRadius = 10.0
             
                 let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-150, height: 20) )
-            if let menu = ourMenu, section < menu.count {
-                titleLbl.text = menu[section].name // Set the section header title based on your data
-                    } else {
-                        titleLbl.text = "Default Header Title" // Provide a default title if there's no data or if the section is out of bounds
-                    }
+//            if let menu = ourMenu, section < menu.count {
+//                titleLbl.text = menu[section].name // Set the section header title based on your data
+//                    } else {
+//                        titleLbl.text = "Default Header Title" // Provide a default title if there's no data or if the section is out of bounds
+//                    }
+            titleLbl.text = productModal?.categories?[section].title ?? ""
 //            titleLbl.text = ourMenu?[indexPath.row].name ?? ""
                 titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             
@@ -378,7 +395,9 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
-            let arrSection = ourMenu?[indexPath.section]
+            let arrSection = productModal?.categories?[indexPath.section].products
+            
+            
            // (arrSection?.menuProducts?.first ?? [])[indexPath.row].image ?? ""
 //            let imageIndex = (imageURL) + (arrSection?.menuProducts?[indexPath.row].first?.image ?? "")
 //            cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray

@@ -211,6 +211,7 @@
 		ECC5A02E2AC5B145008E7A72 /* locationByRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5A02D2AC5B145008E7A72 /* locationByRestoModal.swift */; };
 		ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */; };
 		ECC5BCEF2ABC281F00143940 /* productDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */; };
+		ECCB15CE2ACFEF17003B4B72 /* menuProductModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB15CD2ACFEF17003B4B72 /* menuProductModal.swift */; };
 		ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE802682ABD83F3004CC589 /* favListModal.swift */; };
 		ECE8026B2ABDBD7F004CC589 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = ECE8026A2ABDBD7F004CC589 /* nodataFound.gif */; };
 /* End PBXBuildFile section */
@@ -459,6 +460,7 @@
 		ECC5A02D2AC5B145008E7A72 /* locationByRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationByRestoModal.swift; sourceTree = "<group>"; };
 		ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themeListModal.swift; sourceTree = "<group>"; };
 		ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productDetailModal.swift; sourceTree = "<group>"; };
+		ECCB15CD2ACFEF17003B4B72 /* menuProductModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuProductModal.swift; sourceTree = "<group>"; };
 		ECE802682ABD83F3004CC589 /* favListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favListModal.swift; sourceTree = "<group>"; };
 		ECE8026A2ABDBD7F004CC589 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		FFB2FFBD55D1FD8B4740B383 /* Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				ECC5A02D2AC5B145008E7A72 /* locationByRestoModal.swift */,
 				EC1B96372ACC45A500BBEF7B /* createReviewModal.swift */,
 				EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */,
+				ECCB15CD2ACFEF17003B4B72 /* menuProductModal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1446,6 +1449,7 @@
 				C29CDAFE2A42BB1D0035E03D /* VerifypopUpVC.swift in Sources */,
 				A5F18B882A545149006979DD /* AddProductVC.swift in Sources */,
 				A58CCCAA2A5EDAAE00DFA478 /* EditProfileVC.swift in Sources */,
+				ECCB15CE2ACFEF17003B4B72 /* menuProductModal.swift in Sources */,
 				8B0EA6F02A85093E00353166 /* UploadImgCVC.swift in Sources */,
 				A5A8CF3F2A580E7C006F23ED /* RestoForgotpassVC.swift in Sources */,
 				C2B891232A4AEC820066E753 /* MyMenuTvc.swift in Sources */,

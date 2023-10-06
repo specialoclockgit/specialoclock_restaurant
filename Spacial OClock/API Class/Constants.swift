@@ -152,7 +152,8 @@ enum API: String{
     case restoLIke = "like_product"
     case fetch_restos_by_theme
     case fetch_restos_by_location
-    case write_review 
+    case write_review
+    case fetch_data_by_menutype
    
 }
 
