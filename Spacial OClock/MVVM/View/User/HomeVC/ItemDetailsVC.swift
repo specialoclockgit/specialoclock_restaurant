@@ -84,6 +84,7 @@ class ItemDetailsVC: UIViewController {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        tbMenu.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         initialLoad()
         img.image = imgName
         collView.delegate = self
@@ -352,14 +353,9 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         if tableView == tbMenu{
                 let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
                 sectionV.layer.cornerRadius = 10.0
-            
                 let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-150, height: 20) )
-//            if let menu = ourMenu, section < menu.count {
-//                titleLbl.text = menu[section].name // Set the section header title based on your data
-//                    } else {
-//                        titleLbl.text = "Default Header Title" // Provide a default title if there's no data or if the section is out of bounds
-//                    }
-            titleLbl.text = productModal?.categories?[section].title ?? ""
+
+            titleLbl.text = productModal?.categories?[section].products?.first?.menuTypeName ?? ""
 //            titleLbl.text = ourMenu?[indexPath.row].name ?? ""
                 titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             
@@ -377,7 +373,6 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 viewAllBtn.tag = section
                 viewAllBtn.addTarget(self, action: #selector(isHidden), for: .touchUpInside)
                 viewAllBtn.tag = section
-            
                 sectionV.addSubview(titleLbl)
                 sectionV.addSubview(viewAllBtn)
                 sectionV.bringSubviewToFront(viewAllBtn)
@@ -396,15 +391,11 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
             let arrSection = productModal?.categories?[indexPath.section].products
-            
-            
-           // (arrSection?.menuProducts?.first ?? [])[indexPath.row].image ?? ""
-//            let imageIndex = (imageURL) + (arrSection?.menuProducts?[indexPath.row].first?.image ?? "")
-//            cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
-//            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
-//            cell.img.image = UIImage(named: arrSection.image[indexPath.row])
-//            cell.lblItemName.text = arrSection.itemName[indexPath.row]
-//            cell.lblNewPrice.text = arrSection.newPrice[indexPath.row]
+            let imageIndex = (imageURL) + (arrSection?[indexPath.row].image ?? "")
+            cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+            cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""
+            cell.lblNewPrice.text = "\(arrSection?[indexPath.row].price ?? 0)"
 //            cell.lblPrePrice.attributedText = arrSection.prevPrice[indexPath.row].strikeThrough()
             if arrCheck[indexPath.section] == true {
                 cell.viewCell.isHidden = false
@@ -427,20 +418,19 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         )
         return cell
     }
+       
+       override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+           if(keyPath == "contentSize"){
+               if let newvalue = change?[.newKey]
+               {
+                   let newsize  = newvalue as! CGSize
+                   heightTBMenu.constant = newsize.height
+               }
+           }
+       }
+
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == tbMenu{
-            return  arrCheck[indexPath.section] == true ?  UITableView.automaticDimension : 0
-        }else{
-           return UITableView.automaticDimension
-        }
-    }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        DispatchQueue.main.async { [self] in
-            heightTBMenu.constant = tbMenu.contentSize.height
-            heightTBReview.constant = tbReview.contentSize.height
-        }
-    }
+
 }
 
 //MARK: InitialLoad Fnction
