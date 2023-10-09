@@ -28,7 +28,8 @@ class ItemDetailsVC: UIViewController {
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var scrollView : UIScrollView!
-//    @IBOutlet weak var viewSubSV : UIView!
+    //    @IBOutlet weak var viewSubSV : UIView!
+    @IBOutlet weak var lblOfferDiscription: UILabel!
     @IBOutlet weak var collView : UICollectionView!
     @IBOutlet weak var tbReview : UITableView!
     @IBOutlet weak var stackView : UIStackView!
@@ -58,6 +59,7 @@ class ItemDetailsVC: UIViewController {
     @IBOutlet weak var btnFav : UIButton!
     @IBOutlet weak var btnBook : UIButton!
     @IBOutlet weak var viewButton : UIView!
+    @IBOutlet weak var heightViewButton : NSLayoutConstraint!
     
     //MARK: Variable
     var ProductID = Int()
@@ -66,12 +68,11 @@ class ItemDetailsVC: UIViewController {
     var images: [Imaged]?
     var reviews: [Reviewsd]?
     var ourMenu: [OurMenud]?
+    var products: [Product]?
     var productModal : menuProductModalBody?
-    
-    //    var arrCollMenu : [ModelMenuCollView] = [ModelMenuCollView(name: ["Tonight" , "Happy Hour" , "Today" , "Tommorow"], time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
     var arrCollMenu : [ModelMenuCollView] = []
     var arrTBMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Sandwich", image: ["goose" , "belveder",                                            "Ciroc" ],
-                                        itemName: ["Plain Sandwich" , "Grilled Sandwich" ,                                   "Club Sandwich"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00",  "R20.00" ,"R30.00"]) ,
+                                                         itemName: ["Plain Sandwich" , "Grilled Sandwich" ,                                   "Club Sandwich"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00",  "R20.00" ,"R30.00"]) ,
                                          
                                          ModelMenuTBCell(heading: "Burgers", image: ["" ], itemName: [""], prevPrice: [""], newPrice: [""]),
                                          ModelMenuTBCell(heading: "Pizzas", image: ["" ], itemName: [""], prevPrice: [""], newPrice: [""]),
@@ -80,6 +81,8 @@ class ItemDetailsVC: UIViewController {
     var arrCheck : [Bool] = []
     var btnBookStatus = Int()
     let status = UserDefaults.standard.dineDrinkStatus
+    var actualprice = String()
+    var offerlessprice = String()
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
@@ -138,7 +141,9 @@ class ItemDetailsVC: UIViewController {
             self.collView.reloadData()
             self.tbReview.reloadData()
             self.tbMenu.reloadData()
-            //self.menuProductAPI()
+            if self.ourMenu?.count ?? 0 > 0 {
+                self.menuProductAPI(id: self.ourMenu?[0].id ?? 0)
+            }
         }
     }
     
@@ -146,6 +151,10 @@ class ItemDetailsVC: UIViewController {
     func menuProductAPI(id: Int){
         viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id) { dataa in
             self.productModal = dataa
+            self.products = dataa?.categories?.first?.products ?? []
+            self.actualprice = "\(self.products?.first?.price ?? 0)"
+            self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? 0)"
+            self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
             self.tbMenu.reloadData()
             self.collViewMenu.reloadData()
         }
@@ -183,25 +192,8 @@ class ItemDetailsVC: UIViewController {
             //MARK: Set Menu tabel Data
             if status == 0 {
                 product_detail()
-                let arrDineMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Sandwich",
-                                                                        image: ["planeSanwich" , "grilledSandwich", "clubSandwich" ],
-                                                                         itemName: ["Plain Sandwich" , "Grilled Sandwich" ,  "Club Sandwich"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00",  "R20.00" ,"R30.00"]) ,
-                                                                          
-                                                                          ModelMenuTBCell(heading: "Burgers", image: ["" ], itemName: [""], prevPrice: [""], newPrice: [""]),
-                                                                          ModelMenuTBCell(heading: "Pizzas", image: ["" ], itemName: [""], prevPrice: [""], newPrice: [""]),
-                                                                          ModelMenuTBCell(heading: "Soups", image: ["" ], itemName: [""], prevPrice: [""], newPrice: [""])]
-                arrTBMenu.removeAll()
-                arrTBMenu.append(contentsOf: arrDineMenu)
             }else if status == 1 {
                 product_detail()
-                let arrMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
-                                                  image: ["goose" , "belveder",  "Ciroc" ],  itemName: ["Grey Goose" , "Belvedere" , "Ciroc"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00" ,  "R20.00" ,"R30.00"]) ,
-                                                    ModelMenuTBCell(heading: "Gin", image: ["goose" , "belveder", "Ciroc" ], itemName: ["Grey Goose" , "Belvedere" , "Ciroc"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00" , "R20.00" , "R30.00"]),
-                                                    ModelMenuTBCell(heading: "Rum", image: ["goose" , "belveder", "Ciroc" ], itemName: ["Grey Goose" , "Belvedere" , "Ciroc"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00" , "R20.00" , "R30.00"]),
-                                                    ModelMenuTBCell(heading: "Tequila", image: ["goose" , "belveder", "Ciroc" ], itemName: ["Grey Goose" , "Belvedere" , "Ciroc"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00" , "R20.00" , "R30.00"])]
-                arrTBMenu.removeAll()
-                arrTBMenu.append(contentsOf: arrMenu)
-               
             }
             tbMenu.reloadData()
             
@@ -237,6 +229,9 @@ class ItemDetailsVC: UIViewController {
     @IBAction func btnBookAct(_ sender : UIButton){
         if btnBookStatus == 0{
             let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
+//            screen.offer_id = self.menuProductAPI(id: ourMenu?[sender.tag].id ?? 0)
+            screen.numberofperson = 20
+            screen.resto_id = ProductID
             self.navigationController?.pushViewController(screen, animated: true)
         }
         else if btnBookStatus == 1{
@@ -259,6 +254,7 @@ class ItemDetailsVC: UIViewController {
         sender.isSelected = !sender.isSelected
     }
 }
+
 extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collView{
@@ -303,18 +299,17 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         if collectionView == collViewMenu {
             return CGSize (width: 120.0, height: 200.0)
         }
-            return CGSize(width: 120.0, height: 80.0)
+        return CGSize(width: 120.0, height: 80.0)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if collectionView == collView{
-//
-//        }
+        //        if collectionView == collView{
+        //
+        //        }
         debugPrint(indexPath.row)
         let index = indexPath.row
         if index == 0{
             if status == 0 {
                 menuProductAPI(id: ourMenu?[indexPath.row].id ?? 0)
-                
                 let breakfastArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Breakfast",
                                                                         image: ["clubSandwich" , "grilledSandwich", "planeSanwich" ],
                                                                         itemName: ["Grey Goose" , "Grilled Sandwich" , "Sandwich"],
@@ -324,10 +319,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 arrTBMenu.append(contentsOf: breakfastArr)
             }else if status == 1 {
                 let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
-                                                                        image: ["goose" , "belveder", "Ciroc" ],
-                                                                        itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
-                                                                        prevPrice: ["R50.00" , "R50.00" , "R50.00"],
-                                                                        newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
+                                                                     image: ["goose" , "belveder", "Ciroc" ],
+                                                                     itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
+                                                                     prevPrice: ["R50.00" , "R50.00" , "R50.00"],
+                                                                     newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
                 arrTBMenu.removeAll()
                 arrTBMenu.append(contentsOf: drinksArr)
             }
@@ -338,47 +333,47 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
 extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tbMenu {
-            return productModal?.categories?[section].products?.count ?? 0
+            if arrCheck[section] == false {
+                return 0
+            } else {
+                return productModal?.categories?[section].products?.count ?? 0
+            }
         }
         return reviews?.count ?? 0
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         if tableView == tbMenu{
             return productModal?.categories?.count ?? 0
         }
-        return 1
+        return self.reviews?.count ?? 0
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if tableView == tbMenu{
-                let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
-                sectionV.layer.cornerRadius = 10.0
-                let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-150, height: 20) )
-
+            let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
+            sectionV.layer.cornerRadius = 10.0
+            let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-150, height: 20) )
             titleLbl.text = productModal?.categories?[section].products?.first?.menuTypeName ?? ""
-//            titleLbl.text = ourMenu?[indexPath.row].name ?? ""
-                titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
-            
-                let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-150, y: 10, width: self.view.frame.width - titleLbl.frame.width, height: 30))
-                viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-                if arrCheck[section] == true {
-                    sectionV.backgroundColor = .systemGray5
-                    viewAllBtn.setImage(UIImage(named: "arrowIcon"), for: .normal)
-                }else{
-                    sectionV.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.3)
-                    viewAllBtn.setImage(UIImage(named: "arrowDefault"), for: .normal)
-                    
-                }
-                viewAllBtn.setTitleColor(.black, for: .normal)
-                viewAllBtn.tag = section
-                viewAllBtn.addTarget(self, action: #selector(isHidden), for: .touchUpInside)
-                viewAllBtn.tag = section
-                sectionV.addSubview(titleLbl)
-                sectionV.addSubview(viewAllBtn)
-                sectionV.bringSubviewToFront(viewAllBtn)
-                return sectionV
+            titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
+            let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-150, y: 10, width: self.view.frame.width - titleLbl.frame.width, height: 30))
+            viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            if arrCheck[section] == true {
+                sectionV.backgroundColor = .systemGray5
+                viewAllBtn.setImage(UIImage(named: "arrowIcon"), for: .normal)
+            }else{
+                sectionV.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.3)
+                viewAllBtn.setImage(UIImage(named: "arrowDefault"), for: .normal)
+            }
+            viewAllBtn.setTitleColor(.black, for: .normal)
+            viewAllBtn.tag = section
+            viewAllBtn.addTarget(self, action: #selector(isHidden), for: .touchUpInside)
+            viewAllBtn.tag = section
+            sectionV.addSubview(titleLbl)
+            sectionV.addSubview(viewAllBtn)
+            sectionV.bringSubviewToFront(viewAllBtn)
+            return sectionV
         }
-       return UIView()
+        return UIView()
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tableView == tbMenu{
@@ -386,7 +381,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         }
         return 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
@@ -396,41 +391,36 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""
             cell.lblNewPrice.text = "\(arrSection?[indexPath.row].price ?? 0)"
-//            cell.lblPrePrice.attributedText = arrSection.prevPrice[indexPath.row].strikeThrough()
-            if arrCheck[indexPath.section] == true {
-                cell.viewCell.isHidden = false
-                cell.dataStackVW.isHidden = false
-            }else{
-                cell.viewCell.isHidden = true
-                cell.dataStackVW.isHidden = true
-            }
-            
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellItemDetailReviewTB, for: indexPath) as! CellItemDetailReviewTB
+            let imageIndex = (imageURL) + (self.reviews?[indexPath.row].user?.image ?? "")
+            cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+            cell.lblName.text = self.reviews?[indexPath.row].user?.name ?? ""
+            cell.lblReview.text = self.reviews?[indexPath.row].review ?? ""
+            cell.cosmosView.rating = Double(self.reviews?[indexPath.row].rating ?? "") ?? 0.0
+            cell.lblDate.text = string_date_ToDate(reviews?[indexPath.row].createdAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
             return cell
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellItemDetailReviewTB, for: indexPath) as! CellItemDetailReviewTB
-        let imageIndex = (imageURL) + (self.reviews?[indexPath.row].user?.image ?? "")
-        cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
-        cell.lblName.text = self.reviews?[indexPath.row].user?.name ?? ""
-        cell.lblReview.text = self.reviews?[indexPath.row].review ?? ""
-        cell.cosmosView.rating = Double(self.reviews?[indexPath.row].rating ?? 0)
-        cell.lblDate.text = string_date_ToDate(reviews?[indexPath.row].createdAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy
-        )
-        return cell
+        
     }
-       
-       override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-           if(keyPath == "contentSize"){
-               if let newvalue = change?[.newKey]
-               {
-                   let newsize  = newvalue as! CGSize
-                   heightTBMenu.constant = newsize.height
-               }
-           }
-       }
-
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.heightTBReview.constant = self.tbReview.contentSize.height
+            self.heightTBMenu.constant = self.tbMenu.contentSize.height
+        }
+    }
     
-
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if(keyPath == "contentSize"){
+            if let newvalue = change?[.newKey]
+            {
+                let newsize  = newvalue as! CGSize
+                heightTBMenu.constant = newsize.height
+            }
+        }
+    }
 }
 
 //MARK: InitialLoad Fnction
@@ -443,28 +433,23 @@ extension ItemDetailsVC{
         viewReview.layer.maskedCorners = [.layerMinXMinYCorner]
         imgBottomView.layer.cornerRadius = 30.0
         imgBottomView.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
-        
         lblMenu.lblCornerRadius(cornerRadius: 15.0)
         lblAbout.lblCornerRadius(cornerRadius: 15.0)
         lblReview.lblCornerRadius(cornerRadius: 15.0)
-        
         btnFav.layer.cornerRadius = btnFav.frame.height / 2
-        
         viewA.isHidden = false
         viewM.isHidden = true
         viewR.isHidden = true
         viewButton.isHidden = true
-        //lblAbout Text
-        lblAboutDetail.text = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem \n It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled \n It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem It is a long established fact that a reader will be distracted by the readable c \n It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem It is a long established fact that a reader will be distracted by the readable c"
+        
         //MARK: Menu Offer Arr
-     
         if status == 0 {
             let collDineData : [ModelMenuCollView] = [ModelMenuCollView(name: ["Breakfast" , "Lunch" , "Dinner" , "Special"], time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
             arrCollMenu.removeAll()
             arrCollMenu.append(contentsOf: collDineData)
         }else{
             let collDrinkData : [ModelMenuCollView] = [ModelMenuCollView(name: ["Tonight" , "Happy Hour" ,                                           "Today" , "Tommorow"],
-                                                    time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
+                                                                         time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
             arrCollMenu.removeAll()
             arrCollMenu.append(contentsOf: collDrinkData)
         }
@@ -541,5 +526,5 @@ extension ItemDetailsVC{
         }
         tbMenu.reloadData()
     }
-
+    
 }

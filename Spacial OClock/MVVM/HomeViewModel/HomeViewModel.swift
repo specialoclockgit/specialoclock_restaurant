@@ -102,4 +102,31 @@ class HomeViewModel : NSObject {
             onsuccess(modaldata.body)
         }
     }
+    
+    //MARK: - BOOKING RESTO API
+    func booking_API(bookingDate:String, slotid:Int , numberofPeople:Int,restoid:Int ,offerid:Int ,  onsuccess: @escaping ((bookingRestoModalBody?)->())){
+        let param = ["booking_date":restoid, "slot_id":slotid, "number_of_people":numberofPeople, "restrorant_bar_id":restoid, "offer_id":offerid] as [String:Any]
+        WebService.service(API.booking, param: param, service: .post) {
+            (modaldata: bookingRestoModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    //MARK: - GET SLOTS API
+    func getslots_API(date:String, menuid:Int , restrorant_bar_id:Int,restoid:Int ,offerid:Int ,  onsuccess: @escaping ((getSlotsModalBody?)->())){
+        let param = ["date":date, "menu_id":menuid, "restrorant_bar_id":restrorant_bar_id, "offer_id":offerid] as [String:Any]
+        WebService.service(API.time_slot, param: param, service: .post) {
+            (modaldata: getSlotsModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    //MARK: - CURRENT PAST BOOKING API
+    func currentPast_API(type:Int,genre:String,onsuccess: @escaping (([currentPastModalBody]?)->())){
+        let param = ["type":type, "genre":"0"] as [String:Any]
+        WebService.service(API.booking_history, param: param, service: .post) {
+            (modaldata: currentPastModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
 }

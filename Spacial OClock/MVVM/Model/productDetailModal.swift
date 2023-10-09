@@ -218,7 +218,7 @@ struct productDetailModalBody: Codable {
     let isBlocked: Int?
     let profileImage, commission: String?
     let isLiked: Int?
-    let avgRating: String?
+    var avgRating: String?
     let images: [Imaged]?
     let reviews: [Reviewsd]?
     let ourMenu: [OurMenud]?
@@ -241,6 +241,39 @@ struct productDetailModalBody: Codable {
         case avgRating = "avg_rating"
         case images, reviews
         case ourMenu = "our_menu"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decodeIfPresent(Int.self, forKey: .id)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
+        self.location = try container.decodeIfPresent(String.self, forKey: .location)
+        self.country = try container.decodeIfPresent(String.self, forKey: .country)
+        self.state = try container.decodeIfPresent(String.self, forKey: .state)
+        self.city = try container.decodeIfPresent(String.self, forKey: .city)
+        self.latitude = try container.decodeIfPresent(String.self, forKey: .latitude)
+        self.longitude = try container.decodeIfPresent(String.self, forKey: .longitude)
+        self.userID = try container.decodeIfPresent(Int.self, forKey: .userID)
+        self.shortDescription = try container.decodeIfPresent(String.self, forKey: .shortDescription)
+        self.status = try container.decodeIfPresent(Int.self, forKey: .status)
+        self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
+        self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
+        self.type = try container.decodeIfPresent(Int.self, forKey: .type)
+        self.categoryID = try container.decodeIfPresent(Int.self, forKey: .categoryID)
+        self.cuisineID = try container.decodeIfPresent(Int.self, forKey: .cuisineID)
+        self.themesRestrorantID = try container.decodeIfPresent(Int.self, forKey: .themesRestrorantID)
+        self.isBlocked = try container.decodeIfPresent(Int.self, forKey: .isBlocked)
+        self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage)
+        self.commission = try container.decodeIfPresent(String.self, forKey: .commission)
+        self.isLiked = try container.decodeIfPresent(Int.self, forKey: .isLiked)
+//        self.avgRating = try container.decodeIfPresent(String.self, forKey: .avgRating)
+        if let value = try? container.decode(String.self, forKey: .avgRating) {
+            self.avgRating = value
+        }else if let value = try? container.decode(Int.self, forKey: .avgRating) {
+            self.avgRating = "\(value)"
+        }
+        self.images = try container.decodeIfPresent([Imaged].self, forKey: .images)
+        self.reviews = try container.decodeIfPresent([Reviewsd].self, forKey: .reviews)
+        self.ourMenu = try container.decodeIfPresent([OurMenud].self, forKey: .ourMenu)
     }
 }
 
@@ -323,8 +356,8 @@ struct Offersd: Codable {
 
 // MARK: - Reviewsd
 struct Reviewsd: Codable {
-    let id, userID, restrorantBarID, rating: Int?
-    let review, createdAt, updatedAt: String?
+    var id, userID, restrorantBarID: Int?
+    var review, createdAt, rating, updatedAt: String?
     let user: User?
 
     enum CodingKeys: String, CodingKey {
@@ -332,6 +365,27 @@ struct Reviewsd: Codable {
         case userID = "user_id"
         case restrorantBarID = "restrorant_bar_id"
         case rating, review, createdAt, updatedAt, user
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decodeIfPresent(Int.self, forKey: .id)
+        self.userID = try container.decodeIfPresent(Int.self, forKey: .userID)
+        self.restrorantBarID = try container.decodeIfPresent(Int.self, forKey: .restrorantBarID)
+//        self.rating = try container.decodeIfPresent(Int.self, forKey: .rating)
+        if let value  = try? container.decode(String.self, forKey: .rating) {
+            rating = value
+        } else if let value  = try? container.decode(Int.self, forKey: .rating) {
+            rating = "\(value)"
+        }
+//        self.review = try container.decodeIfPresent(String.self, forKey: .review)
+        if let value = try? container.decode(String.self, forKey: .review) {
+            self.review = value
+        }else if let value = try? container.decode(Int.self, forKey: .review) {
+            self.review = "\(value)"
+        }
+        self.createdAt = try container.decodeIfPresent(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decodeIfPresent(String.self, forKey: .updatedAt)
+        self.user = try container.decodeIfPresent(User.self, forKey: .user)
     }
 }
 

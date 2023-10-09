@@ -202,6 +202,9 @@
 		ECAF86C82AC69ABC0071BFF3 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF86C52AC69ABC0071BFF3 /* SocketIOManager.swift */; };
 		ECAF86C92AC69ABC0071BFF3 /* SocketConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF86C62AC69ABC0071BFF3 /* SocketConstants.swift */; };
 		ECAF86CA2AC69ABC0071BFF3 /* Socketmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF86C72AC69ABC0071BFF3 /* Socketmodel.swift */; };
+		ECB3A2A32AD404D100C65065 /* bookingRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */; };
+		ECB3A2A52AD4134200C65065 /* getSlotsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */; };
+		ECB3A2A72AD431F400C65065 /* currentPastModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A62AD431F400C65065 /* currentPastModal.swift */; };
 		ECBC37BE2AC40E8A00ADEDC7 /* themeRestolistModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */; };
 		ECBC37C02AC4171A00ADEDC7 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37BF2AC4171A00ADEDC7 /* ChatVC.swift */; };
 		ECBC37C62AC4181100ADEDC7 /* senderTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37C52AC4181100ADEDC7 /* senderTVC.swift */; };
@@ -451,6 +454,9 @@
 		ECAF86C52AC69ABC0071BFF3 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		ECAF86C62AC69ABC0071BFF3 /* SocketConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketConstants.swift; sourceTree = "<group>"; };
 		ECAF86C72AC69ABC0071BFF3 /* Socketmodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socketmodel.swift; sourceTree = "<group>"; };
+		ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingRestoModal.swift; sourceTree = "<group>"; };
+		ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getSlotsModal.swift; sourceTree = "<group>"; };
+		ECB3A2A62AD431F400C65065 /* currentPastModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = currentPastModal.swift; sourceTree = "<group>"; };
 		ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = themeRestolistModal.swift; sourceTree = "<group>"; };
 		ECBC37BF2AC4171A00ADEDC7 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		ECBC37C52AC4181100ADEDC7 /* senderTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = senderTVC.swift; sourceTree = "<group>"; };
@@ -595,6 +601,9 @@
 				EC1B96372ACC45A500BBEF7B /* createReviewModal.swift */,
 				EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */,
 				ECCB15CD2ACFEF17003B4B72 /* menuProductModal.swift */,
+				ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */,
+				ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */,
+				ECB3A2A62AD431F400C65065 /* currentPastModal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1529,6 +1538,7 @@
 				A5AB0E2E2A569C1900BB2BF4 /* CellBookingDetailTB.swift in Sources */,
 				8B0BDF242A80F10E00A28BD2 /* Constants.swift in Sources */,
 				A5F7091E2A4EE65900CD26B1 /* CancelBookingReasonVC.swift in Sources */,
+				ECB3A2A72AD431F400C65065 /* currentPastModal.swift in Sources */,
 				C284FBCD2A4056E8006949B4 /* bookingDetailsVC.swift in Sources */,
 				8B9CF07E2A81F221006C90E9 /* TermsandconditionModel.swift in Sources */,
 				C29CDB0E2A42BC1D0035E03D /* BookingVC.swift in Sources */,
@@ -1587,6 +1597,7 @@
 				A51DBFF82A5296C3007535D7 /* UIButton.swift in Sources */,
 				A529D2E02A5FC5F600E416CD /* BarOfferVC.swift in Sources */,
 				A5046FDA2A4D5AED00C23627 /* CellMenuCV.swift in Sources */,
+				ECB3A2A32AD404D100C65065 /* bookingRestoModal.swift in Sources */,
 				C2661A872A4B156C00EEE266 /* CellImageViewCB.swift in Sources */,
 				A5046FF32A4DC18D00C23627 /* CellHelpQAVC.swift in Sources */,
 				C2661A7B2A4AFE3400EEE266 /* RestoSettingTVC.swift in Sources */,
@@ -1600,6 +1611,7 @@
 				C29CDB132A42BC4C0035E03D /* TabbarVC.swift in Sources */,
 				C284FB802A402EE8006949B4 /* CustomImageView.swift in Sources */,
 				ECC5BCEF2ABC281F00143940 /* productDetailModal.swift in Sources */,
+				ECB3A2A52AD4134200C65065 /* getSlotsModal.swift in Sources */,
 				ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */,
 				8B0BDF2B2A80F10E00A28BD2 /* CheckValidations.swift in Sources */,
 				8B0BDF2C2A80F10E00A28BD2 /* CommonUtilities.swift in Sources */,

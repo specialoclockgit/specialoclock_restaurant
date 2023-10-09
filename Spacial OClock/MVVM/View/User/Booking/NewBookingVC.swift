@@ -24,10 +24,18 @@ class NewBookingVC: UIViewController {
     var pickerSelectTime = UIPickerView()
     var arrNumberOfPeople : [Int] = []
     var arrTimmer : [String] = []
+    var resto_id = Int()
+    var offer_id = 0
+    var numberofperson = Int()
     private var currentPage: Date?
+    var viewmodal = HomeViewModel()
+    let df = DateFormatter()
+    var currentDate = String()
+    var now = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         for i in 0...50{
             arrNumberOfPeople.append(i)
         }
@@ -41,8 +49,18 @@ class NewBookingVC: UIViewController {
         pickerSelectTime.dataSource = self
         viewFSCalendar.delegate = self
         viewFSCalendar.dataSource = self
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let result = formatter.string(from: date)
+        currentDate = result
+        now = result
     }
     
+    //MARK: - FUCNTOINS
+//    func getslots(){
+//        viewmodal.getslots_API(date: <#T##String#>, menuid: <#T##Int#>, restrorant_bar_id: <#T##Int#>, restoid: <#T##Int#>, offerid: <#T##Int#>, onsuccess: <#T##((getSlotsModalBody?) -> ())##((getSlotsModalBody?) -> ())##(getSlotsModalBody?) -> ()#>)
+//    }
     //MARK: Buttton Action
     @IBAction func btnContinueAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
@@ -99,6 +117,11 @@ extension NewBookingVC : FSCalendarDelegate , FSCalendarDataSource {
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         let displayedMonth = calendar.currentPage
         updateMonthAndYearLabels(for: displayedMonth)
+    }
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        df.dateFormat = "yyyy-MM-dd"
+        df.locale = Locale.current
+        currentDate = df.string(from: date)
     }
 }
 extension NewBookingVC : UIPickerViewDelegate , UIPickerViewDataSource {

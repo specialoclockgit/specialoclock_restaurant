@@ -6,29 +6,50 @@
 //
 
 import UIKit
+import SDWebImage
+import SkeletonView
+import SwiftGifOrigin
 
 class BookingVC: UIViewController {
 
-    //MARK: - Outlets
+    //MARK: - OUTLETS
+    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var btnCurrent: CustomButton!
     @IBOutlet weak var btnPast: CustomButton!
     @IBOutlet weak var lblHeading : UILabel!
     @IBOutlet weak var bookingTV: UITableView!
     
+    //MARK: - VARIABLES
     var arrImg = ["Rectangle1","Rectangle 351"]
     var status = 0
+    var modal : [currentPastModalBody]?
+    var viewmodal = HomeViewModel()
+    
+    //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        currentpastAPI()
+        bookingTV.showSkeleton()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
     }
 
-    // MARK: - Actions
-    
+    //MARK: - FUNCTIONS
+    func currentpastAPI(){
+        viewmodal.currentPast_API(type: status, genre: "0") { [weak self] dataa in
+            self?.modal = dataa
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.bookingTV.hideSkeleton()
+            }
+            self?.bookingTV.reloadData()
+        }
+    }
+    // MARK: - ACTIONS
     @IBAction func currentBtn(_ sender: UIButton) {
+        currentpastAPI()
         status = 0
         lblHeading.text = "Bookings"
         btnCurrent.setTitleColor(UIColor.white, for: .normal)
@@ -39,6 +60,7 @@ class BookingVC: UIViewController {
     }
     
     @IBAction func pastBtn(_ sender: UIButton) {
+        currentpastAPI()
         status = 1
         lblHeading.text = "Orders"
         btnPast.setTitleColor(UIColor.white, for: .normal)
@@ -48,24 +70,45 @@ class BookingVC: UIViewController {
         bookingTV.reloadData()
     }
 }
-//MARK: - UITableViewDelegateUITableViewDataSource
+//MARK: - EXTENSIONS
 extension BookingVC: UITableViewDelegate, UITableViewDataSource{
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "bookingCell"
+    }
+
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 30
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrImg.count
+        if modal?.count == 0{
+            self.imgView.image = UIImage.gif(name: "nodataFound")
+            self.imgView.isHidden = false
+        }else{
+            self.imgView.isHidden = true
+            return modal?.count ?? 0
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "bookingCell") as! bookingCell
-        if status == 0{
+        if self.modal?[indexPath.row].status == 0{
             cell.bookingStatuslbl.text = "Ongoing"
             cell.bookingStatuslbl.textColor = .red
         }else{
             cell.bookingStatuslbl.text = "Completed"
             cell.bookingStatuslbl.textColor = .systemGreen
         }
-        cell.itemImg.image = UIImage(named: arrImg[indexPath.row])
+        cell.bookingDatelbl.text = modal?[indexPath.row].bookingDate ?? ""
+        cell.bookingNumber.text = modal?[indexPath.row].bookingID ?? ""
+        cell.bookingTimelbl.text = modal?[indexPath.row].bookingSlot ?? ""
+        let image = self.modal?[indexPath.row].restoImage ?? ""
+        let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        cell.itemImg.showIndicator(baseUrl: imageURL, imageUrl: urlString)
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.bookingDetailVC) as! bookingDetailVC
         if status == 1{
@@ -85,8 +128,6 @@ extension BookingVC: UITableViewDelegate, UITableViewDataSource{
         }
         self.navigationController?.pushViewController(screen, animated: true)
     }
-    
-    
 }
 
 //MARK: - UITableViewCell

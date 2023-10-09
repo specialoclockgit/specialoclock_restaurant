@@ -153,7 +153,10 @@ enum API: String{
     case fetch_restos_by_theme
     case fetch_restos_by_location
     case write_review
+    case booking
     case fetch_data_by_menutype
+    case time_slot
+    case booking_history
    
 }
 

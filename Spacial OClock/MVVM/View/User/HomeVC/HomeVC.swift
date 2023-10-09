@@ -324,7 +324,6 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             cell.btnSeeMore.addTarget(self, action: #selector(btnSeeMoreAct), for: .touchUpInside)
             cell.btnSeeMore.tag = indexPath.section
             cell.collView.tag = indexPath.section
-            
             cell.iconString = arrHeading[indexPath.section].img
             cell.heading = arrHeading[indexPath.section].heading
             if indexPath.section == 0 {
