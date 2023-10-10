@@ -25,18 +25,20 @@ class NewBookingVC: UIViewController {
     var arrNumberOfPeople : [Int] = []
     var arrTimmer : [String] = []
     var resto_id = Int()
-    var offer_id = 0
+    var offer_id = String()
     var numberofperson = Int()
     private var currentPage: Date?
     var viewmodal = HomeViewModel()
     let df = DateFormatter()
     var currentDate = String()
     var now = String()
+    var pickmenuid = Int()
+    var restrorant_bar_id = Int()
+    var modal : getSlotsModalBody?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        for i in 0...50{
+        for i in 0...numberofperson{
             arrNumberOfPeople.append(i)
         }
         initialLoad()
@@ -55,13 +57,20 @@ class NewBookingVC: UIViewController {
         let result = formatter.string(from: date)
         currentDate = result
         now = result
+//        getslots()
     }
     
-    //MARK: - FUCNTOINS
-//    func getslots(){
-//        viewmodal.getslots_API(date: <#T##String#>, menuid: <#T##Int#>, restrorant_bar_id: <#T##Int#>, restoid: <#T##Int#>, offerid: <#T##Int#>, onsuccess: <#T##((getSlotsModalBody?) -> ())##((getSlotsModalBody?) -> ())##(getSlotsModalBody?) -> ()#>)
-//    }
+    
     //MARK: Buttton Action
+    @IBAction func btnSelectSlot(_ sender: UIButton) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SlotsVc") as! SlotsVc
+        vc.date = currentDate
+        vc.menuid = self.pickmenuid
+        vc.restobarId = self.restrorant_bar_id
+        vc.restoid = self.resto_id
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func btnContinueAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
         screen.callBack = {

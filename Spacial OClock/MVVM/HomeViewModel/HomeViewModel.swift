@@ -113,9 +113,9 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - GET SLOTS API
-    func getslots_API(date:String, menuid:Int , restrorant_bar_id:Int,restoid:Int ,offerid:Int ,  onsuccess: @escaping ((getSlotsModalBody?)->())){
-        let param = ["date":date, "menu_id":menuid, "restrorant_bar_id":restrorant_bar_id, "offer_id":offerid] as [String:Any]
-        WebService.service(API.time_slot, param: param, service: .post) {
+    func getslots_API(date:String, menuid:Int , restrorant_bar_id:Int,restoid:Int ,offerid:String ,  onsuccess: @escaping ((getSlotsModalBody?)->())){
+        let param = ["date":date, "menu_id":menuid, "restrorant_bar_id":restrorant_bar_id, ,"offer_id":offerid] as [String:Any]
+        WebService.service(API.fetch_available_slots, param: param, service: .post) {
             (modaldata: getSlotsModal, Data , json) in
             onsuccess(modaldata.body)
         }

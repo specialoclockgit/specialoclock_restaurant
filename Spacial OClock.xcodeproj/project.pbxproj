@@ -197,6 +197,8 @@
 		EC2AD12F2ACD7476000C877B /* restoDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */; };
 		EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */; };
 		ECA3544F2AB4394500D4ABF8 /* CussinesRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */; };
+		ECA8C76B2AD568850061F19C /* SlotsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76A2AD568850061F19C /* SlotsVc.swift */; };
+		ECA8C76D2AD568CD0061F19C /* slotsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */; };
 		ECAF1D092AC18857006E20FB /* homeSeeMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */; };
 		ECAF1D0B2AC1887B006E20FB /* homeSeeMoreCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D0A2AC1887B006E20FB /* homeSeeMoreCVC.swift */; };
 		ECAF86C82AC69ABC0071BFF3 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF86C52AC69ABC0071BFF3 /* SocketIOManager.swift */; };
@@ -449,6 +451,8 @@
 		EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restoDetailModal.swift; sourceTree = "<group>"; };
 		EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemCVC.swift; sourceTree = "<group>"; };
 		ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CussinesRestoModal.swift; sourceTree = "<group>"; };
+		ECA8C76A2AD568850061F19C /* SlotsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsVc.swift; sourceTree = "<group>"; };
+		ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slotsTVC.swift; sourceTree = "<group>"; };
 		ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreVC.swift; sourceTree = "<group>"; };
 		ECAF1D0A2AC1887B006E20FB /* homeSeeMoreCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreCVC.swift; sourceTree = "<group>"; };
 		ECAF86C52AC69ABC0071BFF3 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
@@ -1003,6 +1007,7 @@
 		C29CDAF22A42B9170035E03D /* User */ = {
 			isa = PBXGroup;
 			children = (
+				ECA8C7692AD568730061F19C /* dropDownSlots */,
 				ECBC37C92AC44FD700ADEDC7 /* Markderset */,
 				A5B187342A66719000C3E0A7 /* Profile */,
 				A5E598B72A4EF3F1007F82CC /* Alerts */,
@@ -1118,6 +1123,15 @@
 				A5B1873B2A669C1600C3E0A7 /* BookingLocationVC.swift */,
 			);
 			path = Booking;
+			sourceTree = "<group>";
+		};
+		ECA8C7692AD568730061F19C /* dropDownSlots */ = {
+			isa = PBXGroup;
+			children = (
+				ECA8C76A2AD568850061F19C /* SlotsVc.swift */,
+				ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */,
+			);
+			path = dropDownSlots;
 			sourceTree = "<group>";
 		};
 		ECBC37C92AC44FD700ADEDC7 /* Markderset */ = {
@@ -1502,6 +1516,7 @@
 				A5C036C02A5FFC6C00B038CD /* PreviewVC.swift in Sources */,
 				C2661A8D2A4B156C00EEE266 /* CellHomeTB.swift in Sources */,
 				8B0BDF192A80F04400A28BD2 /* AuthViewModel.swift in Sources */,
+				ECA8C76B2AD568850061F19C /* SlotsVc.swift in Sources */,
 				EC2AD12F2ACD7476000C877B /* restoDetailModal.swift in Sources */,
 				A5046FEA2A4D9A9200C23627 /* UILabel.swift in Sources */,
 				C284FB7C2A402EE8006949B4 /* CustomTextField.swift in Sources */,
@@ -1560,6 +1575,7 @@
 				ECAF86CA2AC69ABC0071BFF3 /* Socketmodel.swift in Sources */,
 				C2661A882A4B156C00EEE266 /* CellHomeCV.swift in Sources */,
 				ECBC37C62AC4181100ADEDC7 /* senderTVC.swift in Sources */,
+				ECA8C76D2AD568CD0061F19C /* slotsTVC.swift in Sources */,
 				8B91546C2A85EFAE00CCB83E /* CategorylistingModel.swift in Sources */,
 				C284FB3B2A402A0D006949B4 /* SceneDelegate.swift in Sources */,
 				A52576F22A54402300464E1B /* restoCardListTVC.swift in Sources */,

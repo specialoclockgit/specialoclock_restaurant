@@ -83,6 +83,11 @@ class ItemDetailsVC: UIViewController {
     let status = UserDefaults.standard.dineDrinkStatus
     var actualprice = String()
     var offerlessprice = String()
+    var idsave = Int()
+    var menuid = Int()
+    var numberofperson = Int()
+    var valueSelect = false
+    var restrorant_bar_id = Int()
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
@@ -111,6 +116,7 @@ class ItemDetailsVC: UIViewController {
         for _ in 0...arrTBMenu.count{
             arrCheck.append(false)
         }
+        
     }
     
     
@@ -163,6 +169,7 @@ class ItemDetailsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         product_detail()
+        valueSelect = false
         tabBarController?.tabBar.isHidden = true
     }
     //MARK: Button Action
@@ -228,11 +235,16 @@ class ItemDetailsVC: UIViewController {
     //Book Button
     @IBAction func btnBookAct(_ sender : UIButton){
         if btnBookStatus == 0{
-            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
-//            screen.offer_id = self.menuProductAPI(id: ourMenu?[sender.tag].id ?? 0)
-            screen.numberofperson = 20
-            screen.resto_id = ProductID
-            self.navigationController?.pushViewController(screen, animated: true)
+            if valueSelect == false{
+                CommonUtilities.shared.showAlert(message: "Please select first offer", isSuccess: .error)
+            }else{
+                let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
+                screen.pickmenuid = self.menuid
+                screen.offer_id = "\(idsave)"
+                screen.numberofperson = self.numberofperson
+                screen.resto_id = ProductID
+                self.navigationController?.pushViewController(screen, animated: true)
+            }
         }
         else if btnBookStatus == 1{
             let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
@@ -302,21 +314,16 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         return CGSize(width: 120.0, height: 80.0)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //        if collectionView == collView{
-        //
-        //        }
         debugPrint(indexPath.row)
         let index = indexPath.row
         if index == 0{
             if status == 0 {
+                valueSelect = true
                 menuProductAPI(id: ourMenu?[indexPath.row].id ?? 0)
-                let breakfastArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Breakfast",
-                                                                        image: ["clubSandwich" , "grilledSandwich", "planeSanwich" ],
-                                                                        itemName: ["Grey Goose" , "Grilled Sandwich" , "Sandwich"],
-                                                                        prevPrice: ["R50.00" , "R50.00" , "R50.00"],
-                                                                        newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
-                arrTBMenu.removeAll()
-                arrTBMenu.append(contentsOf: breakfastArr)
+                self.menuid = ourMenu?[indexPath.row].offers?.menuID ?? 0
+                self.restrorant_bar_id = ourMenu?[indexPath.row].offers?.restrorantBarID ?? 0
+                self.idsave = ourMenu?[indexPath.row].offers?.id ?? 0
+                self.numberofperson = ourMenu?[indexPath.row].offers?.numberOfUserBook ?? 0
             }else if status == 1 {
                 let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
                                                                      image: ["goose" , "belveder", "Ciroc" ],
@@ -353,7 +360,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
             sectionV.layer.cornerRadius = 10.0
             let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-150, height: 20) )
-            titleLbl.text = productModal?.categories?[section].products?.first?.menuTypeName ?? ""
+            titleLbl.text = productModal?.categories?[section].title ?? ""
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-150, y: 10, width: self.view.frame.width - titleLbl.frame.width, height: 30))
             viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -386,7 +393,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
             let arrSection = productModal?.categories?[indexPath.section].products
-            let imageIndex = (imageURL) + (arrSection?[indexPath.row].image ?? "")
+            let imageIndex = (imageBaseURL) + (arrSection?[indexPath.row].image ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""

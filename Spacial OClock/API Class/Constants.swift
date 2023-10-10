@@ -155,7 +155,7 @@ enum API: String{
     case write_review
     case booking
     case fetch_data_by_menutype
-    case time_slot
+    case fetch_available_slots
     case booking_history
    
 }
