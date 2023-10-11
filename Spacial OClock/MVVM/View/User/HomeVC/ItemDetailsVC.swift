@@ -243,6 +243,7 @@ class ItemDetailsVC: UIViewController {
                 screen.offer_id = "\(idsave)"
                 screen.numberofperson = self.numberofperson
                 screen.resto_id = ProductID
+                screen.restrorant_bar_id = self.restrorant_bar_id
                 self.navigationController?.pushViewController(screen, animated: true)
             }
         }

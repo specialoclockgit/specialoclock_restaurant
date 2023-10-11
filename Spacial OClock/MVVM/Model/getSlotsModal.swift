@@ -29,7 +29,7 @@ struct Offered: Codable {
     let menuName: String?
     let offerPrice: Int?
     let openTime, closeTime, date: String?
-    let type, numberOfUserBook: Int?
+    let type, numberOfUserBook, totalBookings: Int?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -43,18 +43,20 @@ struct Offered: Codable {
         case closeTime = "close_time"
         case date, type
         case numberOfUserBook = "number_of_user_book"
+        case totalBookings = "total_bookings"
     }
 }
 
 // MARK: - TimeSlot
 struct TimeSlot: Codable {
+    let id: Int?
     let startTime, endTime: String?
     let offered: Int?
 
     enum CodingKeys: String, CodingKey {
+        case id
         case startTime = "start_time"
         case endTime = "end_time"
         case offered
     }
 }
-

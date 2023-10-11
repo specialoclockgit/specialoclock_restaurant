@@ -113,9 +113,9 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - GET SLOTS API
-    func getslots_API(date:String, menuid:Int , restrorant_bar_id:Int,restoid:Int ,offerid:String ,  onsuccess: @escaping ((getSlotsModalBody?)->())){
-        let param = ["date":date, "menu_id":menuid, "restrorant_bar_id":restrorant_bar_id, ,"offer_id":offerid] as [String:Any]
-        WebService.service(API.fetch_available_slots, param: param, service: .post) {
+    func getslots_API(date:String, restrorant_bar_id:Int, restoid:Int ,offer_id:String ,onsuccess: @escaping ((getSlotsModalBody?)->())){
+        let param = [ "offer_id":offer_id, "menu_id":restoid, "restrorant_bar_id":restrorant_bar_id, "date":date] as [String:Any]
+        WebService.service(API.time_slots, param: param, service: .post) {
             (modaldata: getSlotsModal, Data , json) in
             onsuccess(modaldata.body)
         }
@@ -129,4 +129,33 @@ class HomeViewModel : NSObject {
             onsuccess(modaldata.body)
         }
     }
+    
+    //MARK: - BOOKING DETAIL API
+    func bookingDetail_API(bookingId:Int,onsuccess: @escaping ((bookingDetailModalBody?)->())){
+        let param = ["booking_id":bookingId] as [String:Any]
+        WebService.service(API.restro_BookingDetail, param: param, service: .post) {
+            (modaldata: bookingDetailModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    //MARK: - CANCEL BOOKING API
+    func cancelBookig_API(bookingId:Int, reson:String, onsuccess: @escaping ((CommonModel?)->())){
+        let param = ["booking_id":bookingId, "reason":reson] as [String:Any]
+        WebService.service(API.cancel_booking, param: param, service: .post) {
+            (modaldata: CommonModel, Data , json) in
+            onsuccess(modaldata)
+        }
+    }
+    
+    //MARK: - FETCH AVAILABLE API
+    func fetchAvialbleAPI(date:String, restrorant_bar_id:Int,offerid:String, slot_id:Int,onsuccess: @escaping ((getSlotsModalBody?)->())){
+        let param = ["date":date, "slot_id":slot_id, "restrorant_bar_id":restrorant_bar_id, "offer_id":offerid] as [String:Any]
+        WebService.service(API.fetch_available_slots, param: param, service: .post) {
+            (modaldata: getSlotsModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    
 }

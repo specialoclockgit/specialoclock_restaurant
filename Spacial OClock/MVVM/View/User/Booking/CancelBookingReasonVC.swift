@@ -15,7 +15,7 @@ class CancelBookingReasonVC: UIViewController {
     @IBOutlet weak var btnSubmit : UIButton!
     
     //MARK: Variables
-    var callBack : (() -> ())?
+    var callBack : ((String) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class CancelBookingReasonVC: UIViewController {
     }
     @IBAction func btnSubmitAct(sender : UIButton){
         self.dismiss(animated: true)
-        self.callBack?()
+        self.callBack?(textArea.text)
     }
 }
 extension CancelBookingReasonVC  : UITextViewDelegate{

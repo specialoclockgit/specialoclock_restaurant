@@ -28,8 +28,8 @@ class BookingVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentpastAPI()
         bookingTV.showSkeleton()
+        currentpastAPI(status: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,19 +38,19 @@ class BookingVC: UIViewController {
     }
 
     //MARK: - FUNCTIONS
-    func currentpastAPI(){
+    func currentpastAPI(status:Int){
         viewmodal.currentPast_API(type: status, genre: "0") { [weak self] dataa in
             self?.modal = dataa
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.bookingTV.hideSkeleton()
+                self?.bookingTV.reloadData()
             }
-            self?.bookingTV.reloadData()
+            
         }
     }
     // MARK: - ACTIONS
     @IBAction func currentBtn(_ sender: UIButton) {
-        currentpastAPI()
-        status = 0
+        currentpastAPI(status: 0)
         lblHeading.text = "Bookings"
         btnCurrent.setTitleColor(UIColor.white, for: .normal)
         btnPast.setTitleColor(UIColor.black, for: .normal)
@@ -60,9 +60,8 @@ class BookingVC: UIViewController {
     }
     
     @IBAction func pastBtn(_ sender: UIButton) {
-        currentpastAPI()
-        status = 1
-        lblHeading.text = "Orders"
+        currentpastAPI(status: 1)
+        lblHeading.text = "Bookings"
         btnPast.setTitleColor(UIColor.white, for: .normal)
         btnCurrent.setTitleColor(UIColor.black, for: .normal)
         btnPast.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
@@ -71,15 +70,13 @@ class BookingVC: UIViewController {
     }
 }
 //MARK: - EXTENSIONS
-extension BookingVC: UITableViewDelegate, UITableViewDataSource{
-    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "bookingCell"
     }
-
-    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 6
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if modal?.count == 0{
             self.imgView.image = UIImage.gif(name: "nodataFound")
@@ -103,9 +100,9 @@ extension BookingVC: UITableViewDelegate, UITableViewDataSource{
         cell.bookingDatelbl.text = modal?[indexPath.row].bookingDate ?? ""
         cell.bookingNumber.text = modal?[indexPath.row].bookingID ?? ""
         cell.bookingTimelbl.text = modal?[indexPath.row].bookingSlot ?? ""
-        let image = self.modal?[indexPath.row].restoImage ?? ""
-        let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        cell.itemImg.showIndicator(baseUrl: imageURL, imageUrl: urlString)
+        let imageIndex = (imageURL) + (modal?[indexPath.row].restoImage ?? "")
+        cell.itemImg.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.itemImg.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
         return cell
     }
     
@@ -116,14 +113,15 @@ extension BookingVC: UITableViewDelegate, UITableViewDataSource{
             screen.buttonColor = "themeOrange"
             screen.status = "Completed"
             screen.statusColor = "themeGreen"
-            screen.image = arrImg[indexPath.row]
+            //screen.image = arrImg[indexPath.row]
             screen.statusVerify = 1
         }else{
+            screen.booking_id = modal?[indexPath.row].id ?? 0
             screen.buttonTitle = "Cancel Booking"
             screen.buttonColor = "themeRed"
             screen.status = "Ongoing"
             screen.statusColor = "themeRed"
-            screen.image = arrImg[indexPath.row]
+           // screen.image = arrImg[indexPath.row]
             screen.statusVerify = 0
         }
         self.navigationController?.pushViewController(screen, animated: true)
@@ -137,6 +135,4 @@ class bookingCell:UITableViewCell{
     @IBOutlet weak var bookingDatelbl: UILabel!
     @IBOutlet weak var bookingTimelbl: UILabel!
     @IBOutlet weak var bookingStatuslbl: UILabel!
-    
-    
 }

@@ -207,6 +207,7 @@
 		ECB3A2A32AD404D100C65065 /* bookingRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */; };
 		ECB3A2A52AD4134200C65065 /* getSlotsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */; };
 		ECB3A2A72AD431F400C65065 /* currentPastModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A62AD431F400C65065 /* currentPastModal.swift */; };
+		ECBAA8942AD674950070967B /* bookingDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBAA8932AD674950070967B /* bookingDetailModal.swift */; };
 		ECBC37BE2AC40E8A00ADEDC7 /* themeRestolistModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */; };
 		ECBC37C02AC4171A00ADEDC7 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37BF2AC4171A00ADEDC7 /* ChatVC.swift */; };
 		ECBC37C62AC4181100ADEDC7 /* senderTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37C52AC4181100ADEDC7 /* senderTVC.swift */; };
@@ -461,6 +462,7 @@
 		ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingRestoModal.swift; sourceTree = "<group>"; };
 		ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getSlotsModal.swift; sourceTree = "<group>"; };
 		ECB3A2A62AD431F400C65065 /* currentPastModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = currentPastModal.swift; sourceTree = "<group>"; };
+		ECBAA8932AD674950070967B /* bookingDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailModal.swift; sourceTree = "<group>"; };
 		ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = themeRestolistModal.swift; sourceTree = "<group>"; };
 		ECBC37BF2AC4171A00ADEDC7 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		ECBC37C52AC4181100ADEDC7 /* senderTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = senderTVC.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 				ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */,
 				ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */,
 				ECB3A2A62AD431F400C65065 /* currentPastModal.swift */,
+				ECBAA8932AD674950070967B /* bookingDetailModal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1564,6 +1567,7 @@
 				A58CCCA82A5ECAE000DFA478 /* UserDefault.swift in Sources */,
 				A5E837122A56DA6000C2D16A /* ChangePasswordRestoVC.swift in Sources */,
 				C284FB7F2A402EE8006949B4 /* UISwitchCustom.swift in Sources */,
+				ECBAA8942AD674950070967B /* bookingDetailModal.swift in Sources */,
 				C284FB812A402EE8006949B4 /* CustomView.swift in Sources */,
 				ECBC37C82AC4182C00ADEDC7 /* receverTVC.swift in Sources */,
 				A529D2D72A5FBB5800E416CD /* BarMenuVC.swift in Sources */,

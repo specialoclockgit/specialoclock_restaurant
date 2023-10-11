@@ -35,6 +35,7 @@ class NewBookingVC: UIViewController {
     var pickmenuid = Int()
     var restrorant_bar_id = Int()
     var modal : getSlotsModalBody?
+    var timeSlots : [TimeSlot]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,18 +58,38 @@ class NewBookingVC: UIViewController {
         let result = formatter.string(from: date)
         currentDate = result
         now = result
-//        getslots()
+        getslots()
+    }
+    func getslots(){
+        viewmodal.getslots_API(date: currentDate, restrorant_bar_id: restrorant_bar_id, restoid: resto_id, offer_id: offer_id) { [weak self] fetchdata in
+            self?.timeSlots = fetchdata?.timeSlots ?? []
+//            self?.viewmodal.fetchAvialbleAPI(date: self?.date ?? "", restrorant_bar_id: self?.restobarId ?? 0, offerid: self?.offerid ?? "", slot_id: self?.isselect ?? 0) { data in
+//
+//            }
+        //    self?.tblView.reloadData()
+        }
     }
     
     
     //MARK: Buttton Action
     @IBAction func btnSelectSlot(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "SlotsVc") as! SlotsVc
+        vc.preferredContentSize = CGSize(width: 320, height: 360)
+        vc.modalPresentationStyle = .popover
         vc.date = currentDate
         vc.menuid = self.pickmenuid
         vc.restobarId = self.restrorant_bar_id
         vc.restoid = self.resto_id
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.offerid = self.offer_id
+        if let pres = vc.presentationController {
+            pres.delegate = self
+        }
+        if let pop = vc.popoverPresentationController {
+            pop.sourceView = (sender)
+            pop.permittedArrowDirections = .down
+            pop.sourceRect = (sender).bounds
+        }
+        self.present(vc, animated: true)
     }
     
     @IBAction func btnContinueAct(sender : UIButton){
@@ -97,12 +118,12 @@ class NewBookingVC: UIViewController {
     }
     
     private func moveCurrentPage(moveUp: Bool) {
-            let calendar = Calendar.current
-            var dateComponents = DateComponents()
-            dateComponents.month = moveUp ? 1 : -1
-            self.currentPage = calendar.date(byAdding: dateComponents, to: self.currentPage ?? self.today)
-            self.viewFSCalendar.setCurrentPage(self.currentPage!, animated: true)
-        }
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.month = moveUp ? 1 : -1
+        self.currentPage = calendar.date(byAdding: dateComponents, to: self.currentPage ?? self.today)
+        self.viewFSCalendar.setCurrentPage(self.currentPage!, animated: true)
+    }
 
     private var currDate: Date?
         private lazy var today: Date = {
@@ -144,24 +165,24 @@ extension NewBookingVC : UIPickerViewDelegate , UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView == pickerSelectTime{
-            return arrTimmer.count
+            return timeSlots?.count ?? 0
         }else {
             return arrNumberOfPeople.count
         }
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == pickerSelectTime{
-            return arrTimmer[row]
+            return timeSlots?[row].startTime ?? "" + (timeSlots?[row].endTime ?? "")
         }else{
             return arrNumberOfPeople[row].description
         }
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == pickerSelectPeople{
-            tfSelectPeople.text = arrNumberOfPeople[row].description
-        }else{
-            tfSelectTime.text = arrTimmer[row]
-        }
+//        if pickerView == pickerSelectPeople{
+//            tfSelectPeople.text =
+//        }else{
+//            tfSelectTime.text = arrTimmer[row]
+//        }
     }
 }
 extension NewBookingVC  {
@@ -215,5 +236,12 @@ extension NewBookingVC{
         let yearString = dateFormatter.string(from: Date())
         let heading = monthString + yearString
         lblMonth.text = heading
+    }
+}
+
+//MARK: EXTENSIONS
+extension NewBookingVC : UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
 }
