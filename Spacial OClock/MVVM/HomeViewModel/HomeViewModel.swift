@@ -104,8 +104,8 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - BOOKING RESTO API
-    func booking_API(bookingDate:String, slotid:Int , numberofPeople:Int,restoid:Int ,offerid:Int ,  onsuccess: @escaping ((bookingRestoModalBody?)->())){
-        let param = ["booking_date":restoid, "slot_id":slotid, "number_of_people":numberofPeople, "restrorant_bar_id":restoid, "offer_id":offerid] as [String:Any]
+    func booking_API(bookingDate:String, slotid:Int , numberofPeople:String,restoid:Int ,offerid:String ,  onsuccess: @escaping ((bookingRestoModalBody?)->())){
+        let param = ["booking_date":bookingDate, "slot_id":slotid, "number_of_people":numberofPeople, "restrorant_bar_id":restoid, "offer_id":offerid] as [String:Any]
         WebService.service(API.booking, param: param, service: .post) {
             (modaldata: bookingRestoModal, Data , json) in
             onsuccess(modaldata.body)
@@ -149,10 +149,10 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - FETCH AVAILABLE API
-    func fetchAvialbleAPI(date:String, restrorant_bar_id:Int,offerid:String, slot_id:Int,onsuccess: @escaping ((getSlotsModalBody?)->())){
+    func fetchAvialbleAPI(date:String, restrorant_bar_id:Int,offerid:String, slot_id:Int,onsuccess: @escaping ((AvalSlotModalBody?)->())){
         let param = ["date":date, "slot_id":slot_id, "restrorant_bar_id":restrorant_bar_id, "offer_id":offerid] as [String:Any]
         WebService.service(API.fetch_available_slots, param: param, service: .post) {
-            (modaldata: getSlotsModal, Data , json) in
+            (modaldata: AvalSlotModal, Data , json) in
             onsuccess(modaldata.body)
         }
     }

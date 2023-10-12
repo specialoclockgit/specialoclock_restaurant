@@ -8,7 +8,7 @@
 import UIKit
 import FSCalendar
 
-class NewBookingVC: UIViewController {
+class NewBookingVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
     @IBOutlet weak var viewCalendar : UIView!
@@ -36,16 +36,17 @@ class NewBookingVC: UIViewController {
     var restrorant_bar_id = Int()
     var modal : getSlotsModalBody?
     var timeSlots : [TimeSlot]?
+    var slotId = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tfSelectTime.delegate = self
         for i in 0...numberofperson{
             arrNumberOfPeople.append(i)
         }
         initialLoad()
         viewFSCalendar.scope = .month
         viewFSCalendar.placeholderType = .none
-        TimeSelection()
         pickerSelectPeople.delegate = self
         pickerSelectPeople.dataSource = self
         pickerSelectTime.delegate = self
@@ -57,17 +58,22 @@ class NewBookingVC: UIViewController {
         formatter.dateFormat = "yyyy-MM-dd"
         let result = formatter.string(from: date)
         currentDate = result
+        getslots(date: currentDate)
         now = result
-        getslots()
+    
     }
-    func getslots(){
+    func getslots(date:String){
         viewmodal.getslots_API(date: currentDate, restrorant_bar_id: restrorant_bar_id, restoid: resto_id, offer_id: offer_id) { [weak self] fetchdata in
+            self?.tfSelectTime.text = ""
+            self?.tfSelectPeople.text = ""
             self?.timeSlots = fetchdata?.timeSlots ?? []
-//            self?.viewmodal.fetchAvialbleAPI(date: self?.date ?? "", restrorant_bar_id: self?.restobarId ?? 0, offerid: self?.offerid ?? "", slot_id: self?.isselect ?? 0) { data in
-//
-//            }
-        //    self?.tblView.reloadData()
         }
+    }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        viewmodal.fetchAvialbleAPI(date: currentDate, restrorant_bar_id: restrorant_bar_id, offerid: self.offer_id, slot_id: self.slotId) { data in
+            self.numberofperson = data?.availableSlots ?? 0
+        }
+        return true
     }
     
     
@@ -93,12 +99,20 @@ class NewBookingVC: UIViewController {
     }
     
     @IBAction func btnContinueAct(sender : UIButton){
-        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
-        screen.callBack = {
-            let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
-            super.navigationController?.pushViewController(screen, animated: true)
+        if tfSelectTime.text == ""{
+            CommonUtilities.shared.showAlert(message: "Please select time", isSuccess: .error)
+        }else if tfSelectPeople.text == "" {
+            CommonUtilities.shared.showAlert(message: "Please select number of people", isSuccess: .error)
+        }else{
+            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
+            screen.callBack = {
+                self.viewmodal.booking_API(bookingDate: self.currentDate, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id) { data in
+                    let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
+                    super.navigationController?.pushViewController(screen, animated: true)
+                }
+            }
+            self.navigationController?.present(screen, animated: true)
         }
-        self.navigationController?.present(screen, animated: true)
     }
     
     @IBAction func btnBackAct(sender : UIButton){
@@ -148,10 +162,12 @@ extension NewBookingVC : FSCalendarDelegate , FSCalendarDataSource {
         let displayedMonth = calendar.currentPage
         updateMonthAndYearLabels(for: displayedMonth)
     }
+    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         df.dateFormat = "yyyy-MM-dd"
         df.locale = Locale.current
         currentDate = df.string(from: date)
+        getslots(date: currentDate)
     }
 }
 extension NewBookingVC : UIPickerViewDelegate , UIPickerViewDataSource {
@@ -172,47 +188,19 @@ extension NewBookingVC : UIPickerViewDelegate , UIPickerViewDataSource {
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == pickerSelectTime{
-            return timeSlots?[row].startTime ?? "" + (timeSlots?[row].endTime ?? "")
+            
+            return (timeSlots?[row].startTime ?? "") + " - " + (timeSlots?[row].endTime ?? "")
         }else{
             return arrNumberOfPeople[row].description
         }
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        if pickerView == pickerSelectPeople{
-//            tfSelectPeople.text =
-//        }else{
-//            tfSelectTime.text = arrTimmer[row]
-//        }
-    }
-}
-extension NewBookingVC  {
-    func TimeSelection(){
-        var timeArray: [String] = []
-        var timeEndArray : [String] = []
-        let interval = 60
-        let endInterval = 30
-        for h in 8..<24 {
-            for m in 0..<(60/interval) {
-                if m * interval == 0 {
-                    timeArray.append("\(String(format: "%02d", h)):00")
-                } else {
-                    timeArray.append("\(String(format: "%02d", h)):\(String(format: "%02d", m * interval)) ")
-                }
-            }
+        if pickerView == pickerSelectTime{
+            self.slotId = timeSlots?[row].id ?? 0
+            tfSelectTime.text = (timeSlots?[row].startTime ?? "") + " - " + (timeSlots?[row].endTime ?? "")
+        }else{
+            tfSelectPeople.text = arrNumberOfPeople[row].description
         }
-        for e in 8..<24 {
-            for m in 0..<(60/endInterval) {
-                if m * endInterval == 0 {
-                  // timeEndArray.append("\(String(format: "%02d", e)):00")
-                } else {
-                    timeEndArray.append("\(String(format: "%02d", e)):\(String(format: "%02d", m * endInterval)) ")
-                }
-            }
-        }
-        let zip = zip(timeArray, timeEndArray)
-        let resultTimmer = zip.map { $0.0 + " to " + $0.1 }
-        arrTimmer.append(contentsOf: resultTimmer)
-//        debugPrint(arrTimmer)
     }
 }
 
@@ -224,6 +212,7 @@ extension NewBookingVC{
         viewFSCalendar.calendarWeekdayView.clipsToBounds = true
         viewFSCalendar.appearance.headerMinimumDissolvedAlpha = 0
         tfSelectPeople.setupRightImage(imageName: "dropDown" , width: 7, height: 5)
+        
         tfSelectPeople.inputView = pickerSelectPeople
         tfSelectTime.inputView = pickerSelectTime
         

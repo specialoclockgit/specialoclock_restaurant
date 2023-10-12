@@ -197,6 +197,7 @@
 		EC2AD12F2ACD7476000C877B /* restoDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */; };
 		EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */; };
 		ECA3544F2AB4394500D4ABF8 /* CussinesRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */; };
+		ECA600372AD7D03A00C97493 /* AvalSlotModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */; };
 		ECA8C76B2AD568850061F19C /* SlotsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76A2AD568850061F19C /* SlotsVc.swift */; };
 		ECA8C76D2AD568CD0061F19C /* slotsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */; };
 		ECAF1D092AC18857006E20FB /* homeSeeMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */; };
@@ -452,6 +453,7 @@
 		EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restoDetailModal.swift; sourceTree = "<group>"; };
 		EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemCVC.swift; sourceTree = "<group>"; };
 		ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CussinesRestoModal.swift; sourceTree = "<group>"; };
+		ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvalSlotModal.swift; sourceTree = "<group>"; };
 		ECA8C76A2AD568850061F19C /* SlotsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsVc.swift; sourceTree = "<group>"; };
 		ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slotsTVC.swift; sourceTree = "<group>"; };
 		ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreVC.swift; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 				ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */,
 				ECB3A2A62AD431F400C65065 /* currentPastModal.swift */,
 				ECBAA8932AD674950070967B /* bookingDetailModal.swift */,
+				ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1601,6 +1604,7 @@
 				A5947B002A55444300519039 /* CellMyInvoicePendingTV.swift in Sources */,
 				A5E837102A56D53400C2D16A /* AlertBottomVC.swift in Sources */,
 				A5A8CF452A581296006F23ED /* RestoVerificationAlertVC.swift in Sources */,
+				ECA600372AD7D03A00C97493 /* AvalSlotModal.swift in Sources */,
 				A53B4A902A4EB77800E79265 /* NewBookingVC.swift in Sources */,
 				A5A8CF3D2A580D7E006F23ED /* RestoLoginVC.swift in Sources */,
 				A5A8CF382A57DBCD006F23ED /* CellPopOverTV.swift in Sources */,

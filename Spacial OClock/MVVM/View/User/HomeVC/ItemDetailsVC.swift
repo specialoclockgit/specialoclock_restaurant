@@ -87,7 +87,9 @@ class ItemDetailsVC: UIViewController {
     var menuid = Int()
     var numberofperson = Int()
     var valueSelect = false
+    var isselectedoffer = -1
     var restrorant_bar_id = Int()
+    
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
@@ -291,12 +293,21 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
         else if collectionView == collViewMenu{
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
-            if ((indexPath.row % 2 ) == 0)  {
-                cell.img.image = UIImage(named: "greenRectangle")
-                cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
-                cell.lblTime.text = ""
-                cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
+            if status == 0 {
+                if indexPath.row == isselectedoffer{
+                    cell.img.image = UIImage(named: "greenRectangle")
+                    cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
+                    cell.lblTime.text = ""
+                    cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
+                }else{
+                    cell.img.image = UIImage(named: "ornageRectabgle")
+                    cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
+                    cell.lblTime.text = ""
+                    cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
+                }
             }
+            
+            
             let data = ourMenu?[indexPath.row]
             cell.lblTime.text = "\(data?.offers?.openTime ?? "") - " + "\(data?.offers?.closeTime ?? "")"
             cell.lblMenuSchedule.text = data?.offers?.offerName ?? ""
@@ -306,7 +317,6 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             cell.img.image = imgName
             return cell
         }
-        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
@@ -317,8 +327,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         debugPrint(indexPath.row)
         let index = indexPath.row
-        if index == 0{
+   
             if status == 0 {
+                isselectedoffer = indexPath.row
+                collViewMenu.reloadData()
                 valueSelect = true
                 menuProductAPI(id: ourMenu?[indexPath.row].id ?? 0)
                 self.menuid = ourMenu?[indexPath.row].offers?.menuID ?? 0
@@ -333,9 +345,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                                                                      newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
                 arrTBMenu.removeAll()
                 arrTBMenu.append(contentsOf: drinksArr)
+                tbMenu.reloadData()
             }
-            tbMenu.reloadData()
-        }
+           
+        
     }
 }
 extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
