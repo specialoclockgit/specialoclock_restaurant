@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -38,14 +38,14 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PIN" translatesAutoresizingMaskIntoConstraints="NO" id="xfX-6R-Pdg">
-                                <rect key="frame" x="10" y="5" width="20" height="20"/>
+                                <rect key="frame" x="6" y="5" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="MXX-YX-bEP"/>
                                     <constraint firstAttribute="height" constant="20" id="auf-RJ-ESj"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8C-JF-JJe">
-                                <rect key="frame" x="35" y="5" width="60.5" height="20"/>
+                                <rect key="frame" x="31" y="5" width="60.5" height="20"/>
                                 <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="14"/>
                                 <color key="textColor" name="ThemeLabel"/>
                                 <nil key="highlightedColor"/>
@@ -66,7 +66,7 @@
                         <constraints>
                             <constraint firstItem="G8C-JF-JJe" firstAttribute="leading" secondItem="xfX-6R-Pdg" secondAttribute="trailing" constant="5" id="73I-4Q-xIY"/>
                             <constraint firstAttribute="bottom" secondItem="BeO-yV-8iZ" secondAttribute="bottom" id="7iU-2i-vav"/>
-                            <constraint firstItem="xfX-6R-Pdg" firstAttribute="leading" secondItem="4rF-cC-cKo" secondAttribute="leading" constant="10" id="84p-Qi-kzU"/>
+                            <constraint firstItem="xfX-6R-Pdg" firstAttribute="leading" secondItem="4rF-cC-cKo" secondAttribute="leading" constant="6" id="84p-Qi-kzU"/>
                             <constraint firstItem="xfX-6R-Pdg" firstAttribute="top" secondItem="4rF-cC-cKo" secondAttribute="top" constant="5" id="Nqf-f9-8A4"/>
                             <constraint firstItem="G8C-JF-JJe" firstAttribute="centerY" secondItem="xfX-6R-Pdg" secondAttribute="centerY" id="bB5-7T-gtJ"/>
                             <constraint firstItem="BeO-yV-8iZ" firstAttribute="leading" secondItem="4rF-cC-cKo" secondAttribute="leading" id="oKl-ov-5Mq"/>

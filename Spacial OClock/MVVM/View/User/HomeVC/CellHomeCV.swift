@@ -13,6 +13,8 @@ protocol  CellHomeCVDelegate {
 class CellHomeCV: UICollectionViewCell {
 
     //MARK: Outlets
+    @IBOutlet weak var lblRating: UILabel!
+    @IBOutlet weak var viewReview: UIView!
     @IBOutlet weak var imgLocaiton : UIImageView!
     @IBOutlet weak var lblLocationName : UILabel!
     @IBOutlet weak var lblTotalRestaurant : UILabel!
@@ -23,6 +25,8 @@ class CellHomeCV: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        viewReview.layer.cornerRadius = 12
+        viewReview.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
        // initialLoad()
         // Initialization code
     }

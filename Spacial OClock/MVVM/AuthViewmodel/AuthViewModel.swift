@@ -368,7 +368,7 @@ class AuthViewModel : NSObject {
     
     //MARK: - LOCATION GET LIST
     func locationGetapicall(onsuccess: @escaping (([LocationListBody]?)->())){
-        WebService.service(API.location_list, service: .get) {
+        WebService.service(API.fetch_app_availability, service: .get) {
             (modaldata: LocationList, Data , json) in
             onsuccess(modaldata.body)
         }

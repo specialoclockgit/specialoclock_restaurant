@@ -113,7 +113,6 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
             screen.buttonColor = "themeOrange"
             screen.status = "Completed"
             screen.statusColor = "themeGreen"
-            //screen.image = arrImg[indexPath.row]
             screen.statusVerify = 1
         }else{
             screen.booking_id = modal?[indexPath.row].id ?? 0
@@ -121,7 +120,6 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
             screen.buttonColor = "themeRed"
             screen.status = "Ongoing"
             screen.statusColor = "themeRed"
-           // screen.image = arrImg[indexPath.row]
             screen.statusVerify = 0
         }
         self.navigationController?.pushViewController(screen, animated: true)

@@ -36,9 +36,13 @@ class MyOfferVC: UIViewController {
                                             ModelMyOffer(titleName: "Diner Special 30%", subTitle: "", timming: "(16:00 to 22:00)", img: [], itemName: [""], prevPrice: [""], newPrice: [""]) ,
                                             ModelMyOffer(titleName: "Kids Special 40%", subTitle: "", timming: "(16:00 to 22:00)", img: [], itemName: [""], prevPrice: [""], newPrice: [""])]
     var arrCheck : [Bool] = []
-//    var viewmodel =
     var datagetApi : [LocationListBody]?
     var viewmodel = AuthViewModel()
+    var viewmodalhome = HomeViewModel()
+    var getcountry = String()
+    var getstate = String()
+    var getcity = String()
+    var callback : ((String)->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +82,7 @@ class MyOfferVC: UIViewController {
 
 extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.datagetApi?[section].states?.count ?? 0
+        return self.datagetApi?[section].restaurants?.count ?? 0
         
     }
     
@@ -110,8 +114,8 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tbMyOffer.dequeueReusableCell(withIdentifier: Cell.CellMyOfferTB) as! CellMyOfferTB
-        let section = arrModelMyOffer[indexPath.section]
-        cell.lblItemTitle.text = self.datagetApi?[indexPath.section].states?[indexPath.row].state ?? ""
+        let sections = datagetApi?[indexPath.section].restaurants
+        cell.lblItemTitle.text = sections?[indexPath.row].city ?? ""
         
         //MARK: Hide And View Cell
         if arrCheck[indexPath.section] == false{
@@ -124,6 +128,12 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (arrCheck[indexPath.section]) == true ? 45.0 : 0.0
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sections = datagetApi?[indexPath.section].restaurants
+        self.getcity = sections?[indexPath.row].city ?? ""
+        self.callback?(self.getcity)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

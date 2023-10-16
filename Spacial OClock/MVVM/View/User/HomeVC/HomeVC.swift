@@ -72,6 +72,13 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     var viewModel = HomeViewModel()
     var nearBy = [NearbyRestaurant]()
     var locationUpdated = Bool()
+    var getstate = String()
+    var getcity = String()
+    var getcountry = String()
+    
+    
+    
+    fileprivate var sectionArray: [SectionModel] = []
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
@@ -80,13 +87,10 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         initialLoad()
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
-//        self.lblLocation.text = Store.userDetails?.location ?? ""
         isSelected = true
         //MARK: Dine or Drink UserDefault for itemDetailOffer
         UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
         self.getUpdatedLocation()
-//        setDine()
-       // setupMarker()
     }
     
     
@@ -121,7 +125,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                    let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
                     view.lblPersot.text = "\(percentage)%"
 //                    view.providerImageView.image = UIImage(named: "favourite")
-        
                     marker.iconView = view
                     marker.map = self.gmsMapView
                     marker.userData = returnedPlace
@@ -195,8 +198,40 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         return hasPermission
     }
     
-    func setData(type: Int, country: String, state: String) {
-        self.viewModel.homeApi(type: type, country: country, state: state,lat: self.lat ?? 0.0, long: self.long ?? 0.0) { (objData) in
+    func setData(type: Int, country: String, state: String, city:String) {
+        self.sectionArray.removeAll()
+        self.viewModel.homeApi(type: type, country: country, city: city, state: state,lat: self.lat ?? 0.0, long: self.long ?? 0.0) { (objData) in
+            
+            if objData?.location?.count ?? 0 != 0 {
+                let obj = SectionModel(name: "Location",objArray: objData?.location ?? [],image: "PIN")
+                self.sectionArray.append(obj)
+            }
+            
+            if objData?.cuisine?.count ?? 0 != 0 {
+                let obj = SectionModel(name: "Cusinis",objArray: objData?.cuisine ?? [],image: "soup")
+                self.sectionArray.append(obj)
+            }
+            
+            if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
+                let obj = SectionModel(name: "Trending",objArray: objData?.highily_rated_bars_restos ?? [],image: "Trending")
+                self.sectionArray.append(obj)
+            }
+            
+            
+            if objData?.banners?.count ?? 0 != 0 {
+                let obj = SectionModel(name: "Banner",objArray: objData?.banners ?? [],image: "")
+                self.sectionArray.append(obj)
+            }
+            
+            if objData?.theme?.count ?? 0 != 0 {
+                let obj = SectionModel(name: "Theme",objArray: objData?.theme ?? [],image: "mask")
+                self.sectionArray.append(obj)
+            }
+            
+            if objData?.all_bars_restos?.count ?? 0 != 0 {
+                let obj = SectionModel(name: "A-Z",objArray: objData?.all_bars_restos ?? [],image: "9411889")
+                self.sectionArray.append(obj)
+            }
             self.viewModel.homeData = objData
             self.nearBy = objData?.nearby_restaurants ?? []
             self.getalllocations()
@@ -211,6 +246,10 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     @IBAction func btnLocationAct(_ sender : UIButton){
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
         let vc = serviceStoryboard.instantiateViewController(withIdentifier: "MyOfferVC") as! MyOfferVC
+        vc.callback = { dataa in
+            self.getcity = dataa
+            self.lblLocation.text = self.getcity
+        }
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -235,14 +274,10 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDrinks.textColor = UIColor.lightGray
         lblDineIn.textColor = UIColor.black
         isSelected = true
-//        arrHomeTBModel.removeAll()
-//        arrHomeTBModel.append(contentsOf: arrDineIN)
-        //Table cell Heading Array Data
         arrHeading.removeAll()
         arrHeading.append(contentsOf: arrDineHeader)
-        
         UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
-        setData(type: 1, country: "India", state: "Punjab")
+        setData(type: 1, country:self.getcountry, state: "", city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }
     
@@ -252,14 +287,11 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDineIn.textColor = UIColor.lightGray
         lblDrinks.textColor = UIColor.black
         isSelected = false
-//        arrHomeTBModel.removeAll()
-//        arrHomeTBModel.append(contentsOf: arrDrinks)
-        //Table Cell Heading Array Data
         arrHeading.removeAll()
         arrHeading.append(contentsOf: arrDrinkHeading)
         tbHomeData.reloadData()
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
-        setData(type: 2, country: "India", state: "Punjab")
+        setData(type: 2, country: self.getcountry, state: self.getstate, city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }
     
@@ -291,9 +323,13 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 let placemark = placemarks![0]
                 print(placemark.locality!)
                 print(placemark.administrativeArea!)
+                self.getcountry = placemark.country ?? ""
+               // self.getcity = placemark.administrativeArea ?? ""
+                self.getstate = placemark.locality ?? ""
                 print(placemark.country!)
                 
                 self.lblLocation.text = "\(placemark.locality!)"
+            //    self.lblLocation.text = placemarks.coun
             }
         }
         locationManager.stopUpdatingLocation()
@@ -303,44 +339,45 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
 //MARK: - EXETNSIONS
 extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionArray.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  1
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return arrHome.count
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 2 {
+        if sectionArray[indexPath.section].name == "Banner" {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellImageViewTB, for: indexPath) as! CellImageViewTB
             cell.banners = self.viewModel.homeData?.banners ?? [Banner]()
             cell.collView.reloadData()
             return cell
-        }else{
+        } else {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellHomeTB, for: indexPath) as! CellHomeTB
-            cell.lblHeading.text = arrHeading[indexPath.section].heading
-            cell.img.image =  UIImage(named: arrHeading[indexPath.section].img)
+            cell.lblHeading.text = sectionArray[indexPath.section].name
+            cell.img.image =  UIImage(named: sectionArray[indexPath.section].image ?? "")
             cell.btnSeeMore.addTarget(self, action: #selector(btnSeeMoreAct), for: .touchUpInside)
             cell.btnSeeMore.tag = indexPath.section
+            cell.objArray = sectionArray
             cell.collView.tag = indexPath.section
-            cell.iconString = arrHeading[indexPath.section].img
-            cell.heading = arrHeading[indexPath.section].heading
-            if indexPath.section == 0 {
-                cell.location = self.viewModel.homeData?.location ?? [HomeListLocation]()
+            cell.iconString = sectionArray[indexPath.section].image ?? ""
+            cell.heading = sectionArray[indexPath.section].name ?? ""
+            if sectionArray[indexPath.section].name == "Location" {
+                cell.location = sectionArray[indexPath.section].objArray as? [HomeListLocation] ?? []
                 cell.collView.reloadData()
-            }else if indexPath.section == 1 {
-                if isSelected == true {
-                    cell.isCellSelected = true
-                    cell.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
-                    cell.collView.reloadData()
-                }else{
-                    cell.category = self.viewModel.homeData?.category ?? [Category]()
-                    cell.collView.reloadData()
-                    cell.isCellSelected = false
-                }
-            }else if indexPath.section == 3 {
-                cell.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
+            } else if sectionArray[indexPath.section].name == "Cusinis" {
+                cell.isCellSelected = true
+                cell.cuisine = sectionArray[indexPath.section].objArray as? [Cuisine] ?? []
+                cell.collView.reloadData()
+            }else if sectionArray[indexPath.section].name == "Trending" {
+                cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
+                cell.collView.reloadData()
+            }else if sectionArray[indexPath.section].name == "Theme" {
+                cell.themeArr = sectionArray[indexPath.section].objArray as? [ThemeData] ?? []
+                cell.collView.reloadData()
+            }else if sectionArray[indexPath.section].name == "A-Z" {
+                cell.allresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
             }
             return cell
@@ -348,9 +385,9 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 2{
-            return CGFloat(100.0)
-        }else{
+        if sectionArray[indexPath.section].name == "Banner" {
+            return CGFloat(80)
+        } else {
             return CGFloat(250.0)
         }
     }
@@ -366,33 +403,59 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
 extension HomeVC {
     @objc func btnSeeMoreAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
-        switch sender.tag {
-        case 0 :
-            screen.setvalue = "Location"
-            screen.location = self.viewModel.homeData?.location ?? [HomeListLocation]()
+        switch sectionArray[sender.tag].name {
+        case "Location" :
+            screen.setvalue = sectionArray[sender.tag].name ?? ""
+            screen.location = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
-        case 1:
-            debugPrint("Case 1")
-            if isSelected == true {
-                screen.setvalue = "Cuisine"
-                screen.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
-            }else{
-                screen.setvalue = "Category"
-                screen.category = self.viewModel.homeData?.category ?? [Category]()
-            }
+            
+        case "Cusinis" :
+            screen.setvalue = sectionArray[sender.tag].name ?? ""
+            screen.cuisine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
+            self.navigationController?.pushViewController(screen, animated: true)
+            
+        case "Category" :
+            screen.setvalue = sectionArray[sender.tag].name ?? ""
+            screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
            
-        case 3:
-            if isSelected == true {
-                screen.setvalue = "Theme"
-                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
-            }else{
-                screen.setvalue = "Theme"
-                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
-                debugPrint("Not Selected")
-            }
+        case "Trending" :
+            screen.setvalue = sectionArray[sender.tag].name ?? ""
+            screen.all_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
-            debugPrint("case 3")
+            
+        case "Theme" :
+            screen.setvalue = sectionArray[sender.tag].name ?? ""
+            screen.themeArr = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
+            self.navigationController?.pushViewController(screen, animated: true)
+            
+        case "A-Z" :
+            screen.setvalue = sectionArray[sender.tag].name ?? ""
+            screen.highily_rated_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            self.navigationController?.pushViewController(screen, animated: true)
+            
+//        case 1:
+//            debugPrint("Case 1")
+//            if isSelected == true {
+//                screen.setvalue = "Cuisine"
+//                screen.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
+//            }else{
+//                screen.setvalue = "Category"
+//                screen.category = self.viewModel.homeData?.category ?? [Category]()
+//            }
+//            self.navigationController?.pushViewController(screen, animated: true)
+//
+//        case 3:
+//            if isSelected == true {
+//                screen.setvalue = "Theme"
+//                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
+//            }else{
+//                screen.setvalue = "Theme"
+//                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
+//                debugPrint("Not Selected")
+//            }
+//            self.navigationController?.pushViewController(screen, animated: true)
+//            debugPrint("case 3")
         default:
             debugPrint("default btnSeeMoreAct")
         }
@@ -453,4 +516,11 @@ extension HomeVC {
        func randomFloat(min: Float, max:Float) -> Float {
            return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
        }
+}
+
+
+struct SectionModel {
+    var name: String?
+    var objArray: [Any]?
+    var image: String?
 }

@@ -118,6 +118,44 @@ struct HomeListBody: Codable {
     var banners: [Banner]?
     var category: [Category]?
     var nearby_restaurants: [NearbyRestaurant]?
+    var all_bars_restos, highily_rated_bars_restos: [AllBarsResto]?
+}
+
+// MARK: - AllBarsResto
+struct AllBarsResto: Codable {
+    let id: Int?
+    let name: String?
+    let location: String?
+    let country: String?
+    let state, city: String?
+    let latitude, longitude: String?
+    let userID: Int?
+    let shortDescription: String?
+    let status: Int?
+    let openTime: String?
+    let closeTime: String?
+    let type, categoryID, cuisineID, themesRestrorantID: Int?
+    let isBlocked: Int?
+    let profileImage: String?
+    let commission: String?
+    let avgRating: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, location, country, state, city, latitude, longitude
+        case userID = "user_id"
+        case shortDescription = "short_description"
+        case status
+        case openTime = "open_time"
+        case closeTime = "close_time"
+        case type
+        case categoryID = "category_id"
+        case cuisineID = "cuisine_id"
+        case themesRestrorantID = "themes_restrorant_id"
+        case isBlocked = "is_blocked"
+        case profileImage = "profile_image"
+        case commission
+        case avgRating = "avg_rating"
+    }
 }
 
 // MARK: - Theme

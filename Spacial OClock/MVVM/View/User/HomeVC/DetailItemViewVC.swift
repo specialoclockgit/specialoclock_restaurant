@@ -46,19 +46,17 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
         lblTwo.text = lblName
         lblOne.text = "\(setValue)> "
         imgViewHead.image = UIImage(named: setimage)
-        
          
         if setValue == "Location"{
             location_By_RestoAPI()
-        }else if setValue == "Cuisines"{
+        }else if setValue == "Cusinis"{
             get_resto_list()
         }else if setValue == "Categorys"{
             
-        }else{
+        }else if setValue == "Theme"{
             theme_Resto_API()
         }
     }
-    
     
     //MARK: - CUSINS BY RESTO
     func get_resto_list(){
@@ -122,7 +120,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 return restrorants?.count ?? 0
             }
         }
-       else if setValue == "Cuisines"{
+       else if setValue == "Cusinis"{
             if modal?.count == 0 {
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
@@ -145,26 +143,33 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailItemCVC", for: indexPath) as! DetailItemCVC
+        cell.stackHeight.constant = 46
+        cell.viewOffer1.isHidden = true
+        cell.viewOffer2.isHidden = true
+        cell.viewOffer3.isHidden = true
         if setValue == "Location"{
             let imageIndex = (imageURL) + (restrorants?[indexPath.row].profileImage ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = restrorants?[indexPath.row].name ?? ""
-            cell.lblDiscription.text = "\(restrorants?[indexPath.row].offerOpenTime ?? "") - " + "\(restrorants?[indexPath.row].offerCloseTime ?? "") " + "\(restrorants?[indexPath.row].offerPercentage ?? "")%"
+            cell.lblDiscription.text = "\(restrorants?[indexPath.row].openTime ?? "") - " + "\(restrorants?[indexPath.row].closeTime ?? "")"
         }
-        else if setValue == "Cuisines"{
+        else if setValue == "Cusinis"{
             let imageIndex = (imageURL) + (modal?[indexPath.row].profileImage ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = modal?[indexPath.row].name ?? ""
-            cell.lblDiscription.text = "\(modal?[indexPath.row].offerOpenTime ?? "") - " + "\(modal?[indexPath.row].offerCloseTime ?? "") " + "\(modal?[indexPath.row].offerPercentage ?? "")%"
+            cell.lblDiscription.text = "\(modal?[indexPath.row].openTime ?? "") - " + "\(modal?[indexPath.row].closeTime ?? "")"
+            
+            let arrayOffer: [[OfferTiming]] = ((modal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
+            sortArray(arrayOffer: arrayOffer,cell: cell)
             
         }else{
             let imageIndex = (imageURL) + (thememodla?[indexPath.row].profileImage ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = thememodla?[indexPath.row].name ?? ""
-            cell.lblDiscription.text = "\(thememodla?[indexPath.row].openTime ?? "") - " + "\(thememodla?[indexPath.row].closeTime ?? "") " + "\(thememodla?[indexPath.row].offerPercentage ?? "")%"
+            cell.lblDiscription.text = "\(thememodla?[indexPath.row].openTime ?? "") - " + "\(thememodla?[indexPath.row].closeTime ?? "")"
         }
         return cell
     }
@@ -176,7 +181,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = restrorants?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if setValue == "Cuisines"{
+        }else if setValue == "Cusinis"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = modal?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
@@ -184,6 +189,59 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = thememodla?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func sortArray(arrayOffer: [[OfferTiming]], cell: DetailItemCVC) {
+        var arrayOfferTime: [OfferTiming] = []
+        for i in arrayOffer {
+            arrayOfferTime.append(contentsOf: i)
+        }
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "HH:mm"
+        
+        let dateString = formatter.string(from: Date())
+        let output = arrayOfferTime.sorted { string1, string2 in
+            guard let date1 = formatter.date(from: string1.offer ?? "") else { return true }
+            guard let date2 = formatter.date(from: string2.offer ?? "") else { return false }
+            return date1 < date2
+        }
+        
+        
+        var finalArray: [OfferTiming] = []
+        for i in output {
+             let date1 = formatter.date(from: i.offer ?? "") ?? Date()
+            let date = formatter.date(from: dateString) ?? Date()
+            if date < date1 {
+                finalArray.append(i)
+            }
+        }
+    
+        if finalArray.count == 1 {
+            cell.viewOffer1.isHidden = false
+            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
+            cell.lbltime1.text = finalArray[0].offer ?? ""
+        } else if finalArray.count == 2 {
+            cell.viewOffer1.isHidden = false
+            cell.viewOffer2.isHidden = false
+            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
+            cell.lblOffer2.text = "\(finalArray[1].percentage ?? 0)"
+            cell.lbltime1.text = finalArray[0].offer ?? ""
+            cell.lbltime2.text = finalArray[1].offer ?? ""
+        } else if finalArray.count >= 3{
+            cell.viewOffer1.isHidden = false
+            cell.viewOffer2.isHidden = false
+            cell.viewOffer3.isHidden = false
+            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
+            cell.lblOffer2.text = "\(finalArray[1].percentage ?? 0)"
+            cell.lblOffer3.text = "\(finalArray[2].percentage ?? 0)"
+            cell.lbltime1.text = finalArray[0].offer ?? ""
+            cell.lbltime2.text = finalArray[1].offer ?? ""
+            cell.lblTime3.text = finalArray[2].offer ?? ""
+        } else {
+            cell.stackHeight.constant = 0
         }
     }
 }

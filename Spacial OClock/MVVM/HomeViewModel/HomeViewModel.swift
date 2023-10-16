@@ -13,8 +13,8 @@ class HomeViewModel : NSObject {
     var homeData: HomeListBody?
     
     //MARK: - CUISINE GET LIST
-    func homeApi(type:Int, country: String, state:String, lat:Double, long:Double, onsuccess: @escaping ((HomeListBody?)->())){
-        let param:parameters = ["type":type, "country":country, "state": state, "latitude":lat, "longitude":long]
+    func homeApi(type:Int, country: String, city:String, state:String, lat:Double, long:Double, onsuccess: @escaping ((HomeListBody?)->())){
+        let param:parameters = ["type":type, "country":country, "state": state, "latitude":lat,"city":city, "longitude":long]
         print(param)
         WebService.service(API.home, param: param, service: .post) {
             (modaldata: HomeListModel, Data , json) in

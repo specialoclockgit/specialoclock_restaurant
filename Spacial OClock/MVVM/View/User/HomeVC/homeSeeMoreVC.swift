@@ -22,7 +22,10 @@ class homeSeeMoreVC: UIViewController {
     var cuisine = [Cuisine]()
     var themeArr = [ThemeData]()
     var category = [Category]()
+    var all_bars_restos = [AllBarsResto]()
+    var highily_rated_bars_restos = [AllBarsResto]()
     var setvalue = ""
+    var objArray: [SectionModel] = []
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
@@ -30,14 +33,20 @@ class homeSeeMoreVC: UIViewController {
         if setvalue == "Location"{
             lblHeader.text = "Location"
             imgViewHeader.image = UIImage(named: "pinPerson")
-        }else if setvalue == "Cuisine"{
+        }else if setvalue == "Cusinis"{
             lblHeader.text = "Cuisine"
             imgViewHeader.image = UIImage(named: "soup")
         }else if setvalue == "Category"{
             lblHeader.text = "Category"
             imgViewHeader.image = UIImage(named: "menu 1")
-        }else{
+        }else if setvalue == "Trending"{
+            lblHeader.text = "Trending"
+            imgViewHeader.image = UIImage(named: "mask")
+        }else if setvalue == "Theme"{
             lblHeader.text = "Theme"
+            imgViewHeader.image = UIImage(named: "mask")
+        }else{
+            lblHeader.text = "A-Z"
             imgViewHeader.image = UIImage(named: "mask")
         }
     }
@@ -47,14 +56,18 @@ class homeSeeMoreVC: UIViewController {
 //MARK: - EXTENSIONS
 extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if setvalue == "Location"{
-            return location.count
-        }else if setvalue == "Cuisine"{
+        if setvalue == "Cusinis"{
+            return cuisine.count
+        }else if setvalue == "Cusinis"{
             return cuisine.count
         }else if setvalue == "Category"{
             return category.count
-        }else{
+        }else if setvalue == "Trending"{
+            return all_bars_restos.count
+        }else if setvalue == "Theme"{
             return themeArr.count
+        }else{
+            return highily_rated_bars_restos.count
         }
         return 0
     }
@@ -64,7 +77,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.imgVirw.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblName.text = self.location[indexPath.row].city ?? ""
             cell.lblDis.text = "Restaurant \(self.location[indexPath.row].restroCount ?? 0)"
-        }else if setvalue == "Cuisine"{
+        }else if setvalue == "Cusinis"{
             let imageIndex = (imageBaseURL) + (self.cuisine[indexPath.row].image ?? "")
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
@@ -76,12 +89,24 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblDis.text = "Restaurant \(self.category[indexPath.row].clubCount ?? 0)"
             cell.lblName.text = self.category[indexPath.row].title ?? ""
-        }else{
+        }else if setvalue == "Theme"{
             let image = "\(self.themeArr[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.themeArr[indexPath.row].productName ?? ""
+        }else if setvalue == "Trending"{
+            let image = "\(self.all_bars_restos[indexPath.row].profileImage ?? "")"
+            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
+          //cell.lblDis.text = "Restaurant \(self.all_bars_restos[indexPath.row]. ?? 0)"
+            cell.lblName.text = self.all_bars_restos[indexPath.row].name ?? ""
+        }else{
+            let image = "\(self.highily_rated_bars_restos[indexPath.row].profileImage ?? "")"
+            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
+            //cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
+            cell.lblName.text = self.highily_rated_bars_restos[indexPath.row].name ?? ""
         }
         return cell
     }
