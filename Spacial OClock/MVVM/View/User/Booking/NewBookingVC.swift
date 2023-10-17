@@ -212,7 +212,6 @@ extension NewBookingVC{
         viewFSCalendar.calendarWeekdayView.clipsToBounds = true
         viewFSCalendar.appearance.headerMinimumDissolvedAlpha = 0
         tfSelectPeople.setupRightImage(imageName: "dropDown" , width: 7, height: 5)
-        
         tfSelectPeople.inputView = pickerSelectPeople
         tfSelectTime.inputView = pickerSelectTime
         

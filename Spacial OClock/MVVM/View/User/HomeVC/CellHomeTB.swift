@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SDWebImage
+
 struct CellModel {
     var image : UIImage
     var locationNmae  : String
@@ -58,7 +60,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             return objArray[collView.tag].objArray?.count ?? 0
         } else if objArray[collView.tag].name == "Location" {
             return objArray[collView.tag].objArray?.count ?? 0
-        }else if objArray[collView.tag].name == "Trending" {
+        }else if objArray[collView.tag].name == "Popular" {
             return objArray[collView.tag].objArray?.count ?? 0
         }else if objArray[collView.tag].name == "Theme" {
             return objArray[collView.tag].objArray?.count ?? 0
@@ -94,11 +96,11 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblLocationName.text = self.location[indexPath.row].city
             cell.lblTotalRestaurant.text = "\(self.location[indexPath.row].restroCount ?? 0) Restaurants"
             cell.viewReview.isHidden = true
-        }else if objArray[collView.tag].name == "Trending"{
+        }else if objArray[collView.tag].name == "Popular"{
             cell.imgLocaiton.showIndicator(baseUrl: imageURL, imageUrl: self.heishtresto[indexPath.row].profileImage ?? "")
             cell.lblLocationName.text = self.heishtresto[indexPath.row].name
             cell.viewReview.isHidden = false
-            //            cell.lblTotalRestaurant.text = "\(self.heishtresto[indexPath.row].restroCount ?? 0) Restaurants"
+            cell.lblTotalRestaurant.text = self.heishtresto[indexPath.row].shortDescription ?? ""
         }else if objArray[collView.tag].name == "Theme"{
             cell.viewReview.isHidden = true
             let image = "\(self.themeArr[indexPath.row].image ?? "")"
@@ -110,13 +112,10 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             }
         }else if objArray[collView.tag].name == "A-Z"{
             cell.viewReview.isHidden = true
-//            let image = "\(self.heishtresto[indexPath.row].profileImage ?? "")"
-//            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-//            cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-//            cell.imgLocaiton.showIndicator(baseUrl: imageURL, imageUrl: self.heishtresto[indexPath.row].profileImage ?? "")
-//            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            cell.lblLocationName.text = self.heishtresto[indexPath.row].name
-            
+            let imageIndex = (imageURL) + (allresto[indexPath.row].profileImage ?? "")
+            cell.imgLocaiton.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.imgLocaiton.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.lblTotalRestaurant.text = allresto[indexPath.row].shortDescription ?? ""
         }
 //            if collView.tag == 0 {
 //                
@@ -164,7 +163,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setimage = "soup"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
-        else if objArray[collView.tag].name == "Trending"{
+        else if objArray[collView.tag].name == "Popular"{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
             vc.ProductID = heishtresto[indexPath.row].id ?? 0
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
@@ -177,6 +176,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }else{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
+            
             vc.ProductID = allresto[indexPath.row].id ?? 0
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }

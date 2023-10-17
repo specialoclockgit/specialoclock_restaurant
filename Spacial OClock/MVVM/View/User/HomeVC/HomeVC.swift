@@ -96,7 +96,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     //MARK: - MARK SHOW IN GOOGLE MAP
     func getalllocations() {
-            for index in 0..<nearBy.count {
+            for index in 0..<(nearBy.count) {
                 if let returnedPlace = nearBy[index] as? NearbyRestaurant {
                     
                     var percentage = ""
@@ -114,20 +114,28 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                     if let longis = returnedPlace.longitude {
                         longitude = longis
                     }
-
-                    let marker = GMSMarker()
                     
-                    let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 50)
-                  
+                    let marker = GMSMarker()
+              
+                    
                     print("=====map loc",latitude,longitude)
-                    gmsMapView.animate(to: camera)
-                    marker.position = CLLocationCoordinate2DMake(Double(latitude) ?? 0.0, Double(longitude) ?? 0.0)
+               
+                    marker.position = checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
+                
                    let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
                     view.lblPersot.text = "\(percentage)%"
 //                    view.providerImageView.image = UIImage(named: "favourite")
                     marker.iconView = view
                     marker.map = self.gmsMapView
                     marker.userData = returnedPlace
+                }
+                if self.nearBy.count == 0 {
+                    let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
+                    let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 5)
+                    gmsMapView.animate(to: camera1)
+                } else {
+                    let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 5)
+                    gmsMapView.animate(to: camera2)
                 }
             }
        
@@ -213,7 +221,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
             }
             
             if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
-                let obj = SectionModel(name: "Trending",objArray: objData?.highily_rated_bars_restos ?? [],image: "Trending")
+                let obj = SectionModel(name: "Popular",objArray: objData?.highily_rated_bars_restos ?? [],image: "Popular")
                 self.sectionArray.append(obj)
             }
             
@@ -263,7 +271,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     @IBAction func btnDrinks(_ sender: UIButton) {
         if sender.isSelected == false{
-            setDrink()
+               setDrink()
             sender.isSelected = false
         }
     }
@@ -291,10 +299,24 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         arrHeading.append(contentsOf: arrDrinkHeading)
         tbHomeData.reloadData()
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
-        setData(type: 2, country: self.getcountry, state: self.getstate, city: self.getcity)
+       // setData(type: 2, country: self.getcountry, state: self.getstate, city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }
+    @IBAction func btnMapView(_ sender: UIButton) {
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
+//        vc.latitude = self.lat ?? 0.0
+//        vc.longitude = self.long ?? 0.0
+//        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
+    @IBAction func btnSearch(_ sender: UIButton) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
+        vc.city = self.getcity
+        vc.type = 1
+        vc.latitude = self.lat ?? 0.0
+        vc.longitude = self.long ?? 0.0
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     @IBAction func btnProfileAct(_ sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.UserProfileVC) as! UserProfileVC
         self.navigationController?.pushViewController(screen, animated: true)
@@ -370,7 +392,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
                 cell.isCellSelected = true
                 cell.cuisine = sectionArray[indexPath.section].objArray as? [Cuisine] ?? []
                 cell.collView.reloadData()
-            }else if sectionArray[indexPath.section].name == "Trending" {
+            }else if sectionArray[indexPath.section].name == "Popular" {
                 cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
             }else if sectionArray[indexPath.section].name == "Theme" {
@@ -419,7 +441,7 @@ extension HomeVC {
             screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
            
-        case "Trending" :
+        case "Popular" :
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.all_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             self.navigationController?.pushViewController(screen, animated: true)

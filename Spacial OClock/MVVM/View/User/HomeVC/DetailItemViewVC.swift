@@ -38,9 +38,11 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     var lblName = ""
     var setimage = ""
     var setValue = ""
+    var all_bars_restos = [AllBarsResto]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         CollectionView.showAnimatedGradientSkeleton()
         print(cusinessID)
         lblTwo.text = lblName
@@ -55,6 +57,8 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
             
         }else if setValue == "Theme"{
             theme_Resto_API()
+        }else if setValue == "Popular"{
+            
         }
     }
     
@@ -148,14 +152,16 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         cell.viewOffer2.isHidden = true
         cell.viewOffer3.isHidden = true
         if setValue == "Location"{
-            let imageIndex = (imageURL) + (restrorants?[indexPath.row].profileImage ?? "")
+            let imageIndex = (imageURL) + (restrorants?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = restrorants?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(restrorants?[indexPath.row].openTime ?? "") - " + "\(restrorants?[indexPath.row].closeTime ?? "")"
+//            let arrayOffer: [[OfferTiming]] = ((restrorants?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
+//            sortArray(arrayOffer: arrayOffer,cell: cell)
         }
         else if setValue == "Cusinis"{
-            let imageIndex = (imageURL) + (modal?[indexPath.row].profileImage ?? "")
+            let imageIndex = (imageURL) + (modal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = modal?[indexPath.row].name ?? ""
@@ -165,7 +171,9 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             sortArray(arrayOffer: arrayOffer,cell: cell)
             
         }else{
-            let imageIndex = (imageURL) + (thememodla?[indexPath.row].profileImage ?? "")
+//            let arrayOffer: [[OfferTiming]] = ((thememodla?[indexPath.row].offer ?? []).map({$0.offerTimings ?? []}) )
+//            sortArray(arrayOffer: arrayOffer,cell: cell)
+            let imageIndex = (imageURL) + (thememodla?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = thememodla?[indexPath.row].name ?? ""

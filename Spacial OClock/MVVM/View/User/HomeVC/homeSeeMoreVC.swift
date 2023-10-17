@@ -39,8 +39,8 @@ class homeSeeMoreVC: UIViewController {
         }else if setvalue == "Category"{
             lblHeader.text = "Category"
             imgViewHeader.image = UIImage(named: "menu 1")
-        }else if setvalue == "Trending"{
-            lblHeader.text = "Trending"
+        }else if setvalue == "Popular"{
+            lblHeader.text = "Popular"
             imgViewHeader.image = UIImage(named: "mask")
         }else if setvalue == "Theme"{
             lblHeader.text = "Theme"
@@ -62,7 +62,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             return cuisine.count
         }else if setvalue == "Category"{
             return category.count
-        }else if setvalue == "Trending"{
+        }else if setvalue == "Popular"{
             return all_bars_restos.count
         }else if setvalue == "Theme"{
             return themeArr.count
@@ -95,17 +95,15 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.themeArr[indexPath.row].productName ?? ""
-        }else if setvalue == "Trending"{
-            let image = "\(self.all_bars_restos[indexPath.row].profileImage ?? "")"
-            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-          //cell.lblDis.text = "Restaurant \(self.all_bars_restos[indexPath.row]. ?? 0)"
+        }else if setvalue == "Popular"{
+            cell.imgVirw.showIndicator(baseUrl: imageURL, imageUrl: self.all_bars_restos[indexPath.row].profileImage ?? "")
+          cell.lblDis.text = self.all_bars_restos[indexPath.row].shortDescription ?? ""
             cell.lblName.text = self.all_bars_restos[indexPath.row].name ?? ""
         }else{
             let image = "\(self.highily_rated_bars_restos[indexPath.row].profileImage ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            //cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
+            cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.highily_rated_bars_restos[indexPath.row].name ?? ""
         }
         return cell
@@ -114,25 +112,40 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         return CGSize(width: collection.frame.width / 2.1, height: 200)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
         if setvalue == "Location"{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.country = self.location[indexPath.row].country ?? ""
             vc.city = self.location[indexPath.row].city ?? ""
             vc.setValue = "Location"
             vc.setimage = "PIN"
-        }else if setvalue == "Cuisine"{
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if setvalue == "Cusinis"{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.cusinessID = self.cuisine[indexPath.row].id ?? 0
             vc.lblName = self.cuisine[indexPath.row].name ?? ""
             vc.setimage = "soup"
-            vc.setValue = "Cuisines"
+            vc.setValue = "Cusinis"
+            self.navigationController?.pushViewController(vc, animated: true)
         }else if setvalue == "Category"{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
+            self.navigationController?.pushViewController(vc, animated: true)
             //vc.cuisine = category[indexPath.row]
-        }else{
+        }else if setvalue == "Theme"{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.themeID = themeArr[indexPath.row].id ?? 0
             vc.lblName = self.themeArr[indexPath.row].productName ?? ""
             vc.setValue = "Theme"
             vc.setimage = "mask"
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if setvalue == "Popular"{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+            vc.ProductID = all_bars_restos[indexPath.row].id ?? 0
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+            vc.ProductID = highily_rated_bars_restos[indexPath.row].id ?? 0
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        self.navigationController?.pushViewController(vc, animated: true)
+       
     }
 }

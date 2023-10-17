@@ -175,6 +175,9 @@ class ItemDetailsVC: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     //MARK: Button Action
+    @IBAction func btnDate(_ sender: UIButton) {
+        
+    }
     @IBAction func btnBackAct(sender : UIButton){
         self.navigationController?.popViewController(animated: true)
     }
@@ -293,6 +296,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
         else if collectionView == collViewMenu{
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
+            
             if status == 0 {
                 if indexPath.row == isselectedoffer{
                     cell.img.image = UIImage(named: "greenRectangle")
@@ -329,8 +333,11 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         let index = indexPath.row
    
             if status == 0 {
-                isselectedoffer = indexPath.row
-                collViewMenu.reloadData()
+                if collectionView == collViewMenu{
+                    isselectedoffer = indexPath.row
+                    collViewMenu.reloadData()
+                }
+                
                 valueSelect = true
                 menuProductAPI(id: ourMenu?[indexPath.row].id ?? 0)
                 self.menuid = ourMenu?[indexPath.row].offers?.menuID ?? 0
