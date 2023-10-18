@@ -73,6 +73,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeSeeMoreCVC", for: indexPath) as! homeSeeMoreCVC
+        cell.stackHeight.constant = 0
         if setvalue == "Location"{
             cell.imgVirw.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblName.text = self.location[indexPath.row].city ?? ""
@@ -96,20 +97,28 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.themeArr[indexPath.row].productName ?? ""
         }else if setvalue == "Popular"{
+            cell.stackHeight.constant = 46
             cell.imgVirw.showIndicator(baseUrl: imageURL, imageUrl: self.all_bars_restos[indexPath.row].profileImage ?? "")
           cell.lblDis.text = self.all_bars_restos[indexPath.row].shortDescription ?? ""
             cell.lblName.text = self.all_bars_restos[indexPath.row].name ?? ""
         }else{
+            cell.stackHeight.constant = 46
             let image = "\(self.highily_rated_bars_restos[indexPath.row].profileImage ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.highily_rated_bars_restos[indexPath.row].name ?? ""
         }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collection.frame.width / 2.1, height: 200)
+        if setvalue == "Popular"{
+            return CGSize(width: collection.frame.width / 2.1, height: 246)
+        }else if setvalue == "A-Z"{
+            return CGSize(width: collection.frame.width / 2.1, height: 246)
+        }else{
+            return CGSize(width: collection.frame.width / 2.1, height: 200)
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if setvalue == "Location"{

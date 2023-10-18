@@ -42,7 +42,8 @@ class MyOfferVC: UIViewController {
     var getcountry = String()
     var getstate = String()
     var getcity = String()
-    var callback : ((String)->())?
+    var gettimezone = String()
+    var callback : ((String,String)->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +133,8 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sections = datagetApi?[indexPath.section].restaurants
         self.getcity = sections?[indexPath.row].city ?? ""
-        self.callback?(self.getcity)
+        self.gettimezone = sections?[indexPath.row].timezone ?? ""
+        self.callback?(self.getcity, self.gettimezone)
         self.navigationController?.popViewController(animated: true)
     }
 }

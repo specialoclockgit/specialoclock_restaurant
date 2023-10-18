@@ -75,8 +75,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     var getstate = String()
     var getcity = String()
     var getcountry = String()
-    
-    
+    var gettimezone = String()
     
     fileprivate var sectionArray: [SectionModel] = []
     
@@ -131,7 +130,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 }
                 if self.nearBy.count == 0 {
                     let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
-                    let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 5)
+                    let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
                     gmsMapView.animate(to: camera1)
                 } else {
                     let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 5)
@@ -208,7 +207,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     func setData(type: Int, country: String, state: String, city:String) {
         self.sectionArray.removeAll()
-        self.viewModel.homeApi(type: type, country: country, city: city, state: state,lat: self.lat ?? 0.0, long: self.long ?? 0.0) { (objData) in
+        self.viewModel.homeApi(type: type, country: country, city: city, state: state,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.gettimezone) { (objData) in
             
             if objData?.location?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Location",objArray: objData?.location ?? [],image: "PIN")
@@ -254,8 +253,9 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     @IBAction func btnLocationAct(_ sender : UIButton){
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
         let vc = serviceStoryboard.instantiateViewController(withIdentifier: "MyOfferVC") as! MyOfferVC
-        vc.callback = { dataa in
+        vc.callback = { dataa, time in
             self.getcity = dataa
+            self.gettimezone = time
             self.lblLocation.text = self.getcity
         }
         self.navigationController?.pushViewController(vc, animated: true)
@@ -409,7 +409,11 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sectionArray[indexPath.section].name == "Banner" {
             return CGFloat(80)
-        } else {
+        } else if sectionArray[indexPath.section].name == "Popular" {
+            return CGFloat(300)
+        }else if sectionArray[indexPath.section].name == "A-Z"{
+            return CGFloat(300)
+        }else{
             return CGFloat(250.0)
         }
     }

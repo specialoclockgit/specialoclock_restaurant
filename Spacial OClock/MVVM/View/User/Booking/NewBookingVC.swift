@@ -37,9 +37,11 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     var modal : getSlotsModalBody?
     var timeSlots : [TimeSlot]?
     var slotId = Int()
+    var oldDateSelect = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
         tfSelectTime.delegate = self
         for i in 0...numberofperson{
             arrNumberOfPeople.append(i)
@@ -55,8 +57,12 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         viewFSCalendar.dataSource = self
         let date = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "dd-MM-yyyy"
         let result = formatter.string(from: date)
+        let calenderDate = formatter.date(from: oldDateSelect)
+        viewFSCalendar.select(calenderDate)
+        viewFSCalendar.reloadData()
+        viewFSCalendar.calendarHeaderView.reloadData()
         currentDate = result
         getslots(date: currentDate)
         now = result

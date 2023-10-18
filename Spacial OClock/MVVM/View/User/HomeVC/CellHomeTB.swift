@@ -87,21 +87,25 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         if objArray[collView.tag].name == "Cusinis" {
             let image = "\(self.cuisine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            cell.stackHeight.constant = 0
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblLocationName.text = self.cuisine[indexPath.row].name ?? ""
             cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
             cell.viewReview.isHidden = true
         } else if objArray[collView.tag].name == "Location" {
+            cell.stackHeight.constant = 0
             cell.imgLocaiton.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblLocationName.text = self.location[indexPath.row].city
             cell.lblTotalRestaurant.text = "\(self.location[indexPath.row].restroCount ?? 0) Restaurants"
             cell.viewReview.isHidden = true
         }else if objArray[collView.tag].name == "Popular"{
             cell.imgLocaiton.showIndicator(baseUrl: imageURL, imageUrl: self.heishtresto[indexPath.row].profileImage ?? "")
+            cell.stackHeight.constant = 46
             cell.lblLocationName.text = self.heishtresto[indexPath.row].name
             cell.viewReview.isHidden = false
             cell.lblTotalRestaurant.text = self.heishtresto[indexPath.row].shortDescription ?? ""
         }else if objArray[collView.tag].name == "Theme"{
+            cell.stackHeight.constant = 0
             cell.viewReview.isHidden = true
             let image = "\(self.themeArr[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -111,39 +115,25 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].barCount ?? 0) Restaurants"
             }
         }else if objArray[collView.tag].name == "A-Z"{
-            cell.viewReview.isHidden = true
+            cell.viewReview.isHidden = false
+            cell.stackHeight.constant = 46
             let imageIndex = (imageURL) + (allresto[indexPath.row].profileImage ?? "")
             cell.imgLocaiton.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgLocaiton.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblTotalRestaurant.text = allresto[indexPath.row].shortDescription ?? ""
         }
-//            if collView.tag == 0 {
-//                
-//            }else if collView.tag == 1 {
-//                if self.isCellSelected == true {
-//                    let image = "\(self.cuisine[indexPath.row].image ?? "")"
-//                    let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-//                    cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-//                    cell.lblLocationName.text = self.cuisine[indexPath.row].name ?? ""
-//                    cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
-//                }else {
-//                    let image = "\(self.category[indexPath.row].image ?? "")"
-//                    let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-//                    cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-//                    cell.lblLocationName.text = self.category[indexPath.row].title ?? ""
-//                    cell.lblTotalRestaurant.text = "\(self.category[indexPath.row].clubCount ?? 0) Restaurants"
-//                }
-//            }else if collView.tag == 3{
-//                
-//            }else {
-//                cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].restroCount ?? 0) Restaurants"
-//            }
-//        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 195.0, height: 208.0)
+        if objArray[collView.tag].name == "A-Z"{
+            return CGSize(width: 195.0, height: 270)
+        }else if objArray[collView.tag].name == "Popular"{
+            return CGSize(width: 195.0, height: 270)
+        }else{
+            return CGSize(width: 195.0, height: 208.0)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -176,7 +166,6 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }else{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
-            
             vc.ProductID = allresto[indexPath.row].id ?? 0
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }

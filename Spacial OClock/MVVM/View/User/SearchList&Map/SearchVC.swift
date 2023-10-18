@@ -35,7 +35,7 @@ class SearchVC: UIViewController {
     
     //MARK: - FUNCTIONS
     func search_list(){
-        viewmodal.homeApi(type: type, country: "", city: city, state: "", lat: latitude, long: longitude) { data in
+        viewmodal.homeApi(type: type, country: "", city: city, state: "", lat: latitude, long: longitude,timezone: "asdf") { data in
             self.allresto = data?.all_bars_restos ?? []
             self.filterdata = data?.all_bars_restos ?? []
             self.searchCV.reloadData()
@@ -43,7 +43,10 @@ class SearchVC: UIViewController {
     }
     
     //MARK: - ACTIONS
-
+    @IBAction func btnBack(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }
 //MARK: - EXTENSIONS
 extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{

@@ -77,7 +77,8 @@ struct themeRestolistModalBody: Codable {
     let isLiked: Int?
     let availableOffer, offerDescription, offerPercentage, openTime: String?
     let closeTime: String?
-
+    let offers: [CuOffer]?
+    
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude
         case userID = "user_id"
@@ -93,6 +94,6 @@ struct themeRestolistModalBody: Codable {
         case profileImage = "profile_image"
         case commission
         case isLiked = "is_liked"
-        case availableOffer, offerDescription, offerPercentage, openTime, closeTime
+        case availableOffer, offerDescription, offerPercentage, openTime, closeTime, offers
     }
 }

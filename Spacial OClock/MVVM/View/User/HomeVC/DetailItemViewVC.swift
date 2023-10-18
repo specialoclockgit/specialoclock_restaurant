@@ -157,7 +157,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = restrorants?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(restrorants?[indexPath.row].openTime ?? "") - " + "\(restrorants?[indexPath.row].closeTime ?? "")"
-//            let arrayOffer: [[OfferTiming]] = ((restrorants?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
+//            let arrayOffer: [[OfferTiming]] = ((restrorants?[indexPath.row]. ?? []).map({$0.offerTimings ?? []}) )
 //            sortArray(arrayOffer: arrayOffer,cell: cell)
         }
         else if setValue == "Cusinis"{
@@ -171,13 +171,13 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             sortArray(arrayOffer: arrayOffer,cell: cell)
             
         }else{
-//            let arrayOffer: [[OfferTiming]] = ((thememodla?[indexPath.row].offer ?? []).map({$0.offerTimings ?? []}) )
-//            sortArray(arrayOffer: arrayOffer,cell: cell)
+            let arrayTheme : [[OfferTiming]] = ((thememodla?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}))
+            sortArray(arrayOffer: arrayTheme,cell: cell)
             let imageIndex = (imageURL) + (thememodla?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = thememodla?[indexPath.row].name ?? ""
-            cell.lblDiscription.text = "\(thememodla?[indexPath.row].openTime ?? "") - " + "\(thememodla?[indexPath.row].closeTime ?? "")"
+            cell.lblDiscription.text = "\(thememodla?[indexPath.row].bodyOpenTime ?? "") - " + "\(thememodla?[indexPath.row].bodyCloseTime ?? "")"
         }
         return cell
     }

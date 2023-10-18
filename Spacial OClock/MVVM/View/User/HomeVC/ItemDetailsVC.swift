@@ -22,20 +22,19 @@ struct ModelMenuTBCell{
     var prevPrice : [String]
     var newPrice : [String]
 }
-class ItemDetailsVC: UIViewController {
+class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var scrollView : UIScrollView!
-    //    @IBOutlet weak var viewSubSV : UIView!
     @IBOutlet weak var lblOfferDiscription: UILabel!
     @IBOutlet weak var collView : UICollectionView!
     @IBOutlet weak var tbReview : UITableView!
     @IBOutlet weak var stackView : UIStackView!
     @IBOutlet weak var viewAbout : UIView!
     @IBOutlet weak var viewMenu : UIView!
-    @IBOutlet weak var viewReview : UIView!
+    @IBOutlet weak var viewRestoRating: UIView!
     @IBOutlet weak var lblAbout : UILabel!
     @IBOutlet weak var lblMenu : UILabel!
     @IBOutlet weak var lblReview : UILabel!
@@ -46,8 +45,7 @@ class ItemDetailsVC: UIViewController {
     @IBOutlet weak var viewSV : UIView!
     @IBOutlet weak var lblNameREsto: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
-    @IBOutlet weak var lblLocationOne: UILabel!
-    @IBOutlet weak var lblOpenCloseTime: UILabel!
+    @IBOutlet weak var viewReview: UIView!
     @IBOutlet weak var imgBottomView : UIImageView!
     //MENU Outlets
     @IBOutlet weak var collViewMenu : UICollectionView!
@@ -55,6 +53,7 @@ class ItemDetailsVC: UIViewController {
     @IBOutlet weak var heightTBMenu : NSLayoutConstraint!
     @IBOutlet weak var lblRating: UILabel!
     @IBOutlet weak var heightTBReview : NSLayoutConstraint!
+    @IBOutlet weak var txtFldDate: UITextField!
     @IBOutlet weak var imgFav : UIImageView!
     @IBOutlet weak var btnFav : UIButton!
     @IBOutlet weak var btnBook : UIButton!
@@ -63,6 +62,7 @@ class ItemDetailsVC: UIViewController {
     
     //MARK: Variable
     var ProductID = Int()
+    var datePicker = UIDatePicker()
     var viewmodal = HomeViewModel()
     var modal : productDetailModalBody?
     var images: [Imaged]?
@@ -94,6 +94,10 @@ class ItemDetailsVC: UIViewController {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewRestoRating.layer.cornerRadius = 8
+        viewRestoRating.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
+        txtFldDate.delegate = self
+        showDatePicker()
         tbMenu.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         initialLoad()
         img.image = imgName
@@ -133,8 +137,8 @@ class ItemDetailsVC: UIViewController {
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             self.lblNameREsto.text = self.modal?.name ?? ""
-            self.lblOpenCloseTime.text = (self.modal?.openTime ?? "") + "-" + (self.modal?.closeTime ?? "")
-            self.lblLocationOne.text = self.modal?.location ?? ""
+           // self.lblOpenCloseTime.text = (self.modal?.openTime ?? "") + "-" + (self.modal?.closeTime ?? "")
+            //self.lblLocationOne.text = self.modal?.location ?? ""
             self.lblLocation.text = self.modal?.city ?? ""
             if self.modal?.isLiked == 0{
                 self.imgFav.image = UIImage(named: "white h")
@@ -142,7 +146,7 @@ class ItemDetailsVC: UIViewController {
                 self.imgFav.image = UIImage(named: "red h")
             }
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
-            self.cosmosView.rating = Double(self.modal?.avgRating ?? "") ?? 0.0
+            //self.cosmosView.rating = Double(self.modal?.avgRating ?? "") ?? 0.0
             self.lblRating.text = self.modal?.avgRating ?? ""
             self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
             self.collViewMenu.reloadData()
@@ -153,6 +157,35 @@ class ItemDetailsVC: UIViewController {
                 self.menuProductAPI(id: self.ourMenu?[0].id ?? 0)
             }
         }
+    }
+    
+    //MARK: - SHOW DATE PICKER
+    func showDatePicker(){
+        datePicker.datePickerMode = .date
+        if #available(iOS 14, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+            datePicker.sizeToFit()
+        }
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker))
+        datePicker.minimumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+        txtFldDate.inputAccessoryView = toolbar
+        txtFldDate.inputView = datePicker
+    }
+    @objc func donedatePicker(){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        txtFldDate.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    @objc func cancelDatePicker(){
+        self.view.endEditing(true)
     }
     
     //MARK: - MENU PRODUCT API
@@ -175,9 +208,6 @@ class ItemDetailsVC: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     //MARK: Button Action
-    @IBAction func btnDate(_ sender: UIButton) {
-        
-    }
     @IBAction func btnBackAct(sender : UIButton){
         self.navigationController?.popViewController(animated: true)
     }
@@ -240,10 +270,11 @@ class ItemDetailsVC: UIViewController {
     //Book Button
     @IBAction func btnBookAct(_ sender : UIButton){
         if btnBookStatus == 0{
-            if valueSelect == false{
-                CommonUtilities.shared.showAlert(message: "Please select first offer", isSuccess: .error)
+            if txtFldDate.text == ""{
+                CommonUtilities.shared.showAlert(message: "Please select date", isSuccess: .error)
             }else{
                 let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
+                screen.oldDateSelect = txtFldDate.text ?? ""
                 screen.pickmenuid = self.menuid
                 screen.offer_id = "\(idsave)"
                 screen.numberofperson = self.numberofperson
@@ -299,6 +330,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
             if status == 0 {
                 if indexPath.row == isselectedoffer{
+                    self.viewButton.isHidden = false
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
@@ -310,7 +342,6 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
             }
-            
             
             let data = ourMenu?[indexPath.row]
             cell.lblTime.text = "\(data?.offers?.openTime ?? "") - " + "\(data?.offers?.closeTime ?? "")"
@@ -366,8 +397,16 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             } else {
                 return productModal?.categories?[section].products?.count ?? 0
             }
+        }else{
+            if reviews?.count == 0{
+                tbMenu.setNoDataMessage("No Data found", txtColor: .white)
+            }else{
+                tbMenu.backgroundView = nil
+                return reviews?.count ?? 0
+            }
         }
-        return reviews?.count ?? 0
+        
+        return 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -454,9 +493,9 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
 //MARK: InitialLoad Fnction
 extension ItemDetailsVC{
     func initialLoad(){
-        viewAbout.layer.cornerRadius = viewAbout.frame.height / 2
-        viewAbout.layer.maskedCorners = [.layerMaxXMinYCorner]
-        viewMenu.cornerRadius(cornerRadius: 55)
+        viewMenu.layer.cornerRadius = viewAbout.frame.height / 2
+        viewMenu.layer.maskedCorners = [.layerMaxXMinYCorner]
+        viewAbout.cornerRadius(cornerRadius: 55)
         viewReview.layer.cornerRadius = viewReview.frame.height / 2
         viewReview.layer.maskedCorners = [.layerMinXMinYCorner]
         imgBottomView.layer.cornerRadius = 30.0
@@ -465,10 +504,11 @@ extension ItemDetailsVC{
         lblAbout.lblCornerRadius(cornerRadius: 15.0)
         lblReview.lblCornerRadius(cornerRadius: 15.0)
         btnFav.layer.cornerRadius = btnFav.frame.height / 2
-        viewA.isHidden = false
-        viewM.isHidden = true
+        viewA.isHidden = true
+        viewM.isHidden = false
         viewR.isHidden = true
         viewButton.isHidden = true
+        ChangebgColor(viewSelected: viewMenu, viewUnselected: viewAbout, viewUnselected2: viewReview, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview)
         
         //MARK: Menu Offer Arr
         if status == 0 {
