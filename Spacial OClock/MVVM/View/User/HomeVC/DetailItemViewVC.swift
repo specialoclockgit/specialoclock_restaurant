@@ -16,6 +16,7 @@ var arrModel : [ItemsModel] = []
 class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate {
     
     //MARK: Outlets
+    @IBOutlet weak var lblHeader: UILabel!
     @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var CollectionView: UICollectionView!
     @IBOutlet weak var lblTwo: UILabel!
@@ -47,6 +48,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
         print(cusinessID)
         lblTwo.text = lblName
         lblOne.text = "\(setValue)> "
+        lblHeader.text = setValue 
         imgViewHead.image = UIImage(named: setimage)
          
         if setValue == "Location"{
@@ -60,6 +62,9 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
         }else if setValue == "Popular"{
             
         }
+    }
+    @IBAction func btnBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: - CUSINS BY RESTO
@@ -249,7 +254,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lbltime2.text = finalArray[1].offer ?? ""
             cell.lblTime3.text = finalArray[2].offer ?? ""
         } else {
-            cell.stackHeight.constant = 0
+            cell.stackHeight.constant = 46
         }
     }
 }

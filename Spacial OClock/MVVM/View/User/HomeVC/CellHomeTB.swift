@@ -34,7 +34,6 @@ class CellHomeTB: UITableViewCell {
     var allresto = [AllBarsResto]()
     var themeArr = [ThemeData]()
     var category = [Category]()
-    
     var objArray: [SectionModel] = []
     
     override func awakeFromNib() {
@@ -69,17 +68,6 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         } else {
             return 0
         }
-//        if collView.tag == 1 {
-//            if self.isCellSelected == true {
-//                return cuisine.count
-//            }else {
-//                return category.count
-//            }
-//
-//        }else if collView.tag == 3{
-//            return themeArr.count
-//        }
-//        return Int()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -99,8 +87,33 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblTotalRestaurant.text = "\(self.location[indexPath.row].restroCount ?? 0) Restaurants"
             cell.viewReview.isHidden = true
         }else if objArray[collView.tag].name == "Popular"{
+            let celldata = heishtresto.first?.offerTimings
             cell.imgLocaiton.showIndicator(baseUrl: imageURL, imageUrl: self.heishtresto[indexPath.row].profileImage ?? "")
-            cell.stackHeight.constant = 46
+            cell.lblRating.text = "\(heishtresto[indexPath.row].avgRating ?? 0)"
+            if heishtresto.first?.offerTimings?.count == 1 {
+                cell.viewOffer1.isHidden = false
+                cell.lblOffer1.text = "\(celldata?[0].percentage ?? 0)"
+                cell.lblTime1.text = celldata?[0].offer ?? ""
+            } else if heishtresto.first?.offerTimings?.count == 2 {
+                cell.viewOffer1.isHidden = false
+                cell.viewOffer2.isHidden = false
+                cell.lblOffer1.text = "\(celldata?[0].percentage ?? 0)"
+                cell.lblOffer2.text = "\(celldata?[1].percentage ?? 0)"
+                cell.lblTime1.text = celldata?[0].offer ?? ""
+                cell.lblTime2.text = celldata?[1].offer ?? ""
+            } else if heishtresto.first?.offerTimings?.count ?? 0 >= 3{
+                cell.viewOffer1.isHidden = false
+                cell.viewOffer2.isHidden = false
+                cell.viewOffer3.isHidden = false
+                cell.lblOffer1.text = "\(celldata?[0].percentage ?? 0)"
+                cell.lblOffer2.text = "\(celldata?[1].percentage ?? 0)"
+                cell.lblOffer3.text = "\(celldata?[2].percentage ?? 0)"
+                cell.lblTime1.text = celldata?[0].offer ?? ""
+                cell.lblTime2.text = celldata?[1].offer ?? ""
+                cell.lblTime3.text = celldata?[2].offer ?? ""
+            } else {
+                cell.stackHeight.constant = 46
+            }
             cell.lblLocationName.text = self.heishtresto[indexPath.row].name
             cell.viewReview.isHidden = false
             cell.lblTotalRestaurant.text = self.heishtresto[indexPath.row].shortDescription ?? ""
@@ -115,8 +128,34 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].barCount ?? 0) Restaurants"
             }
         }else if objArray[collView.tag].name == "A-Z"{
+            let celldata = allresto.first?.offerTimings
+            cell.lblRating.text = "\(allresto[indexPath.row].avgRating ?? 0)"
+            if allresto.first?.offerTimings?.count == 1 {
+                cell.viewOffer1.isHidden = false
+                cell.lblOffer1.text = "\(celldata?[0].percentage ?? 0)"
+                cell.lblTime1.text = celldata?[0].offer ?? ""
+            } else if allresto.first?.offerTimings?.count == 2 {
+                cell.viewOffer1.isHidden = false
+                cell.viewOffer2.isHidden = false
+                cell.lblOffer1.text = "\(celldata?[0].percentage ?? 0)"
+                cell.lblOffer2.text = "\(celldata?[1].percentage ?? 0)"
+                cell.lblTime1.text = celldata?[0].offer ?? ""
+                cell.lblTime2.text = celldata?[1].offer ?? ""
+            } else if allresto.first?.offerTimings?.count ?? 0 >= 3{
+                cell.viewOffer1.isHidden = false
+                cell.viewOffer2.isHidden = false
+                cell.viewOffer3.isHidden = false
+                cell.lblOffer1.text = "\(celldata?[0].percentage ?? 0)"
+                cell.lblOffer2.text = "\(celldata?[1].percentage ?? 0)"
+                cell.lblOffer3.text = "\(celldata?[2].percentage ?? 0)"
+                cell.lblTime1.text = celldata?[0].offer ?? ""
+                cell.lblTime2.text = celldata?[1].offer ?? ""
+                cell.lblTime3.text = celldata?[2].offer ?? ""
+            } else {
+                cell.stackHeight.constant = 46
+            }
             cell.viewReview.isHidden = false
-            cell.stackHeight.constant = 46
+            cell.stackHeight.constant = 0
             let imageIndex = (imageURL) + (allresto[indexPath.row].profileImage ?? "")
             cell.imgLocaiton.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgLocaiton.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
@@ -155,6 +194,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         }
         else if objArray[collView.tag].name == "Popular"{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
+            
             vc.ProductID = heishtresto[indexPath.row].id ?? 0
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }else if objArray[collView.tag].name == "Theme"{
@@ -169,6 +209,5 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.ProductID = allresto[indexPath.row].id ?? 0
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
-       
     }
 }

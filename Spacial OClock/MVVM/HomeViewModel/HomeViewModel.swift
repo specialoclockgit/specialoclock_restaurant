@@ -14,7 +14,7 @@ class HomeViewModel : NSObject {
     
     //MARK: - CUISINE GET LIST
     func homeApi(type:Int, country: String, city:String, state:String, lat:Double, long:Double,timezone:String, onsuccess: @escaping ((HomeListBody?)->())){
-        let param:parameters = ["type":type, "country":country, "state": state, "latitude":lat,"city":city, "longitude":long, "timezone":country]
+        let param:parameters = ["type":type, "country":country, "state": state, "latitude":lat,"city":city, "longitude":long, "timezone":timezone]
         print(param)
         WebService.service(API.home, param: param, service: .post) {
             (modaldata: HomeListModel, Data , json) in
@@ -51,8 +51,8 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - PRODUCT DETIALS
-    func restoDetial_API(resto_id:Int,onsuccess: @escaping ((productDetailModalBody?)->())){
-        let param:parameters = ["resto_id":resto_id ]
+    func restoDetial_API(resto_id:Int,currentdate:String,onsuccess: @escaping ((productDetailModalBody?)->())){
+        let param:parameters = ["resto_id":resto_id, "date": currentdate]
         WebService.service(API.product_details, param: param, service: .post) {
             (modaldata: productDetailModal, Data , json) in
             onsuccess(modaldata.body)

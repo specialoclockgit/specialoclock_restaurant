@@ -222,9 +222,10 @@ struct productDetailModalBody: Codable {
     let images: [Imaged]?
     let reviews: [Reviewsd]?
     let ourMenu: [OurMenud]?
+    let offer_timings : [OfferTimingDetail]?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, location, country, state, city, latitude, longitude
+        case id, name, location, country, state, city, latitude, longitude, offer_timings
         case userID = "user_id"
         case shortDescription = "short_description"
         case status
@@ -274,6 +275,27 @@ struct productDetailModalBody: Codable {
         self.images = try container.decodeIfPresent([Imaged].self, forKey: .images)
         self.reviews = try container.decodeIfPresent([Reviewsd].self, forKey: .reviews)
         self.ourMenu = try container.decodeIfPresent([OurMenud].self, forKey: .ourMenu)
+        self.offer_timings = try container.decodeIfPresent([OfferTimingDetail].self, forKey: .offer_timings)
+    }
+}
+
+// MARK: - OfferTimingDetail
+struct OfferTimingDetail: Codable {
+    let offer: String?
+    let percentage, id, offerAvailable, slotsleft: Int?
+    let restrorantBarID: Int?
+    let description: String?
+    let menuName: String?
+    let menuID: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case offer, percentage, id
+        case offerAvailable = "offer_available"
+        case slotsleft
+        case restrorantBarID = "restrorant_bar_id"
+        case description
+        case menuName = "menu_name"
+        case menuID = "menu_id"
     }
 }
 

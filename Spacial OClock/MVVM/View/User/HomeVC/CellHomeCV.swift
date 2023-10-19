@@ -13,6 +13,15 @@ protocol  CellHomeCVDelegate {
 class CellHomeCV: UICollectionViewCell {
 
     //MARK: Outlets
+    @IBOutlet weak var viewOffer3: UIView!
+    @IBOutlet weak var viewOffer2: UIView!
+    @IBOutlet weak var viewOffer1: UIView!
+    @IBOutlet weak var lblOffer3: UILabel!
+    @IBOutlet weak var lblOffer2: UILabel!
+    @IBOutlet weak var lblOffer1: UILabel!
+    @IBOutlet weak var lblTime3: UILabel!
+    @IBOutlet weak var lblTime2: UILabel!
+    @IBOutlet weak var lblTime1: UILabel!
     @IBOutlet weak var stackHeight: NSLayoutConstraint!
     @IBOutlet weak var lblRating: UILabel!
     @IBOutlet weak var viewReview: UIView!

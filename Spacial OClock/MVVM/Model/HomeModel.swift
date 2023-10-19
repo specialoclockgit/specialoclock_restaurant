@@ -139,12 +139,15 @@ struct AllBarsResto: Codable {
     let profileImage: String?
     let commission: String?
     let avgRating: Int?
+    let offers: [CuOffer]?
+    let offerTimings: [OfferTiminghome]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude
         case userID = "user_id"
         case shortDescription = "short_description"
-        case status
+        case status,offers
+        case offerTimings = "offer_timings"
         case openTime = "open_time"
         case closeTime = "close_time"
         case type
@@ -156,6 +159,13 @@ struct AllBarsResto: Codable {
         case commission
         case avgRating = "avg_rating"
     }
+}
+
+// MARK: - OfferTiminghome
+struct OfferTiminghome: Codable {
+    let offer: String?
+    let percentage: Int?
+    let id: Int?
 }
 
 // MARK: - Theme

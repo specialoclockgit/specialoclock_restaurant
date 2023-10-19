@@ -76,12 +76,15 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     var getcity = String()
     var getcountry = String()
     var gettimezone = String()
+    var timeZone = String()
     
     fileprivate var sectionArray: [SectionModel] = []
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.timeZone = TimeZone.current.identifier
+        print(timeZone)
         gmsMapView.delegate = self
         initialLoad()
         tbHomeData.delegate = self
@@ -205,9 +208,11 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         return hasPermission
     }
     
+    
+    
     func setData(type: Int, country: String, state: String, city:String) {
         self.sectionArray.removeAll()
-        self.viewModel.homeApi(type: type, country: country, city: city, state: state,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.gettimezone) { (objData) in
+        self.viewModel.homeApi(type: type, country: country, city: city, state: state,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.timeZone) { (objData) in
             
             if objData?.location?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Location",objArray: objData?.location ?? [],image: "PIN")

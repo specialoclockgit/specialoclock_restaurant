@@ -7,10 +7,13 @@
 
 import UIKit
 import SDWebImage
+import SkeletonView
+import SwiftGifOrigin
 
 class homeSeeMoreVC: UIViewController {
 
     //MARK: - OUTLETS
+    @IBOutlet weak var lblHeaderTExt: UILabel!
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var lblHeader: UILabel!
@@ -30,44 +33,96 @@ class homeSeeMoreVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        collection.showSkeleton()
         if setvalue == "Location"{
             lblHeader.text = "Location"
+            lblHeaderTExt.text = "Location"
             imgViewHeader.image = UIImage(named: "pinPerson")
         }else if setvalue == "Cusinis"{
             lblHeader.text = "Cuisine"
+            lblHeaderTExt.text = "Cuisine"
             imgViewHeader.image = UIImage(named: "soup")
         }else if setvalue == "Category"{
-            lblHeader.text = "Category"
+            lblHeader.text = "Cuisine"
+            lblHeaderTExt.text = "Cuisine"
             imgViewHeader.image = UIImage(named: "menu 1")
         }else if setvalue == "Popular"{
             lblHeader.text = "Popular"
+            lblHeaderTExt.text = "Popular"
             imgViewHeader.image = UIImage(named: "mask")
         }else if setvalue == "Theme"{
             lblHeader.text = "Theme"
+            lblHeaderTExt.text = "Theme"
             imgViewHeader.image = UIImage(named: "mask")
         }else{
             lblHeader.text = "A-Z"
+            lblHeaderTExt.text = "A-Z"
             imgViewHeader.image = UIImage(named: "mask")
         }
     }
     //MARK: - ACTIONS
-
+    @IBAction func btnBack(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }
 //MARK: - EXTENSIONS
 extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setvalue == "Cusinis"{
-            return cuisine.count
-        }else if setvalue == "Cusinis"{
-            return cuisine.count
+            self.collection.hideSkeleton()
+            if cuisine.count == 0{
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return cuisine.count
+            }
         }else if setvalue == "Category"{
-            return category.count
+            self.collection.hideSkeleton()
+            if category.count == 0{
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return category.count
+            }
         }else if setvalue == "Popular"{
-            return all_bars_restos.count
+            self.collection.hideSkeleton()
+            if all_bars_restos.count == 0{
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return all_bars_restos.count
+            }
         }else if setvalue == "Theme"{
-            return themeArr.count
+            self.collection.hideSkeleton()
+            if themeArr.count == 0{
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return themeArr.count
+            }
+        }else if setvalue == "Location"{
+            self.collection.hideSkeleton()
+            if location.count == 0{
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return location.count
+            }
         }else{
-            return highily_rated_bars_restos.count
+            self.collection.hideSkeleton()
+            if highily_rated_bars_restos.count == 0{
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return highily_rated_bars_restos.count
+            }
         }
         return 0
     }

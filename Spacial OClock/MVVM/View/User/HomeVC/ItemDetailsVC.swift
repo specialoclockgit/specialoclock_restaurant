@@ -89,11 +89,15 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var valueSelect = false
     var isselectedoffer = -1
     var restrorant_bar_id = Int()
-    
-    
+    var offer : [OfferTimingDetail]?
+    var currentDate = Date()
+    var datecuurent = String()
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Date()
+
+        self.datecuurent = string(format: "yyyy-MM-dd")
         viewRestoRating.layer.cornerRadius = 8
         viewRestoRating.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
         txtFldDate.delegate = self
@@ -125,20 +129,24 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    
+    func string(format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = format
+        return formatter.string(from: self.currentDate)
+    }
     //MARK: - FUNCTION
     func product_detail(){
-        viewmodal.restoDetial_API(resto_id: ProductID) { data in
+        viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.datecuurent) { data in
             self.modal = data
             self.images = data?.images ?? []
             self.reviews = data?.reviews ?? []
             self.ourMenu = data?.ourMenu ?? []
+            self.offer = data?.offer_timings ?? []
             let imageIndex = (imageURL) + (self.modal?.images?.first?.image ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             self.lblNameREsto.text = self.modal?.name ?? ""
-           // self.lblOpenCloseTime.text = (self.modal?.openTime ?? "") + "-" + (self.modal?.closeTime ?? "")
-            //self.lblLocationOne.text = self.modal?.location ?? ""
             self.lblLocation.text = self.modal?.city ?? ""
             if self.modal?.isLiked == 0{
                 self.imgFav.image = UIImage(named: "white h")
@@ -146,7 +154,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.imgFav.image = UIImage(named: "red h")
             }
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
-            //self.cosmosView.rating = Double(self.modal?.avgRating ?? "") ?? 0.0
             self.lblRating.text = self.modal?.avgRating ?? ""
             self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
             self.collViewMenu.reloadData()
@@ -311,7 +318,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
         else if collectionView == collViewMenu
         {
-            return ourMenu?.count ?? 0
+            return offer?.count ?? 0
         }else{
             return 3
         }
@@ -343,9 +350,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }
             }
             
-            let data = ourMenu?[indexPath.row]
-            cell.lblTime.text = "\(data?.offers?.openTime ?? "") - " + "\(data?.offers?.closeTime ?? "")"
-            cell.lblMenuSchedule.text = data?.offers?.offerName ?? ""
+            let data = offer?[indexPath.row]
+            cell.lblTime.text = data?.offer ?? ""
+            cell.lblOffer.text = "\(data?.percentage ?? 0)"
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.CellItemDetailVC, for: indexPath) as! CellItemDetailVC
@@ -370,11 +377,11 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }
                 
                 valueSelect = true
-                menuProductAPI(id: ourMenu?[indexPath.row].id ?? 0)
-                self.menuid = ourMenu?[indexPath.row].offers?.menuID ?? 0
-                self.restrorant_bar_id = ourMenu?[indexPath.row].offers?.restrorantBarID ?? 0
-                self.idsave = ourMenu?[indexPath.row].offers?.id ?? 0
-                self.numberofperson = ourMenu?[indexPath.row].offers?.numberOfUserBook ?? 0
+                menuProductAPI(id: offer?[indexPath.row].id ?? 0)
+//                self.menuid = offer?[indexPath.row].menuID ?? 0
+//                self.restrorant_bar_id = offer?[indexPath.row].offers?.restrorantBarID ?? 0
+//                self.idsave = offer?[indexPath.row].offers?.id ?? 0
+//                self.numberofperson = offer?[indexPath.row].offers?.numberOfUserBook ?? 0
             }else if status == 1 {
                 let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
                                                                      image: ["goose" , "belveder", "Ciroc" ],

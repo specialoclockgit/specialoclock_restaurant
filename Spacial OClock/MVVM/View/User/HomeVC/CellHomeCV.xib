@@ -304,9 +304,18 @@
                 <outlet property="btnNext" destination="e3b-aE-DjQ" id="yCA-y4-r2C"/>
                 <outlet property="imgLocaiton" destination="JP4-ny-PbB" id="0CP-lp-dmb"/>
                 <outlet property="lblLocationName" destination="Ata-4m-wVA" id="p3z-Yo-Kdg"/>
+                <outlet property="lblOffer1" destination="61T-84-s35" id="OJ2-wL-USU"/>
+                <outlet property="lblOffer2" destination="78s-4F-uUc" id="eRd-VB-yMN"/>
+                <outlet property="lblOffer3" destination="mgI-Ku-gtd" id="dGS-fs-1R4"/>
                 <outlet property="lblRating" destination="IUb-5Z-aGG" id="QBg-aL-UKI"/>
+                <outlet property="lblTime1" destination="95g-gz-ywC" id="FqK-MB-4Yc"/>
+                <outlet property="lblTime2" destination="eFr-uc-oFD" id="0n7-KH-qJh"/>
+                <outlet property="lblTime3" destination="FfY-EW-b91" id="kwf-Wi-dfS"/>
                 <outlet property="lblTotalRestaurant" destination="qDh-Ah-lJc" id="BU3-jr-P1J"/>
                 <outlet property="stackHeight" destination="WFr-Cq-eer" id="xWL-ta-ytd"/>
+                <outlet property="viewOffer1" destination="pDk-KH-c4F" id="T7l-Ji-RNh"/>
+                <outlet property="viewOffer2" destination="8E6-v8-LMp" id="kUQ-aw-CfO"/>
+                <outlet property="viewOffer3" destination="vwz-fa-9JB" id="5Zg-Lr-fkx"/>
                 <outlet property="viewReview" destination="Qwp-yy-SCz" id="W3G-i4-tXa"/>
             </connections>
             <point key="canvasLocation" x="242.75362318840581" y="166.74107142857142"/>
