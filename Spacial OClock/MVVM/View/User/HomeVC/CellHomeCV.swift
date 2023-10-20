@@ -13,6 +13,9 @@ protocol  CellHomeCVDelegate {
 class CellHomeCV: UICollectionViewCell {
 
     //MARK: Outlets
+    @IBOutlet weak var offerImg3: UIImageView!
+    @IBOutlet weak var offerImg2: UIImageView!
+    @IBOutlet weak var offerImg1: UIImageView!
     @IBOutlet weak var viewOffer3: UIView!
     @IBOutlet weak var viewOffer2: UIView!
     @IBOutlet weak var viewOffer1: UIView!

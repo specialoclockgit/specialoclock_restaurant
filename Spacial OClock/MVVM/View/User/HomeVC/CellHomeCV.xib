@@ -55,8 +55,8 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95g-gz-ywC">
-                                                <rect key="frame" x="11.5" y="6" width="32" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95g-gz-ywC">
+                                                <rect key="frame" x="23.5" y="6" width="8" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -64,8 +64,8 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-30%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61T-84-s35">
-                                                <rect key="frame" x="11" y="22.5" width="33.5" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61T-84-s35">
+                                                <rect key="frame" x="18.5" y="22.5" width="18" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -101,8 +101,8 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFr-uc-oFD">
-                                                <rect key="frame" x="11.5" y="6" width="32" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFr-uc-oFD">
+                                                <rect key="frame" x="23.5" y="6" width="8" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -110,8 +110,8 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-30%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78s-4F-uUc">
-                                                <rect key="frame" x="11" y="22.5" width="33.5" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78s-4F-uUc">
+                                                <rect key="frame" x="18.5" y="22.5" width="18" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -147,8 +147,8 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfY-EW-b91">
-                                                <rect key="frame" x="11.5" y="6" width="32" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfY-EW-b91">
+                                                <rect key="frame" x="23.5" y="6" width="8" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -156,8 +156,8 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-30%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgI-Ku-gtd">
-                                                <rect key="frame" x="11" y="22.5" width="33.5" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgI-Ku-gtd">
+                                                <rect key="frame" x="18.5" y="22.5" width="18" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -263,6 +263,7 @@
                             <constraint firstItem="qDh-Ah-lJc" firstAttribute="leading" secondItem="GTE-yI-AUF" secondAttribute="leading" constant="10" id="NVg-Go-bQN"/>
                             <constraint firstAttribute="trailing" secondItem="e3b-aE-DjQ" secondAttribute="trailing" constant="10" id="QBU-82-4X7"/>
                             <constraint firstItem="qDh-Ah-lJc" firstAttribute="top" secondItem="Ata-4m-wVA" secondAttribute="bottom" constant="6" id="WoX-Qf-nYM"/>
+                            <constraint firstItem="e3b-aE-DjQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qDh-Ah-lJc" secondAttribute="trailing" constant="6" id="eSB-9q-HNQ"/>
                             <constraint firstItem="Qwp-yy-SCz" firstAttribute="top" secondItem="JP4-ny-PbB" secondAttribute="top" constant="16" id="k2S-yk-Hj4"/>
                             <constraint firstAttribute="trailing" secondItem="JP4-ny-PbB" secondAttribute="trailing" constant="5" id="pyV-4g-b7Q"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qDh-Ah-lJc" secondAttribute="bottom" constant="6" id="q0J-Oc-8lc"/>
@@ -312,6 +313,9 @@
                 <outlet property="lblTime2" destination="eFr-uc-oFD" id="0n7-KH-qJh"/>
                 <outlet property="lblTime3" destination="FfY-EW-b91" id="kwf-Wi-dfS"/>
                 <outlet property="lblTotalRestaurant" destination="qDh-Ah-lJc" id="BU3-jr-P1J"/>
+                <outlet property="offerImg1" destination="Fff-Hx-zwb" id="xOu-Jg-TpL"/>
+                <outlet property="offerImg2" destination="ewS-M5-Rc6" id="baO-m1-9aY"/>
+                <outlet property="offerImg3" destination="Z1e-FB-aV3" id="j5I-E1-AUS"/>
                 <outlet property="stackHeight" destination="WFr-Cq-eer" id="xWL-ta-ytd"/>
                 <outlet property="viewOffer1" destination="pDk-KH-c4F" id="T7l-Ji-RNh"/>
                 <outlet property="viewOffer2" destination="8E6-v8-LMp" id="kUQ-aw-CfO"/>

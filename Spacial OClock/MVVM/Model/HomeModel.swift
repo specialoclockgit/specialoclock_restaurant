@@ -159,6 +159,33 @@ struct AllBarsResto: Codable {
         case commission
         case avgRating = "avg_rating"
     }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decodeIfPresent(Int.self, forKey: .id)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
+        self.location = try container.decodeIfPresent(String.self, forKey: .location)
+        self.country = try container.decodeIfPresent(String.self, forKey: .country)
+        self.state = try container.decodeIfPresent(String.self, forKey: .state)
+        self.city = try container.decodeIfPresent(String.self, forKey: .city)
+        self.latitude = try container.decodeIfPresent(String.self, forKey: .latitude)
+        self.longitude = try container.decodeIfPresent(String.self, forKey: .longitude)
+        self.userID = try container.decodeIfPresent(Int.self, forKey: .userID)
+        self.shortDescription = try container.decodeIfPresent(String.self, forKey: .shortDescription)
+        self.status = try container.decodeIfPresent(Int.self, forKey: .status)
+        self.offers = try container.decodeIfPresent([CuOffer].self, forKey: .offers)
+        self.offerTimings = try container.decodeIfPresent([OfferTiminghome].self, forKey: .offerTimings)
+        self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
+        self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
+        self.type = try container.decodeIfPresent(Int.self, forKey: .type)
+        self.categoryID = try container.decodeIfPresent(Int.self, forKey: .categoryID)
+        self.cuisineID = try container.decodeIfPresent(Int.self, forKey: .cuisineID)
+        self.themesRestrorantID = try container.decodeIfPresent(Int.self, forKey: .themesRestrorantID)
+        self.isBlocked = try container.decodeIfPresent(Int.self, forKey: .isBlocked)
+        self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage)
+        self.commission = try container.decodeIfPresent(String.self, forKey: .commission)
+        self.avgRating = try container.decodeIfPresent(Int.self, forKey: .avgRating)
+    }
 }
 
 // MARK: - OfferTiminghome

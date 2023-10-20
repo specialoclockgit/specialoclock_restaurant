@@ -32,6 +32,8 @@ let imageURL = "http://202.164.42.227:9999/"
 
 let imageBaseURL =  "http://202.164.42.227:9999/assets/images/"
 
+let productImgURL = "http://202.164.42.227:9999/assets/img/"
+
 
 //let imagePickerSources = ImagePickerClass()
 

@@ -85,6 +85,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         super.viewDidLoad()
         self.timeZone = TimeZone.current.identifier
         print(timeZone)
+        gmsMapView.isMyLocationEnabled = true
         gmsMapView.delegate = self
         initialLoad()
         tbHomeData.delegate = self
@@ -136,7 +137,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                     let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
                     gmsMapView.animate(to: camera1)
                 } else {
-                    let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 5)
+                    let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 16)
                     gmsMapView.animate(to: camera2)
                 }
             }

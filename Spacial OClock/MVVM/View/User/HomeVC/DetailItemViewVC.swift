@@ -171,10 +171,9 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = modal?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(modal?[indexPath.row].openTime ?? "") - " + "\(modal?[indexPath.row].closeTime ?? "")"
-            
             let arrayOffer: [[OfferTiming]] = ((modal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
             sortArray(arrayOffer: arrayOffer,cell: cell)
-            
+            cell.stackHeight.constant = 46
         }else{
             let arrayTheme : [[OfferTiming]] = ((thememodla?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}))
             sortArray(arrayOffer: arrayTheme,cell: cell)

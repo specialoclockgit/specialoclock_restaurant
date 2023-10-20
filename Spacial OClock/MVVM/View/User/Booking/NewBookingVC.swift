@@ -38,11 +38,15 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     var timeSlots : [TimeSlot]?
     var slotId = Int()
     var oldDateSelect = String()
+    var selectslot = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        tfSelectTime.delegate = self
+        tfSelectTime.text = selectslot
+//        viewmodal.fetchAvialbleAPI(date: oldDateSelect, restrorant_bar_id: restrorant_bar_id, offerid: self.offer_id, slot_id: self.slotId) { data in
+//            self.numberofperson = data?.availableSlots ?? 0
+//        }
+        //tfSelectTime.delegate = self
         for i in 0...numberofperson{
             arrNumberOfPeople.append(i)
         }
@@ -64,21 +68,19 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         viewFSCalendar.reloadData()
         viewFSCalendar.calendarHeaderView.reloadData()
         currentDate = result
-        getslots(date: currentDate)
+       // getslots(date: currentDate)
         now = result
     
     }
-    func getslots(date:String){
-        viewmodal.getslots_API(date: currentDate, restrorant_bar_id: restrorant_bar_id, restoid: resto_id, offer_id: offer_id) { [weak self] fetchdata in
-            self?.tfSelectTime.text = ""
-            self?.tfSelectPeople.text = ""
-            self?.timeSlots = fetchdata?.timeSlots ?? []
-        }
-    }
+//    func getslots(date:String){
+//        viewmodal.getslots_API(date: currentDate, restrorant_bar_id: restrorant_bar_id, restoid: resto_id, offer_id: offer_id) { [weak self] fetchdata in
+//            self?.tfSelectTime.text = ""
+//            self?.tfSelectPeople.text = ""
+//            self?.timeSlots = fetchdata?.timeSlots ?? []
+//        }
+//    }
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        viewmodal.fetchAvialbleAPI(date: currentDate, restrorant_bar_id: restrorant_bar_id, offerid: self.offer_id, slot_id: self.slotId) { data in
-            self.numberofperson = data?.availableSlots ?? 0
-        }
+        
         return true
     }
     
@@ -112,7 +114,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         }else{
             let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
             screen.callBack = {
-                self.viewmodal.booking_API(bookingDate: self.currentDate, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id) { data in
+                self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: "2", restoid: self.restrorant_bar_id, offerid: "45") { data in
                     let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
                     super.navigationController?.pushViewController(screen, animated: true)
                 }
@@ -173,7 +175,6 @@ extension NewBookingVC : FSCalendarDelegate , FSCalendarDataSource {
         df.dateFormat = "yyyy-MM-dd"
         df.locale = Locale.current
         currentDate = df.string(from: date)
-        getslots(date: currentDate)
     }
 }
 extension NewBookingVC : UIPickerViewDelegate , UIPickerViewDataSource {

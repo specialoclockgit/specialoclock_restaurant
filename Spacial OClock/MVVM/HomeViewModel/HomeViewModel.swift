@@ -97,6 +97,7 @@ class HomeViewModel : NSObject {
     //MARK: - MENU PRODUCT API
     func menuProductAPI(restoid:Int, menutypeid:Int , onsuccess: @escaping ((menuProductModalBody?)->())){
         let param = ["resto_id":restoid , "menu_type_id":menutypeid] as [String:Any]
+        print(param)
         WebService.service(API.fetch_data_by_menutype, param: param, service: .post) {
             (modaldata: menuProductModal, Data , json) in
             onsuccess(modaldata.body)
@@ -151,6 +152,7 @@ class HomeViewModel : NSObject {
     //MARK: - FETCH AVAILABLE API
     func fetchAvialbleAPI(date:String, restrorant_bar_id:Int,offerid:String, slot_id:Int,onsuccess: @escaping ((AvalSlotModalBody?)->())){
         let param = ["date":date, "slot_id":slot_id, "restrorant_bar_id":restrorant_bar_id, "offer_id":offerid] as [String:Any]
+        print("============",param)
         WebService.service(API.fetch_available_slots, param: param, service: .post) {
             (modaldata: AvalSlotModal, Data , json) in
             onsuccess(modaldata.body)

@@ -71,6 +71,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var products: [Product]?
     var productModal : menuProductModalBody?
     var arrCollMenu : [ModelMenuCollView] = []
+    var offerID = Int()
     var arrTBMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Sandwich", image: ["goose" , "belveder",                                            "Ciroc" ],
                                                          itemName: ["Plain Sandwich" , "Grilled Sandwich" ,                                   "Club Sandwich"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00",  "R20.00" ,"R30.00"]) ,
                                          
@@ -92,12 +93,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var offer : [OfferTimingDetail]?
     var currentDate = Date()
     var datecuurent = String()
+    var slottime = String()
+    var slotid = Int()
+    
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Date()
-
         self.datecuurent = string(format: "yyyy-MM-dd")
+        txtFldDate.text = datecuurent
         viewRestoRating.layer.cornerRadius = 8
         viewRestoRating.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
         txtFldDate.delegate = self
@@ -277,18 +280,15 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //Book Button
     @IBAction func btnBookAct(_ sender : UIButton){
         if btnBookStatus == 0{
-            if txtFldDate.text == ""{
-                CommonUtilities.shared.showAlert(message: "Please select date", isSuccess: .error)
-            }else{
-                let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
-                screen.oldDateSelect = txtFldDate.text ?? ""
-                screen.pickmenuid = self.menuid
-                screen.offer_id = "\(idsave)"
-                screen.numberofperson = self.numberofperson
-                screen.resto_id = ProductID
-                screen.restrorant_bar_id = self.restrorant_bar_id
-                self.navigationController?.pushViewController(screen, animated: true)
-            }
+            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
+            screen.slotId = self.slotid
+            screen.selectslot = self.slottime
+            screen.oldDateSelect = txtFldDate.text ?? ""
+            screen.pickmenuid = self.menuid
+            screen.numberofperson = self.numberofperson
+            screen.resto_id = ProductID
+            screen.restrorant_bar_id = self.restrorant_bar_id
+            self.navigationController?.pushViewController(screen, animated: true)
         }
         else if btnBookStatus == 1{
             let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
@@ -352,7 +352,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
             let data = offer?[indexPath.row]
             cell.lblTime.text = data?.offer ?? ""
-            cell.lblOffer.text = "\(data?.percentage ?? 0)"
+            cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.CellItemDetailVC, for: indexPath) as! CellItemDetailVC
@@ -376,12 +376,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     collViewMenu.reloadData()
                 }
                 
-                valueSelect = true
+                //valueSelect = true
+                
                 menuProductAPI(id: offer?[indexPath.row].id ?? 0)
-//                self.menuid = offer?[indexPath.row].menuID ?? 0
-//                self.restrorant_bar_id = offer?[indexPath.row].offers?.restrorantBarID ?? 0
-//                self.idsave = offer?[indexPath.row].offers?.id ?? 0
-//                self.numberofperson = offer?[indexPath.row].offers?.numberOfUserBook ?? 0
+                self.slottime = offer?[indexPath.row].offer ?? ""
+                self.slotid = offer?[indexPath.row].id ?? 0
+                self.menuid = offer?[indexPath.row].menuID ?? 0
+                self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
+                self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
             }else if status == 1 {
                 let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
                                                                      image: ["goose" , "belveder", "Ciroc" ],
@@ -460,7 +462,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
             let arrSection = productModal?.categories?[indexPath.section].products
-            let imageIndex = (imageBaseURL) + (arrSection?[indexPath.row].image ?? "")
+            let imageIndex = (productImgURL) + (arrSection?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""
