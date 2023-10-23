@@ -53,6 +53,7 @@ class bookingDetailVC: UIViewController {
     var actualprice = Int()
     var presntsPrice = String()
     var canceltext = String()
+    var cancelid = String()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
@@ -84,7 +85,7 @@ class bookingDetailVC: UIViewController {
             }
             self.lblOpenClosetime.text = "\(fetchdata?.restrorant?.openTime ?? "") to " + "\(fetchdata?.restrorant?.closeTime ?? "")"
             self.lblAvgRating.text = "\(fetchdata?.restrorant?.avgRating ?? 0)"
-            self.viewCosmos.rating = Double(fetchdata?.restrorant?.avgRating ?? 0)
+            //self.viewCosmos.rating = Double(fetchdata?.restrorant?.avgRating ?? 0)
             self.lblBookingNumber.text = fetchdata?.bookingID ?? ""
             self.lblSpeOffer.text = fetchdata?.offerName ?? "" + (fetchdata?.offerPercentage ?? "")
             self.lblOfferDis.text = fetchdata?.restrorant?.shortDescription ?? ""
@@ -128,7 +129,7 @@ class bookingDetailVC: UIViewController {
                 let reasonScreen = self.storyboard?.instantiateViewController(withIdentifier: ViewController.CancelBookingReasonVC) as! CancelBookingReasonVC
                 reasonScreen.callBack = { dataa in
                     self.canceltext = dataa
-                    self.viewmodal.cancelBookig_API(bookingId: self.booking_id, reson: self.canceltext) { dataa in
+                    self.viewmodal.cancelBookig_API(bookingId: self.cancelid , reson: self.canceltext) { dataa in
                         let bookingScreen = self.storyboard?.instantiateViewController(withIdentifier: ViewController.BookingVC) as! BookingVC
                         self.navigationController?.pushViewController(bookingScreen, animated: true)
                     }

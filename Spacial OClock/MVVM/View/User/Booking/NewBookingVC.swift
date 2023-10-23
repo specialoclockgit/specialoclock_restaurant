@@ -23,7 +23,6 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     var pickerSelectPeople = UIPickerView()
     var pickerSelectTime = UIPickerView()
     var arrNumberOfPeople : [Int] = []
-    var arrTimmer : [String] = []
     var resto_id = Int()
     var offer_id = String()
     var numberofperson = Int()
@@ -43,10 +42,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tfSelectTime.text = selectslot
-//        viewmodal.fetchAvialbleAPI(date: oldDateSelect, restrorant_bar_id: restrorant_bar_id, offerid: self.offer_id, slot_id: self.slotId) { data in
-//            self.numberofperson = data?.availableSlots ?? 0
-//        }
-        //tfSelectTime.delegate = self
+        
         for i in 0...numberofperson{
             arrNumberOfPeople.append(i)
         }
@@ -68,22 +64,13 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         viewFSCalendar.reloadData()
         viewFSCalendar.calendarHeaderView.reloadData()
         currentDate = result
-       // getslots(date: currentDate)
         now = result
     
     }
-//    func getslots(date:String){
-//        viewmodal.getslots_API(date: currentDate, restrorant_bar_id: restrorant_bar_id, restoid: resto_id, offer_id: offer_id) { [weak self] fetchdata in
-//            self?.tfSelectTime.text = ""
-//            self?.tfSelectPeople.text = ""
-//            self?.timeSlots = fetchdata?.timeSlots ?? []
-//        }
-//    }
+    
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        
         return true
     }
-    
     
     //MARK: Buttton Action
     @IBAction func btnSelectSlot(_ sender: UIButton) {
@@ -114,7 +101,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         }else{
             let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
             screen.callBack = {
-                self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: "2", restoid: self.restrorant_bar_id, offerid: "45") { data in
+                self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id) { data in
                     let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
                     super.navigationController?.pushViewController(screen, animated: true)
                 }

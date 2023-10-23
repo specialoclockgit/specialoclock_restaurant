@@ -115,6 +115,7 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
             screen.statusColor = "themeGreen"
             screen.statusVerify = 1
         }else{
+            screen.cancelid = modal?[indexPath.row].bookingID ?? ""
             screen.booking_id = modal?[indexPath.row].id ?? 0
             screen.buttonTitle = "Cancel Booking"
             screen.buttonColor = "themeRed"

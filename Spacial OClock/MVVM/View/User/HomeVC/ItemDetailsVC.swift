@@ -163,8 +163,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.collView.reloadData()
             self.tbReview.reloadData()
             self.tbMenu.reloadData()
-            if self.ourMenu?.count ?? 0 > 0 {
-                self.menuProductAPI(id: self.ourMenu?[0].id ?? 0)
+            if self.offer?.count ?? 0 > 0 {
+                self.menuProductAPI(id: self.offer?[0].menuID ?? 0)
             }
         }
     }
@@ -287,6 +287,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             screen.pickmenuid = self.menuid
             screen.numberofperson = self.numberofperson
             screen.resto_id = ProductID
+            screen.offer_id = "\(self.offerID)"
             screen.restrorant_bar_id = self.restrorant_bar_id
             self.navigationController?.pushViewController(screen, animated: true)
         }
@@ -369,33 +370,32 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         debugPrint(indexPath.row)
         let index = indexPath.row
-   
-            if status == 0 {
-                if collectionView == collViewMenu{
-                    isselectedoffer = indexPath.row
-                    collViewMenu.reloadData()
-                }
-                
-                //valueSelect = true
-                
-                menuProductAPI(id: offer?[indexPath.row].id ?? 0)
-                self.slottime = offer?[indexPath.row].offer ?? ""
-                self.slotid = offer?[indexPath.row].id ?? 0
-                self.menuid = offer?[indexPath.row].menuID ?? 0
-                self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
-                self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
-            }else if status == 1 {
-                let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
-                                                                     image: ["goose" , "belveder", "Ciroc" ],
-                                                                     itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
-                                                                     prevPrice: ["R50.00" , "R50.00" , "R50.00"],
-                                                                     newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
-                arrTBMenu.removeAll()
-                arrTBMenu.append(contentsOf: drinksArr)
-                tbMenu.reloadData()
+        if status == 0 {
+            if collectionView == collViewMenu{
+                isselectedoffer = indexPath.row
+                collViewMenu.reloadData()
             }
-           
-        
+            //valueSelect = true
+            if let id = offer?[indexPath.row].menuID{
+                menuProductAPI(id: id)
+            }
+            self.slottime = offer?[indexPath.row].offer ?? ""
+            self.slotid = offer?[indexPath.row].id ?? 0
+            self.menuid = offer?[indexPath.row].menuID ?? 0
+            self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
+            self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
+            self.offerID = offer?[indexPath.row].offerID ?? 0
+            
+        } else if status == 1 {
+            let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
+                                                                 image: ["goose" , "belveder", "Ciroc" ],
+                                                                 itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
+                                                                 prevPrice: ["R50.00" , "R50.00" , "R50.00"],
+                                                                 newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
+            arrTBMenu.removeAll()
+            arrTBMenu.append(contentsOf: drinksArr)
+            tbMenu.reloadData()
+        }
     }
 }
 extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{

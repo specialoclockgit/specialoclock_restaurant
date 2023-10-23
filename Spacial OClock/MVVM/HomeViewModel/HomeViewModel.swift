@@ -141,7 +141,7 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - CANCEL BOOKING API
-    func cancelBookig_API(bookingId:Int, reson:String, onsuccess: @escaping ((CommonModel?)->())){
+    func cancelBookig_API(bookingId:String, reson:String, onsuccess: @escaping ((CommonModel?)->())){
         let param = ["booking_id":bookingId, "reason":reson] as [String:Any]
         WebService.service(API.cancel_booking, param: param, service: .post) {
             (modaldata: CommonModel, Data , json) in
