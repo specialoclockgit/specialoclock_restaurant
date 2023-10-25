@@ -55,7 +55,7 @@ class CellHomeTB: UITableViewCell {
 extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if objArray[collView.tag].name == "Cusinis" {
+        if objArray[collView.tag].name == "Cuisines" {
             return objArray[collView.tag].objArray?.count ?? 0
         } else if objArray[collView.tag].name == "Location" {
             return objArray[collView.tag].objArray?.count ?? 0
@@ -72,7 +72,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellHomeCV, for: indexPath) as! CellHomeCV
-        if objArray[collView.tag].name == "Cusinis" {
+        if objArray[collView.tag].name == "Cuisines" {
             let image = "\(self.cuisine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.stackHeight.constant = 0
@@ -255,11 +255,11 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setValue = "Location"
             vc.setimage = "pinPerson"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
-        }else if objArray[collView.tag].name == "Cusinis"{
+        }else if objArray[collView.tag].name == "Cuisines"{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.cusinessID = cuisine[indexPath.row].id ?? 0
             vc.lblName = cuisine[indexPath.row].name ?? ""
-            vc.setValue = "Cusinis"
+            vc.setValue = "Cuisines"
             vc.setimage = "soup"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }

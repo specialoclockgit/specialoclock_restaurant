@@ -38,7 +38,7 @@ class homeSeeMoreVC: UIViewController {
             lblHeader.text = "Location"
             lblHeaderTExt.text = "Location"
             imgViewHeader.image = UIImage(named: "pinPerson")
-        }else if setvalue == "Cusinis"{
+        }else if setvalue == "Cuisines"{
             lblHeader.text = "Cuisine"
             lblHeaderTExt.text = "Cuisine"
             imgViewHeader.image = UIImage(named: "soup")
@@ -69,7 +69,7 @@ class homeSeeMoreVC: UIViewController {
 //MARK: - EXTENSIONS
 extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if setvalue == "Cusinis"{
+        if setvalue == "Cuisines"{
             self.collection.hideSkeleton()
             if cuisine.count == 0{
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
@@ -133,7 +133,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.imgVirw.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblName.text = self.location[indexPath.row].city ?? ""
             cell.lblDis.text = "Restaurant \(self.location[indexPath.row].restroCount ?? 0)"
-        }else if setvalue == "Cusinis"{
+        }else if setvalue == "Cuisines"{
             let imageIndex = (imageBaseURL) + (self.cuisine[indexPath.row].image ?? "")
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
@@ -183,12 +183,12 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             vc.setValue = "Location"
             vc.setimage = "PIN"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if setvalue == "Cusinis"{
+        }else if setvalue == "Cuisines"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.cusinessID = self.cuisine[indexPath.row].id ?? 0
             vc.lblName = self.cuisine[indexPath.row].name ?? ""
             vc.setimage = "soup"
-            vc.setValue = "Cusinis"
+            vc.setValue = "Cuisines"
             self.navigationController?.pushViewController(vc, animated: true)
         }else if setvalue == "Category"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC

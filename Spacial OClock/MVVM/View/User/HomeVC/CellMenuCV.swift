@@ -27,7 +27,7 @@ class CellMenuCV: UICollectionViewCell {
 }
 extension CellMenuCV {
     func initialLoad(){
-        lblTime.lblCornerRadius(cornerRadius: 10.0)
+        lblTime.lblCornerRadius(cornerRadius: 18)
         lblOffer.lblCornerRadius(cornerRadius: lblOffer.frame.height / 2)
     }
 }

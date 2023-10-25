@@ -28,6 +28,7 @@ class bookingDetailVC: UIViewController {
     @IBOutlet weak var lblAvgRating: UILabel!
     @IBOutlet weak var lblRestoName: UILabel!
     @IBOutlet weak var tblViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var viewReview: UIView!
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var VeiwOfferCheck: UIView!
     @IBOutlet weak var img : UIImageView!
@@ -41,7 +42,7 @@ class bookingDetailVC: UIViewController {
     //MARK: - VARIABLES
     var buttonTitle = String()
     var buttonColor = String()
-    var status = String()
+    var status = Int()
     var statusColor = String()
     var image = String()
     var statusVerify = Int()
@@ -58,10 +59,11 @@ class bookingDetailVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewReview.layer.cornerRadius = 12
+        viewReview.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
         tabBarController?.tabBar.isHidden = true
         btnMain.setTitle(buttonTitle, for: .normal)
         btnMain.backgroundColor = UIColor(named : buttonColor)
-        lblstatus.text = status
         lblstatus.textColor = UIColor(named: statusColor)
         img.image = UIImage(named: image)
         bookingDetial()
@@ -78,10 +80,12 @@ class bookingDetailVC: UIViewController {
             self.lblCity.text = fetchdata?.restrorant?.city ?? ""
             self.lblLocation.text = fetchdata?.restrorant?.location ?? ""
             self.lblRestoName.text = fetchdata?.restrorant?.name ?? ""
-            if fetchdata?.restrorant?.status == 0{
+            if self.status == 0{
                 self.lblstatus.text = "Ongoing"
-            }else{
+            }else if self.status == 1{
                 self.lblstatus.text = "Complete"
+            }else{
+                self.lblstatus.text = "Cancelled"
             }
             self.lblOpenClosetime.text = "\(fetchdata?.restrorant?.openTime ?? "") to " + "\(fetchdata?.restrorant?.closeTime ?? "")"
             self.lblAvgRating.text = "\(fetchdata?.restrorant?.avgRating ?? 0)"

@@ -30,8 +30,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     var heading = String()
     var cusinessID = Int()
     var themeID = Int()
-    var location : locationByRestoModalBody?
-    var restrorants: [Restrorantee]?
+    var location : [locationByRestoModalBody]?
     var cuisine = [Cuisine]()
     var viewmodal = HomeViewModel()
     var modal: [CussinesRestoModalBody]?
@@ -53,7 +52,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
          
         if setValue == "Location"{
             location_By_RestoAPI()
-        }else if setValue == "Cusinis"{
+        }else if setValue == "Cuisines"{
             get_resto_list()
         }else if setValue == "Categorys"{
             
@@ -89,15 +88,16 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
         }
     }
     
+    
     //MARK: - LOCATION BY RESTO
     func location_By_RestoAPI(){
-        viewmodal.locationByRestoAPI(country: country, city: city,type: "1") { dataa in
-            self.location = dataa
-            self.restrorants = dataa?.location?.first?.restrorants ?? []
+        viewmodal.locationByRestoAPI(country: country, city: city,type: "1") { [weak self] dataa in
+            self?.location = dataa
+           // self?.restrorants = dataa?.location?.first?.restrorants ?? []
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.CollectionView.hideSkeleton()
+                self?.CollectionView.hideSkeleton()
             }
-            self.CollectionView.reloadData()
+            self?.CollectionView.reloadData()
         }
     }
     
@@ -121,15 +121,15 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
 extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setValue == "Location"{
-            if restrorants?.count == 0 {
+            if location?.count == 0 {
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return restrorants?.count ?? 0
+                return location?.count ?? 0
             }
         }
-       else if setValue == "Cusinis"{
+       else if setValue == "Cuisines"{
             if modal?.count == 0 {
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
@@ -157,15 +157,38 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         cell.viewOffer2.isHidden = true
         cell.viewOffer3.isHidden = true
         if setValue == "Location"{
-            let imageIndex = (imageURL) + (restrorants?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            let imageIndex = (imageURL) + (location?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblName.text = restrorants?[indexPath.row].name ?? ""
-            cell.lblDiscription.text = "\(restrorants?[indexPath.row].openTime ?? "") - " + "\(restrorants?[indexPath.row].closeTime ?? "")"
-//            let arrayOffer: [[OfferTiming]] = ((restrorants?[indexPath.row]. ?? []).map({$0.offerTimings ?? []}) )
-//            sortArray(arrayOffer: arrayOffer,cell: cell)
+            cell.lblName.text = location?[indexPath.row].name ?? ""
+            cell.lblDiscription.text = location?[indexPath.row].shortDescription ?? ""
+            let fetchresto = location?[indexPath.row].offers?.first?.offerTimings ?? []
+            if fetchresto.count == 1 {
+                cell.viewOffer1.isHidden = false
+                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
+                cell.lbltime1.text = fetchresto[0].offer ?? ""
+            } else if fetchresto.count == 2 {
+                cell.viewOffer1.isHidden = false
+                cell.viewOffer2.isHidden = false
+                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
+                cell.lblOffer2.text = "\(fetchresto[1].percentage ?? 0)"
+                cell.lbltime1.text = fetchresto[0].offer ?? ""
+                cell.lbltime2.text = fetchresto[1].offer ?? ""
+            } else if fetchresto.count >= 3{
+                cell.viewOffer1.isHidden = false
+                cell.viewOffer2.isHidden = false
+                cell.viewOffer3.isHidden = false
+                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
+                cell.lblOffer2.text = "\(fetchresto[1].percentage ?? 0)"
+                cell.lblOffer3.text = "\(fetchresto[2].percentage ?? 0)"
+                cell.lbltime1.text = fetchresto[0].offer ?? ""
+                cell.lbltime2.text = fetchresto[1].offer ?? ""
+                cell.lblTime3.text = fetchresto[2].offer ?? ""
+            } else {
+                cell.stackHeight.constant = 46
+            }
         }
-        else if setValue == "Cusinis"{
+        else if setValue == "Cuisines"{
             let imageIndex = (imageURL) + (modal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
@@ -191,9 +214,9 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if setValue == "Location"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-            vc.ProductID = restrorants?[indexPath.row].id ?? 0
+            vc.ProductID = location?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if setValue == "Cusinis"{
+        }else if setValue == "Cuisines"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = modal?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)

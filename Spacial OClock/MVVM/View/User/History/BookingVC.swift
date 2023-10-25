@@ -29,23 +29,25 @@ class BookingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bookingTV.showSkeleton()
-        currentpastAPI(status: 0)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        currentpastAPI(status: 0)
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
     }
 
     //MARK: - FUNCTIONS
     func currentpastAPI(status:Int){
+        self.modal?.removeAll()
+        self.bookingTV.reloadData()
         viewmodal.currentPast_API(type: status, genre: "0") { [weak self] dataa in
-            self?.modal = dataa
+            self?.modal = dataa?.reversed()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.bookingTV.hideSkeleton()
-                self?.bookingTV.reloadData()
             }
-            
+            self?.bookingTV.reloadData()
         }
     }
     // MARK: - ACTIONS
@@ -93,9 +95,12 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
         if self.modal?[indexPath.row].status == 0{
             cell.bookingStatuslbl.text = "Ongoing"
             cell.bookingStatuslbl.textColor = .red
-        }else{
+        }else if self.modal?[indexPath.row].status == 1{
             cell.bookingStatuslbl.text = "Completed"
             cell.bookingStatuslbl.textColor = .systemGreen
+        }else{
+            cell.bookingStatuslbl.text = "Cancelled"
+            cell.bookingStatuslbl.textColor = .red
         }
         cell.bookingDatelbl.text = modal?[indexPath.row].bookingDate ?? ""
         cell.bookingNumber.text = modal?[indexPath.row].bookingID ?? ""
@@ -108,10 +113,10 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.bookingDetailVC) as! bookingDetailVC
+        screen.status = modal?[indexPath.row].status ?? 0
         if status == 1{
             screen.buttonTitle = "Add Rating & Review"
             screen.buttonColor = "themeOrange"
-            screen.status = "Completed"
             screen.statusColor = "themeGreen"
             screen.statusVerify = 1
         }else{
@@ -119,7 +124,6 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
             screen.booking_id = modal?[indexPath.row].id ?? 0
             screen.buttonTitle = "Cancel Booking"
             screen.buttonColor = "themeRed"
-            screen.status = "Ongoing"
             screen.statusColor = "themeRed"
             screen.statusVerify = 0
         }

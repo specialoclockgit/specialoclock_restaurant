@@ -127,7 +127,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 
                    let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
                     view.lblPersot.text = "\(percentage)%"
-//                    view.providerImageView.image = UIImage(named: "favourite")
                     marker.iconView = view
                     marker.map = self.gmsMapView
                     marker.userData = returnedPlace
@@ -221,9 +220,11 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
             }
             
             if objData?.cuisine?.count ?? 0 != 0 {
-                let obj = SectionModel(name: "Cusinis",objArray: objData?.cuisine ?? [],image: "soup")
+                let obj = SectionModel(name: "Cuisines",objArray: objData?.cuisine ?? [],image: "soup")
                 self.sectionArray.append(obj)
             }
+            
+            
             
             if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Popular",objArray: objData?.highily_rated_bars_restos ?? [],image: "Popular")
@@ -309,10 +310,11 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         self.tbHomeData.layoutSubviews()
     }
     @IBAction func btnMapView(_ sender: UIButton) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
-//        vc.latitude = self.lat ?? 0.0
-//        vc.longitude = self.long ?? 0.0
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
+        vc.nearBy = self.nearBy
+        vc.latitude = self.lat ?? 0.0
+        vc.longitude = self.long ?? 0.0
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func btnSearch(_ sender: UIButton) {
@@ -328,7 +330,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         self.navigationController?.pushViewController(screen, animated: true)
     }
     //FUNCTION CURRENT LOCATIONS
-    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             locationManager.startUpdatingLocation()
@@ -394,7 +395,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             if sectionArray[indexPath.section].name == "Location" {
                 cell.location = sectionArray[indexPath.section].objArray as? [HomeListLocation] ?? []
                 cell.collView.reloadData()
-            } else if sectionArray[indexPath.section].name == "Cusinis" {
+            } else if sectionArray[indexPath.section].name == "Cuisines" {
                 cell.isCellSelected = true
                 cell.cuisine = sectionArray[indexPath.section].objArray as? [Cuisine] ?? []
                 cell.collView.reloadData()
@@ -414,7 +415,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sectionArray[indexPath.section].name == "Banner" {
-            return CGFloat(80)
+            return CGFloat(100)
         } else if sectionArray[indexPath.section].name == "Popular" {
             return CGFloat(300)
         }else if sectionArray[indexPath.section].name == "A-Z"{
@@ -441,7 +442,7 @@ extension HomeVC {
             screen.location = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
-        case "Cusinis" :
+        case "Cuisines" :
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.cuisine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
             self.navigationController?.pushViewController(screen, animated: true)

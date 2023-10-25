@@ -42,7 +42,7 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - LOCATION BY RESTO API
-    func locationByRestoAPI(country:String,city:String,type:String,onsuccess: @escaping ((locationByRestoModalBody?)->())){
+    func locationByRestoAPI(country:String,city:String,type:String,onsuccess: @escaping (([locationByRestoModalBody]?)->())){
         let param:parameters = ["country":country, "city":city, "type":"1"]
         WebService.service(API.fetch_restos_by_location, param: param, service: .post) {
             (modaldata: locationByRestoModal, Data , json) in

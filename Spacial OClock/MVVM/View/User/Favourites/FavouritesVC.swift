@@ -35,7 +35,7 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
     //MARK: - FUNCTIONS
     func get_list(){
         favViewModal.favListAPI { [weak self] dataa in
-            self?.modal = dataa
+            self?.modal = dataa?.reversed()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.favouriteCV.hideSkeleton()
             }

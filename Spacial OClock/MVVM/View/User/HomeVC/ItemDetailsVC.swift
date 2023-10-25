@@ -101,7 +101,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.datecuurent = string(format: "yyyy-MM-dd")
         txtFldDate.text = datecuurent
-        viewRestoRating.layer.cornerRadius = 8
+        viewRestoRating.layer.cornerRadius = 12
         viewRestoRating.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
         txtFldDate.delegate = self
         showDatePicker()
@@ -143,7 +143,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.datecuurent) { data in
             self.modal = data
             self.images = data?.images ?? []
-            self.reviews = data?.reviews ?? []
+            self.reviews = data?.reviews?.reversed() ?? []
             self.ourMenu = data?.ourMenu ?? []
             self.offer = data?.offer_timings ?? []
             let imageIndex = (imageURL) + (self.modal?.images?.first?.image ?? "")
@@ -218,6 +218,9 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         tabBarController?.tabBar.isHidden = true
     }
     //MARK: Button Action
+    @IBAction func btnAudioCall(_ sender: UIButton) {
+        
+    }
     @IBAction func btnBackAct(sender : UIButton){
         self.navigationController?.popViewController(animated: true)
     }
