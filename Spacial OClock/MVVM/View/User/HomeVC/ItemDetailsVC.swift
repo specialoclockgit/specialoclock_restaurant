@@ -219,7 +219,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     //MARK: Button Action
     @IBAction func btnAudioCall(_ sender: UIButton) {
-        
+        if let phoneURL = URL(string: "tel://+919079019971") {
+            if UIApplication.shared.canOpenURL(phoneURL) {
+                UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+            }else {
+                
+            }
+        }
+
     }
     @IBAction func btnBackAct(sender : UIButton){
         self.navigationController?.popViewController(animated: true)
@@ -417,7 +424,6 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 return reviews?.count ?? 0
             }
         }
-        
         return 0
     }
     

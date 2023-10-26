@@ -94,20 +94,14 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnContinueAct(sender : UIButton){
-        if tfSelectTime.text == ""{
-            CommonUtilities.shared.showAlert(message: "Please select time", isSuccess: .error)
-        }else if tfSelectPeople.text == "" {
-            CommonUtilities.shared.showAlert(message: "Please select number of people", isSuccess: .error)
-        }else{
-            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
-            screen.callBack = {
-                self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id) { data in
-                    let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
-                    super.navigationController?.pushViewController(screen, animated: true)
-                }
+        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
+        screen.callBack = {
+            self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id) { data in
+                let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
+                super.navigationController?.pushViewController(screen, animated: true)
             }
-            self.navigationController?.present(screen, animated: true)
         }
+        self.navigationController?.present(screen, animated: true)
     }
     
     @IBAction func btnBackAct(sender : UIButton){
