@@ -10,6 +10,13 @@ import IQKeyboardManagerSwift
 import GooglePlaces
 import GoogleMaps
 @main
+/*
+ 
+ hardin@gmail.com
+ pass: 12345678
+ 
+ 
+ */
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     private let locationManager = CLLocationManager()

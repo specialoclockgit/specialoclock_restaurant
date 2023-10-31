@@ -307,6 +307,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.navigationController?.pushViewController(screenReview, animated: true)
         }
     }
+    @IBAction func btnAllMenu(_ sender: UIButton)
+    {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "allMenuVC") as! allMenuVC
+        vc.restoid = ProductID
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     @IBAction func btnFavAct(_ sender : UIButton){
         if sender.isSelected == false{
@@ -354,7 +360,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblTime.text = ""
                     cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
                 }else{
-                    cell.img.image = UIImage(named: "ornageRectabgle")
+                    cell.img.image = UIImage(named: "BgOfferImg")
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
                     cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
@@ -379,6 +385,13 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         debugPrint(indexPath.row)
+        if collectionView == collView{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+            vc.settype = 0
+            vc.setImage = self.images?[indexPath.row].image ?? ""
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
         let index = indexPath.row
         if status == 0 {
             if collectionView == collViewMenu{

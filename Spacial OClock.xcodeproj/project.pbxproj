@@ -212,6 +212,7 @@
 		ECB3A2A32AD404D100C65065 /* bookingRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */; };
 		ECB3A2A52AD4134200C65065 /* getSlotsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */; };
 		ECB3A2A72AD431F400C65065 /* currentPastModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A62AD431F400C65065 /* currentPastModal.swift */; };
+		ECB549832AEB86C00041FA1C /* fullImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB549822AEB86C00041FA1C /* fullImageView.swift */; };
 		ECBAA8942AD674950070967B /* bookingDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBAA8932AD674950070967B /* bookingDetailModal.swift */; };
 		ECBC37BE2AC40E8A00ADEDC7 /* themeRestolistModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */; };
 		ECBC37C02AC4171A00ADEDC7 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37BF2AC4171A00ADEDC7 /* ChatVC.swift */; };
@@ -223,6 +224,9 @@
 		ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */; };
 		ECC5BCEF2ABC281F00143940 /* productDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */; };
 		ECCB15CE2ACFEF17003B4B72 /* menuProductModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB15CD2ACFEF17003B4B72 /* menuProductModal.swift */; };
+		ECCEDB3C2AF10EE300DA8D8D /* allMenuModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCEDB3B2AF10EE300DA8D8D /* allMenuModal.swift */; };
+		ECCEDB3F2AF112A600DA8D8D /* allMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCEDB3E2AF112A600DA8D8D /* allMenuVC.swift */; };
+		ECCEDB412AF1130900DA8D8D /* allMenuCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCEDB402AF1130900DA8D8D /* allMenuCVC.swift */; };
 		ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE802682ABD83F3004CC589 /* favListModal.swift */; };
 		ECE8026B2ABDBD7F004CC589 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = ECE8026A2ABDBD7F004CC589 /* nodataFound.gif */; };
 /* End PBXBuildFile section */
@@ -472,6 +476,7 @@
 		ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingRestoModal.swift; sourceTree = "<group>"; };
 		ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getSlotsModal.swift; sourceTree = "<group>"; };
 		ECB3A2A62AD431F400C65065 /* currentPastModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = currentPastModal.swift; sourceTree = "<group>"; };
+		ECB549822AEB86C00041FA1C /* fullImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullImageView.swift; sourceTree = "<group>"; };
 		ECBAA8932AD674950070967B /* bookingDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailModal.swift; sourceTree = "<group>"; };
 		ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = themeRestolistModal.swift; sourceTree = "<group>"; };
 		ECBC37BF2AC4171A00ADEDC7 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -483,6 +488,9 @@
 		ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themeListModal.swift; sourceTree = "<group>"; };
 		ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productDetailModal.swift; sourceTree = "<group>"; };
 		ECCB15CD2ACFEF17003B4B72 /* menuProductModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuProductModal.swift; sourceTree = "<group>"; };
+		ECCEDB3B2AF10EE300DA8D8D /* allMenuModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allMenuModal.swift; sourceTree = "<group>"; };
+		ECCEDB3E2AF112A600DA8D8D /* allMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allMenuVC.swift; sourceTree = "<group>"; };
+		ECCEDB402AF1130900DA8D8D /* allMenuCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allMenuCVC.swift; sourceTree = "<group>"; };
 		ECE802682ABD83F3004CC589 /* favListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favListModal.swift; sourceTree = "<group>"; };
 		ECE8026A2ABDBD7F004CC589 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		FFB2FFBD55D1FD8B4740B383 /* Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -622,6 +630,7 @@
 				ECB3A2A62AD431F400C65065 /* currentPastModal.swift */,
 				ECBAA8932AD674950070967B /* bookingDetailModal.swift */,
 				ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */,
+				ECCEDB3B2AF10EE300DA8D8D /* allMenuModal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1021,6 +1030,7 @@
 		C29CDAF22A42B9170035E03D /* User */ = {
 			isa = PBXGroup;
 			children = (
+				ECCEDB3D2AF1129200DA8D8D /* Menu */,
 				ECB020662ADEBBDA002D2C07 /* SearchList&Map */,
 				ECA8C7692AD568730061F19C /* dropDownSlots */,
 				ECBC37C92AC44FD700ADEDC7 /* Markderset */,
@@ -1034,6 +1044,7 @@
 				C29CDB012A42BB840035E03D /* SettingVC */,
 				C29CDAF42A42BB030035E03D /* AuthVC */,
 				C29CDAF32A42B91E0035E03D /* Storyboard */,
+				ECB549822AEB86C00041FA1C /* fullImageView.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1177,6 +1188,15 @@
 				ECAF86C72AC69ABC0071BFF3 /* Socketmodel.swift */,
 			);
 			path = Socket;
+			sourceTree = "<group>";
+		};
+		ECCEDB3D2AF1129200DA8D8D /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				ECCEDB3E2AF112A600DA8D8D /* allMenuVC.swift */,
+				ECCEDB402AF1130900DA8D8D /* allMenuCVC.swift */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1487,6 +1507,7 @@
 				EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */,
 				C29CDB092A42BB930035E03D /* DeleteAccountPopUp.swift in Sources */,
 				C25738132A4ACC50002BA6A7 /* RestoProfileVC.swift in Sources */,
+				ECB549832AEB86C00041FA1C /* fullImageView.swift in Sources */,
 				8B9154702A860D0600CCB83E /* AddBusinessModel.swift in Sources */,
 				A5046FEC2A4DAC7F00C23627 /* NotificationVC.swift in Sources */,
 				A5046FDE2A4D61B500C23627 /* UIView.swift in Sources */,
@@ -1522,6 +1543,7 @@
 				A5A8CF412A580FB7006F23ED /* RestoSignUPVC.swift in Sources */,
 				A5A8CF362A57DAEA006F23ED /* PopOverVC.swift in Sources */,
 				EC1B96382ACC45A500BBEF7B /* createReviewModal.swift in Sources */,
+				ECCEDB3F2AF112A600DA8D8D /* allMenuVC.swift in Sources */,
 				A5E8370C2A56C94600C2D16A /* HelpFAQRestoVC.swift in Sources */,
 				C284FB392A402A0D006949B4 /* AppDelegate.swift in Sources */,
 				8B9CF07C2A81F10B006C90E9 /* forgotpasswordmodel.swift in Sources */,
@@ -1535,6 +1557,7 @@
 				ECC5A02E2AC5B145008E7A72 /* locationByRestoModal.swift in Sources */,
 				ECB020652ADE6594002D2C07 /* mapViewController.swift in Sources */,
 				A5A8CF3A2A5800F3006F23ED /* PaymentCenterAlertVC.swift in Sources */,
+				ECCEDB3C2AF10EE300DA8D8D /* allMenuModal.swift in Sources */,
 				A51DBFF22A5292A4007535D7 /* BreakfastVC.swift in Sources */,
 				ECAF1D092AC18857006E20FB /* homeSeeMoreVC.swift in Sources */,
 				ECBC37CD2AC44FE300ADEDC7 /* CustomMarker.swift in Sources */,
@@ -1626,6 +1649,7 @@
 				A55779DE2A55A7F5002B2FC2 /* EditOfferVC.swift in Sources */,
 				C29CDAFD2A42BB1D0035E03D /* SignUPVC.swift in Sources */,
 				A5947B002A55444300519039 /* CellMyInvoicePendingTV.swift in Sources */,
+				ECCEDB412AF1130900DA8D8D /* allMenuCVC.swift in Sources */,
 				A5E837102A56D53400C2D16A /* AlertBottomVC.swift in Sources */,
 				A5A8CF452A581296006F23ED /* RestoVerificationAlertVC.swift in Sources */,
 				ECA600372AD7D03A00C97493 /* AvalSlotModal.swift in Sources */,

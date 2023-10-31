@@ -162,6 +162,7 @@ enum API: String{
     case restro_BookingDetail
     case cancel_booking
     case fetch_available_slots
+    case fetch_menu_gallery
    
 }
 

@@ -62,6 +62,10 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
             
         }
     }
+    @IBAction func btnSearch(_ sender: Any) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }

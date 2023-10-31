@@ -159,5 +159,16 @@ class HomeViewModel : NSObject {
         }
     }
     
+    //MARK: - FETCH ALL MENU API
+    func allMenu_API(resto_bar_id:Int,onsuccess: @escaping (([allMenuModalBody]?)->())){
+        let param = ["resto_bar_id":resto_bar_id] as [String:Any]
+        print("============",param)
+        WebService.service(API.fetch_menu_gallery, param: param, service: .post) {
+            (modaldata: allMenuModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    
     
 }
