@@ -151,7 +151,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     }
     
     
-    func getUpdatedLocation(){
+    func getUpdatedLocation() {
         if (CLLocationManager.locationServicesEnabled())
         {
             locationManager.delegate = self

@@ -49,6 +49,13 @@
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QEq-mO-TDc">
+                                        <rect key="frame" x="65" y="34" width="33.5" height="0.5"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="OLI-cX-1Rj"/>
+                                        </constraints>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="R40.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jq6-ix-86I">
                                         <rect key="frame" x="108.5" y="27" width="34.5" height="14"/>
                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="10"/>
@@ -58,11 +65,14 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
+                                    <constraint firstItem="QEq-mO-TDc" firstAttribute="centerY" secondItem="XUX-vp-ADb" secondAttribute="centerY" id="FFh-Ko-7cz"/>
                                     <constraint firstItem="XUX-vp-ADb" firstAttribute="bottom" secondItem="IH1-JW-bWg" secondAttribute="bottom" constant="-5" id="KRf-nJ-QcO"/>
                                     <constraint firstItem="IH1-JW-bWg" firstAttribute="top" secondItem="rft-lS-GU0" secondAttribute="top" constant="5" id="RPR-6w-slu"/>
                                     <constraint firstAttribute="bottom" secondItem="IH1-JW-bWg" secondAttribute="bottom" constant="5" id="SXF-QV-3Jz"/>
                                     <constraint firstItem="jq6-ix-86I" firstAttribute="leading" secondItem="XUX-vp-ADb" secondAttribute="trailing" constant="10" id="VS7-Op-z0V"/>
+                                    <constraint firstItem="QEq-mO-TDc" firstAttribute="leading" secondItem="XUX-vp-ADb" secondAttribute="leading" id="XHf-rE-Vg6"/>
                                     <constraint firstItem="IH1-JW-bWg" firstAttribute="leading" secondItem="rft-lS-GU0" secondAttribute="leading" constant="20" id="aZU-e9-BEs"/>
+                                    <constraint firstItem="QEq-mO-TDc" firstAttribute="trailing" secondItem="XUX-vp-ADb" secondAttribute="trailing" id="bHb-6z-QpY"/>
                                     <constraint firstItem="XUX-vp-ADb" firstAttribute="leading" secondItem="8Ww-tQ-8RC" secondAttribute="leading" id="bgY-gB-dPd"/>
                                     <constraint firstAttribute="height" constant="51" id="d1U-WX-gew"/>
                                     <constraint firstItem="8Ww-tQ-8RC" firstAttribute="top" secondItem="IH1-JW-bWg" secondAttribute="top" constant="2" id="gka-Yb-DSd"/>

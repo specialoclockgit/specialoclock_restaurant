@@ -7,10 +7,12 @@
 
 import UIKit
 import SDWebImage
+import SwiftGifOrigin
 
 class allMenuVC: UIViewController {
 
     //MARK: - OUTLETS
+    @IBOutlet weak var imgVeiwGif: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     //MARK: - VARIABLES
@@ -40,7 +42,14 @@ class allMenuVC: UIViewController {
 //MARK: - EXTENSIONS
 extension allMenuVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return modal?.count ?? 0
+        if modal?.count == 0{
+            imgVeiwGif.image = UIImage.gif(name: "nodataFound")
+            imgVeiwGif.isHidden = false
+        }else{
+            imgVeiwGif.isHidden = true
+            return modal?.count ?? 0
+        }
+        return 0
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "allMenuCVC", for: indexPath) as! allMenuCVC

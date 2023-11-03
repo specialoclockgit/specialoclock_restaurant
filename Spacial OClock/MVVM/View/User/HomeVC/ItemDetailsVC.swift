@@ -9,7 +9,8 @@ import UIKit
 import SDWebImage
 import IQKeyboardManagerSwift
 import Cosmos
-import SwiftUI
+import CoreLocation
+import QuartzCore
 
 struct ModelMenuCollView {
     var name : [String]
@@ -54,6 +55,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblRating: UILabel!
     @IBOutlet weak var heightTBReview : NSLayoutConstraint!
     @IBOutlet weak var txtFldDate: UITextField!
+    @IBOutlet weak var lblTotalRes: UILabel!
     @IBOutlet weak var imgFav : UIImageView!
     @IBOutlet weak var btnFav : UIButton!
     @IBOutlet weak var btnBook : UIButton!
@@ -61,6 +63,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var heightViewButton : NSLayoutConstraint!
     
     //MARK: Variable
+    var lat : Double?
+    var long : Double?
+    var discount : Int?
+    let locationManager = CLLocationManager()
     var ProductID = Int()
     var datePicker = UIDatePicker()
     var viewmodal = HomeViewModel()
@@ -99,6 +105,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.datecuurent = string(format: "yyyy-MM-dd")
         txtFldDate.text = datecuurent
         viewRestoRating.layer.cornerRadius = 12
@@ -150,7 +157,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             self.lblNameREsto.text = self.modal?.name ?? ""
-            self.lblLocation.text = self.modal?.city ?? ""
+            self.lblLocation.text = self.modal?.location ?? ""
             if self.modal?.isLiked == 0{
                 self.imgFav.image = UIImage(named: "white h")
             }else{
@@ -159,11 +166,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
             self.lblRating.text = self.modal?.avgRating ?? ""
             self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
+            self.lblTotalRes.text = "\(self.modal?.totalBookings ?? "") reservations"
+            self.getUpdatedLocation()
             self.collViewMenu.reloadData()
             self.collView.reloadData()
             self.tbReview.reloadData()
             self.tbMenu.reloadData()
             if self.offer?.count ?? 0 > 0 {
+                self.discount = self.offer?[0].percentage ?? 0
                 self.menuProductAPI(id: self.offer?[0].menuID ?? 0)
             }
         }
@@ -400,6 +410,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             }
             //valueSelect = true
             if let id = offer?[indexPath.row].menuID{
+                self.discount = offer?[indexPath.row].percentage ?? 0
                 menuProductAPI(id: id)
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
@@ -450,10 +461,10 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         if tableView == tbMenu{
             let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
             sectionV.layer.cornerRadius = 10.0
-            let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-150, height: 20) )
-            titleLbl.text = productModal?.categories?[section].title ?? ""
+            let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-10, height: 20) )
+            titleLbl.text = "Recommended \(productModal?.categories?[section].title ?? "")"
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
-            let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-150, y: 10, width: self.view.frame.width - titleLbl.frame.width, height: 30))
+            let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-24, y: 10, width: 30, height: 30))
             viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             if arrCheck[section] == true {
                 sectionV.backgroundColor = .systemGray5
@@ -488,11 +499,13 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""
-            cell.lblNewPrice.text = "\(arrSection?[indexPath.row].price ?? 0)"
+            cell.lblPrePrice.text = "\(arrSection?[indexPath.row].price ?? 0)"
+            cell.lblNewPrice.text = calCulateDiscount(actualPrice: Double(arrSection?[indexPath.row].price ?? 0), discount: Double(discount ?? 0)).description
+            //"\(arrSection?[indexPath.row].price ?? 0)"
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellItemDetailReviewTB, for: indexPath) as! CellItemDetailReviewTB
-            let imageIndex = (imageURL) + (self.reviews?[indexPath.row].user?.image ?? "")
+            let imageIndex = (imageURL) + (self.reviews?[indexPath.row].user?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             cell.lblName.text = self.reviews?[indexPath.row].user?.name ?? ""
@@ -626,4 +639,66 @@ extension ItemDetailsVC{
         tbMenu.reloadData()
     }
     
+}
+
+
+extension ItemDetailsVC : CLLocationManagerDelegate{
+    func getUpdatedLocation() {
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager.delegate = self
+            //   locationManager.distanceFilter = 100.0
+            if #available(iOS 14.0, *) {
+                locationManager.desiredAccuracy = kCLLocationAccuracyReduced
+            } else {
+                // Fallback on earlier versions0000
+            }
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        self.lat = locValue.latitude
+        self.long = locValue.longitude
+        let distance =  distanceBetween(lat1: locValue.latitude, lon1: locValue.longitude, lat2: Double(self.modal?.latitude ?? "") ?? 0, lon2: Double(self.modal?.longitude ?? "") ?? 0)
+        let miles = "\(String(format:"%.1f",distance)) miles"
+        self.lblLocation.text = "\(self.modal?.location ?? "") \n\(miles)"
+        locationManager.stopUpdatingLocation()
+    }
+    
+    
+}
+
+func calCulateDiscount (actualPrice: Double,discount: Double) -> Int {
+    let result = (actualPrice / 100) * discount
+    let finalAmount = actualPrice - result
+    print("oferr data----------",actualPrice,discount,finalAmount)
+    return Int(finalAmount)
+}
+
+func degreesToRadians(_ degrees: Double) -> Double {
+    return degrees * .pi / 180.0
+}
+
+func distanceBetween(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
+    let earthRadius = 6371.0 // Radius of the Earth in kilometers
+
+    let dLat = degreesToRadians(lat2 - lat1)
+    let dLon = degreesToRadians(lon2 - lon1)
+
+    let a = sin(dLat/2) * sin(dLat/2) + cos(degreesToRadians(lat1)) * cos(degreesToRadians(lat2)) * sin(dLon/2) * sin(dLon/2)
+    let c = 2 * atan2(sqrt(a), sqrt(1-a))
+
+    let distanceInKilometers = earthRadius * c
+    let distanceInMiles = distanceInKilometers * 0.621371 // Convert to miles
+
+    return distanceInMiles
 }

@@ -208,7 +208,7 @@ struct productDetailModal: Codable {
 // MARK: - productDetailModalBody
 struct productDetailModalBody: Codable {
     let id: Int?
-    let name, location, country, state: String?
+    var name, location, country, state, totalBookings: String?
     let city, latitude, longitude: String?
     let userID: Int?
     let shortDescription: String?
@@ -240,7 +240,7 @@ struct productDetailModalBody: Codable {
         case commission
         case isLiked = "is_liked"
         case avgRating = "avg_rating"
-        case images, reviews
+        case images, reviews, totalBookings
         case ourMenu = "our_menu"
     }
     init(from decoder: Decoder) throws {
@@ -266,6 +266,13 @@ struct productDetailModalBody: Codable {
         self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage)
         self.commission = try container.decodeIfPresent(String.self, forKey: .commission)
         self.isLiked = try container.decodeIfPresent(Int.self, forKey: .isLiked)
+       // self.totalBookings = try container.decodeIfPresent(String.self, forKey: .totalBookings)
+        if let value = try? container.decode(String.self, forKey: .totalBookings) {
+            self.totalBookings = value
+        }else if let value = try? container.decode(Int.self, forKey: .totalBookings) {
+            self.totalBookings = "\(value)"
+        }
+        
 //        self.avgRating = try container.decodeIfPresent(String.self, forKey: .avgRating)
         if let value = try? container.decode(String.self, forKey: .avgRating) {
             self.avgRating = value

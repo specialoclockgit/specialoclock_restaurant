@@ -226,7 +226,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 cell.stackHeight.constant = 46
             }
             cell.viewReview.isHidden = false
-            let imageIndex = (imageURL) + (allresto[indexPath.row].profileImage ?? "")
+            let imageIndex = (imageURL) + (allresto[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgLocaiton.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgLocaiton.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblLocationName.text = allresto[indexPath.row].name ?? ""

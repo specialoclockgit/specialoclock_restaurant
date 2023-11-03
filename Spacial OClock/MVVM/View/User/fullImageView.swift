@@ -8,19 +8,22 @@
 import UIKit
 import SDWebImage
 
-class fullImageView: UIViewController {
+class fullImageView: UIViewController, UIScrollViewDelegate {
 
     //MARK: - OUTLETS
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imgView: UIImageView!
     
     //MARK: - VARIABLES
     var setImage = String()
     var url = String()
     var settype = Int()
+
     
     //MARK: - VIEW LIFECYLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupScrollView()
         if settype == 0{
             let imageIndex = (imageURL) + (self.setImage )
             self.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -32,6 +35,15 @@ class fullImageView: UIViewController {
         }
         
     }
+    private func setupScrollView() {
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 6.0
+        }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+            return imgView
+        }
     //MARK: - ACTIONS
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
