@@ -26,8 +26,10 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
         super.viewDidLoad()
         btnBack.isHidden = true
         favouriteCV.showAnimatedGradientSkeleton()
-        get_list()
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        get_list()
     }
     
     // MARK: - Actions

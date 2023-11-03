@@ -324,17 +324,16 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @IBAction func btnFavAct(_ sender : UIButton){
-        if sender.isSelected == false{
-            viewmodal.resto_likeAPI(Restoid: ProductID, status: 0) { data in
-                self.imgFav.image = UIImage(named: "red h")
-            }
-        }else{
-            viewmodal.resto_likeAPI(Restoid: ProductID, status: 0) { data in
-                self.imgFav.image = UIImage(named: "white h")
+    @IBAction func btnFavAct(_ sender : UIButton) {
+        
+        if let type = self.modal?.isLiked {
+            let likeType = type == 0 ? 1 : 0
+            let img = type == 0 ? UIImage(named: "red h") : UIImage(named: "white h")
+            viewmodal.resto_likeAPI(Restoid: ProductID, status: likeType) { resp in
+                self.modal?.isLiked = likeType
+                self.imgFav.image = img
             }
         }
-        sender.isSelected = !sender.isSelected
     }
 }
 

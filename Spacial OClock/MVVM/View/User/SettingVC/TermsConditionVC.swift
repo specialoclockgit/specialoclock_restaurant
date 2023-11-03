@@ -22,7 +22,7 @@ class TermsConditionVC: UIViewController {
         super.viewDidLoad()
         if status == 0 {
             cms(type: 1)
-            headerlbl.text = "Term & Conditions"
+            headerlbl.text = "Terms & Conditions"
         }else if status == 1{
             cms(type: 2)
             headerlbl.text = titleLbl

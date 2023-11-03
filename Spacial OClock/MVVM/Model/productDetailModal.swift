@@ -217,7 +217,7 @@ struct productDetailModalBody: Codable {
     let type, categoryID, cuisineID, themesRestrorantID: Int?
     let isBlocked: Int?
     let profileImage, commission: String?
-    let isLiked: Int?
+    var isLiked: Int?
     var avgRating: String?
     let images: [Imaged]?
     let reviews: [Reviewsd]?

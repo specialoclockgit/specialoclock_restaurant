@@ -1032,7 +1032,7 @@
                                                                                         <size key="value" width="16" height="0.0"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
-                                                                                        <integer key="value" value="10"/>
+                                                                                        <integer key="value" value="12"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </textField>
@@ -1843,7 +1843,7 @@
                                 <rect key="frame" x="0.0" y="58" width="414" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LdW-yE-N70">
-                                        <rect key="frame" x="20" y="15" width="30" height="30"/>
+                                        <rect key="frame" x="20" y="16" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="SE1-B7-2Fh"/>
                                             <constraint firstAttribute="height" constant="30" id="mEw-g7-5nA"/>
@@ -1854,11 +1854,8 @@
                                             <action selector="backBtn:" destination="g8K-Tm-S5b" eventType="touchUpInside" id="bwN-pr-Vaq"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms Conditions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QwI-WL-GWm">
-                                        <rect key="frame" x="117" y="15" width="180" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="ZgN-UO-Mj8"/>
-                                        </constraints>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms &amp; Conditions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QwI-WL-GWm">
+                                        <rect key="frame" x="107.5" y="17" width="199" height="28"/>
                                         <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -6147,7 +6144,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJK-oO-W8s">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Top Background-1" translatesAutoresizingMaskIntoConstraints="NO" id="nOE-82-804">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Top Background-1" translatesAutoresizingMaskIntoConstraints="NO" id="nOE-82-804">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="130" id="pBx-k3-QrJ"/>
@@ -6320,14 +6317,14 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CbJ-1x-Tda">
                                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="100"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Menu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNq-eW-vey">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special's" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNq-eW-vey">
                                                                                 <rect key="frame" x="34" y="15" width="70" height="30"/>
                                                                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="70" id="Qlk-pv-QUz"/>
                                                                                     <constraint firstAttribute="height" constant="30" id="cYg-BO-i2e"/>
                                                                                 </constraints>
-                                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
+                                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
@@ -6359,7 +6356,7 @@
                                                                                     <constraint firstAttribute="width" constant="70" id="TqH-ZM-ROu"/>
                                                                                     <constraint firstAttribute="height" constant="30" id="fMX-VA-Kz1"/>
                                                                                 </constraints>
-                                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
+                                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <userDefinedRuntimeAttributes>
@@ -6396,7 +6393,7 @@
                                                                                     <constraint firstAttribute="width" constant="70" id="vmF-eY-3wL"/>
                                                                                     <constraint firstAttribute="height" constant="30" id="xDW-aD-cxO"/>
                                                                                 </constraints>
-                                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
+                                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
@@ -9216,9 +9213,6 @@ EE1lbnU
         <designable name="u6I-F8-ckZ">
             <size key="intrinsicContentSize" width="88" height="38.5"/>
         </designable>
-        <designable name="uou-KM-at9">
-            <size key="intrinsicContentSize" width="270" height="50"/>
-        </designable>
         <designable name="vFz-ay-J2k">
             <size key="intrinsicContentSize" width="180" height="161.5"/>
         </designable>
@@ -9253,8 +9247,8 @@ EE1lbnU
         <image name="Rectangle 351" width="288" height="105"/>
         <image name="SearchIcon" width="16.5" height="16.5"/>
         <image name="TICK" width="62.5" height="62.5"/>
-        <image name="Top Background" width="758" height="527"/>
-        <image name="Top Background-1" width="758" height="527"/>
+        <image name="Top Background" width="750" height="501"/>
+        <image name="Top Background-1" width="750" height="501"/>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="arrow.right" catalog="system" width="128" height="95"/>
         <image name="arrowDefault" width="8" height="13.5"/>
