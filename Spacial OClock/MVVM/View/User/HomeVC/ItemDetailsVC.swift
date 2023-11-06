@@ -61,8 +61,11 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var btnBook : UIButton!
     @IBOutlet weak var viewButton : UIView!
     @IBOutlet weak var heightViewButton : NSLayoutConstraint!
+    @IBOutlet weak var lblUserLOcation: UILabel!
+    @IBOutlet weak var lblOpenClose: UILabel!
     
     //MARK: Variable
+    let promotionTxt = "Promotion cannot be applied with any other in-house promotions.Please refer to the special condition below for more details."
     var lat : Double?
     var long : Double?
     var discount : Int?
@@ -145,6 +148,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         formatter.dateFormat = format
         return formatter.string(from: self.currentDate)
     }
+        
     //MARK: - FUNCTION
     func product_detail(){
         viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.datecuurent) { data in
@@ -158,6 +162,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             self.lblNameREsto.text = self.modal?.name ?? ""
             self.lblLocation.text = self.modal?.location ?? ""
+            self.lblUserLOcation.text = Store.userDetails?.location ?? ""
+            self.lblOpenClose.text = "\(self.modal?.openTime ?? "") - " + "\(self.modal?.closeTime ?? "")"
             if self.modal?.isLiked == 0{
                 self.imgFav.image = UIImage(named: "white h")
             }else{
@@ -240,6 +246,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     @IBAction func btnBackAct(sender : UIButton){
         self.navigationController?.popViewController(animated: true)
+    }
+    @IBAction func btnLocation(_ sender: UIButton) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
+        vc.iscomeFrom = 0
+        vc.latitude = Double(Store.userDetails?.latitude ?? "") ?? 0.0
+        vc.longitude = Double(Store.userDetails?.longitude ?? "") ?? 0.0
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func isSelected(sender : UIButton){
@@ -461,7 +474,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
             sectionV.layer.cornerRadius = 10.0
             let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-10, height: 20) )
-            titleLbl.text = "Recommended \(productModal?.categories?[section].title ?? "")"
+            titleLbl.numberOfLines = 0
+            titleLbl.text = "Recommended \(productModal?.categories?[section].title ?? "") \n\(self.promotionTxt)"
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-24, y: 10, width: 30, height: 30))
             viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)

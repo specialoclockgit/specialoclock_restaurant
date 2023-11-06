@@ -18,16 +18,34 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
     var latitude = Double()
     var longitude = Double()
     var nearBy = [NearbyRestaurant]()
+    var iscomeFrom = Int()
+    
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        if iscomeFrom == 0{
+            setLocation()
+        }else{
+            getalllocations()
+        }
+       
         print("countis",nearBy.count)
-        getalllocations()
+        //getalllocations()
     }
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
     }
+    
+    func setLocation(){
+        let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: Double(self.latitude ), longitude: Double(self.longitude )))
+        let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(self.latitude )), longitude: CLLocationDegrees(Double(longitude)), zoom: 16)
+        print("=====map loc",latitude,longitude)
+        marker.icon = UIImage.init(named: "pinPerson")
+        mapView.animate(to: camera)
+        marker.map = self.mapView
+    }
+    
     //MARK: - FUNCTIONS
     func getalllocations() {
         mapView.clear()
@@ -55,25 +73,24 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
                 let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 16)
                 
                 print("=====map loc",latitude,longitude)
-//                mapView.animate(to: camera)
                 marker.position = checkIfMutlipleCoordinates(latitude: Float(Double(latitude) ?? 0.0), longitude: Float(Double(longitude) ?? 0.0))
-                //CLLocationCoordinate2DMake(Double(latitude) ?? 0.0, Double(longitude) ?? 0.0)
                 let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-                view.lblPersot.text = "\(percentage)%"
-                
-                //                    view.providerImageView.image = UIImage(named: "favourite")
+                view.lblPersot.text = "-\(percentage)%"
                 marker.iconView = view
                 mapView.animate(to: camera)
                 marker.map = self.mapView
-//                marker.userData = returnedPlace
             }
         }
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
-        vc.ProductID = self.nearBy[0].id ?? 0
-        self.navigationController?.pushViewController(vc, animated: true)
+        if iscomeFrom == 0{
+            
+        }else{
+            let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
+            vc.ProductID = self.nearBy[0].id ?? 0
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         return true
     }
     @IBAction func backBtn(_ sender: UIButton) {
@@ -95,10 +112,8 @@ extension mapViewController{
         }
 
         // arrTemp giving array of objects with similar lat long
-
         if (arrTemp.count ?? 0 ) > 1{
             // Core Logic giving minor variation to similar lat long
-
             let variation = (randomFloat(min: 0.0, max: 1.0) - 0.5) / 1500
             lat = lat + variation
             lng = lng + variation
@@ -107,23 +122,11 @@ extension mapViewController{
             return  finalPos
 
         }else{
-            //            let eventTemp = self.viewModel.eventData?.filter {
-            //
-            //                return (((latitude == Float($0.latitude ?? "0.0")) && (longitude == Float($0.longitude ?? "0.0"))))
-            //            }
-            //
-            //  if (eventTemp?.count ?? 0) > 1{
-            // Core Logic giving minor variation to similar lat long
-
             let variation = (randomFloat(min: 0.0, max: 1.0) - 0.5) / 1500
             lat = lat + variation
             lng = lng + variation
-
-            // }
-
             let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
             return  finalPos
-
         }
 
     }

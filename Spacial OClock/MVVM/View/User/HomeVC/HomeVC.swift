@@ -27,9 +27,9 @@ var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Ce
 var arrHome = ["Location","Cuisines","","Theme"]
 
 class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GMSMapViewDelegate{
-
+    
     //MARK: - OUTLETS
-
+    
     @IBOutlet weak var gmsMapView: GMSMapView!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var tfSearch : UITextField!
@@ -99,49 +99,49 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     //MARK: - MARK SHOW IN GOOGLE MAP
     func getalllocations() {
-            for index in 0..<(nearBy.count) {
-                if let returnedPlace = nearBy[index] as? NearbyRestaurant {
-                    
-                    var percentage = ""
-                    var latitude = "0.0"
-                    var longitude = "0.0"
-                    
-                    if let name = returnedPlace.offerPercentage {
-                        percentage = name
-                    }
-                    
-                    if let latis = returnedPlace.latitude {
-                        latitude = latis
-                    }
-                    
-                    if let longis = returnedPlace.longitude {
-                        longitude = longis
-                    }
-                    
-                    let marker = GMSMarker()
-              
-                    
-                    print("=====map loc",latitude,longitude)
-               
-                    marker.position = checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
+        for index in 0..<(nearBy.count) {
+            if let returnedPlace = nearBy[index] as? NearbyRestaurant {
                 
-                   let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-                    view.lblPersot.text = "\(percentage)%"
-                    marker.iconView = view
-                    marker.map = self.gmsMapView
-                    marker.userData = returnedPlace
+                var percentage = ""
+                var latitude = "0.0"
+                var longitude = "0.0"
+                
+                if let name = returnedPlace.offerPercentage {
+                    percentage = name
                 }
-                if self.nearBy.count == 0 {
-                    let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
-                    let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
-                    gmsMapView.animate(to: camera1)
-                } else {
-                    let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 16)
-                    gmsMapView.animate(to: camera2)
+                
+                if let latis = returnedPlace.latitude {
+                    latitude = latis
                 }
+                
+                if let longis = returnedPlace.longitude {
+                    longitude = longis
+                }
+                
+                let marker = GMSMarker()
+                
+                
+                print("=====map loc",latitude,longitude)
+                
+                marker.position = checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
+                
+                let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
+                view.lblPersot.text = "\(percentage)%"
+                marker.iconView = view
+                marker.map = self.gmsMapView
+                marker.userData = returnedPlace
             }
-       
+            if self.nearBy.count == 0 {
+                let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
+                let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
+                gmsMapView.animate(to: camera1)
+            } else {
+                let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 16)
+                gmsMapView.animate(to: camera2)
+            }
         }
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         setDine()
@@ -150,12 +150,11 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
     }
     
-    
     func getUpdatedLocation() {
         if (CLLocationManager.locationServicesEnabled())
         {
             locationManager.delegate = self
-         //   locationManager.distanceFilter = 100.0
+            //   locationManager.distanceFilter = 100.0
             if #available(iOS 14.0, *) {
                 locationManager.desiredAccuracy = kCLLocationAccuracyReduced
             } else {
@@ -182,8 +181,8 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
             if CLLocationManager.locationServicesEnabled() {
                 locationUpdated = true
                 locationManager.delegate = self
-             //   locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                    locationManager.startUpdatingLocation()
+                //   locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
             }else{
                 locationUpdated = false
             }
@@ -224,13 +223,10 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 self.sectionArray.append(obj)
             }
             
-            
-            
             if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Popular",objArray: objData?.highily_rated_bars_restos ?? [],image: "Popular")
                 self.sectionArray.append(obj)
             }
-            
             
             if objData?.banners?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Banner",objArray: objData?.banners ?? [],image: "")
@@ -278,7 +274,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     @IBAction func btnDrinks(_ sender: UIButton) {
         if sender.isSelected == false{
-               setDrink()
+            setDrink()
             sender.isSelected = false
         }
     }
@@ -306,11 +302,12 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         arrHeading.append(contentsOf: arrDrinkHeading)
         tbHomeData.reloadData()
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
-       // setData(type: 2, country: self.getcountry, state: self.getstate, city: self.getcity)
+//        setData(type: 2, country: self.getcountry, state: self.getstate, city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }
     @IBAction func btnMapView(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
+        vc.iscomeFrom = 1
         vc.nearBy = self.nearBy
         vc.latitude = self.lat ?? 0.0
         vc.longitude = self.long ?? 0.0
@@ -353,12 +350,12 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 print(placemark.locality!)
                 print(placemark.administrativeArea!)
                 self.getcountry = placemark.country ?? ""
-               // self.getcity = placemark.administrativeArea ?? ""
+                // self.getcity = placemark.administrativeArea ?? ""
                 self.getstate = placemark.locality ?? ""
                 print(placemark.country!)
                 
                 self.lblLocation.text = "\(placemark.locality!)"
-            //    self.lblLocation.text = placemarks.coun
+                //    self.lblLocation.text = placemarks.coun
             }
         }
         locationManager.stopUpdatingLocation()
@@ -412,7 +409,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             return cell
         }
     }
-   
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sectionArray[indexPath.section].name == "Banner" {
             return CGFloat(100)
@@ -451,7 +448,7 @@ extension HomeVC {
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
-           
+            
         case "Popular" :
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.all_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
@@ -467,28 +464,28 @@ extension HomeVC {
             screen.highily_rated_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
-//        case 1:
-//            debugPrint("Case 1")
-//            if isSelected == true {
-//                screen.setvalue = "Cuisine"
-//                screen.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
-//            }else{
-//                screen.setvalue = "Category"
-//                screen.category = self.viewModel.homeData?.category ?? [Category]()
-//            }
-//            self.navigationController?.pushViewController(screen, animated: true)
-//
-//        case 3:
-//            if isSelected == true {
-//                screen.setvalue = "Theme"
-//                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
-//            }else{
-//                screen.setvalue = "Theme"
-//                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
-//                debugPrint("Not Selected")
-//            }
-//            self.navigationController?.pushViewController(screen, animated: true)
-//            debugPrint("case 3")
+            //        case 1:
+            //            debugPrint("Case 1")
+            //            if isSelected == true {
+            //                screen.setvalue = "Cuisine"
+            //                screen.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
+            //            }else{
+            //                screen.setvalue = "Category"
+            //                screen.category = self.viewModel.homeData?.category ?? [Category]()
+            //            }
+            //            self.navigationController?.pushViewController(screen, animated: true)
+            //
+            //        case 3:
+            //            if isSelected == true {
+            //                screen.setvalue = "Theme"
+            //                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
+            //            }else{
+            //                screen.setvalue = "Theme"
+            //                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
+            //                debugPrint("Not Selected")
+            //            }
+            //            self.navigationController?.pushViewController(screen, animated: true)
+            //            debugPrint("case 3")
         default:
             debugPrint("default btnSeeMoreAct")
         }
@@ -501,7 +498,7 @@ extension HomeVC : UITextFieldDelegate{
         tfSearch.text = .none
         return true
     }
-
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         if tfSearch.text!.count == 0 {
             tfSearch.text = "Location, cuisine, restaurant name,..."
@@ -522,33 +519,33 @@ extension HomeVC {
 
 extension HomeVC {
     func checkIfMutlipleCoordinates(latitude : Float , longitude : Float) -> CLLocationCoordinate2D {
-           
-           var lat = latitude
-           var lng = longitude
-           // arrFilterData is array of model which is giving lat long
-            let arrTemp = nearBy.filter {
-               return (((latitude == Float($0.latitude ?? "")) && (longitude == Float($0.longitude ?? ""))))
-           }
-           // arrTemp giving array of objects with similar lat long
+        
+        var lat = latitude
+        var lng = longitude
+        // arrFilterData is array of model which is giving lat long
+        let arrTemp = nearBy.filter {
+            return (((latitude == Float($0.latitude ?? "")) && (longitude == Float($0.longitude ?? ""))))
+        }
+        // arrTemp giving array of objects with similar lat long
         if (arrTemp.count ) > 1{
-               // Core Logic giving minor variation to similar lat long
-               let variation = (randomFloat(min: 0.0, max: 2.0) - 0.5) / 1500
-               lat = lat + variation
-               lng = lng + variation
-               let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
-               return  finalPos
-           } else {
-               let variation = (randomFloat(min: 0.0, max: 2.0) - 0.5) / 1500
-               lat = lat + variation
-               lng = lng + variation
-               let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
-               return  finalPos
-           }
-       }
-       
-       func randomFloat(min: Float, max:Float) -> Float {
-           return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
-       }
+            // Core Logic giving minor variation to similar lat long
+            let variation = (randomFloat(min: 0.0, max: 2.0) - 0.5) / 1500
+            lat = lat + variation
+            lng = lng + variation
+            let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
+            return  finalPos
+        } else {
+            let variation = (randomFloat(min: 0.0, max: 2.0) - 0.5) / 1500
+            lat = lat + variation
+            lng = lng + variation
+            let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
+            return  finalPos
+        }
+    }
+    
+    func randomFloat(min: Float, max:Float) -> Float {
+        return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
+    }
 }
 
 
