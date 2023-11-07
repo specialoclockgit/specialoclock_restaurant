@@ -473,7 +473,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         if tableView == tbMenu{
             let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
             sectionV.layer.cornerRadius = 10.0
-            let titleLbl = UILabel.init(frame: CGRect(x: 20, y: 15, width: tableView.frame.width-10, height: 20) )
+            let titleLbl = UILabel.init(frame: CGRect(x: 18, y: 15, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
             titleLbl.text = "Recommended \(productModal?.categories?[section].title ?? "") \n\(self.promotionTxt)"
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
@@ -499,7 +499,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tableView == tbMenu{
-            return 50.0
+            return 50
         }
         return 0
     }

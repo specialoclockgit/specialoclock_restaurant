@@ -57,7 +57,9 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if objArray[collView.tag].name == "Cuisines" {
             return objArray[collView.tag].objArray?.count ?? 0
-        } else if objArray[collView.tag].name == "Location" {
+        }else if objArray[collView.tag].name == "Category"{
+            return objArray[collView.tag].objArray?.count ?? 0
+        }else if objArray[collView.tag].name == "Location" {
             return objArray[collView.tag].objArray?.count ?? 0
         }else if objArray[collView.tag].name == "Popular" {
             return objArray[collView.tag].objArray?.count ?? 0
@@ -80,7 +82,16 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblLocationName.text = self.cuisine[indexPath.row].name ?? ""
             cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
             cell.viewReview.isHidden = true
-        } else if objArray[collView.tag].name == "Location" {
+        } else  if objArray[collView.tag].name == "Category" {
+            let image = "\(self.category[indexPath.row].image ?? "")"
+            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            cell.stackHeight.constant = 0
+            cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
+            cell.lblLocationName.text = self.category[indexPath.row].title ?? ""
+            cell.lblTotalRestaurant.text = "\(self.category[indexPath.row].clubCount ?? 0) Restaurants"
+            cell.viewReview.isHidden = true
+        }
+        else if objArray[collView.tag].name == "Location" {
             cell.stackHeight.constant = 0
             cell.imgLocaiton.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblLocationName.text = self.location[indexPath.row].city
@@ -255,7 +266,15 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setValue = "Location"
             vc.setimage = "pinPerson"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
-        }else if objArray[collView.tag].name == "Cuisines"{
+        }else if objArray[collView.tag].name == "Category"{
+            let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            vc.cusinessID = category[indexPath.row].id ?? 0
+            vc.lblName = category[indexPath.row].title ?? ""
+            vc.setValue = "Category"
+            vc.setimage = "category_icon"
+            super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if objArray[collView.tag].name == "Cuisines"{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.cusinessID = cuisine[indexPath.row].id ?? 0
             vc.lblName = cuisine[indexPath.row].name ?? ""

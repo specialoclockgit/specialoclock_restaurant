@@ -45,6 +45,7 @@
                         <constraint firstItem="FpT-Bu-IOV" firstAttribute="leading" secondItem="V25-5F-P5M" secondAttribute="leading" constant="20" id="S1w-kc-T6l"/>
                         <constraint firstItem="YzN-DE-eEp" firstAttribute="centerY" secondItem="FpT-Bu-IOV" secondAttribute="centerY" id="Suy-0e-8Mj"/>
                         <constraint firstItem="FpT-Bu-IOV" firstAttribute="centerY" secondItem="V25-5F-P5M" secondAttribute="centerY" id="Th0-zG-b7C"/>
+                        <constraint firstItem="YzN-DE-eEp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FpT-Bu-IOV" secondAttribute="trailing" constant="6" id="bon-oh-pvU"/>
                     </constraints>
                 </view>
             </subviews>

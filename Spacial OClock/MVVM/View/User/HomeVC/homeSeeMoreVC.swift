@@ -43,8 +43,8 @@ class homeSeeMoreVC: UIViewController {
             lblHeaderTExt.text = "Cuisine"
             imgViewHeader.image = UIImage(named: "soup")
         }else if setvalue == "Category"{
-            lblHeader.text = "Cuisine"
-            lblHeaderTExt.text = "Cuisine"
+            lblHeader.text = "Category"
+            lblHeaderTExt.text = "Category"
             imgViewHeader.image = UIImage(named: "menu 1")
         }else if setvalue == "Popular"{
             lblHeader.text = "Popular"
@@ -140,9 +140,9 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.lblDis.text = "Restaurant \(self.cuisine[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.cuisine[indexPath.row].name ?? ""
         }else if setvalue == "Category"{
-            let imageIndex = (imageBaseURL) + (self.category[indexPath.row].image ?? "")
-            cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            let image = "\(self.category[indexPath.row].image ?? "")"
+            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblDis.text = "Restaurant \(self.category[indexPath.row].clubCount ?? 0)"
             cell.lblName.text = self.category[indexPath.row].title ?? ""
         }else if setvalue == "Theme"{
@@ -192,8 +192,11 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             self.navigationController?.pushViewController(vc, animated: true)
         }else if setvalue == "Category"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
+            vc.cusinessID = self.category[indexPath.row].id ?? 0
+            vc.lblName = self.category[indexPath.row].title ?? ""
+            vc.setimage = "category_icon"
+            vc.setValue = "Category"
             self.navigationController?.pushViewController(vc, animated: true)
-            //vc.cuisine = category[indexPath.row]
         }else if setvalue == "Theme"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.themeID = themeArr[indexPath.row].id ?? 0

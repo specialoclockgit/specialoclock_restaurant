@@ -49,24 +49,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     var lat : Double?
     var long : Double?
     let locationManager = CLLocationManager()
-    var arrHeading  : [Header] = [Header(heading: "Locations", img: "PIN")  ,
-                                  Header(heading: "Cuisines", img: "soup") ,
-                                  Header(heading: "", img: "" ),
-                                  Header(heading: "Theme", img: "mask")]
-    var arrDineHeader : [Header] = [Header(heading: "Locations", img: "PIN")  ,
-                                    Header(heading: "Cuisines", img: "soup") ,
-                                    Header(heading: "", img: "" ),
-                                    Header(heading: "Theme", img: "mask")]
-    
-    var arrDrinkHeading : [Header] = [Header(heading: "Locations", img: "PIN")  ,
-                                      Header(heading: "Categories", img: "category") ,
-                                      Header(heading: "", img: "" ),
-                                      Header(heading: "Theme", img: "mask")]
-    //Drink Data
-    let arrDrinks : [HomeTBModel] = [HomeTBModel(heading: "Location", name: ["Central Cape Town" ,"Rondebosch"],  img: ["location1","location2"], restoClub: ["32 Restaurants", "7 Restaurants"]) ,HomeTBModel(heading: "Category", name: ["Wise Crax","Bangin Brews"], img: ["drinkImg1","drinkImg2"], restoClub: ["32 Clubs", "7 Clubs"]),HomeTBModel(heading: "", name: [""], img: [""], restoClub: [""]),HomeTBModel(heading: "Theme", name: ["Ocean View","Beach" ], img:  ["drinkTheme1","drinkTheme2" ], restoClub: ["32 Bar", "7 Bar"])]
-    //Dine In Data
-    let arrDineIN : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Central Cape Town","Rondebosch" ],img: ["location1" ,"location2"],  restoClub: ["32 Restaurants" , "7 Restaurants"]) ,HomeTBModel(heading: "Cuisines", name: ["Grill","Grill" ], img: ["image3" ,"image2"], restoClub:  ["32 Restaurants" , "7 Restaurants"]),HomeTBModel(heading: "", name: [""], img: [""], restoClub: [""]),HomeTBModel(heading: "Theme", name: ["OceanView","Hotel" ], img:  ["theme1","theme2" ], restoClub:  ["32 Restaurants" , "7 Restaurants"])]
-    
     let manager = CLLocationManager()
     var isSelected  = Bool()
     var viewModel = HomeViewModel()
@@ -94,6 +76,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         //MARK: Dine or Drink UserDefault for itemDetailOffer
         UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
         self.getUpdatedLocation()
+        setDine()
     }
     
     
@@ -144,7 +127,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setDine()
+        
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
@@ -218,6 +201,11 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 self.sectionArray.append(obj)
             }
             
+            if objData?.category?.count ?? 0 != 0{
+                let obj = SectionModel(name: "Category",objArray: objData?.category ?? [],image: "category_icon")
+                self.sectionArray.append(obj)
+            }
+            
             if objData?.cuisine?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Cuisines",objArray: objData?.cuisine ?? [],image: "soup")
                 self.sectionArray.append(obj)
@@ -285,8 +273,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDrinks.textColor = UIColor.lightGray
         lblDineIn.textColor = UIColor.black
         isSelected = true
-        arrHeading.removeAll()
-        arrHeading.append(contentsOf: arrDineHeader)
         UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
         setData(type: 1, country:self.getcountry, state: "", city: self.getcity)
         self.tbHomeData.layoutSubviews()
@@ -298,11 +284,8 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDineIn.textColor = UIColor.lightGray
         lblDrinks.textColor = UIColor.black
         isSelected = false
-        arrHeading.removeAll()
-        arrHeading.append(contentsOf: arrDrinkHeading)
-        tbHomeData.reloadData()
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
-//        setData(type: 2, country: self.getcountry, state: self.getstate, city: self.getcity)
+        setData(type: 2, country: "India", state: "ff", city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }
     @IBAction func btnMapView(_ sender: UIButton) {
@@ -364,13 +347,12 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
 
 //MARK: - EXETNSIONS
 extension HomeVC : UITableViewDelegate , UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  1
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -395,6 +377,10 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             } else if sectionArray[indexPath.section].name == "Cuisines" {
                 cell.isCellSelected = true
                 cell.cuisine = sectionArray[indexPath.section].objArray as? [Cuisine] ?? []
+                cell.collView.reloadData()
+            }else if sectionArray[indexPath.section].name == "Category"{
+                cell.isCellSelected = true
+                cell.category = sectionArray[indexPath.section].objArray as? [Category] ?? []
                 cell.collView.reloadData()
             }else if sectionArray[indexPath.section].name == "Popular" {
                 cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []

@@ -35,6 +35,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     var viewmodal = HomeViewModel()
     var modal: [CussinesRestoModalBody]?
     var thememodla : [themeRestolistModalBody]?
+    var categoryModal : [CategoryByRModalBody]?
     var lblName = ""
     var setimage = ""
     var setValue = ""
@@ -54,8 +55,8 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
             location_By_RestoAPI()
         }else if setValue == "Cuisines"{
             get_resto_list()
-        }else if setValue == "Categorys"{
-            
+        }else if setValue == "Category"{
+            fetch_Category_REsto()
         }else if setValue == "Theme"{
             theme_Resto_API()
         }else if setValue == "Popular"{
@@ -85,6 +86,17 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     func theme_Resto_API(){
         viewmodal.restoThemelistAPI(restoid: themeID) { [weak self] dataa in
             self?.thememodla = dataa
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.CollectionView.hideSkeleton()
+            }
+            self?.CollectionView.reloadData()
+        }
+    }
+    
+    //MARK: - CATEGORY BY GET RESTO LIST API
+    func fetch_Category_REsto(){
+        viewmodal.categoryBYResto(categoryID: cusinessID) { [weak self] dataaa in
+            self?.categoryModal = dataaa
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
             }
@@ -132,8 +144,16 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 imgViewGif.isHidden = true
                 return location?.count ?? 0
             }
+        }else if setValue == "Category"{
+            if categoryModal?.count == 0 {
+                imgViewGif.image = UIImage.gif(name: "nodataFound")
+                imgViewGif.isHidden = false
+            }else{
+                imgViewGif.isHidden = true
+                return categoryModal?.count ?? 0
+            }
         }
-       else if setValue == "Cuisines"{
+        else if setValue == "Cuisines"{
             if modal?.count == 0 {
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
@@ -151,7 +171,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 return thememodla?.count ?? 0
             }
         }
-       return 0
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -191,6 +211,15 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             } else {
                 cell.stackHeight.constant = 46
             }
+        } else if setValue == "Category"{
+            let imageIndex = (imageURL) + (categoryModal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.lblName.text = categoryModal?[indexPath.row].name ?? ""
+            cell.lblDiscription.text = "\(categoryModal?[indexPath.row].openTime ?? "") - " + "\(categoryModal?[indexPath.row].closeTime ?? "")"
+            let arrayOffer: [[OfferTiming]] = ((categoryModal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
+            sortArray(arrayOffer: arrayOffer,cell: cell)
+            cell.stackHeight.constant = 46
         }
         else if setValue == "Cuisines"{
             let imageIndex = (imageURL) + (modal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
@@ -220,7 +249,12 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = location?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if setValue == "Cuisines"{
+        }else if setValue == "Category"{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+            vc.ProductID = categoryModal?[indexPath.row].id ?? 0
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if setValue == "Cuisines"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = modal?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)

@@ -147,12 +147,12 @@ enum API: String{
     case roomLeaderboad      = "leaderboard"
     case leaderboard         = "userQuizResult"
     case home                = "home"
-    case fetch_restos_by_cusine = "fetch_restos_by_cusine"
     case theme_UserRestro    = "theme_UserRestro"
     case product_details = "fetch_resto_by_id"
     case liked_listing = "liked_listing"
     case restoLIke = "like_product"
     case fetch_restos_by_theme
+    case fetch_restos_by_cusine
     case fetch_restos_by_location
     case write_review
     case booking
@@ -163,6 +163,7 @@ enum API: String{
     case cancel_booking
     case fetch_available_slots
     case fetch_menu_gallery
+    case fetch_restos_by_category
    
 }
 
