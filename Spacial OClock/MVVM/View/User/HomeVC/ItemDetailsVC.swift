@@ -512,8 +512,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""
-            cell.lblPrePrice.text = "\(arrSection?[indexPath.row].price ?? 0)"
-            cell.lblNewPrice.text = calCulateDiscount(actualPrice: Double(arrSection?[indexPath.row].price ?? 0), discount: Double(discount ?? 0)).description
+            cell.lblPrePrice.text = "R\(arrSection?[indexPath.row].price ?? 0)"
+            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(arrSection?[indexPath.row].price ?? 0), discount: Double(discount ?? 0)).description)"
             //"\(arrSection?[indexPath.row].price ?? 0)"
             return cell
         }else{

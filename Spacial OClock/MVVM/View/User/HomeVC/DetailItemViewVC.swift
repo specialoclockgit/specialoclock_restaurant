@@ -40,10 +40,11 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     var setimage = ""
     var setValue = ""
     var all_bars_restos = [AllBarsResto]()
+    var type = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.type = UserDefaults.standard.integer(forKey: "dineDrinkStatus")
         CollectionView.showAnimatedGradientSkeleton()
         print(cusinessID)
         lblTwo.text = lblName
@@ -84,7 +85,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     
     //MARK: - THEME BY RESTO
     func theme_Resto_API(){
-        viewmodal.restoThemelistAPI(restoid: themeID) { [weak self] dataa in
+        viewmodal.restoThemelistAPI(restoid: themeID, type: type) { [weak self] dataa in
             self?.thememodla = dataa
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()

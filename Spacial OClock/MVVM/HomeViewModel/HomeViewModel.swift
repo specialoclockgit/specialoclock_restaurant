@@ -77,8 +77,8 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - HOME THEME RESTO LIST API
-    func restoThemelistAPI(restoid:Int,onsuccess: @escaping (([themeRestolistModalBody]?)->())){
-        let param = ["theme_id":restoid]
+    func restoThemelistAPI(restoid:Int,type:Int,onsuccess: @escaping (([themeRestolistModalBody]?)->())){
+        let param = ["theme_id":restoid, "type":type]
         WebService.service(API.fetch_restos_by_theme, param: param, service: .post) {
             (modaldata: themeRestolistModal, Data , json) in
             onsuccess(modaldata.body)

@@ -321,7 +321,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         self.lat = locValue.latitude
         self.long = locValue.longitude
         let location = locations.last! as CLLocation
-        //  self.locationLbl.text = location
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             if (error != nil){
@@ -450,28 +449,6 @@ extension HomeVC {
             screen.highily_rated_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
-            //        case 1:
-            //            debugPrint("Case 1")
-            //            if isSelected == true {
-            //                screen.setvalue = "Cuisine"
-            //                screen.cuisine = self.viewModel.homeData?.cuisine ?? [Cuisine]()
-            //            }else{
-            //                screen.setvalue = "Category"
-            //                screen.category = self.viewModel.homeData?.category ?? [Category]()
-            //            }
-            //            self.navigationController?.pushViewController(screen, animated: true)
-            //
-            //        case 3:
-            //            if isSelected == true {
-            //                screen.setvalue = "Theme"
-            //                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
-            //            }else{
-            //                screen.setvalue = "Theme"
-            //                screen.themeArr = self.viewModel.homeData?.theme ?? [ThemeData]()
-            //                debugPrint("Not Selected")
-            //            }
-            //            self.navigationController?.pushViewController(screen, animated: true)
-            //            debugPrint("case 3")
         default:
             debugPrint("default btnSeeMoreAct")
         }

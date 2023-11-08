@@ -4,6 +4,8 @@
 <dict>
 	<key> NSLocationWhenInUseUsageDescription</key>
 	<string>location access.</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

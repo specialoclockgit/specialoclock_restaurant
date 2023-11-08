@@ -134,9 +134,9 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.lblName.text = self.location[indexPath.row].city ?? ""
             cell.lblDis.text = "Restaurant \(self.location[indexPath.row].restroCount ?? 0)"
         }else if setvalue == "Cuisines"{
-            let imageIndex = (imageBaseURL) + (self.cuisine[indexPath.row].image ?? "")
-            cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            let image = "\(self.cuisine[indexPath.row].image ?? "")"
+            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblDis.text = "Restaurant \(self.cuisine[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.cuisine[indexPath.row].name ?? ""
         }else if setvalue == "Category"{

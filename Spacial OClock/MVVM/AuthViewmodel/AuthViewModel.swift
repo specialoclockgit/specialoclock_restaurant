@@ -36,15 +36,12 @@ class AuthViewModel : NSObject {
             }
         }
     }
-    
 
     func fileUploadedAPI(type: String, image:UIImage,onSuccess:@escaping(([FileuploadModelBody]?)->())) {
-        
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat.fullDate.rawValue
         let date = formatter.string(from: Date())
         let imageInfo : ImageStructInfo
-        
         imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpeg", file_type: "image/jpeg", data: image.toData(), key: "image", image: image)
         
         let param = ["type": type, "folder": "users", "image": imageInfo] as [String : Any]
@@ -66,7 +63,6 @@ class AuthViewModel : NSObject {
         }
     }
     
-
     //MARK: - LOGIN API
     func loginApicall(email:String, password:String,device_type:Int ,onSuccess: @escaping (()->())) {
         if email.trimmingCharacters(in: .whitespaces).isEmpty {
@@ -87,14 +83,12 @@ class AuthViewModel : NSObject {
         }
     }
     
-    
-    //    MARK: - VERIFICATION OTP
+    //MARK: - VERIFICATION OTP
     func otpverification(otp:String, onSuccess :@escaping()->()){
         if otp.count < 4 {
             CommonUtilities.shared.showAlert(message: "Please enter otp", isSuccess: .error)
         }else{
             let param : parameters = ["otp":otp]
-           
             WebService.service(API.verify_otp, param: param, service: .post){
                 (modaldata : CommonModel , data, json) in
                 onSuccess()
@@ -102,19 +96,14 @@ class AuthViewModel : NSObject {
         }
     }
     
-    
     //MARK: RESEND OTP
     func resendOtp(phone: String ,onSuccess : @escaping (()->())) {
-        
         let params = ["phone": phone] as [String : Any]
-        
         WebService.service(API.resend_otp, param: params , service: .post, showHud: true) {
             (modaldata : ResendOtpModel , Data, Json) in
-         //   CommonUtilities.shared.showAlert(message: "Your OTP is \(modaldata.body?.otp ?? 0)", isSuccess: .success)
             onSuccess()
         }
     }
-
     
     //MARK: Forgot Password
     func ForgotPassword(email: String, onSuccess : @escaping (()->())) {
