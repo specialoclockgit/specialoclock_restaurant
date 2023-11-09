@@ -177,10 +177,11 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailItemCVC", for: indexPath) as! DetailItemCVC
-        cell.stackHeight.constant = 46
-        cell.viewOffer1.isHidden = true
-        cell.viewOffer2.isHidden = true
-        cell.viewOffer3.isHidden = true
+//        cell.stackHeight.constant = 46
+//        cell.viewOffer1.isHidden = true
+//        cell.viewOffer2.isHidden = true
+//        cell.viewOffer3.isHidden = true
+        
         if setValue == "Location"{
             let imageIndex = (imageURL) + (location?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -188,39 +189,46 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblName.text = location?[indexPath.row].name ?? ""
             cell.lblDiscription.text = location?[indexPath.row].shortDescription ?? ""
             let fetchresto = location?[indexPath.row].offers?.first?.offerTimings ?? []
-            if fetchresto.count == 1 {
-                cell.viewOffer1.isHidden = false
-                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
-                cell.lbltime1.text = fetchresto[0].offer ?? ""
-            } else if fetchresto.count == 2 {
-                cell.viewOffer1.isHidden = false
-                cell.viewOffer2.isHidden = false
-                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
-                cell.lblOffer2.text = "\(fetchresto[1].percentage ?? 0)"
-                cell.lbltime1.text = fetchresto[0].offer ?? ""
-                cell.lbltime2.text = fetchresto[1].offer ?? ""
-            } else if fetchresto.count >= 3{
-                cell.viewOffer1.isHidden = false
-                cell.viewOffer2.isHidden = false
-                cell.viewOffer3.isHidden = false
-                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
-                cell.lblOffer2.text = "\(fetchresto[1].percentage ?? 0)"
-                cell.lblOffer3.text = "\(fetchresto[2].percentage ?? 0)"
-                cell.lbltime1.text = fetchresto[0].offer ?? ""
-                cell.lbltime2.text = fetchresto[1].offer ?? ""
-                cell.lblTime3.text = fetchresto[2].offer ?? ""
-            } else {
-                cell.stackHeight.constant = 46
-            }
+            cell.offerTimings = fetchresto
+            cell.offerCollection.reloadData()
+            
+            
+//            if fetchresto.count == 1 {
+//                cell.viewOffer1.isHidden = false
+//                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
+//                cell.lbltime1.text = fetchresto[0].offer ?? ""
+//            } else if fetchresto.count == 2 {
+//                cell.viewOffer1.isHidden = false
+//                cell.viewOffer2.isHidden = false
+//                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
+//                cell.lblOffer2.text = "\(fetchresto[1].percentage ?? 0)"
+//                cell.lbltime1.text = fetchresto[0].offer ?? ""
+//                cell.lbltime2.text = fetchresto[1].offer ?? ""
+//            } else if fetchresto.count >= 3{
+//                cell.viewOffer1.isHidden = false
+//                cell.viewOffer2.isHidden = false
+//                cell.viewOffer3.isHidden = false
+//                cell.lblOffer1.text = "\(fetchresto[0].percentage ?? 0)"
+//                cell.lblOffer2.text = "\(fetchresto[1].percentage ?? 0)"
+//                cell.lblOffer3.text = "\(fetchresto[2].percentage ?? 0)"
+//                cell.lbltime1.text = fetchresto[0].offer ?? ""
+//                cell.lbltime2.text = fetchresto[1].offer ?? ""
+//                cell.lblTime3.text = fetchresto[2].offer ?? ""
+//            } else {
+//                cell.stackHeight.constant = 46
+//            }
         } else if setValue == "Category"{
             let imageIndex = (imageURL) + (categoryModal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = categoryModal?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(categoryModal?[indexPath.row].openTime ?? "") - " + "\(categoryModal?[indexPath.row].closeTime ?? "")"
-            let arrayOffer: [[OfferTiming]] = ((categoryModal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
-            sortArray(arrayOffer: arrayOffer,cell: cell)
-            cell.stackHeight.constant = 46
+            let fetchresto = categoryModal?[indexPath.row].offers?.first?.offerTimings ?? []
+            cell.offerTimings = fetchresto
+            cell.offerCollection.reloadData()
+//            let arrayOffer: [[OfferTiming]] = ((categoryModal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
+//            sortArray(arrayOffer: arrayOffer,cell: cell)
+//            cell.stackHeight.constant = 46
         }
         else if setValue == "Cuisines"{
             let imageIndex = (imageURL) + (modal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
@@ -228,22 +236,28 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = modal?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(modal?[indexPath.row].openTime ?? "") - " + "\(modal?[indexPath.row].closeTime ?? "")"
-            let arrayOffer: [[OfferTiming]] = ((modal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
-            sortArray(arrayOffer: arrayOffer,cell: cell)
-            cell.stackHeight.constant = 46
+            let fetchresto = modal?[indexPath.row].offers?.first?.offerTimings ?? []
+            cell.offerTimings = fetchresto
+            cell.offerCollection.reloadData()
+//            let arrayOffer: [[OfferTiming]] = ((modal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
+//            sortArray(arrayOffer: arrayOffer,cell: cell)
+//            cell.stackHeight.constant = 46
         }else{
-            let arrayTheme : [[OfferTiming]] = ((thememodla?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}))
-            sortArray(arrayOffer: arrayTheme,cell: cell)
+//            let arrayTheme : [[OfferTiming]] = ((thememodla?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}))
+//            sortArray(arrayOffer: arrayTheme,cell: cell)
             let imageIndex = (imageURL) + (thememodla?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = thememodla?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(thememodla?[indexPath.row].bodyOpenTime ?? "") - " + "\(thememodla?[indexPath.row].bodyCloseTime ?? "")"
+            let fetchresto = thememodla?[indexPath.row].offers?.first?.offerTimings
+            cell.offerTimings = fetchresto
+            cell.offerCollection.reloadData()
         }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 2.1, height: 260)
+        return CGSize(width: collectionView.frame.width, height: 286)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if setValue == "Location"{
@@ -266,57 +280,57 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         }
     }
     
-    func sortArray(arrayOffer: [[OfferTiming]], cell: DetailItemCVC) {
-        var arrayOfferTime: [OfferTiming] = []
-        for i in arrayOffer {
-            arrayOfferTime.append(contentsOf: i)
-        }
-        
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "HH:mm"
-        
-        let dateString = formatter.string(from: Date())
-        let output = arrayOfferTime.sorted { string1, string2 in
-            guard let date1 = formatter.date(from: string1.offer ?? "") else { return true }
-            guard let date2 = formatter.date(from: string2.offer ?? "") else { return false }
-            return date1 < date2
-        }
-        
-        
-        var finalArray: [OfferTiming] = []
-        for i in output {
-             let date1 = formatter.date(from: i.offer ?? "") ?? Date()
-            let date = formatter.date(from: dateString) ?? Date()
-            if date < date1 {
-                finalArray.append(i)
-            }
-        }
-    
-        if finalArray.count == 1 {
-            cell.viewOffer1.isHidden = false
-            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
-            cell.lbltime1.text = finalArray[0].offer ?? ""
-        } else if finalArray.count == 2 {
-            cell.viewOffer1.isHidden = false
-            cell.viewOffer2.isHidden = false
-            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
-            cell.lblOffer2.text = "\(finalArray[1].percentage ?? 0)"
-            cell.lbltime1.text = finalArray[0].offer ?? ""
-            cell.lbltime2.text = finalArray[1].offer ?? ""
-        } else if finalArray.count >= 3{
-            cell.viewOffer1.isHidden = false
-            cell.viewOffer2.isHidden = false
-            cell.viewOffer3.isHidden = false
-            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
-            cell.lblOffer2.text = "\(finalArray[1].percentage ?? 0)"
-            cell.lblOffer3.text = "\(finalArray[2].percentage ?? 0)"
-            cell.lbltime1.text = finalArray[0].offer ?? ""
-            cell.lbltime2.text = finalArray[1].offer ?? ""
-            cell.lblTime3.text = finalArray[2].offer ?? ""
-        } else {
-            cell.stackHeight.constant = 46
-        }
-    }
+//    func sortArray(arrayOffer: [[OfferTiming]], cell: DetailItemCVC) {
+//        var arrayOfferTime: [OfferTiming] = []
+//        for i in arrayOffer {
+//            arrayOfferTime.append(contentsOf: i)
+//        }
+//
+//        let formatter = DateFormatter()
+//        formatter.locale = Locale(identifier: "en_US_POSIX")
+//        formatter.dateFormat = "HH:mm"
+//
+//        let dateString = formatter.string(from: Date())
+//        let output = arrayOfferTime.sorted { string1, string2 in
+//            guard let date1 = formatter.date(from: string1.offer ?? "") else { return true }
+//            guard let date2 = formatter.date(from: string2.offer ?? "") else { return false }
+//            return date1 < date2
+//        }
+//
+//
+//        var finalArray: [OfferTiming] = []
+//        for i in output {
+//             let date1 = formatter.date(from: i.offer ?? "") ?? Date()
+//            let date = formatter.date(from: dateString) ?? Date()
+//            if date < date1 {
+//                finalArray.append(i)
+//            }
+//        }
+//
+//        if finalArray.count == 1 {
+//            cell.viewOffer1.isHidden = false
+//            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
+//            cell.lbltime1.text = finalArray[0].offer ?? ""
+//        } else if finalArray.count == 2 {
+//            cell.viewOffer1.isHidden = false
+//            cell.viewOffer2.isHidden = false
+//            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
+//            cell.lblOffer2.text = "\(finalArray[1].percentage ?? 0)"
+//            cell.lbltime1.text = finalArray[0].offer ?? ""
+//            cell.lbltime2.text = finalArray[1].offer ?? ""
+//        } else if finalArray.count >= 3{
+//            cell.viewOffer1.isHidden = false
+//            cell.viewOffer2.isHidden = false
+//            cell.viewOffer3.isHidden = false
+//            cell.lblOffer1.text = "\(finalArray[0].percentage ?? 0)"
+//            cell.lblOffer2.text = "\(finalArray[1].percentage ?? 0)"
+//            cell.lblOffer3.text = "\(finalArray[2].percentage ?? 0)"
+//            cell.lbltime1.text = finalArray[0].offer ?? ""
+//            cell.lbltime2.text = finalArray[1].offer ?? ""
+//            cell.lblTime3.text = finalArray[2].offer ?? ""
+//        } else {
+//            cell.stackHeight.constant = 46
+//        }
+//    }
 }
 

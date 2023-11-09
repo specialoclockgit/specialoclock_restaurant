@@ -128,52 +128,82 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeSeeMoreCVC", for: indexPath) as! homeSeeMoreCVC
-        cell.stackHeight.constant = 0
         if setvalue == "Location"{
+            cell.seeMoreColleHeight.constant = 0
             cell.imgVirw.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblName.text = self.location[indexPath.row].city ?? ""
             cell.lblDis.text = "Restaurant \(self.location[indexPath.row].restroCount ?? 0)"
         }else if setvalue == "Cuisines"{
+            cell.seeMoreColleHeight.constant = 0
             let image = "\(self.cuisine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblDis.text = "Restaurant \(self.cuisine[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.cuisine[indexPath.row].name ?? ""
         }else if setvalue == "Category"{
+            cell.seeMoreColleHeight.constant = 0
             let image = "\(self.category[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblDis.text = "Restaurant \(self.category[indexPath.row].clubCount ?? 0)"
             cell.lblName.text = self.category[indexPath.row].title ?? ""
         }else if setvalue == "Theme"{
+            cell.seeMoreColleHeight.constant = 0
             let image = "\(self.themeArr[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblDis.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
             cell.lblName.text = self.themeArr[indexPath.row].productName ?? ""
         }else if setvalue == "Popular"{
-            cell.stackHeight.constant = 46
-            cell.imgVirw.showIndicator(baseUrl: imageURL, imageUrl: self.all_bars_restos[indexPath.row].profileImage ?? "")
-          cell.lblDis.text = self.all_bars_restos[indexPath.row].shortDescription ?? ""
+            let imageIndex = (imageURL) + (all_bars_restos[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.lblDis.text = self.all_bars_restos[indexPath.row].shortDescription ?? ""
             cell.lblName.text = self.all_bars_restos[indexPath.row].name ?? ""
+            cell.offerTimings = self.all_bars_restos[indexPath.row].offerTimings ?? []
+            cell.lblDis.text = (self.all_bars_restos[indexPath.row].openTime ?? "") +  "-" + (self.highily_rated_bars_restos[indexPath.row].closeTime ?? "")
+            if cell.offerTimings?.count == 0{
+                cell.seeMoreColleHeight.constant = 0
+            }else{
+                cell.seeMoreColleHeight.constant = 46
+            }
         }else{
-            cell.stackHeight.constant = 46
-            let image = "\(self.highily_rated_bars_restos[indexPath.row].profileImage ?? "")"
-            let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            cell.imgVirw.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
+            let imageIndex = (imageURL) + (highily_rated_bars_restos[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblName.text = self.highily_rated_bars_restos[indexPath.row].name ?? ""
+            cell.lblDis.text = (self.highily_rated_bars_restos[indexPath.row].openTime ?? "") +  "-" + (self.highily_rated_bars_restos[indexPath.row].closeTime ?? "")
+            cell.offerTimings = self.highily_rated_bars_restos[indexPath.row].offerTimings ?? []
+            if cell.offerTimings?.count == 0{
+                cell.seeMoreColleHeight.constant = 0
+            }else{
+                cell.seeMoreColleHeight.constant = 46
+            }
         }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if setvalue == "Popular"{
-            return CGSize(width: collection.frame.width / 2.1, height: 246)
-        }else if setvalue == "A-Z"{
-            return CGSize(width: collection.frame.width / 2.1, height: 246)
+        if setvalue == "Location"{
+            return CGSize(width: collection.frame.width, height: 216)
+        }else if setvalue == "Cuisines"{
+            return CGSize(width: collection.frame.width, height: 216)
+        }else if setvalue == "Category"{
+            return CGSize(width: collection.frame.width, height: 216)
+        }else if setvalue == "Theme"{
+            return CGSize(width: collection.frame.width, height: 216)
+        }else if setvalue == "Popular"{
+            if self.all_bars_restos[indexPath.row].offerTimings?.count == 0{
+                return CGSize(width: collection.frame.width, height: 216)
+            }else{
+                return CGSize(width: collection.frame.width, height: 266)
+            }
         }else{
-            return CGSize(width: collection.frame.width / 2.1, height: 200)
+            if self.highily_rated_bars_restos[indexPath.row].offerTimings?.count == 0{
+                return CGSize(width: collection.frame.width, height: 216)
+            }else{
+                return CGSize(width: collection.frame.width, height: 266)
+            }
         }
-        
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if setvalue == "Location"{

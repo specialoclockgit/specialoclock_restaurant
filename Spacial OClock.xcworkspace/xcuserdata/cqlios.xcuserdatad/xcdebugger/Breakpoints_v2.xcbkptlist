@@ -7,77 +7,62 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F481C7F0-9167-44A1-9FB0-BB71B78B0E48"
+            uuid = "6671AC32-6812-4685-BC08-05D0E9411A25"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/SearchList&amp;Map/mapViewController.swift"
+            filePath = "Spacial OClock/MVVM/View/User/HomeVC/DetailItemViewVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "setLocation()"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "F481C7F0-9167-44A1-9FB0-BB71B78B0E48 - bb2d451eb859f355"
+                  uuid = "6671AC32-6812-4685-BC08-05D0E9411A25 - a0c91a8dce423e6e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.mapViewController.setLocation() -&gt; ()"
+                  symbolName = "Spacial_OClock.DetailItemViewVC.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
                   moduleName = "Spacial OClock"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/SearchList&amp;Map/mapViewController.swift"
+                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/DetailItemViewVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "49"
-                  endingLineNumber = "49"
-                  offsetFromSymbolStart = "612">
+                  startingLineNumber = "193"
+                  endingLineNumber = "193"
+                  offsetFromSymbolStart = "6956">
                </Location>
                <Location
-                  uuid = "F481C7F0-9167-44A1-9FB0-BB71B78B0E48 - bb2d451eb859f497"
+                  uuid = "6671AC32-6812-4685-BC08-05D0E9411A25 - a0c91a8dce423e6e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.mapViewController.setLocation() -&gt; ()"
+                  symbolName = "Spacial_OClock.DetailItemViewVC.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
                   moduleName = "Spacial OClock"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/SearchList&amp;Map/mapViewController.swift"
+                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/DetailItemViewVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
-                  offsetFromSymbolStart = "643">
+                  startingLineNumber = "193"
+                  endingLineNumber = "193"
+                  offsetFromSymbolStart = "7044">
                </Location>
                <Location
-                  uuid = "F481C7F0-9167-44A1-9FB0-BB71B78B0E48 - bb2d451eb859f3b0"
+                  uuid = "6671AC32-6812-4685-BC08-05D0E9411A25 - a0c91a8dce423e6e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.mapViewController.setLocation() -&gt; ()"
+                  symbolName = "Spacial_OClock.DetailItemViewVC.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
                   moduleName = "Spacial OClock"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/SearchList&amp;Map/mapViewController.swift"
+                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/DetailItemViewVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
-                  offsetFromSymbolStart = "620">
-               </Location>
-               <Location
-                  uuid = "F481C7F0-9167-44A1-9FB0-BB71B78B0E48 - bb2d451eb859f3b0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.mapViewController.setLocation() -&gt; ()"
-                  moduleName = "Spacial OClock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/SearchList&amp;Map/mapViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
-                  offsetFromSymbolStart = "584">
+                  startingLineNumber = "193"
+                  endingLineNumber = "193"
+                  offsetFromSymbolStart = "5856">
                </Location>
             </Locations>
          </BreakpointContent>

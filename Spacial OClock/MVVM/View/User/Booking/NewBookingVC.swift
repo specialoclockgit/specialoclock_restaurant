@@ -196,7 +196,7 @@ extension NewBookingVC{
     func initialLoad(){
         viewFSCalendar.layer.cornerRadius = 15.0
         viewFSCalendar.calendarHeaderView.backgroundColor = UIColor.systemGray5
-        viewFSCalendar.calendarWeekdayView.backgroundColor = UIColor(named: "themeGreen")
+        //viewFSCalendar.calendarWeekdayView.backgroundColor = UIColor(named: "themeGreen")
         viewFSCalendar.calendarWeekdayView.clipsToBounds = true
         viewFSCalendar.appearance.headerMinimumDissolvedAlpha = 0
         tfSelectPeople.setupRightImage(imageName: "dropDown" , width: 7, height: 5)

@@ -58,8 +58,8 @@ struct CuOffer: Codable {
     let offerPrice: Int?
     let openTime, closeTime, date: String?
     let type, numberOfUserBook, totalBookings: Int?
-    let offerTimings: [OfferTiming]?
-
+    let offerTimings: [OfferTimingd]?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case restrorantBarID = "restrorant_bar_id"
@@ -75,10 +75,4 @@ struct CuOffer: Codable {
         case totalBookings = "total_bookings"
         case offerTimings = "offer_timings"
     }
-}
-
-// MARK: - OfferTiming
-struct OfferTiming: Codable {
-    let offer: String?
-    let percentage, id: Int?
 }

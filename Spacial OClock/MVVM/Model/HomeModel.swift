@@ -140,7 +140,7 @@ struct AllBarsResto: Codable {
     let commission: String?
     let avgRating: Int?
     let offers: [CuOffer]?
-    let offerTimings: [OfferTiminghome]?
+    var offerTimings: [OfferTiminghome]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude

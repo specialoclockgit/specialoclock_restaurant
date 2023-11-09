@@ -201,6 +201,8 @@
 		ECA4AC892ADD736F00502E43 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4AC882ADD736F00502E43 /* SearchVC.swift */; };
 		ECA4AC8B2ADD738200502E43 /* SearchCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4AC8A2ADD738200502E43 /* SearchCVC.swift */; };
 		ECA600372AD7D03A00C97493 /* AvalSlotModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */; };
+		ECA6A0632AFCAFA40094DCC1 /* OfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA6A0622AFCAFA30094DCC1 /* OfferCVC.swift */; };
+		ECA6A0652AFCF3360094DCC1 /* offerSeeMoreCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA6A0642AFCF3360094DCC1 /* offerSeeMoreCVC.swift */; };
 		ECA8C76B2AD568850061F19C /* SlotsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76A2AD568850061F19C /* SlotsVc.swift */; };
 		ECA8C76D2AD568CD0061F19C /* slotsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */; };
 		ECAF1D092AC18857006E20FB /* homeSeeMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */; };
@@ -466,6 +468,8 @@
 		ECA4AC882ADD736F00502E43 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		ECA4AC8A2ADD738200502E43 /* SearchCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCVC.swift; sourceTree = "<group>"; };
 		ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvalSlotModal.swift; sourceTree = "<group>"; };
+		ECA6A0622AFCAFA30094DCC1 /* OfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCVC.swift; sourceTree = "<group>"; };
+		ECA6A0642AFCF3360094DCC1 /* offerSeeMoreCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = offerSeeMoreCVC.swift; sourceTree = "<group>"; };
 		ECA8C76A2AD568850061F19C /* SlotsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsVc.swift; sourceTree = "<group>"; };
 		ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slotsTVC.swift; sourceTree = "<group>"; };
 		ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreVC.swift; sourceTree = "<group>"; };
@@ -1048,6 +1052,8 @@
 				C29CDAF42A42BB030035E03D /* AuthVC */,
 				C29CDAF32A42B91E0035E03D /* Storyboard */,
 				ECB549822AEB86C00041FA1C /* fullImageView.swift */,
+				ECA6A0622AFCAFA30094DCC1 /* OfferCVC.swift */,
+				ECA6A0642AFCF3360094DCC1 /* offerSeeMoreCVC.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1530,6 +1536,7 @@
 				8B9CF0802A8212FE006C90E9 /* Fileupload.swift in Sources */,
 				8B0BDF272A80F10E00A28BD2 /* Reachability.swift in Sources */,
 				C284FB692A402A46006949B4 /* restoCreateVC.swift in Sources */,
+				ECA6A0632AFCAFA40094DCC1 /* OfferCVC.swift in Sources */,
 				8BF5ED802A84E82700F2EA8C /* helpandFaqModel.swift in Sources */,
 				C29CDAFB2A42BB1D0035E03D /* WalkThroughVC.swift in Sources */,
 				A55779DC2A559F26002B2FC2 /* CenterAlertVC.swift in Sources */,
@@ -1690,6 +1697,7 @@
 				ECB3A2A52AD4134200C65065 /* getSlotsModal.swift in Sources */,
 				ECC5BCED2ABC1B7600143940 /* themeListModal.swift in Sources */,
 				8B0BDF2B2A80F10E00A28BD2 /* CheckValidations.swift in Sources */,
+				ECA6A0652AFCF3360094DCC1 /* offerSeeMoreCVC.swift in Sources */,
 				8B0BDF2C2A80F10E00A28BD2 /* CommonUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
