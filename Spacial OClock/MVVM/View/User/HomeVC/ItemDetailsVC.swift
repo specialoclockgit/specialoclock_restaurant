@@ -48,6 +48,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var viewReview: UIView!
     @IBOutlet weak var imgBottomView : UIImageView!
+    @IBOutlet weak var viewFullMenu: UICollectionView!
+    @IBOutlet weak var viewFullMeny: UIView!
     //MENU Outlets
     @IBOutlet weak var collViewMenu : UICollectionView!
     @IBOutlet weak var tbMenu : UITableView!
@@ -61,11 +63,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var btnBook : UIButton!
     @IBOutlet weak var viewButton : UIView!
     @IBOutlet weak var heightViewButton : NSLayoutConstraint!
+    @IBOutlet weak var viewFM: UIView!
+    @IBOutlet weak var lblFullMenu: UILabel!
     @IBOutlet weak var lblUserLOcation: UILabel!
     @IBOutlet weak var lblOpenClose: UILabel!
     
     //MARK: Variable
     let promotionTxt = "Promotion cannot be applied with any other in-house promotions.Please refer to the special condition below for more details."
+    
     var lat : Double?
     var long : Double?
     var discount : Int?
@@ -105,9 +110,17 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var slottime = String()
     var slotid = Int()
     
+    //full menu
+    var modalfullmenu : [allMenuModalBody]?
+    var restoid = Int()
+    
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewFullMenu.delegate = self
+        viewFullMenu.dataSource = self
+        
+        fetchdata()
         
         self.datecuurent = string(format: "yyyy-MM-dd")
         txtFldDate.text = datecuurent
@@ -139,7 +152,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         for _ in 0...arrTBMenu.count{
             arrCheck.append(false)
         }
-        
     }
     
     func string(format: String) -> String {
@@ -161,8 +173,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             self.lblNameREsto.text = self.modal?.name ?? ""
-            self.lblLocation.text = self.modal?.location ?? ""
-            self.lblUserLOcation.text = Store.userDetails?.location ?? ""
+            self.lblLocation.text = Store.userDetails?.location ?? ""
+            self.lblUserLOcation.text = self.modal?.location ?? ""
             self.lblOpenClose.text = "\(self.modal?.openTime ?? "") - " + "\(self.modal?.closeTime ?? "")"
             if self.modal?.isLiked == 0{
                 self.imgFav.image = UIImage(named: "white h")
@@ -182,6 +194,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.discount = self.offer?[0].percentage ?? 0
                 self.menuProductAPI(id: self.offer?[0].menuID ?? 0)
             }
+        }
+    }
+    //MARK: - FUNCTION
+    func fetchdata(){
+        viewmodal.allMenu_API(resto_bar_id: ProductID) { [weak self] data in
+            self?.modalfullmenu =  data
+            self?.viewFullMenu.reloadData()
         }
     }
     
@@ -258,19 +277,21 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBAction func isSelected(sender : UIButton){
         switch sender.tag {
         case 0 :
-            ChangebgColor(viewSelected: viewAbout, viewUnselected: viewMenu, viewUnselected2: viewReview, labelSelected: lblAbout, labelUnselected: lblMenu, labelUnselecte2: lblReview)
+            ChangebgColor(viewSelected: viewAbout, viewUnselected: viewMenu, viewUnselected2: viewReview, ViewUnselected3: viewFullMeny, labelSelected: lblAbout, labelUnselected: lblMenu, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
             viewA.layoutSubviews()
             viewA.isHidden = false
             viewM.isHidden = true
             viewR.isHidden = true
+            viewFM.isHidden = true
             viewButton.isHidden = true
             debugPrint("0")
             
         case 1 :
-            ChangebgColor(viewSelected: viewMenu, viewUnselected: viewAbout, viewUnselected2: viewReview, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview)
+            ChangebgColor(viewSelected: viewMenu, viewUnselected: viewAbout, viewUnselected2: viewReview,ViewUnselected3: viewFullMeny, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
             viewA.isHidden = true
             viewM.isHidden = false
             viewR.isHidden = true
+            viewFM.isHidden = true
             viewButton.isHidden = false
             btnBookStatus = 0
             btnBook.setTitle("Book", for: .normal)
@@ -284,12 +305,27 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             
         case 2 :
             product_detail()
-            ChangebgColor(viewSelected: viewReview, viewUnselected: viewAbout, viewUnselected2: viewMenu, labelSelected: lblReview, labelUnselected: lblAbout, labelUnselecte2: lblMenu)
+            ChangebgColor(viewSelected: viewReview, viewUnselected: viewAbout, viewUnselected2: viewMenu,ViewUnselected3: viewFullMeny, labelSelected: lblReview, labelUnselected: lblAbout, labelUnselecte2: lblMenu,lblUnselected3: lblFullMenu)
             viewA.isHidden = true
             viewM.isHidden = true
             viewR.isHidden = false
+            viewFM.isHidden = true
             viewButton.isHidden = false
             btnBookStatus = 1
+            btnBook.setTitle("Write a Review", for: .normal)
+            debugPrint("2")
+    
+            
+        case 3 :
+            fetchdata()
+            ChangebgColor(viewSelected: viewFullMeny, viewUnselected: viewAbout, viewUnselected2: viewMenu,ViewUnselected3: viewReview, labelSelected: lblFullMenu, labelUnselected: lblAbout, labelUnselecte2: lblMenu,lblUnselected3: lblReview)
+            viewA.isHidden = true
+            viewM.isHidden = true
+            viewR.isHidden = true
+            viewFM.isHidden = false
+            viewButton.isHidden = true
+            btnBookStatus = 1
+           // viewFM.backgroundColor = UIColor.clear
             btnBook.setTitle("Write a Review", for: .normal)
             debugPrint("2")
         default:
@@ -330,6 +366,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.navigationController?.pushViewController(screenReview, animated: true)
         }
     }
+    @IBAction func btnMap(_ sender: UIButton) {
+    }
     @IBAction func btnAllMenu(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "allMenuVC") as! allMenuVC
@@ -353,14 +391,33 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
 extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collView{
-            return images?.count ?? 0
+            if images?.count == 0 {
+                collView.setNoDataMessage("No Data found", txtColor: .white)
+            }else{
+                collView.backgroundView = nil
+                return images?.count ?? 0
+            }
         }
         else if collectionView == collViewMenu
         {
-            return offer?.count ?? 0
-        }else{
+            if offer?.count == 0 {
+                collView.setNoDataMessage("No Data found", txtColor: .white)
+            }else{
+                collView.backgroundView = nil
+                return offer?.count ?? 0
+            }
+        }else if collectionView == viewFullMenu{
+            if modalfullmenu?.count == 0{
+                collView.setNoDataMessage("No Data found", txtColor: .white)
+            }else{
+                collView.backgroundView = nil
+                return modalfullmenu?.count ?? 0
+            }
+        }
+        else {
             return 3
         }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -373,7 +430,6 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
         else if collectionView == collViewMenu{
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
-            
             if status == 0 {
                 if indexPath.row == isselectedoffer{
                     self.viewButton.isHidden = false
@@ -388,12 +444,18 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
             }
-            
             let data = offer?[indexPath.row]
             cell.lblTime.text = data?.offer ?? ""
             cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
             return cell
-        }else{
+        }else if collectionView == viewFullMenu{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "allMenuCVC", for: indexPath) as! allMenuCVC
+            let imageIndex = (self.modalfullmenu?[indexPath.row].baseurl ?? "") + (self.modalfullmenu?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            return cell
+        }else
+        {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.CellItemDetailVC, for: indexPath) as! CellItemDetailVC
             cell.img.image = imgName
             return cell
@@ -402,6 +464,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
             return CGSize (width: 120.0, height: 200.0)
+        }else if collectionView == viewFullMenu{
+            return CGSize(width: viewFullMenu.frame.width / 2.1, height: 166)
         }
         return CGSize(width: 120.0, height: 80.0)
     }
@@ -411,6 +475,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
             vc.settype = 0
             vc.setImage = self.images?[indexPath.row].image ?? ""
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if collectionView == viewFullMenu{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+            vc.settype = 1
+            vc.url = self.modalfullmenu?[indexPath.row].baseurl ?? ""
+            vc.setImage = self.modalfullmenu?[indexPath.row].image ?? ""
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
@@ -552,11 +622,14 @@ extension ItemDetailsVC{
     func initialLoad(){
         viewMenu.layer.cornerRadius = viewAbout.frame.height / 2
         viewMenu.layer.maskedCorners = [.layerMaxXMinYCorner]
-        viewAbout.cornerRadius(cornerRadius: 55)
+        viewAbout.cornerRadius(cornerRadius: 30)
         viewReview.layer.cornerRadius = viewReview.frame.height / 2
         viewReview.layer.maskedCorners = [.layerMinXMinYCorner]
         imgBottomView.layer.cornerRadius = 30.0
         imgBottomView.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
+        viewFullMeny.layer.cornerRadius = 30
+        viewFullMeny.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
+        lblFullMenu.lblCornerRadius(cornerRadius: 15.0)
         lblMenu.lblCornerRadius(cornerRadius: 15.0)
         lblAbout.lblCornerRadius(cornerRadius: 15.0)
         lblReview.lblCornerRadius(cornerRadius: 15.0)
@@ -564,8 +637,9 @@ extension ItemDetailsVC{
         viewA.isHidden = true
         viewM.isHidden = false
         viewR.isHidden = true
+        viewFM.isHidden = true
         viewButton.isHidden = true
-        ChangebgColor(viewSelected: viewMenu, viewUnselected: viewAbout, viewUnselected2: viewReview, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview)
+        ChangebgColor(viewSelected: viewMenu, viewUnselected: viewAbout, viewUnselected2: viewReview,ViewUnselected3: viewFullMenu, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
         
         //MARK: Menu Offer Arr
         if status == 0 {
@@ -579,15 +653,16 @@ extension ItemDetailsVC{
             arrCollMenu.append(contentsOf: collDrinkData)
         }
     }
-    func ChangebgColor(viewSelected : UIView , viewUnselected : UIView, viewUnselected2: UIView , labelSelected : UILabel , labelUnselected : UILabel , labelUnselecte2 : UILabel){
+    func ChangebgColor(viewSelected : UIView , viewUnselected : UIView, viewUnselected2: UIView ,ViewUnselected3:UIView, labelSelected : UILabel , labelUnselected : UILabel , labelUnselecte2 : UILabel, lblUnselected3:UILabel){
         viewSelected.backgroundColor = UIColor.systemGray5
         viewUnselected.backgroundColor = UIColor.white
         viewUnselected2.backgroundColor = UIColor.white
+        ViewUnselected3.backgroundColor = UIColor.white
         labelSelected.backgroundColor = UIColor.white
         labelUnselected.backgroundColor = UIColor.systemGray5
         labelUnselecte2.backgroundColor = UIColor.systemGray5
+        lblUnselected3.backgroundColor = UIColor.systemGray5
     }
-    
 }
 
 //MARK: Objective function

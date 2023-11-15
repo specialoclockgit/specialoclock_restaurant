@@ -161,7 +161,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.lblDis.text = self.all_bars_restos[indexPath.row].shortDescription ?? ""
             cell.lblName.text = self.all_bars_restos[indexPath.row].name ?? ""
             cell.offerTimings = self.all_bars_restos[indexPath.row].offerTimings ?? []
-            cell.lblDis.text = (self.all_bars_restos[indexPath.row].openTime ?? "") +  "-" + (self.highily_rated_bars_restos[indexPath.row].closeTime ?? "")
+//            cell.lblDis.text = (self.all_bars_restos[indexPath.row].openTime ?? "") +  "-" + (self.highily_rated_bars_restos[indexPath.row].closeTime ?? "")
             if cell.offerTimings?.count == 0{
                 cell.seeMoreColleHeight.constant = 0
             }else{
@@ -186,22 +186,22 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         if setvalue == "Location"{
             return CGSize(width: collection.frame.width, height: 216)
         }else if setvalue == "Cuisines"{
-            return CGSize(width: collection.frame.width, height: 216)
+            return CGSize(width: collection.frame.width, height: 236)
         }else if setvalue == "Category"{
-            return CGSize(width: collection.frame.width, height: 216)
+            return CGSize(width: collection.frame.width, height: 236)
         }else if setvalue == "Theme"{
             return CGSize(width: collection.frame.width, height: 216)
         }else if setvalue == "Popular"{
             if self.all_bars_restos[indexPath.row].offerTimings?.count == 0{
                 return CGSize(width: collection.frame.width, height: 216)
             }else{
-                return CGSize(width: collection.frame.width, height: 266)
+                return CGSize(width: collection.frame.width, height: 286)
             }
         }else{
             if self.highily_rated_bars_restos[indexPath.row].offerTimings?.count == 0{
                 return CGSize(width: collection.frame.width, height: 216)
             }else{
-                return CGSize(width: collection.frame.width, height: 266)
+                return CGSize(width: collection.frame.width, height: 286)
             }
         }
     }

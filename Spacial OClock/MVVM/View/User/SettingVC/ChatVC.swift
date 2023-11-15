@@ -294,6 +294,25 @@ extension UITableView {
     }
 }
 
+//MARK: - UICOLLECTION VIEW 
+extension UICollectionView {
+    func reloadData(completion: @escaping () -> ()) {
+        UIView.animate(withDuration: 0, animations: { self.reloadData()})
+        {_ in completion() }
+    }
+    
+    func setNoDataMessage(_ message: String,txtColor:UIColor) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = txtColor
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont(name: "Poppins-Medium", size: 20)
+        messageLabel.sizeToFit()
+        self.backgroundView = messageLabel
+    }
+}
+
 // MARK: - EXTENSION FOR DATE
 extension Date {
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class DetailItemCVC: UICollectionViewCell {
     
@@ -19,7 +20,15 @@ class DetailItemCVC: UICollectionViewCell {
     
     
 }
-extension DetailItemCVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "OfferCVC"
+    }
+
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return offerTimings?.count ?? 0
     }
@@ -33,7 +42,7 @@ extension DetailItemCVC : UICollectionViewDelegate, UICollectionViewDataSource, 
         return CGSize(width: collectionView.frame.width/6.1, height: 64)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        1
+        5
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         1
