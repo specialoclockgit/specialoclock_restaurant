@@ -173,8 +173,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             self.lblNameREsto.text = self.modal?.name ?? ""
-            self.lblLocation.text = Store.userDetails?.location ?? ""
-            self.lblUserLOcation.text = self.modal?.location ?? ""
+            self.lblLocation.text = self.modal?.location ?? ""
+            self.lblUserLOcation.text = self.modal?.city ?? ""
             self.lblOpenClose.text = "\(self.modal?.openTime ?? "") - " + "\(self.modal?.closeTime ?? "")"
             if self.modal?.isLiked == 0{
                 self.imgFav.image = UIImage(named: "white h")
@@ -367,6 +367,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         }
     }
     @IBAction func btnMap(_ sender: UIButton) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
+        vc.latitude = Double(self.modal?.latitude ?? "") ?? 0.0
+        vc.longitude = Double(self.modal?.longitude ?? "") ?? 0.0
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnAllMenu(_ sender: UIButton)
     {
@@ -376,7 +380,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnFavAct(_ sender : UIButton) {
-        
         if let type = self.modal?.isLiked {
             let likeType = type == 0 ? 1 : 0
             let img = type == 0 ? UIImage(named: "red h") : UIImage(named: "white h")
@@ -547,7 +550,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             titleLbl.numberOfLines = 0
             titleLbl.text = "Recommended \(productModal?.categories?[section].title ?? "") \n\(self.promotionTxt)"
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
-            let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-24, y: 10, width: 30, height: 30))
+            let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-100, y: 10, width: 30, height: 30))
             viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             if arrCheck[section] == true {
                 sectionV.backgroundColor = .systemGray5

@@ -29,7 +29,6 @@ class SearchVC: UIViewController {
     //MARK: - VIEW LFIECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        search_list()
         txtFldSearch.delegate = self
     }
     
@@ -40,6 +39,10 @@ class SearchVC: UIViewController {
             self.filterdata = data?.all_bars_restos ?? []
             self.searchCV.reloadData()
         }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        search_list()
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     //MARK: - ACTIONS

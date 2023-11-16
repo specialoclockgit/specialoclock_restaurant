@@ -195,6 +195,8 @@
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
 		EC1B96382ACC45A500BBEF7B /* createReviewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B96372ACC45A500BBEF7B /* createReviewModal.swift */; };
 		EC2AD12F2ACD7476000C877B /* restoDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */; };
+		EC43798F2B0604650017FBA8 /* newSeeMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC43798E2B0604650017FBA8 /* newSeeMoreVC.swift */; };
+		EC4379912B0612A00017FBA8 /* newSeeMoreCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4379902B0612A00017FBA8 /* newSeeMoreCVC.swift */; };
 		EC4DD6AB2AFA149A00961D82 /* CategoryByRModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4DD6AA2AFA149A00961D82 /* CategoryByRModal.swift */; };
 		EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */; };
 		ECA3544F2AB4394500D4ABF8 /* CussinesRestoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */; };
@@ -462,6 +464,8 @@
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC1B96372ACC45A500BBEF7B /* createReviewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createReviewModal.swift; sourceTree = "<group>"; };
 		EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restoDetailModal.swift; sourceTree = "<group>"; };
+		EC43798E2B0604650017FBA8 /* newSeeMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newSeeMoreVC.swift; sourceTree = "<group>"; };
+		EC4379902B0612A00017FBA8 /* newSeeMoreCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newSeeMoreCVC.swift; sourceTree = "<group>"; };
 		EC4DD6AA2AFA149A00961D82 /* CategoryByRModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryByRModal.swift; sourceTree = "<group>"; };
 		EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemCVC.swift; sourceTree = "<group>"; };
 		ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CussinesRestoModal.swift; sourceTree = "<group>"; };
@@ -1037,6 +1041,7 @@
 		C29CDAF22A42B9170035E03D /* User */ = {
 			isa = PBXGroup;
 			children = (
+				EC43798D2B0604520017FBA8 /* NewSeeMore */,
 				ECCEDB3D2AF1129200DA8D8D /* Menu */,
 				ECB020662ADEBBDA002D2C07 /* SearchList&Map */,
 				ECA8C7692AD568730061F19C /* dropDownSlots */,
@@ -1159,6 +1164,15 @@
 				ECB020672ADEBC0A002D2C07 /* selectDateVC.swift */,
 			);
 			path = Booking;
+			sourceTree = "<group>";
+		};
+		EC43798D2B0604520017FBA8 /* NewSeeMore */ = {
+			isa = PBXGroup;
+			children = (
+				EC43798E2B0604650017FBA8 /* newSeeMoreVC.swift */,
+				EC4379902B0612A00017FBA8 /* newSeeMoreCVC.swift */,
+			);
+			path = NewSeeMore;
 			sourceTree = "<group>";
 		};
 		ECA8C7692AD568730061F19C /* dropDownSlots */ = {
@@ -1547,6 +1561,7 @@
 				A5F18B8A2A5454DE006979DD /* MyOfferVC.swift in Sources */,
 				A5B187382A6671BA00C3E0A7 /* UserEditProfileVC.swift in Sources */,
 				A50474692A66585300643D37 /* UITextView.swift in Sources */,
+				EC4379912B0612A00017FBA8 /* newSeeMoreCVC.swift in Sources */,
 				A5046FE42A4D81F700C23627 /* HeaderTBMenu.swift in Sources */,
 				A5B187362A6671AA00C3E0A7 /* UserProfileVC.swift in Sources */,
 				A5E598B92A4EF408007F82CC /* CustomTopAlertVC.swift in Sources */,
@@ -1690,6 +1705,7 @@
 				8B91546A2A85EC5000CCB83E /* ThemeModel.swift in Sources */,
 				A5AC1FB02A4C54F0007EF488 /* CellItemDetailVC.swift in Sources */,
 				C2661A762A4AFBA600EEE266 /* AddMenuVc.swift in Sources */,
+				EC43798F2B0604650017FBA8 /* newSeeMoreVC.swift in Sources */,
 				A5046FEF2A4DACB800C23627 /* CellNotificationVC.swift in Sources */,
 				C29CDB132A42BC4C0035E03D /* TabbarVC.swift in Sources */,
 				C284FB802A402EE8006949B4 /* CustomImageView.swift in Sources */,

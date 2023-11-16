@@ -6,13 +6,23 @@
 //
 
 import UIKit
+import Cosmos
 
 class homeSeeMoreCVC: UICollectionViewCell {
     
+    @IBOutlet weak var cosmosView: CosmosView!
+    @IBOutlet weak var lblRating: UILabel!
+    @IBOutlet weak var LocationHeading: UILabel!
+    @IBOutlet weak var imgViewHome: UIImageView!
+    @IBOutlet weak var lblOpenHour: UILabel!
+    @IBOutlet weak var imgViewClock: UIImageView!
+    @IBOutlet weak var imgViewCity: UIImageView!
+    @IBOutlet weak var lblCity: UILabel!
     @IBOutlet weak var seeMoreColleHeight: NSLayoutConstraint!
     @IBOutlet weak var SeeMoreCollection: UICollectionView!
     @IBOutlet weak var lblDis: UILabel!
     @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var imgVirw: CustomImageView!
     
     var offerTimings: [OfferTiminghome]?

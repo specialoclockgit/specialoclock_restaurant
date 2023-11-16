@@ -10,6 +10,8 @@ import SkeletonView
 
 class DetailItemCVC: UICollectionViewCell {
     
+    @IBOutlet weak var lblfirstLocaton: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var offerCollectionHeight: NSLayoutConstraint!
     @IBOutlet weak var offerCollection: UICollectionView!
     @IBOutlet weak var lblDiscription: UILabel!

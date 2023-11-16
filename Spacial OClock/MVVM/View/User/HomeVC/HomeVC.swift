@@ -417,38 +417,42 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
 //MARK: Table Button Objective function
 extension HomeVC {
     @objc func btnSeeMoreAct(sender : UIButton){
-        let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
         switch sectionArray[sender.tag].name {
         case "Location" :
+            let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.location = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Cuisines" :
+            let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.cuisine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Category" :
+            let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Popular" :
+            let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.all_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Theme" :
+            let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.themeArr = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "A-Z" :
+            let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.highily_rated_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
-            
         default:
             debugPrint("default btnSeeMoreAct")
         }
