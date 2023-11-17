@@ -28,8 +28,12 @@ class fullImageView: UIViewController, UIScrollViewDelegate {
             let imageIndex = (imageURL) + (self.setImage )
             self.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
-        }else{
+        }else if settype == 1{
             let imageIndex1 = (url) + (self.setImage)
+            self.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            self.imgView.sd_setImage(with: URL(string: imageIndex1), placeholderImage: UIImage(named: "Userssss"))
+        }else{
+            let imageIndex1 = (imageBaseURL) + (self.setImage)
             self.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgView.sd_setImage(with: URL(string: imageIndex1), placeholderImage: UIImage(named: "Userssss"))
         }

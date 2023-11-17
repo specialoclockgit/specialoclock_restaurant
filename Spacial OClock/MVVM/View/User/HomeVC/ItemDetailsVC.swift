@@ -48,6 +48,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var viewReview: UIView!
     @IBOutlet weak var imgBottomView : UIImageView!
+    @IBOutlet weak var viewFCHeight: NSLayoutConstraint!
     @IBOutlet weak var viewFullMenu: UICollectionView!
     @IBOutlet weak var viewFullMeny: UIView!
     //MENU Outlets
@@ -448,6 +449,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }
             }
             let data = offer?[indexPath.row]
+            cell.lblMenuSchedule.text = data?.menuName ?? ""
             cell.lblTime.text = data?.offer ?? ""
             cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
             return cell
@@ -466,7 +468,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
-            return CGSize (width: 120.0, height: 200.0)
+            return CGSize (width: 100, height: 200.0)
         }else if collectionView == viewFullMenu{
             return CGSize(width: viewFullMenu.frame.width / 2.1, height: 166)
         }
@@ -516,6 +518,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             tbMenu.reloadData()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
+        }
+    }
 }
 extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -542,15 +550,19 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         }
         return self.reviews?.count ?? 0
     }
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if tableView == tbMenu{
-            let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
-            sectionV.layer.cornerRadius = 10.0
-            let titleLbl = UILabel.init(frame: CGRect(x: 18, y: 15, width: tableView.frame.width-50, height: 20) )
+            let sectionV1 = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
+            sectionV1.backgroundColor = UIColor.clear
+            let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40) )
+            sectionV.layer.cornerRadius = 10
+            let titleLbl = UILabel.init(frame: CGRect(x: 18, y: 10, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
-            titleLbl.text = "Recommended \(productModal?.categories?[section].title ?? "") \n\(self.promotionTxt)"
+            titleLbl.text = "Recommended \(productModal?.categories?[section].products?.first?.menuTypeName ?? "")"
+//            \n\(self.promotionTxt)"
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
-            let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-100, y: 10, width: 30, height: 30))
+            let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-30, y: 6, width: 30, height: 30))
             viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             if arrCheck[section] == true {
                 sectionV.backgroundColor = .systemGray5
@@ -566,7 +578,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             sectionV.addSubview(titleLbl)
             sectionV.addSubview(viewAllBtn)
             sectionV.bringSubviewToFront(viewAllBtn)
-            return sectionV
+            sectionV1.addSubview(sectionV)
+            return sectionV1
         }
         return UIView()
     }
@@ -576,7 +589,6 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         }
         return 0
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
@@ -587,7 +599,6 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""
             cell.lblPrePrice.text = "R\(arrSection?[indexPath.row].price ?? 0)"
             cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(arrSection?[indexPath.row].price ?? 0), discount: Double(discount ?? 0)).description)"
-            //"\(arrSection?[indexPath.row].price ?? 0)"
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellItemDetailReviewTB, for: indexPath) as! CellItemDetailReviewTB
@@ -608,7 +619,13 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             self.heightTBMenu.constant = self.tbMenu.contentSize.height
         }
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let arrSection = productModal?.categories?[indexPath.section].products
+        let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+        vc.settype = 2
+        vc.setImage = arrSection?[indexPath.row].image ?? ""
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if(keyPath == "contentSize"){
             if let newvalue = change?[.newKey]

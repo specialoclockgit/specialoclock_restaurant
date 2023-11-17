@@ -31,39 +31,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="121" height="197"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8I-dT-1gg">
-                                <rect key="frame" x="4.5" y="10" width="112.5" height="98"/>
+                                <rect key="frame" x="-1" y="2" width="123" height="108"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ornageRectabgle" translatesAutoresizingMaskIntoConstraints="NO" id="ihD-iw-bXs">
-                                        <rect key="frame" x="0.0" y="0.0" width="112.5" height="98"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ornageRectabgle" translatesAutoresizingMaskIntoConstraints="NO" id="ihD-iw-bXs">
+                                        <rect key="frame" x="5" y="5" width="113" height="98"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="50"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tonight" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-FJ-upr">
-                                        <rect key="frame" x="16" y="25" width="80.5" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tonight" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-FJ-upr">
+                                        <rect key="frame" x="15" y="27" width="93" height="17"/>
                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eH3-AV-9hM">
-                                        <rect key="frame" x="39" y="52" width="34" height="14.5"/>
+                                        <rect key="frame" x="44.5" y="54" width="34" height="14.5"/>
                                         <fontDescription key="fontDescription" name="Astral-Sisters" family="Astral Sisters" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="ihD-iw-bXs" firstAttribute="leading" secondItem="B8I-dT-1gg" secondAttribute="leading" id="41R-h4-2c7"/>
-                                    <constraint firstItem="ihD-iw-bXs" firstAttribute="top" secondItem="B8I-dT-1gg" secondAttribute="top" id="C3M-hB-oQn"/>
-                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="centerX" secondItem="B8I-dT-1gg" secondAttribute="centerX" id="OKq-ko-4vX"/>
-                                    <constraint firstAttribute="bottom" secondItem="ihD-iw-bXs" secondAttribute="bottom" id="UVY-6d-Ic4"/>
-                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="leading" secondItem="B8I-dT-1gg" secondAttribute="leading" constant="16" id="VYg-Go-N5t"/>
+                                    <constraint firstAttribute="width" constant="123" id="2Gg-BK-jkT"/>
+                                    <constraint firstItem="ihD-iw-bXs" firstAttribute="leading" secondItem="B8I-dT-1gg" secondAttribute="leading" constant="5" id="41R-h4-2c7"/>
+                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="trailing" secondItem="ihD-iw-bXs" secondAttribute="trailing" constant="-10" id="6hC-uR-7bn"/>
+                                    <constraint firstItem="ihD-iw-bXs" firstAttribute="top" secondItem="B8I-dT-1gg" secondAttribute="top" constant="5" id="C3M-hB-oQn"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eH3-AV-9hM" secondAttribute="bottom" constant="6" id="Nyg-ie-7kH"/>
+                                    <constraint firstAttribute="bottom" secondItem="ihD-iw-bXs" secondAttribute="bottom" constant="5" id="UVY-6d-Ic4"/>
                                     <constraint firstItem="eH3-AV-9hM" firstAttribute="centerX" secondItem="B8I-dT-1gg" secondAttribute="centerX" id="WZi-Re-IxM"/>
-                                    <constraint firstAttribute="trailing" secondItem="dAN-FJ-upr" secondAttribute="trailing" constant="16" id="a3a-qd-GXi"/>
+                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="leading" secondItem="ihD-iw-bXs" secondAttribute="leading" constant="10" id="cEk-f6-jhi"/>
                                     <constraint firstItem="eH3-AV-9hM" firstAttribute="top" secondItem="dAN-FJ-upr" secondAttribute="bottom" constant="10" id="efW-0U-LBa"/>
-                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="top" secondItem="B8I-dT-1gg" secondAttribute="top" constant="25" id="nDc-tg-LAo"/>
-                                    <constraint firstAttribute="trailing" secondItem="ihD-iw-bXs" secondAttribute="trailing" id="nTs-NN-sXD"/>
+                                    <constraint firstAttribute="trailing" secondItem="ihD-iw-bXs" secondAttribute="trailing" constant="5" id="nTs-NN-sXD"/>
+                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="top" secondItem="ihD-iw-bXs" secondAttribute="top" constant="22" id="wgc-ev-umM"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08:00 to 8:30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zK-gD-B4f">
-                                <rect key="frame" x="10.5" y="108" width="100" height="35"/>
+                                <rect key="frame" x="10.5" y="114" width="100" height="35"/>
                                 <color key="backgroundColor" name="themeOrange"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="afV-md-Z0t"/>
@@ -74,7 +80,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-10%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jba-UX-6ji">
-                                <rect key="frame" x="43" y="153" width="35" height="35"/>
+                                <rect key="frame" x="43" y="159" width="35" height="35"/>
                                 <color key="backgroundColor" name="themeOrange"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="F4j-Yh-bRm"/>
@@ -87,11 +93,10 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="8zK-gD-B4f" firstAttribute="centerX" secondItem="Uht-Wr-eMD" secondAttribute="centerX" id="3o1-Fc-wfV"/>
-                            <constraint firstAttribute="height" constant="197" id="9Hf-xX-CpQ"/>
-                            <constraint firstItem="8zK-gD-B4f" firstAttribute="top" secondItem="B8I-dT-1gg" secondAttribute="bottom" id="Ci9-3f-Isp"/>
+                            <constraint firstItem="8zK-gD-B4f" firstAttribute="top" secondItem="B8I-dT-1gg" secondAttribute="bottom" constant="4" id="Ci9-3f-Isp"/>
                             <constraint firstAttribute="width" constant="121" id="PyD-Qj-dGI"/>
                             <constraint firstItem="Jba-UX-6ji" firstAttribute="centerX" secondItem="Uht-Wr-eMD" secondAttribute="centerX" id="dPR-4P-0UR"/>
-                            <constraint firstItem="B8I-dT-1gg" firstAttribute="top" secondItem="Uht-Wr-eMD" secondAttribute="top" constant="10" id="dbW-Wh-doH"/>
+                            <constraint firstItem="B8I-dT-1gg" firstAttribute="top" secondItem="Uht-Wr-eMD" secondAttribute="top" constant="2" id="dbW-Wh-doH"/>
                             <constraint firstItem="B8I-dT-1gg" firstAttribute="centerX" secondItem="Uht-Wr-eMD" secondAttribute="centerX" id="eEo-OE-xrz"/>
                             <constraint firstItem="Jba-UX-6ji" firstAttribute="top" secondItem="8zK-gD-B4f" secondAttribute="bottom" constant="10" id="rkh-gP-ARj"/>
                         </constraints>
