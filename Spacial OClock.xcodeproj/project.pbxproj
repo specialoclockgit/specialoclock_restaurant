@@ -205,6 +205,8 @@
 		ECA600372AD7D03A00C97493 /* AvalSlotModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */; };
 		ECA6A0632AFCAFA40094DCC1 /* OfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA6A0622AFCAFA30094DCC1 /* OfferCVC.swift */; };
 		ECA6A0652AFCF3360094DCC1 /* offerSeeMoreCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA6A0642AFCF3360094DCC1 /* offerSeeMoreCVC.swift */; };
+		ECA77A802B0B219E00FC2285 /* directionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA77A7F2B0B219E00FC2285 /* directionVC.swift */; };
+		ECA77A822B0B236700FC2285 /* LocationManager1.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA77A812B0B236700FC2285 /* LocationManager1.swift */; };
 		ECA8C76B2AD568850061F19C /* SlotsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76A2AD568850061F19C /* SlotsVc.swift */; };
 		ECA8C76D2AD568CD0061F19C /* slotsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */; };
 		ECAF1D092AC18857006E20FB /* homeSeeMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */; };
@@ -474,6 +476,8 @@
 		ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvalSlotModal.swift; sourceTree = "<group>"; };
 		ECA6A0622AFCAFA30094DCC1 /* OfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCVC.swift; sourceTree = "<group>"; };
 		ECA6A0642AFCF3360094DCC1 /* offerSeeMoreCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = offerSeeMoreCVC.swift; sourceTree = "<group>"; };
+		ECA77A7F2B0B219E00FC2285 /* directionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = directionVC.swift; sourceTree = "<group>"; };
+		ECA77A812B0B236700FC2285 /* LocationManager1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager1.swift; sourceTree = "<group>"; };
 		ECA8C76A2AD568850061F19C /* SlotsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsVc.swift; sourceTree = "<group>"; };
 		ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slotsTVC.swift; sourceTree = "<group>"; };
 		ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreVC.swift; sourceTree = "<group>"; };
@@ -662,6 +666,7 @@
 		A52576EA2A542C5200464E1B /* Constant */ = {
 			isa = PBXGroup;
 			children = (
+				ECA77A812B0B236700FC2285 /* LocationManager1.swift */,
 				C2661A902A4B163200EEE266 /* Constant.swift */,
 			);
 			path = Constant;
@@ -1041,6 +1046,7 @@
 		C29CDAF22A42B9170035E03D /* User */ = {
 			isa = PBXGroup;
 			children = (
+				ECA77A7E2B0B217200FC2285 /* Direction */,
 				EC43798D2B0604520017FBA8 /* NewSeeMore */,
 				ECCEDB3D2AF1129200DA8D8D /* Menu */,
 				ECB020662ADEBBDA002D2C07 /* SearchList&Map */,
@@ -1173,6 +1179,14 @@
 				EC4379902B0612A00017FBA8 /* newSeeMoreCVC.swift */,
 			);
 			path = NewSeeMore;
+			sourceTree = "<group>";
+		};
+		ECA77A7E2B0B217200FC2285 /* Direction */ = {
+			isa = PBXGroup;
+			children = (
+				ECA77A7F2B0B219E00FC2285 /* directionVC.swift */,
+			);
+			path = Direction;
 			sourceTree = "<group>";
 		};
 		ECA8C7692AD568730061F19C /* dropDownSlots */ = {
@@ -1527,6 +1541,7 @@
 			files = (
 				8B9154742A86372800CCB83E /* ResendOtpModel.swift in Sources */,
 				C29CDB062A42BB930035E03D /* SettingsVC.swift in Sources */,
+				ECA77A802B0B219E00FC2285 /* directionVC.swift in Sources */,
 				EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */,
 				C29CDB092A42BB930035E03D /* DeleteAccountPopUp.swift in Sources */,
 				C25738132A4ACC50002BA6A7 /* RestoProfileVC.swift in Sources */,
@@ -1610,6 +1625,7 @@
 				A58CCCA52A5EB50D00DFA478 /* RestoWalkThroughVC.swift in Sources */,
 				A529D2DB2A5FBCE300E416CD /* BarMenuDetailItemsVC.swift in Sources */,
 				A5AB0E2A2A56842B00BB2BF4 /* CellBookingRestoTB.swift in Sources */,
+				ECA77A822B0B236700FC2285 /* LocationManager1.swift in Sources */,
 				A52576F42A54402300464E1B /* RestoCardListVC.swift in Sources */,
 				C29CDB072A42BB930035E03D /* ChangePasswordVC.swift in Sources */,
 				C29CDAFF2A42BB1D0035E03D /* ForgotPasswordVC.swift in Sources */,

@@ -86,11 +86,12 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblDis.text = (self.all_bars_restos[indexPath.row].openTime ?? "") + " - " +  (self.all_bars_restos[indexPath.row].closeTime ?? "")
-           // cell.lblDis.text = self.all_bars_restos[indexPath.row].shortDescription ?? ""
             cell.lblName.text = self.all_bars_restos[indexPath.row].name ?? ""
             cell.offerTimings = self.all_bars_restos[indexPath.row].offerTimings ?? []
             cell.lblCity.text = self.all_bars_restos[indexPath.row].city ?? ""
             cell.lblLocation.text = self.all_bars_restos[indexPath.row].location ?? ""
+            cell.lblRating.text = "\(self.all_bars_restos[indexPath.row].avgRating ?? 0)"
+            cell.cosmosView.rating = Double(self.all_bars_restos[indexPath.row].avgRating ?? 0)
             if cell.offerTimings?.count == 0{
                 cell.seeMoreColleHeight.constant = 0
             }else{

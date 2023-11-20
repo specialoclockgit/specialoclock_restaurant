@@ -7,9 +7,12 @@
 
 import UIKit
 import SkeletonView
+import Cosmos
 
 class DetailItemCVC: UICollectionViewCell {
     
+    @IBOutlet weak var cosmosView: CosmosView!
+    @IBOutlet weak var lblRaiting: UILabel!
     @IBOutlet weak var lblfirstLocaton: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var offerCollectionHeight: NSLayoutConstraint!

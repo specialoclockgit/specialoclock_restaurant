@@ -173,9 +173,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblLocationName.text = self.themeArr[indexPath.row].productName ?? ""
-            if self.isCellSelected == true {
-                cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].barCount ?? 0) Restaurants"
-            }
+            cell.lblTotalRestaurant.text = "\(self.themeArr[indexPath.row].restroCount ?? 0) Restaurants"
         }else if objArray[collView.tag].name == "A-Z"{
             cell.stackHeight.constant = 46
             let celldata = allresto[indexPath.row].offerTimings

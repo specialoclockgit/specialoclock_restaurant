@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -68,6 +69,12 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="R40.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9OT-nI-cpy">
+                                        <rect key="frame" x="148" y="29" width="34.5" height="14"/>
+                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="10"/>
+                                        <color key="textColor" name="themeOrange"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
@@ -83,7 +90,9 @@
                                     <constraint firstAttribute="trailing" secondItem="8Ww-tQ-8RC" secondAttribute="trailing" constant="12" id="fuR-Ga-nts"/>
                                     <constraint firstItem="jq6-ix-86I" firstAttribute="centerY" secondItem="XUX-vp-ADb" secondAttribute="centerY" id="iJE-sb-dUW"/>
                                     <constraint firstItem="8Ww-tQ-8RC" firstAttribute="leading" secondItem="IH1-JW-bWg" secondAttribute="trailing" constant="12" id="mQ9-2S-24u"/>
+                                    <constraint firstItem="9OT-nI-cpy" firstAttribute="leading" secondItem="jq6-ix-86I" secondAttribute="trailing" constant="6" id="rod-jj-vyw"/>
                                     <constraint firstItem="XUX-vp-ADb" firstAttribute="top" secondItem="8Ww-tQ-8RC" secondAttribute="bottom" constant="4" id="swJ-Lt-a7c"/>
+                                    <constraint firstItem="9OT-nI-cpy" firstAttribute="centerY" secondItem="jq6-ix-86I" secondAttribute="centerY" id="zcW-js-Zhi"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -126,6 +135,7 @@
             <connections>
                 <outlet property="dataStackVW" destination="FCF-bh-oty" id="xjh-Ge-Uq3"/>
                 <outlet property="img" destination="IH1-JW-bWg" id="tVc-Bm-hgO"/>
+                <outlet property="lblDiscount" destination="9OT-nI-cpy" id="3NI-M9-LKL"/>
                 <outlet property="lblItemName" destination="8Ww-tQ-8RC" id="PKQ-Wm-n8C"/>
                 <outlet property="lblNewPrice" destination="jq6-ix-86I" id="BWL-0O-xXw"/>
                 <outlet property="lblPrePrice" destination="XUX-vp-ADb" id="Kq4-k3-MxF"/>
@@ -136,6 +146,9 @@
     </objects>
     <resources>
         <image name="Ciroc" width="40" height="43"/>
+        <namedColor name="themeOrange">
+            <color red="0.99599999189376831" green="0.44699999690055847" blue="0.075000002980232239" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

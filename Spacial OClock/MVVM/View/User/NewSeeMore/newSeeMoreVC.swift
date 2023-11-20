@@ -32,21 +32,21 @@ class newSeeMoreVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if setvalue == "Location"{
-            lblHeader.text = "Location"
-            lblHead1.text = "Location"
-            imgView.image = UIImage(named: "pinPerson")
+//            lblHeader.text = "Location"
+//            lblHead1.text = "Location"
+//            imgView.image = UIImage(named: "pinPerson")
         }else if setvalue == "Cuisines"{
-            lblHeader.text = "Cuisine"
-            lblHead1.text = "Cuisine"
-            imgView.image = UIImage(named: "soup")
+//            lblHeader.text = "Cuisine"
+         //   lblHead1.text = "Cuisine"
+//            imgView.image = UIImage(named: "soup")
         }else if setvalue == "Category"{
-            lblHeader.text = "Category"
-            lblHead1.text = "Category"
-            imgView.image = UIImage(named: "menu 1")
+//            lblHeader.text = "Category"
+//            lblHead1.text = "Category"
+//            imgView.image = UIImage(named: "menu 1")
         }else if setvalue == "Theme"{
-            lblHeader.text = "Theme"
-            lblHead1.text = "Theme"
-            imgView.image = UIImage(named: "mask")
+//            lblHeader.text = "Theme"
+//            lblHead1.text = "Theme"
+//            imgView.image = UIImage(named: "mask")
         }
     }
     

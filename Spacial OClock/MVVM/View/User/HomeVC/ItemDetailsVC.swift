@@ -26,6 +26,8 @@ struct ModelMenuTBCell{
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
+    @IBOutlet weak var imgViewGifReview: UIImageView!
+    @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var scrollView : UIScrollView!
@@ -52,6 +54,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var viewFullMenu: UICollectionView!
     @IBOutlet weak var viewFullMeny: UIView!
     //MENU Outlets
+    @IBOutlet weak var ImgViewgifReview: UIImageView!
     @IBOutlet weak var collViewMenu : UICollectionView!
     @IBOutlet weak var tbMenu : UITableView!
     @IBOutlet weak var heightTBMenu : NSLayoutConstraint!
@@ -151,7 +154,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         tbMenu.delegate = self
         tbMenu.dataSource = self
         for _ in 0...arrTBMenu.count{
-            arrCheck.append(false)
+            arrCheck.append(true)
         }
     }
     
@@ -185,7 +188,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
             self.lblRating.text = self.modal?.avgRating ?? ""
             self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
-            self.lblTotalRes.text = "\(self.modal?.totalBookings ?? "") reservations"
+            self.lblTotalRes.text = "\(self.modal?.totalBookings ?? "") Reservations"
+            self.cosmosView.rating = Double(self.modal?.avgRating ?? "") ?? 0.0
             self.getUpdatedLocation()
             self.collViewMenu.reloadData()
             self.collView.reloadData()
@@ -368,9 +372,9 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         }
     }
     @IBAction func btnMap(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
-        vc.latitude = Double(self.modal?.latitude ?? "") ?? 0.0
-        vc.longitude = Double(self.modal?.longitude ?? "") ?? 0.0
+        let vc = storyboard?.instantiateViewController(withIdentifier: "directionVC") as! directionVC
+        vc.lat = Double(self.modal?.latitude ?? "") ?? 0.0
+        vc.lng = Double(self.modal?.longitude ?? "") ?? 0.0
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnAllMenu(_ sender: UIButton)
@@ -521,7 +525,15 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
+            if self.modalfullmenu?.count == 0{
+                self.viewFCHeight.constant = 220
+                self.ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
+                self.ImgViewgifReview.isHidden = false
+            }else{
+                self.ImgViewgifReview.isHidden = true
+                self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
+            }
+          
         }
     }
 }
@@ -535,9 +547,10 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             }
         }else{
             if reviews?.count == 0{
-                tbMenu.setNoDataMessage("No Data found", txtColor: .white)
+                ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
+                ImgViewgifReview.isHidden = false
             }else{
-                tbMenu.backgroundView = nil
+                ImgViewgifReview.isHidden = true
                 return reviews?.count ?? 0
             }
         }
@@ -598,7 +611,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
             cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""
             cell.lblPrePrice.text = "R\(arrSection?[indexPath.row].price ?? 0)"
-            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(arrSection?[indexPath.row].price ?? 0), discount: Double(discount ?? 0)).description)"
+            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(arrSection?[indexPath.row].price ?? 0), discount: Double(arrSection?[indexPath.row].offer?.offerPrice ?? 0)).description)"
+            cell.lblDiscount.text = "(\(arrSection?[indexPath.row].offer?.offerPrice ?? 0)% Discount)"
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellItemDetailReviewTB, for: indexPath) as! CellItemDetailReviewTB
@@ -615,16 +629,28 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            self.heightTBReview.constant = self.tbReview.contentSize.height
+            if self.reviews?.count == 0{
+                self.heightTBReview.constant = 220
+                self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
+                self.imgViewGifReview.isHidden = false
+            }else{
+                self.imgViewGifReview.isHidden = true
+                self.heightTBReview.constant = self.tbReview.contentSize.height
+            }
             self.heightTBMenu.constant = self.tbMenu.contentSize.height
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let arrSection = productModal?.categories?[indexPath.section].products
-        let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-        vc.settype = 2
-        vc.setImage = arrSection?[indexPath.row].image ?? ""
-        self.navigationController?.pushViewController(vc, animated: true)
+        if tableView == tbMenu{
+            let arrSection = productModal?.categories?[indexPath.section].products
+            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+            vc.settype = 2
+            vc.setImage = arrSection?[indexPath.row].image ?? ""
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            
+        }
+        
     }
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if(keyPath == "contentSize"){
@@ -689,61 +715,61 @@ extension ItemDetailsVC{
 extension ItemDetailsVC{
     @objc func isHidden(sender : UIButton){
         debugPrint(sender.tag)
-        switch sender.tag {
-        case 0 :
+//        switch sender.tag {
+//        case 0 :
             if sender.isSelected  == false{
-                if arrCheck[sender.tag] == false{
-                    arrCheck[sender.tag] = true
-                    debugPrint(arrCheck)
-                    debugPrint(sender.tag)
-                    sender.isSelected = true
-                    sender.setImage(UIImage(named: "aarrowIcon"), for: .selected)
-                }else{
+                if arrCheck[sender.tag] == true{
                     arrCheck[sender.tag] = false
                     debugPrint(arrCheck)
                     debugPrint(sender.tag)
                     sender.isSelected = false
+                    sender.setImage(UIImage(named: "aarrowIcon"), for: .selected)
+                }else{
+                    arrCheck[sender.tag] = true
+                    debugPrint(arrCheck)
+                    debugPrint(sender.tag)
+                    sender.isSelected = true
                     sender.setImage(UIImage(named: "arrowDefault"), for: .selected)
                 }
             }
             debugPrint("Case 0")
-        case 1 :
-            if sender.isSelected  == false{
-                if arrCheck[sender.tag] == false{
-                    arrCheck[sender.tag] = true
-                    sender.isSelected = true
-                }else{
-                    arrCheck[sender.tag] = false
-                    sender.isSelected = false
-                }
-            }
-            debugPrint("Case 1")
-        case 2 :
-            if sender.isSelected  == false{
-                if arrCheck[sender.tag] == false{
-                    arrCheck[sender.tag] = true
-                    sender.isSelected = true
-                }else{
-                    arrCheck[sender.tag] = false
-                    sender.isSelected = false
-                }
-            }
-            debugPrint("Case 2")
-        case 3 :
-            if sender.isSelected  == false{
-                if arrCheck[sender.tag] == false{
-                    arrCheck[sender.tag] = true
-                    sender.isSelected = true
-                }else{
-                    arrCheck[sender.tag] = false
-                    sender.isSelected = false
-                }
-            }
-            debugPrint("Case 3")
+//        case 1 :
+//            if sender.isSelected  == false{
+//                if arrCheck[sender.tag] == false{
+//                    arrCheck[sender.tag] = true
+//                    sender.isSelected = true
+//                }else{
+//                    arrCheck[sender.tag] = false
+//                    sender.isSelected = false
+//                }
+//            }
+//            debugPrint("Case 1")
+//        case 2 :
+//            if sender.isSelected  == false{
+//                if arrCheck[sender.tag] == false{
+//                    arrCheck[sender.tag] = true
+//                    sender.isSelected = true
+//                }else{
+//                    arrCheck[sender.tag] = false
+//                    sender.isSelected = false
+//                }
+//            }
+//            debugPrint("Case 2")
+//        case 3 :
+//            if sender.isSelected  == false{
+//                if arrCheck[sender.tag] == false{
+//                    arrCheck[sender.tag] = true
+//                    sender.isSelected = true
+//                }else{
+//                    arrCheck[sender.tag] = false
+//                    sender.isSelected = false
+//                }
+//            }
+//            debugPrint("Case 3")
             
-        default:
-            debugPrint("Is Hideen default run")
-        }
+//        default:
+//            debugPrint("Is Hideen default run")
+//        }
         tbMenu.reloadData()
     }
     
@@ -777,8 +803,9 @@ extension ItemDetailsVC : CLLocationManagerDelegate{
         self.lat = locValue.latitude
         self.long = locValue.longitude
         let distance =  distanceBetween(lat1: locValue.latitude, lon1: locValue.longitude, lat2: Double(self.modal?.latitude ?? "") ?? 0, lon2: Double(self.modal?.longitude ?? "") ?? 0)
-        let miles = "\(String(format:"%.1f",distance)) miles"
-        self.lblLocation.text = "\(self.modal?.location ?? "") \n\(miles)"
+        let miles = "\(String(format:"%.1f",distance)) KM"
+        self.lblHeading.text = "Location " + "\(miles)"
+       // "\(self.modal?.location ?? "") \n\(miles)"
         locationManager.stopUpdatingLocation()
     }
     
@@ -786,7 +813,8 @@ extension ItemDetailsVC : CLLocationManagerDelegate{
 }
 
 func calCulateDiscount (actualPrice: Double,discount: Double) -> Int {
-    let result = (actualPrice / 100) * discount
+    let result = (actualPrice * discount) / 100
+    //(actualPrice / 100) * discount
     let finalAmount = actualPrice - result
     print("oferr data----------",actualPrice,discount,finalAmount)
     return Int(finalAmount)

@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         SocketIOManager.sharedInstance.connect_user_listen()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        LocationManager1.sharedInstance.determineMyCurrentLocation()
         if CLLocationManager.locationServicesEnabled() {
             locationUpdated = true
             locationManager.delegate = self

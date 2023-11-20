@@ -10,7 +10,8 @@ import UIKit
 class CellMenuTV: UITableViewCell {
     
     //MARK: Outlets
-//    @IBOutlet weak var lblHeading : UILabel!
+    @IBOutlet weak var lblDiscount: UILabel!
+    //    @IBOutlet weak var lblHeading : UILabel!
 //    @IBOutlet weak var btn : UIButton!
     @IBOutlet weak var viewCell : UIView!
     @IBOutlet weak var heightStackView : NSLayoutConstraint!
