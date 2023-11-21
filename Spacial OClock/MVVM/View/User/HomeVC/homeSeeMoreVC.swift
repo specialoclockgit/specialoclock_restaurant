@@ -85,7 +85,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             let imageIndex = (imageURL) + (all_bars_restos[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblDis.text = (self.all_bars_restos[indexPath.row].openTime ?? "") + " - " +  (self.all_bars_restos[indexPath.row].closeTime ?? "")
+            cell.lblDis.text = ((self.all_bars_restos[indexPath.row].openTime)?.components(separatedBy: " ").first ?? "") + " - " +  ((self.all_bars_restos[indexPath.row].closeTime)?.components(separatedBy: " ").first ?? "")
             cell.lblName.text = self.all_bars_restos[indexPath.row].name ?? ""
             cell.offerTimings = self.all_bars_restos[indexPath.row].offerTimings ?? []
             cell.lblCity.text = self.all_bars_restos[indexPath.row].city ?? ""

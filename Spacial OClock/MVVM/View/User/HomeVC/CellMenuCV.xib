@@ -42,7 +42,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tonight" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-FJ-upr">
-                                        <rect key="frame" x="15" y="27" width="93" height="17"/>
+                                        <rect key="frame" x="17" y="27" width="89" height="17"/>
                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -57,12 +57,12 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="123" id="2Gg-BK-jkT"/>
                                     <constraint firstItem="ihD-iw-bXs" firstAttribute="leading" secondItem="B8I-dT-1gg" secondAttribute="leading" constant="5" id="41R-h4-2c7"/>
-                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="trailing" secondItem="ihD-iw-bXs" secondAttribute="trailing" constant="-10" id="6hC-uR-7bn"/>
+                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="trailing" secondItem="ihD-iw-bXs" secondAttribute="trailing" constant="-12" id="6hC-uR-7bn"/>
                                     <constraint firstItem="ihD-iw-bXs" firstAttribute="top" secondItem="B8I-dT-1gg" secondAttribute="top" constant="5" id="C3M-hB-oQn"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eH3-AV-9hM" secondAttribute="bottom" constant="6" id="Nyg-ie-7kH"/>
                                     <constraint firstAttribute="bottom" secondItem="ihD-iw-bXs" secondAttribute="bottom" constant="5" id="UVY-6d-Ic4"/>
                                     <constraint firstItem="eH3-AV-9hM" firstAttribute="centerX" secondItem="B8I-dT-1gg" secondAttribute="centerX" id="WZi-Re-IxM"/>
-                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="leading" secondItem="ihD-iw-bXs" secondAttribute="leading" constant="10" id="cEk-f6-jhi"/>
+                                    <constraint firstItem="dAN-FJ-upr" firstAttribute="leading" secondItem="ihD-iw-bXs" secondAttribute="leading" constant="12" id="cEk-f6-jhi"/>
                                     <constraint firstItem="eH3-AV-9hM" firstAttribute="top" secondItem="dAN-FJ-upr" secondAttribute="bottom" constant="10" id="efW-0U-LBa"/>
                                     <constraint firstAttribute="trailing" secondItem="ihD-iw-bXs" secondAttribute="trailing" constant="5" id="nTs-NN-sXD"/>
                                     <constraint firstItem="dAN-FJ-upr" firstAttribute="top" secondItem="ihD-iw-bXs" secondAttribute="top" constant="22" id="wgc-ev-umM"/>

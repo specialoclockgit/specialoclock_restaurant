@@ -11,12 +11,10 @@ import SkeletonView
 class newSeeMoreVC: UIViewController {
 
     //MARK: - OUTLETS
+    @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var colleVeiw: UICollectionView!
-    @IBOutlet weak var lblHead2: UILabel!
-    @IBOutlet weak var lblHead1: UILabel!
-    @IBOutlet weak var imgView: UIImageView!
-    @IBOutlet weak var lblHeader: UILabel!
+   
     
     //MARK: - VARIABELS
     var location = [HomeListLocation]()
@@ -32,21 +30,13 @@ class newSeeMoreVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if setvalue == "Location"{
-//            lblHeader.text = "Location"
-//            lblHead1.text = "Location"
-//            imgView.image = UIImage(named: "pinPerson")
+            lblHeading.text = "Location"
         }else if setvalue == "Cuisines"{
-//            lblHeader.text = "Cuisine"
-         //   lblHead1.text = "Cuisine"
-//            imgView.image = UIImage(named: "soup")
+            lblHeading.text = "Cuisine"
         }else if setvalue == "Category"{
-//            lblHeader.text = "Category"
-//            lblHead1.text = "Category"
-//            imgView.image = UIImage(named: "menu 1")
+            lblHeading.text = "Category"
         }else if setvalue == "Theme"{
-//            lblHeader.text = "Theme"
-//            lblHead1.text = "Theme"
-//            imgView.image = UIImage(named: "mask")
+            lblHeading.text = "Theme"
         }
     }
     

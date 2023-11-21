@@ -125,7 +125,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         viewFullMenu.dataSource = self
         
         fetchdata()
-        
         self.datecuurent = string(format: "yyyy-MM-dd")
         txtFldDate.text = datecuurent
         viewRestoRating.layer.cornerRadius = 12
@@ -153,9 +152,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         self.tbMenu.register(nibMenuTB, forCellReuseIdentifier: Cell.CellMenuTV)
         tbMenu.delegate = self
         tbMenu.dataSource = self
-        for _ in 0...arrTBMenu.count{
-            arrCheck.append(true)
+        
+        
+        for i in 0...(self.products?.count ?? 0){
+            self.arrCheck.append(false)
         }
+       
     }
     
     func string(format: String) -> String {
@@ -173,13 +175,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.reviews = data?.reviews?.reversed() ?? []
             self.ourMenu = data?.ourMenu ?? []
             self.offer = data?.offer_timings ?? []
-            let imageIndex = (imageURL) + (self.modal?.images?.first?.image ?? "")
+            let imageIndex = (imageURL) + (self.modal?.images?.first?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+            self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             self.lblNameREsto.text = self.modal?.name ?? ""
             self.lblLocation.text = self.modal?.location ?? ""
             self.lblUserLOcation.text = self.modal?.city ?? ""
-            self.lblOpenClose.text = "\(self.modal?.openTime ?? "") - " + "\(self.modal?.closeTime ?? "")"
+            self.lblOpenClose.text = "\((self.modal?.openTime ?? "").components(separatedBy: " ").first ?? "") - " + "\((self.modal?.closeTime ?? "").components(separatedBy: " ").first ?? "")"
             if self.modal?.isLiked == 0{
                 self.imgFav.image = UIImage(named: "white h")
             }else{
@@ -197,7 +199,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.tbMenu.reloadData()
             if self.offer?.count ?? 0 > 0 {
                 self.discount = self.offer?[0].percentage ?? 0
-                self.menuProductAPI(id: self.offer?[0].menuID ?? 0)
+               self.menuProductAPI(id: self.offer?[0].menuID ?? 0)
             }
         }
     }
@@ -206,6 +208,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         viewmodal.allMenu_API(resto_bar_id: ProductID) { [weak self] data in
             self?.modalfullmenu =  data
             self?.viewFullMenu.reloadData()
+            self?.viewFCHeight.constant = self?.viewFullMenu.contentSize.height ?? 0
         }
     }
     
@@ -242,12 +245,27 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     func menuProductAPI(id: Int){
         viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id) { dataa in
             self.productModal = dataa
-            self.products = dataa?.categories?.first?.products ?? []
+            self.products = dataa?.products ?? []
             self.actualprice = "\(self.products?.first?.price ?? 0)"
             self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? 0)"
             self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
             self.tbMenu.reloadData()
             self.collViewMenu.reloadData()
+            self.arrCheck.removeAll()
+            
+            for i in 0...(self.products?.count ?? 0){
+                if i == 0 {
+                    if self.viewButton.isHidden == true {
+                        self.arrCheck.append(false)
+                    } else {
+                        self.arrCheck.append(true)
+                    }
+                    
+                } else {
+                    self.arrCheck.append(false)
+                }
+                self.tbMenu.reloadData()
+            }
         }
     }
     
@@ -431,9 +449,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellItemDetailVC", for: indexPath) as! CellItemDetailVC
-            let imageIndex = (imageURL) + (self.images?[indexPath.row].image ?? "")
+            let imageIndex = (imageURL) + (self.images?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             return cell
         }
         else if collectionView == collViewMenu{
@@ -461,7 +479,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "allMenuCVC", for: indexPath) as! allMenuCVC
             let imageIndex = (self.modalfullmenu?[indexPath.row].baseurl ?? "") + (self.modalfullmenu?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             return cell
         }else
         {
@@ -526,12 +544,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             if self.modalfullmenu?.count == 0{
-                self.viewFCHeight.constant = 220
+                self.viewFCHeight.constant = 260
                 self.ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
                 self.ImgViewgifReview.isHidden = false
             }else{
                 self.ImgViewgifReview.isHidden = true
-                self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
+                
             }
           
         }
@@ -543,7 +561,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             if arrCheck[section] == false {
                 return 0
             } else {
-                return productModal?.categories?[section].products?.count ?? 0
+                return products?.count ?? 0
             }
         }else{
             if reviews?.count == 0{
@@ -557,12 +575,14 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         return 0
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if tableView == tbMenu{
-            return productModal?.categories?.count ?? 0
-        }
-        return self.reviews?.count ?? 0
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        if tableView == tbMenu{
+//            return products?.count ?? 0
+//        }else{
+//            return self.reviews?.count ?? 0
+//        }
+//        
+//    }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if tableView == tbMenu{
@@ -572,7 +592,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             sectionV.layer.cornerRadius = 10
             let titleLbl = UILabel.init(frame: CGRect(x: 18, y: 10, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
-            titleLbl.text = "Recommended \(productModal?.categories?[section].products?.first?.menuTypeName ?? "")"
+            titleLbl.text = "Recommended \(products?[section].menuTypeName ?? "") Special"
 //            \n\(self.promotionTxt)"
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-30, y: 6, width: 30, height: 30))
@@ -605,20 +625,20 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
-            let arrSection = productModal?.categories?[indexPath.section].products
-            let imageIndex = (productImgURL) + (arrSection?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
+           // let arrSection = products?[indexPath.section]
+            let imageIndex = (productImgURL) + (products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
-            cell.lblItemName.text = arrSection?[indexPath.row].productName ?? ""
-            cell.lblPrePrice.text = "R\(arrSection?[indexPath.row].price ?? 0)"
-            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(arrSection?[indexPath.row].price ?? 0), discount: Double(arrSection?[indexPath.row].offer?.offerPrice ?? 0)).description)"
-            cell.lblDiscount.text = "(\(arrSection?[indexPath.row].offer?.offerPrice ?? 0)% Discount)"
+            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
+            cell.lblItemName.text = products?[indexPath.row].productName ?? ""
+            cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
+            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(products?[indexPath.row].offerPercentage ?? 0)).description)"
+            cell.lblDiscount.text = "(\(products?[indexPath.row].offerPercentage ?? 0)% Discount)"
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellItemDetailReviewTB, for: indexPath) as! CellItemDetailReviewTB
             let imageIndex = (imageURL) + (self.reviews?[indexPath.row].user?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
+            cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             cell.lblName.text = self.reviews?[indexPath.row].user?.name ?? ""
             cell.lblReview.text = self.reviews?[indexPath.row].review ?? ""
             cell.cosmosView.rating = Double(self.reviews?[indexPath.row].rating ?? "") ?? 0.0
@@ -642,10 +662,9 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbMenu{
-            let arrSection = productModal?.categories?[indexPath.section].products
             let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
             vc.settype = 2
-            vc.setImage = arrSection?[indexPath.row].image ?? ""
+            vc.setImage = products?[indexPath.row].image ?? ""
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             
@@ -803,7 +822,7 @@ extension ItemDetailsVC : CLLocationManagerDelegate{
         self.lat = locValue.latitude
         self.long = locValue.longitude
         let distance =  distanceBetween(lat1: locValue.latitude, lon1: locValue.longitude, lat2: Double(self.modal?.latitude ?? "") ?? 0, lon2: Double(self.modal?.longitude ?? "") ?? 0)
-        let miles = "\(String(format:"%.1f",distance)) KM"
+        let miles = "\(String(format:"%.1f",distance)) Km"
         self.lblHeading.text = "Location " + "\(miles)"
        // "\(self.modal?.location ?? "") \n\(miles)"
         locationManager.stopUpdatingLocation()

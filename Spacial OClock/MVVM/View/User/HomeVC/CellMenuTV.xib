@@ -30,7 +30,7 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="FCF-bh-oty">
                         <rect key="frame" x="4" y="2" width="275" height="74"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rft-lS-GU0" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rft-lS-GU0">
                                 <rect key="frame" x="4" y="2" width="283" height="70"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ciroc" translatesAutoresizingMaskIntoConstraints="NO" id="IH1-JW-bWg">
@@ -94,23 +94,6 @@
                                     <constraint firstItem="XUX-vp-ADb" firstAttribute="top" secondItem="8Ww-tQ-8RC" secondAttribute="bottom" constant="4" id="swJ-Lt-a7c"/>
                                     <constraint firstItem="9OT-nI-cpy" firstAttribute="centerY" secondItem="jq6-ix-86I" secondAttribute="centerY" id="zcW-js-Zhi"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                        <size key="value" width="0.40000000000000002" height="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>

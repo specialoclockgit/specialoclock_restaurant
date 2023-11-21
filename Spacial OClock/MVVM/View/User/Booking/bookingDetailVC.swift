@@ -74,7 +74,7 @@ class bookingDetailVC: UIViewController {
         viewmodal.bookingDetail_API(bookingId: booking_id) { fetchdata in
             self.modal = fetchdata
             self.products = fetchdata?.restrorant?.products ?? []
-            let imageIndex = (imageURL) + (fetchdata?.restrorant?.profileImage ?? "")
+            let imageIndex = (imageURL) + (fetchdata?.restrorant?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             self.lblCity.text = fetchdata?.restrorant?.city ?? ""

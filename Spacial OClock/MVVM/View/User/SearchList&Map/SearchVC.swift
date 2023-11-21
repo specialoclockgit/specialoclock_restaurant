@@ -66,11 +66,10 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCVC", for: indexPath) as! SearchCVC
-        let imageIndex = (imageURL) + (filterdata?[indexPath.row].profileImage ?? "")
-        
+        let imageIndex = (imageURL) + (filterdata?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
         if cell.imgView != nil {
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
         }
        
         cell.lblName.text = filterdata?[indexPath.row].name ?? ""

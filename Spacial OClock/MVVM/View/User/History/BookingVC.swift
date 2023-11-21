@@ -105,7 +105,7 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
         cell.bookingDatelbl.text = modal?[indexPath.row].bookingDate ?? ""
         cell.bookingNumber.text = modal?[indexPath.row].bookingID ?? ""
         cell.bookingTimelbl.text = modal?[indexPath.row].bookingSlot ?? ""
-        let imageIndex = (imageURL) + (modal?[indexPath.row].restoImage ?? "")
+        let imageIndex = (imageURL) + (modal?[indexPath.row].restoImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.itemImg.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.itemImg.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
         return cell
