@@ -39,7 +39,6 @@ class LoginVC: UIViewController {
         self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 1) {
             if Store.userDetails?.isOtpVerified == 1 {
                Store.autoLogin = true
-              // self.userHomeRoot()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
                 CommonUtilities.shared.showAlert(message: "Login successfully", isSuccess: .success)
                 self.navigationController?.pushViewController(vc, animated: true)

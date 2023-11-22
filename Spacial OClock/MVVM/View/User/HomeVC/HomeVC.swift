@@ -74,7 +74,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         tbHomeData.dataSource = self
         isSelected = true
         //MARK: Dine or Drink UserDefault for itemDetailOffer
-        UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
+        UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
         self.getUpdatedLocation()
         setDine()
     }
@@ -273,7 +273,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDrinks.textColor = UIColor.lightGray
         lblDineIn.textColor = UIColor.black
         isSelected = true
-        UserDefaults.standard.set(0, forKey: "dineDrinkStatus")
+        UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
         setData(type: 1, country:self.getcountry, state: "", city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }
@@ -284,7 +284,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDineIn.textColor = UIColor.lightGray
         lblDrinks.textColor = UIColor.black
         isSelected = false
-        UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
+        UserDefaults.standard.set(2, forKey: "dineDrinkStatus")
         setData(type: 2, country: "India", state: "ff", city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }

@@ -208,7 +208,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         viewmodal.allMenu_API(resto_bar_id: ProductID) { [weak self] data in
             self?.modalfullmenu =  data
             self?.viewFullMenu.reloadData()
-            self?.viewFCHeight.constant = self?.viewFullMenu.contentSize.height ?? 0
         }
     }
     
@@ -456,7 +455,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
         else if collectionView == collViewMenu{
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
-            if status == 0 {
+            if status == 1{
                 if indexPath.row == isselectedoffer{
                     self.viewButton.isHidden = false
                     cell.img.image = UIImage(named: "greenRectangle")
@@ -494,9 +493,13 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }else if collectionView == viewFullMenu{
             return CGSize(width: viewFullMenu.frame.width / 2.1, height: 166)
         }
+//        else if collectionView == collView{
+//            return CGSize(width: collView.frame.width / 3, height: 100)
+//        }
         return CGSize(width: 120.0, height: 80.0)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(status)
         debugPrint(indexPath.row)
         if collectionView == collView{
             let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
@@ -512,7 +515,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
         
         let index = indexPath.row
-        if status == 0 {
+        if status == 1 {
             if collectionView == collViewMenu{
                 isselectedoffer = indexPath.row
                 collViewMenu.reloadData()
@@ -529,7 +532,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
             self.offerID = offer?[indexPath.row].offerID ?? 0
             
-        } else if status == 1 {
+        } else if status == 2 {
             let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
                                                                  image: ["goose" , "belveder", "Ciroc" ],
                                                                  itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
@@ -549,7 +552,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 self.ImgViewgifReview.isHidden = false
             }else{
                 self.ImgViewgifReview.isHidden = true
-                
+                self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
             }
           
         }

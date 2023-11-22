@@ -33,7 +33,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8I-dT-1gg">
                                 <rect key="frame" x="-1" y="2" width="123" height="108"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ornageRectabgle" translatesAutoresizingMaskIntoConstraints="NO" id="ihD-iw-bXs">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BgOfferImg" translatesAutoresizingMaskIntoConstraints="NO" id="ihD-iw-bXs">
                                         <rect key="frame" x="5" y="5" width="113" height="98"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -124,7 +124,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="ornageRectabgle" width="112.5" height="98"/>
+        <image name="BgOfferImg" width="112.5" height="98"/>
         <namedColor name="themeOrange">
             <color red="0.99599999189376831" green="0.44699999690055847" blue="0.075000002980232239" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

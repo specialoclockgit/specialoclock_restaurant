@@ -177,7 +177,5 @@ class HomeViewModel : NSObject {
             (modaldata: CategoryByRModal, Data , json) in
             onsuccess(modaldata.body)
         }
-    }
-    
-    
+    }    
 }

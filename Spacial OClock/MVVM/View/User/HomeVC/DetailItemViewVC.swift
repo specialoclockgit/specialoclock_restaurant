@@ -40,7 +40,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     var setimage = ""
     var setValue = ""
     var all_bars_restos = [AllBarsResto]()
-    var type = 0
+    var type = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
