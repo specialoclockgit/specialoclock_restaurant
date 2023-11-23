@@ -493,9 +493,6 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }else if collectionView == viewFullMenu{
             return CGSize(width: viewFullMenu.frame.width / 2.1, height: 166)
         }
-//        else if collectionView == collView{
-//            return CGSize(width: collView.frame.width / 3, height: 100)
-//        }
         return CGSize(width: 120.0, height: 80.0)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -554,7 +551,6 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 self.ImgViewgifReview.isHidden = true
                 self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
             }
-          
         }
     }
 }
