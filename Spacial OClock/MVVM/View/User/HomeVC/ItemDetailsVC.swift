@@ -589,7 +589,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             sectionV1.backgroundColor = UIColor.clear
             let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40) )
             sectionV.layer.cornerRadius = 10
-            let titleLbl = UILabel.init(frame: CGRect(x: 18, y: 10, width: tableView.frame.width-50, height: 20) )
+            let titleLbl = UILabel.init(frame: CGRect(x: 12, y: 10, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
             titleLbl.text = "Recommended \(products?[section].menuTypeName ?? "") Special"
 //            \n\(self.promotionTxt)"

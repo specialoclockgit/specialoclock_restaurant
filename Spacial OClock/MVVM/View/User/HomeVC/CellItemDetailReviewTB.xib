@@ -50,6 +50,20 @@
                                     <constraint firstAttribute="height" constant="20" id="CNH-CT-Fhn"/>
                                     <constraint firstAttribute="width" constant="70" id="QVi-ti-BQG"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                        <color key="value" red="0.94891685250000002" green="0.82155972720000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                        <color key="value" red="0.94901960784313721" green="0.81960784313725488" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nov 15, 2023" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9XS-bK-3Ch">
                                 <rect key="frame" x="186" y="5" width="100" height="14"/>
@@ -83,11 +97,12 @@
                             <constraint firstItem="TvW-xz-bS0" firstAttribute="leading" secondItem="aft-mB-bRK" secondAttribute="trailing" constant="10" id="QBV-Es-xCI"/>
                             <constraint firstItem="TvW-xz-bS0" firstAttribute="top" secondItem="UPh-IF-nvi" secondAttribute="bottom" constant="5" id="VGs-XA-pyR"/>
                             <constraint firstItem="aft-mB-bRK" firstAttribute="leading" secondItem="ndd-6b-ZeW" secondAttribute="leading" constant="5" id="WE0-hc-RTS"/>
+                            <constraint firstItem="AGx-Cr-PWK" firstAttribute="leading" secondItem="TvW-xz-bS0" secondAttribute="trailing" constant="-125" id="ay8-qG-Qf5"/>
                             <constraint firstItem="UPh-IF-nvi" firstAttribute="top" secondItem="ndd-6b-ZeW" secondAttribute="top" constant="5" id="drc-aS-POJ"/>
-                            <constraint firstItem="AGx-Cr-PWK" firstAttribute="top" secondItem="TvW-xz-bS0" secondAttribute="bottom" constant="20" id="eQs-6p-TvT"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="AGx-Cr-PWK" secondAttribute="bottom" constant="10" id="fxx-1b-4Ks"/>
                             <constraint firstItem="AGx-Cr-PWK" firstAttribute="leading" secondItem="ndd-6b-ZeW" secondAttribute="leading" constant="10" id="ifW-g6-uLG"/>
                             <constraint firstAttribute="trailing" secondItem="AGx-Cr-PWK" secondAttribute="trailing" constant="10" id="kOG-Oi-QDx"/>
+                            <constraint firstItem="AGx-Cr-PWK" firstAttribute="top" secondItem="TvW-xz-bS0" secondAttribute="bottom" constant="20" id="l5O-fU-oaA"/>
                         </constraints>
                     </view>
                 </subviews>

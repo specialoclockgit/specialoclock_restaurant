@@ -120,29 +120,23 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
         if let userInfo = notification.request.content.userInfo as? [String:Any] {
             print("**********************")
             print(userInfo)
-//            let apnsData = userInfo["data"] as? [String:Any]
-            
-//            if let notificationType = apnsData?["noti_type"] as? String {
-//                if Store.isCompanion == "2" {
-//                    let homeStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
-//                    if let tabBarController  = rootController1 as? UINavigationController  ,  let visibleViewController = tabBarController.visibleViewController {
-//                        if notificationType == "message" {
-//                            if visibleViewController != visibleViewController as? ChatVC {
-//                                completionHandler([.alert, .sound])
-//
-//                            } else {
-//                                completionHandler([])
-//                            }
-//                        }else {
-//
-//                        }
-//                    }
-//                }
+            let userInfos = userInfo["aps"] as?  [String:Any]
+            let Staustype = userInfos?["type"] as? Int
+//            if Store.userDetails?.body.role == 1 {
+                if let topVc = UIApplication.topViewController(), topVc.isKind(of: RestoHomeVC.self) {
+                    completionHandler([])
+                } else {
+                    completionHandler([.sound,.banner,.badge])
+                }
+                if let topVc = UIApplication.topViewController(), topVc.isKind(of: ChatVC.self) {
+                    completionHandler([])
+                } else {
+                    completionHandler([.sound,.banner,.badge])
+                }
+                
+//            }else{
+//                completionHandler([.sound,.banner,.badge])
 //            }
-        }
-        let badgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
-        DispatchQueue.main.async {
-            UIApplication.shared.applicationIconBadgeNumber = badgeNumber
         }
     }
     
@@ -199,5 +193,22 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
 //            }
         }
         completionHandler()
+    }
+}
+
+extension UIApplication {
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
     }
 }
