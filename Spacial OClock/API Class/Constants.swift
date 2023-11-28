@@ -164,6 +164,9 @@ enum API: String{
     case fetch_available_slots
     case fetch_menu_gallery
     case fetch_restos_by_category
+    
+    //RESTO
+    case restro_home
    
 }
 

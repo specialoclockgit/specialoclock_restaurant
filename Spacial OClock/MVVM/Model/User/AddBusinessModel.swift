@@ -43,32 +43,32 @@
 //        case userID = "user_id"
 //    }
 //}
+
 import Foundation
 
-// MARK: - Model
+// MARK: - AddbusinessModel
 struct AddbusinessModel: Codable {
-    var success: Bool
-    var code: Int
-    var message: String
-    var body: AddbusinessModelBody
+    let success: Bool?
+    let code: Int?
+    let message: String?
+    let body: AddbusinessModelBody?
 }
 
-// MARK: - Body
+// MARK: - AddbusinessModelBody
 struct AddbusinessModelBody: Codable {
-    var addBar: AddBar
+    let addRestaurant: AddRestaurant?
 
     enum CodingKeys: String, CodingKey {
-        case addBar = "add_bar"
+        case addRestaurant = "add_restaurant"
     }
 }
 
-// MARK: - AddBar
-struct AddBar: Codable {
-    var status, isBlocked, id: Int
-    var name, type, profileImage, location: String
-    var openTime, closeTime, categoryID, themesRestrorantID: String
-    var shortDescription: String
-    var userID: Int
+// MARK: - AddRestaurant
+struct AddRestaurant: Codable {
+    let status, isBlocked, id: Int?
+    let name, type, profileImage, location: String?
+    let openTime, closeTime, themesRestrorantID, shortDescription: String?
+    let userID: Int?
 
     enum CodingKeys: String, CodingKey {
         case status
@@ -78,10 +78,8 @@ struct AddBar: Codable {
         case location
         case openTime = "open_time"
         case closeTime = "close_time"
-        case categoryID = "category_id"
         case themesRestrorantID = "themes_restrorant_id"
         case shortDescription = "short_description"
         case userID = "user_id"
     }
 }
-

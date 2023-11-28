@@ -162,10 +162,7 @@
 		C284FB502A402A0E006949B4 /* Spacial_OClockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB4F2A402A0E006949B4 /* Spacial_OClockTests.swift */; };
 		C284FB5A2A402A0F006949B4 /* Spacial_OClockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB592A402A0F006949B4 /* Spacial_OClockUITests.swift */; };
 		C284FB5C2A402A0F006949B4 /* Spacial_OClockUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB5B2A402A0F006949B4 /* Spacial_OClockUITestsLaunchTests.swift */; };
-		C284FB692A402A46006949B4 /* restoCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB682A402A46006949B4 /* restoCreateVC.swift */; };
 		C284FB6C2A402D6F006949B4 /* RestoBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C284FB6B2A402D6F006949B4 /* RestoBar.storyboard */; };
-		C284FB732A402E3E006949B4 /* RestoHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB712A402E3E006949B4 /* RestoHomeVC.swift */; };
-		C284FB742A402E3E006949B4 /* RestoHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB722A402E3E006949B4 /* RestoHomeTVC.swift */; };
 		C284FB7C2A402EE8006949B4 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB762A402EE7006949B4 /* CustomTextField.swift */; };
 		C284FB7D2A402EE8006949B4 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB772A402EE7006949B4 /* CustomButton.swift */; };
 		C284FB7E2A402EE8006949B4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284FB782A402EE7006949B4 /* ImagePicker.swift */; };
@@ -221,6 +218,11 @@
 		ECB3A2A72AD431F400C65065 /* currentPastModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB3A2A62AD431F400C65065 /* currentPastModal.swift */; };
 		ECB549832AEB86C00041FA1C /* fullImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB549822AEB86C00041FA1C /* fullImageView.swift */; };
 		ECBAA8942AD674950070967B /* bookingDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBAA8932AD674950070967B /* bookingDetailModal.swift */; };
+		ECBAD2DA2B15D6CF005E9B6E /* restoCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBAD2D92B15D6CF005E9B6E /* restoCreateVC.swift */; };
+		ECBAD2DC2B160E85005E9B6E /* restoViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBAD2DB2B160E85005E9B6E /* restoViewModal.swift */; };
+		ECBAD2E02B160F1B005E9B6E /* homeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBAD2DF2B160F1B005E9B6E /* homeModal.swift */; };
+		ECBAD2E22B161021005E9B6E /* RestoHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBAD2E12B161021005E9B6E /* RestoHomeVC.swift */; };
+		ECBAD2E62B161146005E9B6E /* RestoHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBAD2E52B161146005E9B6E /* RestoHomeTVC.swift */; };
 		ECBC37BE2AC40E8A00ADEDC7 /* themeRestolistModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */; };
 		ECBC37C02AC4171A00ADEDC7 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37BF2AC4171A00ADEDC7 /* ChatVC.swift */; };
 		ECBC37C62AC4181100ADEDC7 /* senderTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBC37C52AC4181100ADEDC7 /* senderTVC.swift */; };
@@ -414,10 +416,7 @@
 		C284FB552A402A0F006949B4 /* Spacial OClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spacial OClockUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C284FB592A402A0F006949B4 /* Spacial_OClockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacial_OClockUITests.swift; sourceTree = "<group>"; };
 		C284FB5B2A402A0F006949B4 /* Spacial_OClockUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacial_OClockUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		C284FB682A402A46006949B4 /* restoCreateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = restoCreateVC.swift; sourceTree = "<group>"; };
 		C284FB6B2A402D6F006949B4 /* RestoBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RestoBar.storyboard; sourceTree = "<group>"; };
-		C284FB712A402E3E006949B4 /* RestoHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoHomeVC.swift; sourceTree = "<group>"; };
-		C284FB722A402E3E006949B4 /* RestoHomeTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoHomeTVC.swift; sourceTree = "<group>"; };
 		C284FB762A402EE7006949B4 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		C284FB772A402EE7006949B4 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C284FB782A402EE7006949B4 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -492,6 +491,11 @@
 		ECB3A2A62AD431F400C65065 /* currentPastModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = currentPastModal.swift; sourceTree = "<group>"; };
 		ECB549822AEB86C00041FA1C /* fullImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullImageView.swift; sourceTree = "<group>"; };
 		ECBAA8932AD674950070967B /* bookingDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailModal.swift; sourceTree = "<group>"; };
+		ECBAD2D92B15D6CF005E9B6E /* restoCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restoCreateVC.swift; sourceTree = "<group>"; };
+		ECBAD2DB2B160E85005E9B6E /* restoViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restoViewModal.swift; sourceTree = "<group>"; };
+		ECBAD2DF2B160F1B005E9B6E /* homeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeModal.swift; sourceTree = "<group>"; };
+		ECBAD2E12B161021005E9B6E /* RestoHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoHomeVC.swift; sourceTree = "<group>"; };
+		ECBAD2E52B161146005E9B6E /* RestoHomeTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestoHomeTVC.swift; path = "../../../../../../specialoclock/Spacial OClock/MVVM/View/RestoBar/Home/RestoHomeTVC.swift"; sourceTree = "<group>"; };
 		ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = themeRestolistModal.swift; sourceTree = "<group>"; };
 		ECBC37BF2AC4171A00ADEDC7 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		ECBC37C52AC4181100ADEDC7 /* senderTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = senderTVC.swift; sourceTree = "<group>"; };
@@ -589,6 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				8B0BDF182A80F04400A28BD2 /* AuthViewModel.swift */,
+				ECBAD2DB2B160E85005E9B6E /* restoViewModal.swift */,
 			);
 			path = AuthViewmodel;
 			sourceTree = "<group>";
@@ -612,40 +617,8 @@
 		A500C5F12A4BF63600F4D33D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */,
-				8B0BDF2D2A80F68B00A28BD2 /* HomeVM.swift */,
-				8B0BDF2F2A80FFFD00A28BD2 /* SignUpModel.swift */,
-				8B9CF07B2A81F10B006C90E9 /* forgotpasswordmodel.swift */,
-				8B9CF07D2A81F221006C90E9 /* TermsandconditionModel.swift */,
-				8B9CF07F2A8212FE006C90E9 /* Fileupload.swift */,
-				8BEFA2492A8496F400FE1E35 /* ContactUsModel.swift */,
-				8BEFA24D2A84A05000FE1E35 /* NotificationStatusModel.swift */,
-				8BF5ED7F2A84E82700F2EA8C /* helpandFaqModel.swift */,
-				8B9154692A85EC5000CCB83E /* ThemeModel.swift */,
-				8B91546B2A85EFAD00CCB83E /* CategorylistingModel.swift */,
-				8B91546D2A85F06E00CCB83E /* CuisineListingModel.swift */,
-				8B91546F2A860D0600CCB83E /* AddBusinessModel.swift */,
-				8B9154712A86224F00CCB83E /* EditProfileModel.swift */,
-				29A8E4A82A90AECE0062E142 /* getProfileModel.swift */,
-				8B9154732A86372800CCB83E /* ResendOtpModel.swift */,
-				29A19A392A8FA7C9008193A4 /* commonModel.swift */,
-				2ACA091D2A9DDE1D00FDD9E0 /* LocationListModel.swift */,
-				2A1C50612A9F167300FBE41A /* HomeModel.swift */,
-				ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */,
-				ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */,
-				ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */,
-				ECE802682ABD83F3004CC589 /* favListModal.swift */,
-				ECC5A02D2AC5B145008E7A72 /* locationByRestoModal.swift */,
-				EC1B96372ACC45A500BBEF7B /* createReviewModal.swift */,
-				EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */,
-				ECCB15CD2ACFEF17003B4B72 /* menuProductModal.swift */,
-				ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */,
-				ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */,
-				ECB3A2A62AD431F400C65065 /* currentPastModal.swift */,
-				ECBAA8932AD674950070967B /* bookingDetailModal.swift */,
-				ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */,
-				ECCEDB3B2AF10EE300DA8D8D /* allMenuModal.swift */,
-				EC4DD6AA2AFA149A00961D82 /* CategoryByRModal.swift */,
+				ECBAD2DD2B160ED4005E9B6E /* User */,
+				ECBAD2DE2B160EE4005E9B6E /* Resto */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -956,9 +929,9 @@
 			isa = PBXGroup;
 			children = (
 				8B0EA6EF2A85093E00353166 /* UploadImgCVC.swift */,
-				C284FB682A402A46006949B4 /* restoCreateVC.swift */,
 				C25738122A4ACC50002BA6A7 /* RestoProfileVC.swift */,
 				A58CCCA92A5EDAAE00DFA478 /* EditProfileVC.swift */,
+				ECBAD2D92B15D6CF005E9B6E /* restoCreateVC.swift */,
 			);
 			path = "\U0010RestoCreate";
 			sourceTree = "<group>";
@@ -991,9 +964,9 @@
 		C284FB702A402E2F006949B4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C284FB722A402E3E006949B4 /* RestoHomeTVC.swift */,
-				C284FB712A402E3E006949B4 /* RestoHomeVC.swift */,
+				ECBAD2E52B161146005E9B6E /* RestoHomeTVC.swift */,
 				A5A8CF462A581CCB006F23ED /* RestoTabBarVC.swift */,
+				ECBAD2E12B161021005E9B6E /* RestoHomeVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1206,6 +1179,55 @@
 				ECB020642ADE6594002D2C07 /* mapViewController.swift */,
 			);
 			path = "SearchList&Map";
+			sourceTree = "<group>";
+		};
+		ECBAD2DD2B160ED4005E9B6E /* User */ = {
+			isa = PBXGroup;
+			children = (
+				ECBC37BD2AC40E8A00ADEDC7 /* themeRestolistModal.swift */,
+				8B0BDF2D2A80F68B00A28BD2 /* HomeVM.swift */,
+				8B0BDF2F2A80FFFD00A28BD2 /* SignUpModel.swift */,
+				8B9CF07B2A81F10B006C90E9 /* forgotpasswordmodel.swift */,
+				8B9CF07D2A81F221006C90E9 /* TermsandconditionModel.swift */,
+				8B9CF07F2A8212FE006C90E9 /* Fileupload.swift */,
+				8BEFA2492A8496F400FE1E35 /* ContactUsModel.swift */,
+				8BEFA24D2A84A05000FE1E35 /* NotificationStatusModel.swift */,
+				8BF5ED7F2A84E82700F2EA8C /* helpandFaqModel.swift */,
+				8B9154692A85EC5000CCB83E /* ThemeModel.swift */,
+				8B91546B2A85EFAD00CCB83E /* CategorylistingModel.swift */,
+				8B91546D2A85F06E00CCB83E /* CuisineListingModel.swift */,
+				8B91546F2A860D0600CCB83E /* AddBusinessModel.swift */,
+				8B9154712A86224F00CCB83E /* EditProfileModel.swift */,
+				29A8E4A82A90AECE0062E142 /* getProfileModel.swift */,
+				8B9154732A86372800CCB83E /* ResendOtpModel.swift */,
+				29A19A392A8FA7C9008193A4 /* commonModel.swift */,
+				2ACA091D2A9DDE1D00FDD9E0 /* LocationListModel.swift */,
+				2A1C50612A9F167300FBE41A /* HomeModel.swift */,
+				ECA3544E2AB4394500D4ABF8 /* CussinesRestoModal.swift */,
+				ECC5BCEC2ABC1B7600143940 /* themeListModal.swift */,
+				ECC5BCEE2ABC281F00143940 /* productDetailModal.swift */,
+				ECE802682ABD83F3004CC589 /* favListModal.swift */,
+				ECC5A02D2AC5B145008E7A72 /* locationByRestoModal.swift */,
+				EC1B96372ACC45A500BBEF7B /* createReviewModal.swift */,
+				EC2AD12E2ACD7476000C877B /* restoDetailModal.swift */,
+				ECCB15CD2ACFEF17003B4B72 /* menuProductModal.swift */,
+				ECB3A2A22AD404D100C65065 /* bookingRestoModal.swift */,
+				ECB3A2A42AD4134200C65065 /* getSlotsModal.swift */,
+				ECB3A2A62AD431F400C65065 /* currentPastModal.swift */,
+				ECBAA8932AD674950070967B /* bookingDetailModal.swift */,
+				ECA600362AD7D03A00C97493 /* AvalSlotModal.swift */,
+				ECCEDB3B2AF10EE300DA8D8D /* allMenuModal.swift */,
+				EC4DD6AA2AFA149A00961D82 /* CategoryByRModal.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		ECBAD2DE2B160EE4005E9B6E /* Resto */ = {
+			isa = PBXGroup;
+			children = (
+				ECBAD2DF2B160F1B005E9B6E /* homeModal.swift */,
+			);
+			path = Resto;
 			sourceTree = "<group>";
 		};
 		ECBC37C92AC44FD700ADEDC7 /* Markderset */ = {
@@ -1545,8 +1567,10 @@
 				EC6221632ABAC8B40036B68E /* DetailItemCVC.swift in Sources */,
 				C29CDB092A42BB930035E03D /* DeleteAccountPopUp.swift in Sources */,
 				C25738132A4ACC50002BA6A7 /* RestoProfileVC.swift in Sources */,
+				ECBAD2DC2B160E85005E9B6E /* restoViewModal.swift in Sources */,
 				ECB549832AEB86C00041FA1C /* fullImageView.swift in Sources */,
 				8B9154702A860D0600CCB83E /* AddBusinessModel.swift in Sources */,
+				ECBAD2DA2B15D6CF005E9B6E /* restoCreateVC.swift in Sources */,
 				A5046FEC2A4DAC7F00C23627 /* NotificationVC.swift in Sources */,
 				A5046FDE2A4D61B500C23627 /* UIView.swift in Sources */,
 				A53B4A922A4EC46F00E79265 /* UITextField.swift in Sources */,
@@ -1564,10 +1588,10 @@
 				A529D2DD2A5FC07B00E416CD /* CellBarDetailItemTV.swift in Sources */,
 				8B9CF0802A8212FE006C90E9 /* Fileupload.swift in Sources */,
 				8B0BDF272A80F10E00A28BD2 /* Reachability.swift in Sources */,
-				C284FB692A402A46006949B4 /* restoCreateVC.swift in Sources */,
 				ECA6A0632AFCAFA40094DCC1 /* OfferCVC.swift in Sources */,
 				8BF5ED802A84E82700F2EA8C /* helpandFaqModel.swift in Sources */,
 				C29CDAFB2A42BB1D0035E03D /* WalkThroughVC.swift in Sources */,
+				ECBAD2E02B160F1B005E9B6E /* homeModal.swift in Sources */,
 				A55779DC2A559F26002B2FC2 /* CenterAlertVC.swift in Sources */,
 				A55779D82A559159002B2FC2 /* HeaderMyOfferCell.swift in Sources */,
 				C2661A792A4AFE0600EEE266 /* RestoSettingVC.swift in Sources */,
@@ -1613,7 +1637,6 @@
 				C284FB7C2A402EE8006949B4 /* CustomTextField.swift in Sources */,
 				A5F18B8D2A545505006979DD /* CellMyOfferTB.swift in Sources */,
 				A5FD2E7F2A53FF8500682FFA /* ImagePicker(3).swift in Sources */,
-				C284FB742A402E3E006949B4 /* RestoHomeTVC.swift in Sources */,
 				ECA3544F2AB4394500D4ABF8 /* CussinesRestoModal.swift in Sources */,
 				A5222B972A628C3800C2E962 /* String.swift in Sources */,
 				29A19A3A2A8FA7C9008193A4 /* commonModel.swift in Sources */,
@@ -1682,9 +1705,9 @@
 				A5947B042A55576800519039 /* CellMyInvoiceDetailBookingTB.swift in Sources */,
 				A52576F32A54402300464E1B /* ProAddCardVc.swift in Sources */,
 				C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */,
-				C284FB732A402E3E006949B4 /* RestoHomeVC.swift in Sources */,
 				A5B1873C2A669C1600C3E0A7 /* BookingLocationVC.swift in Sources */,
 				ECB020682ADEBC0A002D2C07 /* selectDateVC.swift in Sources */,
+				ECBAD2E62B161146005E9B6E /* RestoHomeTVC.swift in Sources */,
 				A5E8370A2A56C92B00C2D16A /* CellHelpFAQTB.swift in Sources */,
 				8B0BDF262A80F10E00A28BD2 /* Extensions.swift in Sources */,
 				A5A8CF432A58115C006F23ED /* RestoVerificationVC.swift in Sources */,
@@ -1715,6 +1738,7 @@
 				C2661A872A4B156C00EEE266 /* CellImageViewCB.swift in Sources */,
 				A5046FF32A4DC18D00C23627 /* CellHelpQAVC.swift in Sources */,
 				C2661A7B2A4AFE3400EEE266 /* RestoSettingTVC.swift in Sources */,
+				ECBAD2E22B161021005E9B6E /* RestoHomeVC.swift in Sources */,
 				A5AB0E312A56BC4E00BB2BF4 /* NotificationRestoVC.swift in Sources */,
 				A52576EC2A54354E00464E1B /* CancelBookingAlertVC.swift in Sources */,
 				8B0BDF2A2A80F10E00A28BD2 /* Store.swift in Sources */,

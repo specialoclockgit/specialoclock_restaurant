@@ -1,8 +1,9 @@
-//
-//  restoCreateVC.swift
-//  Special O'Clock
-//
-//  Created by cql99 on 16/06/23.
+////
+////  restoCreateVC.swift
+////  Special O'Clock
+////
+////  Created by cql99 on 16/06/23.
+////
 //
 
 import UIKit
@@ -11,8 +12,9 @@ import PhotosUI
 import MobileCoreServices
 import DropDown
 import GooglePlaces
-class restoCreateVC: UIViewController, UITextFieldDelegate {
 
+class restoCreateVC: UIViewController, UITextFieldDelegate {
+    
     //MARK: - OUTLETS
     @IBOutlet weak var tfLocation: CustomTextField!
     @IBOutlet weak var coolectionVW: UICollectionView!
@@ -41,6 +43,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     var pickerView = UIPickerView()
     var imgArr = [UIImage]()
     var isImageSelected = false
+    var singleimage = false
+    
     var isCompId:Bool? = false
     let dropDown = DropDown()
     var latitude = String()
@@ -51,60 +55,90 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     var dataCategory: [CategoryListingModelBody]?
     var dataCuisine: [CuisineListingModelBody]?
     var imgString:String?
-    var imgmultiple:String?
+    var imgmultiple = String()
     var themeId = Int()
     var Cuisinid = Int()
     var categoryID = Int()
+    var image:[FileuploadModelBody]?
+    var images:[FileuploadModelBody]?
+    var openTime = String()
+    var CloseTime = String()
+    var state = String()
+    var city = String()
+    var country = String()
+    
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         initialLoad()
         tfTheme.tintColor = UIColor.clear
-        self.showTimePicker()
-        self.showTimePicker2()
+        ShowtimePicker1()
+        ShowtimePicker2()
         tfCusinies.delegate = self
         tfCategory.delegate = self
         tfLocation.delegate = self
         self.setupThemeApi()
         self.setupCuisineApi()
         self.setupCategoryApi()
-
+        
     }
+    //MARK: - THEME API
     func setupThemeApi() {
         self.viewmodel.themeapicall { data in
             self.dataTheme = data ?? []
         }
     }
+    //MARK: - CATEGORY API
     func setupCategoryApi() {
         self.viewmodel.Categoryapicall { data in
             self.dataCategory  = data ?? []
         }
     }
+    //MARK: - CUISINE API
     func setupCuisineApi() {
         self.viewmodel.Cuisineapicall { data in
             self.dataCuisine = data ?? []
         }
     }
-    //MARK: - ACTIONS
+    //MARK: - BUTTON BACK
+    @IBAction func btnGallay(_ sender: UIButton) {
+        ImagePicker().pickImage(self) { (image) in
+            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
+                //                self?.imgString = imageData
+                self?.image = imageData ?? [FileuploadModelBody]()
+                self?.singleimage = true
+            }
+            
+            self.imgProfileResto.image = image
+        }
+    }
     @IBAction func btnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
+    //MARK : - BUTTON SIGNUP
     @IBAction func btnSignUPAct(_ sender : UIButton){
-        viewmodel.addbusinessApi(isImageSelected: isImageSelected, Profileimage: imgProfileResto, type: 1, name: tfName.text ?? "", image: ["imgArr"], location: tfLocation.text ?? "", opentime: tfOpenTime.text ?? "", closetime: tfCloseTime.text ?? "", themesrestrorantid: String(themeId ?? 0), cusine: String(Cuisinid ?? 0), shortdescription: tvDescription.text ?? "") {
-            let vc  = self.storyboard?.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC)as! RestoTabBarVC
-            self.navigationController?.pushViewController(vc, animated: true)
+        if !(singleimage){
+            CommonUtilities.shared.showAlert(message: "Please select  image", isSuccess: .error)
+        } else if self.imgArr.count  <= 2{
+            CommonUtilities.shared.showAlert(message: "Please select 3 image", isSuccess: .error)
+        }else {
+            self.viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: 1, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfLocation.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.Cuisinid.description, shortdescription: self.tvDescription.text ?? "") {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "RestoVerificationAlertVC")as! RestoVerificationAlertVC
+                vc.callBack = {
+                    for controller in self.navigationController!.viewControllers as Array {
+                        if controller.isKind(of: LoginVC.self) {
+                            self.navigationController!.popToViewController(controller, animated: true)
+                            break
+                        }
+                    }
+                }
+                vc.modalPresentationStyle = .overFullScreen
+                self.present(vc, animated: true)
+                
+            }
         }
-     
     }
-//    @IBAction func btnRestoProfileAct(_ sender : UIButton){
-//        ImagePicker().pickImage(self) { (image) in
-//            self.imgProfile.image = image
-//            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
-//                self?.image = imageData ?? [FileuploadModelBody]()
-//            }
-//            self.isImageSelected = true
-//        }
-//    }
+    //MARK: - BUTTON THEME DROP DOWN
     @IBAction func btnTheme(_ sender: UIButton) {
         let data = dataTheme
         dropDown.dataSource = dataTheme?.map({$0.productName}) ?? []
@@ -119,6 +153,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
             
         }
     }
+    //MARK: - BUTTON CATEGORY DROP DOWN
     @IBAction func btnCategory(_ sender: Any) {
         
         dropDown.dataSource = dataCategory?.map({$0.title}) ?? []
@@ -132,115 +167,125 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
             
         }
     }
-        @IBAction func btnCuisines(_ sender: Any) {
-            dropDown.dataSource = dataCuisine?.map({$0.name}) ?? []
-            dropDown.anchorView = tfCusinies
-            dropDown.width = tfCusinies.frame.width
-            dropDown.bottomOffset = CGPoint(x: 0, y: (tfCusinies as AnyObject).frame.size.height)
-            dropDown.show()
-            dropDown.selectionAction = { [weak self] (index: Int, item: String) in
-                self?.Cuisinid = self?.dataCuisine?[index].id ?? 0
-                guard let _ = self else { return }
-                self?.tfCusinies.text = "\(item) "
-                
-            }
+    //MARK: - BUTTON CUISINE DROP DOWN
+    @IBAction func btnCuisines(_ sender: Any) {
+        dropDown.dataSource = dataCuisine?.map({$0.name}) ?? []
+        dropDown.anchorView = tfCusinies
+        dropDown.width = tfCusinies.frame.width
+        dropDown.bottomOffset = CGPoint(x: 0, y: (tfCusinies as AnyObject).frame.size.height)
+        dropDown.show()
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            self?.Cuisinid = self?.dataCuisine?[index].id ?? 0
+            guard let _ = self else { return }
+            self?.tfCusinies.text = "\(item) "
+            
         }
+    }
+    //MARK : - BUTTON CROSS
     @objc func crossbtn(_ sender: UIButton){
         imgArr.remove(at:sender.tag)
         self.coolectionVW.reloadData()
     }
-    //    FUNCTION PHP PICKER
-        func openPHPicker() {
-            if #available(iOS 14.0, *) {
-                var phPickerConfig = PHPickerConfiguration(photoLibrary: .shared())
-                phPickerConfig.selectionLimit = 15
-                phPickerConfig.filter = PHPickerFilter.any(of: [.images, .livePhotos])
-                let phPickerVC = PHPickerViewController(configuration: phPickerConfig)
-                phPickerVC.delegate = self
-                present(phPickerVC, animated: true)
-            } else {
-            }
-        }
-//    FUNCTION TIME PICKER
-    func showTimePicker(){
-           //Formate Date
-        timePicker.datePickerMode = .time
-        
-           if #available(iOS 14.0, *) {
-               timePicker.preferredDatePickerStyle = .wheels
-           } else {
-           }
-           let toolbar = UIToolbar();
-           toolbar.sizeToFit()
-           let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneTimePicker));
-           let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-           let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTimePicker));
-           
-           toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
-           tfOpenTime.inputAccessoryView = toolbar
-        tfOpenTime.inputView = timePicker
-       }
-       
-       @objc func doneTimePicker(){
-           let formatter = DateFormatter()
-           formatter.dateFormat = " h:mm a"
-        
-           //  datePicker.datePickerMode = UIDatePicker.Mode.time
-           tfOpenTime.text = formatter.string(from: timePicker.date)
-           formatter.dateFormat = " h:mm a"
-           let resultString = formatter.string(from: timePicker.date)
-           //          self.startDate = resultString
-           print(resultString)
-           self.view.endEditing(true)
-       }
-    @objc func cancelTimePicker(){
-            self.view.endEditing(true)
-        }
     
-    //    FUNCTION TIME PICKER SECOND
-    func showTimePicker2(){
-           //Formate Date
-        timePicker2.datePickerMode = .time
-           if #available(iOS 14.0, *) {
-               timePicker2.preferredDatePickerStyle = .wheels
-           } else {
-               // Fallback on earlier versions
-           }
-           
-           //ToolBar
-           let toolbar = UIToolbar();
-           toolbar.sizeToFit()
-           let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneTimePicker2));
-           let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-           let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTimePicker2));
-           
-           toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
-           tfCloseTime.inputAccessoryView = toolbar
-        tfCloseTime.inputView = timePicker2
-       }
-       
-       @objc func doneTimePicker2(){
-           let formatter = DateFormatter()
-           formatter.dateFormat = " h:mm a"
-        
-           //  datePicker.datePickerMode = UIDatePicker.Mode.time
-           tfCloseTime.text = formatter.string(from: timePicker2.date)
-           formatter.dateFormat = " h:mm a"
-           let resultString = formatter.string(from: timePicker2.date)
-           //          self.startDate = resultString
-           print(resultString)
-           self.view.endEditing(true)
-       }
-    @objc func cancelTimePicker2(){
-            self.view.endEditing(true)
+    //    FUNCTION PHP PICKER
+    func openPHPicker() {
+        if #available(iOS 14.0, *) {
+            var phPickerConfig = PHPickerConfiguration(photoLibrary: .shared())
+            phPickerConfig.selectionLimit = 3
+            phPickerConfig.filter = PHPickerFilter.any(of: [.images, .livePhotos])
+            let phPickerVC = PHPickerViewController(configuration: phPickerConfig)
+            phPickerVC.delegate = self
+            present(phPickerVC, animated: true)
+        } else {
         }
-}
-extension restoCreateVC : UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        tvDescription.text = .none
+    }
+    //MARK: - START TIME
+    func ShowtimePicker1(){
+        //Formate Date
+        timePicker.datePickerMode = .time
+        if #available(iOS 14.0, *) {
+            timePicker.preferredDatePickerStyle = .wheels
+        } else {
+        }
+        
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneteTime1));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+        tfOpenTime.inputAccessoryView = toolbar
+        tfOpenTime.inputView = timePicker
     }
     
+    @objc func doneteTime1(){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm a"
+        //        formatter.dateFormat = "HH:mm a"
+        tfOpenTime.text = formatter.string(from: timePicker.date)
+        openTime =  formatter.string(from: timePicker.date)
+        print(tfOpenTime ?? "")
+        self.view.endEditing(true)
+    }
+    @objc func cancelDatePicker(){
+        self.view.endEditing(true)
+    }
+    
+    func ShowtimePicker2() {
+        timePicker2.datePickerMode = .time
+        
+        if #available(iOS 14.0, *) {
+            timePicker2.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneteTime2));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker2));
+        
+        toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        tfCloseTime.inputAccessoryView = toolbar
+        tfCloseTime.inputView = timePicker2
+    }
+    
+    @objc func doneteTime2() {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm a"
+        //        formatter.dateFormat = "HH:mm a"
+        tfCloseTime.text = formatter.string(from: timePicker2.date)
+        CloseTime =  formatter.string(from: timePicker2.date)
+        
+        if CloseTime > openTime{
+            tfCloseTime.text = formatter.string(from: timePicker2.date)
+            
+            print(tfCloseTime ?? "")
+            self.view.endEditing(true)
+        }else {
+            // Show an error message or prevent setting the end time
+            // For example, you can show an alert:
+            showAlert(message: "End time must be after start time")
+        }
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func cancelDatePicker2() {
+        self.view.endEditing(true)
+    }
 }
+
+
+//MARK: - EXTENSION CHANGES UI
 extension restoCreateVC{
     func initialLoad(){
         view.hideKeyboardWhenTappedAround()
@@ -250,20 +295,20 @@ extension restoCreateVC{
         viewMain.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         tfTheme.inputView = pickerView
         tfCusinies.inputView = pickerView
-//        imgOptionOne.layer.cornerRadius = 10.0
-//        imgOptionTwo.layer.cornerRadius = 10.0
-//        imgOptionThree.layer.cornerRadius = 10.0
-        if btnCheckStatus == 0 {
+        let check =  UserDefaults.standard.status
+        if check == 1 {
             lblName.text = "Restaurant Name"
             viewCategory.isHidden = true
-        }else if btnCheckStatus == 1 {
+        }else if check == 2 {
             lblName.text = "Bar Name"
+            lblHeading.text = "Pub & Bar Profiler"
             viewCuisines.isHidden = true
             viewOffer.isHidden = true
             viewCategory.isHidden = false
         }
     }
 }
+
 //EXTENSION COLLECTION VIEW
 extension restoCreateVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -299,7 +344,7 @@ extension restoCreateVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 3 - 13 , height: 100 )
-//        collectionVW.frame.height / 1 - 0
+        //        collectionVW.frame.height / 1 - 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -310,15 +355,38 @@ extension restoCreateVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if collectionView == collectionView {
+        if collectionView == coolectionVW {
             self.isImageSelected = true
             if indexPath.section != 0 {
-//                self.imgArr.removeAll()
-            
-                
             }else{
-                openPHPicker()
-
+//                CommonUtilities.shared.showAlertCustomeBrn(message: "Please select", firstTitle: "Gallery", secondTitle: "Camera") { Camera in
+                    ImagePicker().pickImage(self) { (img) in
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//                            // your code here
+//                            self.imgArr.append(img)
+//                            self.coolectionVW.reloadData()
+//                            print("camera",img)
+//                        }
+                        DispatchQueue.main.async {
+                            self.imgArr.append(img)
+                            self.isCompId = true
+                            self.coolectionVW.reloadData()
+//                            imageCount += 1 // Increment the loaded image count
+//                            if imageCount == results.count {
+                                // All images have been loaded, you can perform any additional tasks here
+                                self.viewmodel.fileUploadeMultipledAPI(type: "image", image: self.imgArr) { (objData) in
+                                    self.images = objData
+                                }
+//                            }
+                        }
+                        
+                        
+                    }
+//                } CancelMove: { Gallery in
+//                    self.openPHPicker()
+//
+//                }
+                
             }
         }
     }
@@ -345,6 +413,9 @@ extension restoCreateVC: PHPickerViewControllerDelegate {
                     imageCount += 1 // Increment the loaded image count
                     if imageCount == results.count {
                         // All images have been loaded, you can perform any additional tasks here
+                        self.viewmodel.fileUploadeMultipledAPI(type: "image", image: self.imgArr) { (objData) in
+                            self.images = objData
+                        }
                     }
                 }
             }
@@ -360,7 +431,7 @@ extension restoCreateVC: PHPickerViewControllerDelegate {
         }
     }
 }
-// MARK: - EXTENSION OF
+// MARK: - EXTENSION OF LOCTAIONS
 extension restoCreateVC:GMSAutocompleteViewControllerDelegate {
     //MARK:- GMSAutocompleteViewController delegates
     
@@ -381,28 +452,32 @@ extension restoCreateVC:GMSAutocompleteViewControllerDelegate {
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
         dismiss(animated: true, completion: nil)
     }
-    
-    func getAddressFromLatLon(pdblLatitude: String, withLongitude pdblLongitude: String) {
+    func getAddressFromLatLon(pdblLatitude: String, withLongitude pdblLongitude: String){
         var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
-        let lat: Double = Double("\(pdblLatitude)") ?? 0.0
+        let lat: Double = Double("\(pdblLatitude)") ?? 00
         //21.228124
-        let lon: Double = Double("\(pdblLongitude)") ?? 0.0
+        let lon: Double = Double("\(pdblLongitude)") ?? 00
         //72.833770
-       
         let ceo: CLGeocoder = CLGeocoder()
         center.latitude = lat
         center.longitude = lon
         
         let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
+        
+        
         ceo.reverseGeocodeLocation(loc, completionHandler:
-            {(placemarks, error) in
-                if (error != nil)
-                {
-                    print("reverse geodcode fail: \(error!.localizedDescription)")
-                }
+                                    {(placemarks, error) in
+            if (error != nil)
+            {
+                print("reverse geodcode fail: \(error!.localizedDescription)")
+            }
+            if placemarks != nil
+            {
                 let pm = placemarks! as [CLPlacemark]
+                
                 if pm.count > 0 {
                     let pm = placemarks![0]
+                    
                     var addressString : String = ""
                     if pm.subLocality != nil {
                         addressString = addressString + pm.subLocality! + ", "
@@ -413,41 +488,92 @@ extension restoCreateVC:GMSAutocompleteViewControllerDelegate {
                     if pm.locality != nil {
                         addressString = addressString + pm.locality! + ", "
                     }
-                    if pm.administrativeArea != nil {
-                        addressString = addressString + pm.administrativeArea! + ", "
-                    }
                     if pm.country != nil {
                         addressString = addressString + pm.country! + ", "
                     }
                     if pm.postalCode != nil {
                         addressString = addressString + pm.postalCode! + " "
                     }
-                    print(pm.postalCode)
-                    print(pm.country)
-                    print(pm.locality)
-                    print(pm.administrativeArea)
-                    print(addressString)
-
+//                    self.locationLbl.text = addressString
                     self.tfLocation.text = addressString
-//                    self.tfPostalCode.text = pm.postalCode
-//                    self.tfState.text = pm.administrativeArea
-///                    self.tfCountry.text = pm.country
+                     self.city = pm.locality ?? ""
+                    self.state = pm.administrativeArea  ?? ""
+                    self.country = pm.country ?? ""
                 }
+            }
         })
+        
     }
+    
+//    func getAddressFromLatLon(pdblLatitude: String, withLongitude pdblLongitude: String) {
+//        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
+//        let lat: Double = Double("\(pdblLatitude)") ?? 0.0
+//        //21.228124
+//        let lon: Double = Double("\(pdblLongitude)") ?? 0.0
+//        //72.833770
+//
+//        let ceo: CLGeocoder = CLGeocoder()
+//        center.latitude = lat
+//        center.longitude = lon
+//
+//        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
+//        ceo.reverseGeocodeLocation(loc, completionHandler:
+//                                    {(placemarks, error) in
+//            if (error != nil)
+//            {
+//                print("reverse geodcode fail: \(error!.localizedDescription)")
+//            }
+//            let pm = placemarks! as [CLPlacemark]
+//            if pm.count > 0 {
+//                let pm = placemarks![0]
+//                var addressString : String = ""
+//                if pm.subLocality != nil {
+//                    addressString = addressString + pm.subLocality! + ", "
+//                }
+//                if pm.thoroughfare != nil {
+//                    addressString = addressString + pm.thoroughfare! + ", "
+//                }
+//                if pm.locality != nil {
+//                    addressString = addressString + pm.locality! + ", "
+//                }
+//                if pm.administrativeArea != nil {
+//                    addressString = addressString + pm.administrativeArea! + ", "
+//                }
+//                if pm.country != nil {
+//                    addressString = addressString + pm.country! + ", "
+//                }
+//                if pm.postalCode != nil {
+//                    addressString = addressString + pm.postalCode! + " "
+//                }
+//                print(pm.postalCode)
+//                print(pm.country)
+//                print(pm.locality)
+//                print(pm.administrativeArea)
+//                print(addressString)
+//
+//                self.tfLocation.text = addressString
+//                self.city = pm.locality ?? ""
+//                self.state = pm.administrativeArea  ?? ""
+//                self.country = pm.country ?? ""
+//
+//
+//
+//            }
+//        })
+//    }
     
 }
 // MARK: - EXTENSION OF TEXTFIELD
 extension restoCreateVC{
-
+    
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-      if textField == tfLocation {
-          let placePickerController = GMSAutocompleteViewController()
-          placePickerController.delegate = self
-          present(placePickerController, animated: true, completion: nil)
-          return false
-      }
-     return true
+        if textField == tfLocation {
+            let placePickerController = GMSAutocompleteViewController()
+            placePickerController.delegate = self
+            present(placePickerController, animated: true, completion: nil)
+            return false
+        }
+        return true
     }
 }
 

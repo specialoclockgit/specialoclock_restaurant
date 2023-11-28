@@ -31,13 +31,14 @@ struct SignupBody: Codable {
     var image, verifyImage: String?
     var isImageVerified: Int?
     var location, latitude, longitude: String?
-    var loginTime: Int?
+    var loginTime, bussinesstype: Int?
     var notes, interests: String?
     var status, loginStep, isCompleted, notificationStatus: Int?
     var createdAt, updatedAt, token: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name
+        case bussinesstype = "bussiness_type"
         case aboutMe = "about_me"
         case nickName = "nick_name"
         case dob, gender, email, type, role

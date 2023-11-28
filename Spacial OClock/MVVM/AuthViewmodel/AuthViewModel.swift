@@ -15,7 +15,7 @@ class AuthViewModel : NSObject {
     var eventImgString = String()
     
     //MARK: - SIGN UP API
-    func signUpapi(isImage:Bool,image: [FileuploadModelBody], name : String, email: String,country_code: String,countrySymbol:String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String, onsuccess: @escaping ((()->()))) {
+    func signUpapi(isImage:Bool,image: [FileuploadModelBody], name : String, email: String,country_code: String,countrySymbol:String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String,role:Int, onsuccess: @escaping ((()->()))) {
         
         if CheckValidations.validationSignUp(isImage:isImage,name: name, email: email, country_code: country_code,countrySymbol:countrySymbol, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , isselected: isselected){
             let jsonEncoder = JSONEncoder()
@@ -23,7 +23,7 @@ class AuthViewModel : NSObject {
                 let jsonData = try jsonEncoder.encode(image)
                 let jsonString = String(data: jsonData, encoding: .utf8)
                 guard let json = jsonString else{return}
-                let param : parameters = [ "image":json,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":1, "device_type":1] as [String : Any]
+                let param : parameters = [ "image":json,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":role, "device_type":1] as [String : Any]
                 
                 WebService.service(API.signup,  param: param, service: .post){
                     (modeldata: SignupModel, data, json) in
@@ -37,11 +37,14 @@ class AuthViewModel : NSObject {
         }
     }
 
+    // MARK: - Image Upload
     func fileUploadedAPI(type: String, image:UIImage,onSuccess:@escaping(([FileuploadModelBody]?)->())) {
+        selectedImageArr.removeAll()
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat.fullDate.rawValue
         let date = formatter.string(from: Date())
         let imageInfo : ImageStructInfo
+        
         imageInfo = ImageStructInfo.init(fileName: "Img\(date).jpeg", file_type: "image/jpeg", data: image.toData(), key: "image", image: image)
         
         let param = ["type": type, "folder": "users", "image": imageInfo] as [String : Any]
@@ -256,8 +259,11 @@ class AuthViewModel : NSObject {
     
     
     //    NARK: - ADDBUSINESS
-    func addbusinessApi(isImageSelected:Bool,Profileimage:UIImageView,type:Int,  name:String, image: [String], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String, onsuccess:@escaping (()->())) -> Bool{
-        if !(isImageSelected) {
+    func addbusinessApi(singleimage:Bool,isImageSelected:Bool,country:String,state:String,city:String,latitude:Double,longitude:Double,Profileimage:[FileuploadModelBody],type:Int, name:String, image: [FileuploadModelBody], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String, onsuccess:@escaping (()->())) -> Bool{
+        if !(singleimage) {
+            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
+            return false
+        }  else if !(isImageSelected) {
             CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
             return false
         } else if name.trimmingCharacters(in: .whitespaces).isEmpty{
@@ -282,22 +288,51 @@ class AuthViewModel : NSObject {
             CommonUtilities.shared.showAlert(message: "Enter your short description", isSuccess: .error)
             return false
         }else{
+            addResto(type: type,Profileimage:Profileimage, country:country,state:state,city:city,latitude:latitude,longitude:longitude,name: name, image: image, location: location, opentime: opentime, closetime: closetime, themesrestrorantid: themesrestrorantid, cusine: cusine, shortdescription: shortdescription) { (data) in
+                onsuccess()
+            }
+            return true
+        }
+        
+    }
+    
+    
+    func addResto(type:Int,Profileimage:[FileuploadModelBody],country:String,state:String,city:String,latitude:Double,longitude:Double, name:String, image: [FileuploadModelBody], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String, onsuccess: @escaping (((AddbusinessModel?)->()))) {
+        let jsonEncoder = JSONEncoder()
+        do {
+            let jsonData = try jsonEncoder.encode(Profileimage)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            guard let json = jsonString else{return}
+            
+            let jsonDataimage = try jsonEncoder.encode(image)
+            let jsonStringimage = String(data: jsonDataimage, encoding: .utf8)
+            guard let jsonimage = jsonStringimage else{return}
+            
             let param: parameters = ["type":type,
-                                     "profile_image":imageData,
+                                     "profile_image":json,
                                      "name": name,
-                                     "image":imageData,
+                                     "image":jsonimage,
                                      "location":location,
                                      "open_time": opentime,
                                      "close_time":closetime,
-                                     "short_description": shortdescription ]
+                                     "short_description": shortdescription,
+                                     "themes_restrorant_id":themesrestrorantid,
+                                     "cuisine_ids":cusine,
+                                     "country":country,
+                                     "state":state,
+                                     "city":city,
+                                     "latitude":latitude,
+                                     "country_code":Store.userDetails?.countryCode ?? "",
+                                     "mobile":Store.userDetails?.phone ?? 0,
+                                     "longitude":longitude]
             print(param)
             WebService.service(API.add_business, param: param, service: .post){
                 (modeldata: AddbusinessModel, data, json) in
-                onsuccess()
-                
+                onsuccess(modeldata)
             }
+        } catch {
+            print("error--\(error.localizedDescription)")
         }
-        return true
     }
     
     
@@ -360,6 +395,36 @@ class AuthViewModel : NSObject {
         WebService.service(API.fetch_app_availability, service: .get) {
             (modaldata: LocationList, Data , json) in
             onsuccess(modaldata.body)
+        }
+    }
+    
+    // MARK: - Image Upload
+    func fileUploadeMultipledAPI(type: String, image:[UIImage],onSuccess:@escaping(([FileuploadModelBody]?)->())) {
+        
+        selectedImageArr.removeAll()
+        var uploadImages = [ImageStructInfo]()
+        for i in 0..<image.count {
+            let formatter = DateFormatter()
+            formatter.dateFormat = dateFormat.fullDate.rawValue
+            let date = formatter.string(from: Date())
+            uploadImages.append(ImageStructInfo.init(fileName: "Img\(date).jpeg", file_type: "image/jpg", data: image[i].toData(), key: "image", image: image[i]))
+        }
+        let param = ["type": type, "folder": "users", "image": uploadImages] as [String : Any]
+        print(param)
+        
+        WebService.service(API.file_upload, param: param, service: .post, showHud: true) {
+            (userData: FileuploadModel , data, json) in
+            
+            for indx in 0..<(userData.body.count ?? 0){
+                let image = userData.body[indx].image
+                let thumbnail = userData.body[indx].thumbnail
+                let fileName = userData.body[indx].fileName
+                let folder = userData.body[indx].folder
+                let file_type = userData.body[indx].file_type
+                let newDict : parameters = ["image":image,"thumbnail":thumbnail,"fileName":fileName,"folder":folder,"file_type":file_type]
+                self.selectedImageArr.append(newDict)
+            }
+            onSuccess(userData.body)
         }
     }
 }

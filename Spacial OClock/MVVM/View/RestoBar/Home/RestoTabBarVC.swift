@@ -11,7 +11,6 @@ class RestoTabBarVC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tabBar.backgroundColor = UIColor.white
-        // Do any additional setup after loading the view.
+
     }
 }

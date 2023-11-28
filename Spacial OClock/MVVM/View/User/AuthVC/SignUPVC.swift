@@ -24,6 +24,7 @@ class SignUPVC: UIViewController {
     @IBOutlet weak var tfPassword : UITextField!
     @IBOutlet weak var tfConfirmPass : UITextField!
     @IBOutlet weak var stackViewRestaurant : UIStackView!
+    @IBOutlet weak var viewButton: CustomView!
     @IBOutlet weak var btnMainRB : UIButton!
     @IBOutlet weak var btnBar : UIButton!
     @IBOutlet weak var btnRestaurant : UIButton!
@@ -31,7 +32,6 @@ class SignUPVC: UIViewController {
     //MARK: Variables
     var viewmodel = AuthViewModel()
     let locationManager = CLLocationManager()
-    var btnCheckStatus = Int()
     var isImageSelected = false
     var isselected = false
     var lat : Double?
@@ -40,8 +40,10 @@ class SignUPVC: UIViewController {
     var Location = String()
     var countryCode = String()
     var image = [FileuploadModelBody]()
+    var selectStatus = Int()
+    var restoselctStatus = Int()
     
-
+    
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +66,7 @@ class SignUPVC: UIViewController {
 #endif
             }
         }
-        btnCheckStatus = 0
+        
         uiSet()
     }
     
@@ -72,25 +74,13 @@ class SignUPVC: UIViewController {
     func uiSet(){
         tapGesture()
         view.hideKeyboardWhenTappedAround()
-        //userBtn.isHidden = true
-        
+        viewButton.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
-       
+        
     }
     //MARK: - Function
-//    func uiSet(){
-//        view.hideKeyboardWhenTappedAround()
-//
-//       // userBtn.setTitleColor(UIColor.white, for: .normal)
-//       // restaurantBtn.isHidden = true
-//      //  restaurantBtn.setTitleColor(UIColor.black, for: .normal)
-//      //  userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
-//      //  restaurantBtn.backgroundColor = UIColor(red: 213/255, green: 213/255, blue: 213/255, alpha: 1)
-//        tfEmail.keyboardType = .alphabet
-//        tfName.keyboardType = .asciiCapable
-//    }
     
     // MARK: - Actions
     @IBAction func btnProfile(_ sender : UIButton){
@@ -102,6 +92,26 @@ class SignUPVC: UIViewController {
                 self?.isImageSelected = true
             }
         }
+    }
+    @IBAction func btnResto(_ sender: UIButton) {
+        selectStatus = 2
+        restaurantBtn.setTitleColor(UIColor.white, for: .normal)
+        userBtn.setTitleColor(UIColor.black, for: .normal)
+        restaurantBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
+        userBtn.backgroundColor = UIColor.systemGray6
+        if sender.isSelected == false{
+            stackViewRestaurant.isHidden = false
+            viewButton.isHidden = false
+        }
+    }
+    
+    @IBAction func btnUser(_ sender: UIButton) {
+        selectStatus = 0
+        userBtn.setTitleColor(UIColor.white, for: .normal)
+        restaurantBtn.setTitleColor(UIColor.black, for: .normal)
+        userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
+        restaurantBtn.backgroundColor = UIColor.systemGray6
+        viewButton.isHidden = true
     }
     
     @IBAction func btnBack(_ sender: UIButton){
@@ -117,13 +127,27 @@ class SignUPVC: UIViewController {
         }
     }
     
+    @IBAction func btbnSelectBar(_ sender: UIButton) {
+        restoselctStatus = 2
+        viewButton.isHidden = true
+        restaurantBtn.setTitle("Bar ▼", for: .normal)
+    }
+    
+    @IBAction func btnSelectResto(_ sender: UIButton) {
+        restoselctStatus = 1
+        viewButton.isHidden = true
+        restaurantBtn.setTitle("Restaurant ▼", for: .normal)
+    }
+    
     @IBAction func btnSignIn(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnSignUp(_ sender: UIButton) {
-        self.viewmodel.signUpapi(isImage: self.isImageSelected, image: self.image , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location) {
+        self.viewmodel.signUpapi(isImage: self.isImageSelected, image: self.image , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location, role: self.selectStatus) {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
+            vc.btnCheckStatus = self.selectStatus
+            vc.restoselctStatus = self.restoselctStatus
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -204,16 +228,16 @@ extension SignUPVC : CLLocationManagerDelegate{
 
 extension SignUPVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        if textField == self.tfPhone{
-//            let maxLength = AuthViewModel.getCountryBasedMobileNumberRange(code: self.countryCode)
-//            let currentString: NSString = (textField.text ?? "") as NSString
-//            let newString: String =
-//            currentString.replacingCharacters(in: range, with: string) as String
-//            if newString.first == "0"{
-//                return false
-//            }
-//            return newString.count <= maxLength
-//        }else
+        //        if textField == self.tfPhone{
+        //            let maxLength = AuthViewModel.getCountryBasedMobileNumberRange(code: self.countryCode)
+        //            let currentString: NSString = (textField.text ?? "") as NSString
+        //            let newString: String =
+        //            currentString.replacingCharacters(in: range, with: string) as String
+        //            if newString.first == "0"{
+        //                return false
+        //            }
+        //            return newString.count <= maxLength
+        //        }else
         if textField == self.tfName{
             let currentString: NSString = (textField.text ?? "") as NSString
             let newString: String =

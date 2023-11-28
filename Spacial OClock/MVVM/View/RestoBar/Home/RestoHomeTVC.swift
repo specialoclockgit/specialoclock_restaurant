@@ -1,12 +1,12 @@
 //
-//  RestoHomeTVC.swift
-//  Special O'Clock
+//  restoHomeTVC.swift
+//  Spacial OClock
 //
-//  Created by cql99 on 19/06/23.
+//  Created by cqlios on 28/11/23.
 //
 
 import UIKit
 
-class RestoHomeTVC: UITableViewCell {
-
+class restoHomeTVC: UITableViewCell {
+   
 }

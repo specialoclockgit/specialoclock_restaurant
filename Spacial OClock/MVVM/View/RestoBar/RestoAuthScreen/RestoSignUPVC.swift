@@ -109,7 +109,6 @@ class RestoSignUPVC: UIViewController{
 //        userBtn.setTitleColor(UIColor.white, for: .normal)
 //        restaurantBtn.setTitleColor(UIColor.black, for: .normal)
 //        userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
-//        //        restaurantBtn.backgroundColor = UIColor(red: 213/255, green: 213/255, blue: 213/255, alpha: 1)
 //        restaurantBtn.backgroundColor = UIColor.systemGray6
 //        viewButton.isHidden = true
     }
