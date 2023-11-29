@@ -58,6 +58,25 @@ PODS:
   - Socket.IO-Client-Swift (16.0.1):
     - Starscream (~> 4.0)
   - Starscream (4.0.6)
+  - StripeApplePay (23.14.0):
+    - StripeCore (= 23.14.0)
+  - StripeCore (23.14.0)
+  - StripePayments (23.14.0):
+    - StripeCore (= 23.14.0)
+    - StripePayments/Stripe3DS2 (= 23.14.0)
+  - StripePayments/Stripe3DS2 (23.14.0):
+    - StripeCore (= 23.14.0)
+  - StripePaymentSheet (23.14.0):
+    - StripeApplePay (= 23.14.0)
+    - StripeCore (= 23.14.0)
+    - StripePayments (= 23.14.0)
+    - StripePaymentsUI (= 23.14.0)
+  - StripePaymentsUI (23.14.0):
+    - StripeCore (= 23.14.0)
+    - StripePayments (= 23.14.0)
+    - StripeUICore (= 23.14.0)
+  - StripeUICore (23.14.0):
+    - StripeCore (= 23.14.0)
   - SVPinView (1.0.11)
   - SwiftGifOrigin (1.7.0)
   - SwiftMessages (9.0.6):
@@ -82,6 +101,7 @@ DEPENDENCIES:
   - SKCountryPicker
   - SkeletonView
   - Socket.IO-Client-Swift
+  - StripePaymentSheet
   - SVPinView (~> 1.0)
   - SwiftGifOrigin
   - SwiftMessages
@@ -112,6 +132,12 @@ SPEC REPOS:
     - SkeletonView
     - Socket.IO-Client-Swift
     - Starscream
+    - StripeApplePay
+    - StripeCore
+    - StripePayments
+    - StripePaymentSheet
+    - StripePaymentsUI
+    - StripeUICore
     - SVPinView
     - SwiftGifOrigin
     - SwiftMessages
@@ -141,11 +167,17 @@ SPEC CHECKSUMS:
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
   Socket.IO-Client-Swift: c116d6dc9fd6be9c259bacfe143f8725bce7d79e
   Starscream: fb2c4510bebf908c62bd383bcf05e673720e91fd
+  StripeApplePay: 4d19e9f2fab4d6ed0a3f7939d13da4c64910af95
+  StripeCore: 531807424f6dd954aed8cd2475b7cc76533a55b7
+  StripePayments: 73158203a3e98a41793e018ebdd868485ef3a1c4
+  StripePaymentSheet: 95340212d987049d2ea5bd92942eb5b65ca77609
+  StripePaymentsUI: aa483d9ef591205fd7c17506820bf54fed7a3253
+  StripeUICore: 780801d69fe56a6194ff6f8783506a38968ac297
   SVPinView: 9b538d0ba68cdb092afe4f0f67ec84cbed079466
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 7b1d6ff954a9bcdcc0d8e2633d706c010a7cb976
+PODFILE CHECKSUM: 29fa1240dfddec8d170370917da4a9b6b9defc4d
 
 COCOAPODS: 1.12.1

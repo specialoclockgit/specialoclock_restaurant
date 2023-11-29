@@ -167,6 +167,15 @@ enum API: String{
     
     //RESTO
     case restro_home
+    case fetch_notifications
+    case menu_listing
+    case menu_product_listing
+    case offer_listing
+    case review_listing = "fetch_reviews"
+    case fetch_invoices
+    case card_listing
+    case fetch_invoice_detail
+    case payment_sheet
    
 }
 

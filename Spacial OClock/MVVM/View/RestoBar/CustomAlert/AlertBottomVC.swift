@@ -9,11 +9,11 @@ import UIKit
 
 class AlertBottomVC: UIViewController {
     
-    //MARK: Outlets
+    //MARK: OUTLETS
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var lblMessage : UILabel!
     
-    //MARK: Variables
+    //MARK: VARIABLES
     var status = Int()
     var imgString = String()
     var messgae = String()
@@ -21,15 +21,14 @@ class AlertBottomVC: UIViewController {
     var statuschange = Int()
     var viewmodel = AuthViewModel()
     
+    //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         img.image = UIImage(named: imgString)
         lblMessage.text = messgae
-        // Do any additional setup after loading the view.
     }
     
-    //MARK: Button Act
-    
+    //MARK: ACTIONS
     @IBAction func btnYesAct(_ sender : UIButton){
         if statuschange == 0{
             self.viewmodel.deleteAccountApi {
@@ -45,8 +44,7 @@ class AlertBottomVC: UIViewController {
                 self.callBack?()
                 
             }
-            }
-//        }
+        }
     }
       
     @IBAction func btnNoACt(_ sender : UIButton){

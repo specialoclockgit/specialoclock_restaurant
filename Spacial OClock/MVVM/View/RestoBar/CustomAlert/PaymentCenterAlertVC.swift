@@ -8,16 +8,21 @@
 import UIKit
 
 class PaymentCenterAlertVC: UIViewController {
-
+    
+    //MARK: - VARIABELS
+    var callback : (()->())?
+    
+    //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
     //MARK: Button Action
     @IBAction func btnDoneAct(_ sender : UIButton){
-        self.dismiss(animated: true)
+        self.dismiss(animated: true) {
+            self.callback?()
+        }
     }
 
 }

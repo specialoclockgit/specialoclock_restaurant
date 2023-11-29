@@ -28,6 +28,7 @@ target 'Spacial OClock' do
   pod 'GoogleMaps'
   pod 'Socket.IO-Client-Swift'
   pod 'SwiftyJSON'
+  pod 'StripePaymentSheet'
 #  pod 'SKPhotoBrowser'
 
   

@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfileVC: UIViewController {
     
     //MARK: Outlets
+    @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var btnViewProfile : UIButton!
     @IBOutlet weak var btnEditProfile : UIButton!
     @IBOutlet weak var lblName : UILabel!
@@ -18,12 +20,32 @@ class ProfileVC: UIViewController {
   
     //MARK: Varibale
     var btnCheckStatus = Int()
+    var checkValue = String()
+    var viewmodel =  AuthViewModel()
+    var getdataget: GetprofileModelBody?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if self.accessibilityHint == "Restaurant"{
+            btnViewProfile.setTitle("Restaurant Profile", for: .normal)
+        }else if self.accessibilityHint == "Bar"{
+            btnViewProfile.setTitle("Bar Profile", for: .normal)
+        }
         initialLoad()
-        // Do any additional setup after loading the view.
     }
+    
+     func setupAPi(){
+        viewmodel.ProfileAPI { data in
+            self.getdataget = data
+            self.lblName.text = data?.name ?? ""
+            self.lblEmail.text = data?.email ?? ""
+            self.lblPhoneNumber.text =  data?.phone.description ?? ""
+            self.profileImg.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
+            self.profileImg.sd_setImage(with: URL(string: imageURL + (data?.image ?? "")),placeholderImage: UIImage(named: "placeholder 1"))
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
@@ -31,12 +53,13 @@ class ProfileVC: UIViewController {
     //MARK: Button Actions
     @IBAction func btnRestaurantProfileAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.RestoProfileVC) as! RestoProfileVC
-        let status = UserDefaults.standard.status
-        if status == 0 {
-            screen.heading = "Restaurant Profile"
-        }else if status == 1{
-            screen.heading = "Bar Profile"
-        }
+        
+//        let status = UserDefaults.standard.status
+//        if status == 0 {
+//
+//        }else if status == 1{
+//            screen.heading = "Bar Profile"
+//        }
         self.navigationController?.pushViewController(screen, animated: true)
     }
     

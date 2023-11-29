@@ -13,22 +13,23 @@ class ChangePasswordRestoVC: UIViewController {
     @IBOutlet weak var tfoldPassword: CustomTextField!
     @IBOutlet weak var tfNewPass : UITextField!
     @IBOutlet weak var tfConfirmPass : UITextField!
+    
     //MARK: VARIABLE
     var viewmodel = AuthViewModel()
+    
+    //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
         view.hideKeyboardWhenTappedAround()
-        // Do any additional setup after loading the view.
     }
     
     //MARK: Button Action
     @IBAction func btnUpdate(_ sender: Any) {
-//        self.viewmodel.changePasswordapicall(oldpassword: tfoldPassword.text ?? "", newpassword: tfNewPass.text ?? "", confirmpassword: tfConfirmPass.text ?? "") {
-//            self.navigationController?.popViewController(animated: true)
-//        }
+        self.viewmodel.changePasswordapicall(oldpassword: tfoldPassword.text ?? "", newpassword: tfNewPass.text ?? "", confirmpassword: tfConfirmPass.text ?? "") {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
-    
     @IBAction func btnBackAct(_ sender : UIButton){
         self.navigationController?.popViewController(animated: true)
     }

@@ -21,7 +21,7 @@ class UserEditProfileVC: UIViewController {
     
     //MARK: PROPERTIES
     var viewmodel = AuthViewModel()
-    var profileBody : GetProfileBody?
+    var profileBody : GetprofileModelBody?
     var countryCode = String()
     var image = [FileuploadModelBody]()
     var isImage = false
@@ -42,12 +42,12 @@ class UserEditProfileVC: UIViewController {
     
     private func setData() {
         self.viewmodel.ProfileAPI { data in
-            self.profileBody = data.body
-            self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: data.body?.image ?? "")
-            self.tfName.text = data.body?.name ?? ""
-            self.tfEmail.text = data.body?.email ?? ""
-            self.tfPhoneNumber.text = "\(data.body?.phone ?? 0)"
-            self.tfCountryCode.text = "\(data.body?.countryCode ?? "")"
+            self.profileBody = data
+            self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: data?.image ?? "")
+            self.tfName.text = data?.name ?? ""
+            self.tfEmail.text = data?.email ?? ""
+            self.tfPhoneNumber.text = "\(data?.phone ?? 0)"
+            self.tfCountryCode.text = "\(data?.countryCode ?? "")"
         }
     }
     

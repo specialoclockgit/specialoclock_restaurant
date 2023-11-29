@@ -15,6 +15,7 @@ class AddProductVC: UIViewController {
     
     //MARK: Variable
     var picker = UIPickerView()
+    var menuID = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -371,11 +371,10 @@ class AuthViewModel : NSObject {
    
     
     //MARK: Profile
-    func ProfileAPI(onSuccess:@escaping ((GetProfileModel)->())) {
-        
+    func ProfileAPI(onSuccess:@escaping ((GetprofileModelBody?)->())) {
         WebService.service(.get_profile, service: .get, showHud: true) {
-            (userData: GetProfileModel ,data, json) in
-            onSuccess(userData)
+            (userData: GetprofileModel ,data, json) in
+            onSuccess(userData.body)
         }
     }
     

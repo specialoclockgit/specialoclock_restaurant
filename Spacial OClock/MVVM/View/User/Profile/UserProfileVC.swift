@@ -20,7 +20,7 @@ class UserProfileVC: UIViewController {
     //MARK: Varibale
     var btnCheckStatus = Int()
     var viewModel = AuthViewModel()
-    var profileBody : GetProfileBody?
+    var profileBody : GetprofileModelBody?
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +36,11 @@ class UserProfileVC: UIViewController {
     
     func setData() {
         self.viewModel.ProfileAPI { data in
-            self.profileBody = data.body
-            self.lblName.text = data.body?.name ?? ""
-            self.lblEmail.text = data.body?.email ?? ""
-            self.lblPhoneNumber.text = "\(data.body?.countryCode ?? "") \(data.body?.phone ?? 0)"
-            self.profileImg.showIndicator(baseUrl: imageURL, imageUrl: data.body?.image ?? "")
+            self.profileBody = data
+            self.lblName.text = data?.name ?? ""
+            self.lblEmail.text = data?.email ?? ""
+            self.lblPhoneNumber.text = "\(data?.countryCode ?? "") \(data?.phone ?? 0)"
+            self.profileImg.showIndicator(baseUrl: imageURL, imageUrl: data?.image ?? "")
         }
     }
     

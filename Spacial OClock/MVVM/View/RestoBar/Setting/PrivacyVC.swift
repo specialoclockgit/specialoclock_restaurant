@@ -17,24 +17,24 @@ class PrivacyVC: UIViewController {
     //MARK: Variable
     var status = Int()
     var heading = String()
-    var viewmodel = AuthViewModel()
+    var viewmodel = restoViewModal()
     
+    //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
         lblHeading.text = heading
-//        if self.lblHeading.text == "Privacy Policy" {
-//            viewmodel.privacypolicyApi { data in
-//                self.lblcms.text = data?.description.htmlToString
-//            }
-//        } else {
-//            self.lblHeading.text == "Terms and condition"; do {
-//                self.viewmodel.termsandconditionApi { data in
-//                    self.lblcms.text = data?.description.htmlToString
-//                }
-//            }
-//        }
-        // Do any additional setup after loading the view.
+        if self.lblHeading.text == "Privacy Policy" {
+            viewmodel.privacypolicyApi { data in
+                self.lblcms.text = data?.description.htmlToString
+            }
+        } else {
+            self.lblHeading.text == "Terms and condition"; do {
+                self.viewmodel.termsandconditionApi { data in
+                    self.lblcms.text = data?.description.htmlToString
+                }
+            }
+        }
     }
     
     //MARK: Button Action
@@ -42,16 +42,4 @@ class PrivacyVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-}
-extension PrivacyVC {
-//    func checkStatus(){
-//        switch status {
-//        case 0:
-//            debugPrint("0")
-//        case 1:
-//            debugPrint("1")
-//               default:
-//            debugPrint("")
-//        }
-//    }
 }

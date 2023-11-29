@@ -10,6 +10,11 @@ import UIKit
 class CellMyOfferTB: UITableViewCell {
     
     //MARK: Outlets
+    
+    @IBOutlet weak var lblOfferPrice: UILabel!
+    @IBOutlet weak var lblActualPrice: UILabel!
+    @IBOutlet weak var lblTittleName: UILabel!
+    @IBOutlet weak var imgViwe: UIImageView!
     @IBOutlet weak var stackView : UIStackView!
     @IBOutlet weak var lblItemTitle : UILabel!
  
