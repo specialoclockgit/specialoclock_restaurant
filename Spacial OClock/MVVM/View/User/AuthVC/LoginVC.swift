@@ -36,7 +36,7 @@ class LoginVC: UIViewController {
     }
 
     @IBAction func btnSignIn(_ sender: UIButton){
-        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 1) {
+        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 1, role: Store.userDetails?.role ?? 0) {
             if Store.userDetails?.role == 0{
                 if Store.userDetails?.isOtpVerified == 1 {
                    Store.autoLogin = true
@@ -48,20 +48,23 @@ class LoginVC: UIViewController {
                    CommonUtilities.shared.showAlert(message: "Please verify otp", isSuccess: .error)
                    self.navigationController?.pushViewController(vc, animated: true)
                 }
-            }else
-            {
-                if Store.userDetails?.bussinesstype == 1{
-                    let storyboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "RestoTabBarVC") as! RestoTabBarVC
-                    CommonUtilities.shared.showAlert(message: "Login successfully", isSuccess: .success)
-                    vc.accessibilityHint = "Restaurant"
+            }else{
+                let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+                if Store.userDetails?.isOtpVerified != 1{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
                     self.navigationController?.pushViewController(vc, animated: true)
-                }else{
-                    let storyboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "RestoTabBarVC") as! RestoTabBarVC
-                    vc.accessibilityHint = "Bar"
+                }else if Store.userDetails?.isCompleted != 1{
+                    let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
+                    vc.heading = "Restaurant Profile"
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else if Store.userDetails?.is_approved == 0{
+                    CommonUtilities.shared.showAlert(message: "Your Business approval is pending from admin.", isSuccess: .error)
+                }else {
+                    let vc = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC)as! RestoTabBarVC
+                    Store.autoLogin = true
                     CommonUtilities.shared.showAlert(message: "Login successfully", isSuccess: .success)
                     self.navigationController?.pushViewController(vc, animated: true)
+                    
                 }
             }
         }

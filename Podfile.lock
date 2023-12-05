@@ -83,6 +83,7 @@ PODS:
     - SwiftMessages/App (= 9.0.6)
   - SwiftMessages/App (9.0.6)
   - SwiftyJSON (5.0.1)
+  - WaterfallLayout (0.2)
 
 DEPENDENCIES:
   - Cosmos (~> 23.0)
@@ -106,6 +107,7 @@ DEPENDENCIES:
   - SwiftGifOrigin
   - SwiftMessages
   - SwiftyJSON
+  - WaterfallLayout
 
 SPEC REPOS:
   trunk:
@@ -142,6 +144,7 @@ SPEC REPOS:
     - SwiftGifOrigin
     - SwiftMessages
     - SwiftyJSON
+    - WaterfallLayout
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
@@ -177,7 +180,8 @@ SPEC CHECKSUMS:
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  WaterfallLayout: 030e04b041e5c6c47ae2c1eaa685c60289fab0b1
 
-PODFILE CHECKSUM: 29fa1240dfddec8d170370917da4a9b6b9defc4d
+PODFILE CHECKSUM: 734008084e8e5dd4569ec30b2a40330b59ec01a7
 
 COCOAPODS: 1.12.1

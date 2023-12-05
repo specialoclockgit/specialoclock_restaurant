@@ -52,7 +52,7 @@ class AuthViewModel : NSObject {
         
         WebService.service(API.file_upload, param: param, service: .post, showHud: true) {
             (userData: FileuploadModel , data, json) in
-            
+           
             for indx in 0..<(userData.body.count ?? 0){
                 let image = userData.body[indx].image
                 let thumbnail = userData.body[indx].thumbnail
@@ -67,7 +67,7 @@ class AuthViewModel : NSObject {
     }
     
     //MARK: - LOGIN API
-    func loginApicall(email:String, password:String,device_type:Int ,onSuccess: @escaping (()->())) {
+    func loginApicall(email:String, password:String,device_type:Int,role:Int ,onSuccess: @escaping (()->())) {
         if email.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your email", isSuccess: .error)
         }else if !email.isValidemail {
@@ -75,7 +75,7 @@ class AuthViewModel : NSObject {
         }else if password.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
         }else {
-            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type,"role":1]
+            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type,"role":role]
             WebService.service(API.login, param: param, service: .post){
                 (modaldata: SignupModel , Data, Json) in
                 Store.userDetails = modaldata.body

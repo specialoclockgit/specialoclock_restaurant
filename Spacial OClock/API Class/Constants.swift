@@ -26,13 +26,13 @@ let iOSplatForm = "1"
 
 //let baseURL  = "http://202.164.42.227:9999"
 
-let baseURL = "http://202.164.42.227:9999/api/"
+let baseURL = "https://app.specialoclock.com/api/"
 
-let imageURL = "http://202.164.42.227:9999/"
+let imageURL = "https://app.specialoclock.com/"
 
-let imageBaseURL =  "http://202.164.42.227:9999/assets/images/"
+let imageBaseURL =  "https://app.specialoclock.com/assets/images/"
 
-let productImgURL = "http://202.164.42.227:9999/assets/img/"
+let productImgURL = "https://app.specialoclock.com/assets/img/"
 
 
 //let imagePickerSources = ImagePickerClass()
@@ -176,12 +176,15 @@ enum API: String{
     case card_listing
     case fetch_invoice_detail
     case payment_sheet
+    case get_business_details
+    case edit_business
    
 }
 
 //MARK: - User Default keys
 enum DefaultKeys: String
 {
+    case restoStatus
     case Authorization
     case userId
     case loginvalue

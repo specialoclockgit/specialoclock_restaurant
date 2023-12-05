@@ -122,7 +122,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         } else if self.imgArr.count  <= 2{
             CommonUtilities.shared.showAlert(message: "Please select 3 image", isSuccess: .error)
         }else {
-            self.viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: 1, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfLocation.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.Cuisinid.description, shortdescription: self.tvDescription.text ?? "") {
+            self.viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfLocation.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.Cuisinid.description, shortdescription: self.tvDescription.text ?? "") {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "RestoVerificationAlertVC")as! RestoVerificationAlertVC
                 vc.callBack = {
                     for controller in self.navigationController!.viewControllers as Array {
@@ -205,6 +205,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         timePicker.datePickerMode = .time
         if #available(iOS 14.0, *) {
             timePicker.preferredDatePickerStyle = .wheels
+            timePicker.minuteInterval = 30
         } else {
         }
         
@@ -222,7 +223,6 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     @objc func doneteTime1(){
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm a"
-        //        formatter.dateFormat = "HH:mm a"
         tfOpenTime.text = formatter.string(from: timePicker.date)
         openTime =  formatter.string(from: timePicker.date)
         print(tfOpenTime ?? "")
@@ -234,7 +234,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     
     func ShowtimePicker2() {
         timePicker2.datePickerMode = .time
-        
+        timePicker2.minuteInterval = 30
+        timePicker2.minuteInterval = 30
         if #available(iOS 14.0, *) {
             timePicker2.preferredDatePickerStyle = .wheels
         } else {

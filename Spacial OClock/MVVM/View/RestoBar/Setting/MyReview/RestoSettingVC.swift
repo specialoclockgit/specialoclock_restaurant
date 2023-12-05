@@ -147,7 +147,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
             deleteAcccount.imgString = "delete-user"
             deleteAcccount.messgae = AlertMessage.deleteAccountMessage
             deleteAcccount.callBack = {
-                //SceneDelegate().RestoLogin()
+                SceneDelegate().setLoginRoot()
             }
             self.navigationController?.present(deleteAcccount, animated: true)
         case 12:
@@ -157,7 +157,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
             logOutScreen.imgString = "logout"
             logOutScreen.messgae = AlertMessage.logOutMessage
             logOutScreen.callBack = {
-                //SceneDelegate().RestoLogin()
+                SceneDelegate().setLoginRoot()
             }
             self.navigationController?.present(logOutScreen, animated: true)
         default :

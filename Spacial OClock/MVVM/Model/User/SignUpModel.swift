@@ -33,11 +33,11 @@ struct SignupBody: Codable {
     var location, latitude, longitude: String?
     var loginTime, bussinesstype: Int?
     var notes, interests: String?
-    var status, loginStep, isCompleted, notificationStatus: Int?
+    var status, loginStep, isCompleted, notificationStatus, is_approved: Int?
     var createdAt, updatedAt, token: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, name
+        case id, name, is_approved
         case bussinesstype = "bussiness_type"
         case aboutMe = "about_me"
         case nickName = "nick_name"

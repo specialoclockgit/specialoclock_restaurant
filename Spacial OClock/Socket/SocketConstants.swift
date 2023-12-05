@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 enum socketKeys : String {
-    case socketBaseUrl = "http://202.164.42.227:9999"
+    case socketBaseUrl = "https://app.specialoclock.com"
     case userId = "user_id"
     case senderId = "sender_id"
     case receiverId = "receiver_id"

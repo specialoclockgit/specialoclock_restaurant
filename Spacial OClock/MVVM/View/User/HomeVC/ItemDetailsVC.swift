@@ -113,6 +113,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var datecuurent = String()
     var slottime = String()
     var slotid = Int()
+    var screenCheck = Int()
     
     //full menu
     var modalfullmenu : [allMenuModalBody]?
@@ -231,7 +232,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     @objc func donedatePicker(){
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.dateFormat = "yyyy-MM-dd"
         txtFldDate.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
     }

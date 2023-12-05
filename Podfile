@@ -29,6 +29,7 @@ target 'Spacial OClock' do
   pod 'Socket.IO-Client-Swift'
   pod 'SwiftyJSON'
   pod 'StripePaymentSheet'
+  pod 'WaterfallLayout'
 #  pod 'SKPhotoBrowser'
 
   

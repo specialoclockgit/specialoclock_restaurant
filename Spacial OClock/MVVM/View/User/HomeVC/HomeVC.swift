@@ -422,17 +422,20 @@ extension HomeVC {
             let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.location = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
+            screen.filterlocation = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Cuisines" :
             let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.cuisine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
+            screen.filterCusine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Category" :
             let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
+            screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
             screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
@@ -446,6 +449,7 @@ extension HomeVC {
             let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.themeArr = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
+            screen.filterthemeAry = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "A-Z" :

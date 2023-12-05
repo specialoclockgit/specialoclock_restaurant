@@ -74,24 +74,24 @@ class Store {
     }
 
     class var isfromsecure: String?{
-           set {
-               Store.saveValue(newValue, .loginvalue)
-           }get{
-               return Store.getValue(.loginvalue) as? String
-           }
-       }
+        set {
+            Store.saveValue(newValue, .loginvalue)
+        }get{
+            return Store.getValue(.loginvalue) as? String
+        }
+    }
     
     
-//    class var notifications: [NotificationListBody]? {
-//        set{
-//            Store.saveUserDetails(newValue, .notifications)
-////            Store.authKey = newValue?.token
-//
-//        }
-//        get{
-//            return Store.getUserDetails(.notifications)
-//        }
-//    }
+    
+    class var status: String? {
+        set{
+            Store.saveUserDetails(newValue, .restoStatus)
+
+        }
+        get{
+            return Store.getUserDetails(.restoStatus)
+        }
+    }
     
     static var remove: DefaultKeys!{
         didSet{

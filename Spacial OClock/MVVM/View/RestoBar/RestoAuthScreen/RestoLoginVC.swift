@@ -17,6 +17,7 @@ class RestoLoginVC: UIViewController {
     //MARK: - VARIABLES
     var viewmodel = AuthViewModel()
     var swipeGesture = UISwipeGestureRecognizer()
+    var role = Int()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
@@ -33,7 +34,7 @@ class RestoLoginVC: UIViewController {
     }
 
     @IBAction func btnSignIn(_ sender: UIButton){
-        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 1) {
+        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 1, role: self.role) {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC)as! RestoTabBarVC
             self.navigationController?.pushViewController(vc, animated: true)
         }

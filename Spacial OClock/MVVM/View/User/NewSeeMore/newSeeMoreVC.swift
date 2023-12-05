@@ -7,10 +7,14 @@
 
 import UIKit
 import SkeletonView
-
+import SwiftGifOrigin
+#if canImport(CHTCollectionViewWaterfallLayout)
+import CHTCollectionViewWaterfallLayout
+#endif
 class newSeeMoreVC: UIViewController {
 
     //MARK: - OUTLETS
+    @IBOutlet weak var txtFldSearch: CustomTextField!
     @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var colleVeiw: UICollectionView!
@@ -23,12 +27,18 @@ class newSeeMoreVC: UIViewController {
     var category = [Category]()
     var all_bars_restos = [AllBarsResto]()
     var highily_rated_bars_restos = [AllBarsResto]()
+    var filterlocation = [HomeListLocation]()
+    var filterCusine = [Cuisine]()
+    var filterthemeAry = [ThemeData]()
+    var filtercategory = [Category]()
     var setvalue = ""
     var objArray: [SectionModel] = []
     
     //MARK: - VIEW LIEFCYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        txtFldSearch.delegate  = self
+        setupCollectionView()
         if setvalue == "Location"{
             lblHeading.text = "Location"
         }else if setvalue == "Cuisines"{
@@ -38,8 +48,19 @@ class newSeeMoreVC: UIViewController {
         }else if setvalue == "Theme"{
             lblHeading.text = "Theme"
         }
+        colleVeiw.reloadData()
     }
-    
+    func setupCollectionView(){
+        // Create a waterfall layout
+        let layout = CHTCollectionViewWaterfallLayout()
+        // Change individual layout attributes for the spacing between cells
+        layout.minimumColumnSpacing = 5
+        layout.minimumInteritemSpacing = 10.0
+        // Collection view attributes
+        colleVeiw.alwaysBounceVertical = true
+        // Add the waterfall layout to your collection view
+        colleVeiw.collectionViewLayout = layout
+    }
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
     }
@@ -54,7 +75,7 @@ class newSeeMoreVC: UIViewController {
     }
 }
 //MARK: - EXTENSION
-extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setvalue == "Cuisines"{
             self.colleVeiw.hideSkeleton()
@@ -63,7 +84,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return cuisine.count
+                return filterCusine.count
             }
         }else if setvalue == "Category"{
             self.colleVeiw.hideSkeleton()
@@ -72,7 +93,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return category.count
+                return filtercategory.count
             }
         }else if setvalue == "Theme"{
             self.colleVeiw.hideSkeleton()
@@ -81,7 +102,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return themeArr.count
+                return filterthemeAry.count
             }
         }else if setvalue == "Location"{
             self.colleVeiw.hideSkeleton()
@@ -90,81 +111,142 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return location.count
+                return filterlocation.count
             }
         }
         return 0
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newSeeMoreCVC", for: indexPath) as! newSeeMoreCVC
-        cell.view.layer.cornerRadius = 10
-        cell.view.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
         if setvalue == "Location"{
             cell.imgView.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
-            cell.lblName.text = self.location[indexPath.row].city ?? ""
-            cell.lblTotalREs.text = "Restaurant \(self.location[indexPath.row].restroCount ?? 0)"
+            cell.lblName.text = self.filterlocation[indexPath.row].city ?? ""
+            cell.lblTotalREs.text = "Restaurant \(self.filterlocation[indexPath.row].restroCount ?? 0)"
         }else if setvalue == "Cuisines"{
-            let image = "\(self.cuisine[indexPath.row].image ?? "")"
+            let image = "\(self.filterCusine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            cell.lblTotalREs.text = "Restaurant \(self.cuisine[indexPath.row].restroCount ?? 0)"
-            cell.lblName.text = self.cuisine[indexPath.row].name ?? ""
+            cell.lblTotalREs.text = "Restaurant \(self.filterCusine[indexPath.row].restroCount ?? 0)"
+            cell.lblName.text = self.filterCusine[indexPath.row].name ?? ""
         }else if setvalue == "Category"{
-            let image = "\(self.category[indexPath.row].image ?? "")"
+            let image = "\(self.filtercategory[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            cell.lblTotalREs.text = "Restaurant \(self.category[indexPath.row].clubCount ?? 0)"
-            cell.lblName.text = self.category[indexPath.row].title ?? ""
+            cell.lblTotalREs.text = "Restaurant \(self.filtercategory[indexPath.row].clubCount ?? 0)"
+            cell.lblName.text = self.filtercategory[indexPath.row].title ?? ""
         }else if setvalue == "Theme"{
-            let image = "\(self.themeArr[indexPath.row].image ?? "")"
+            let image = "\(self.filterthemeAry[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            cell.lblTotalREs.text = "Restaurant \(self.themeArr[indexPath.row].restroCount ?? 0)"
-            cell.lblName.text = self.themeArr[indexPath.row].productName ?? ""
+            cell.lblTotalREs.text = "Restaurant \(self.filterthemeAry[indexPath.row].restroCount ?? 0)"
+            cell.lblName.text = self.filterthemeAry[indexPath.row].productName ?? ""
         }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if setvalue == "Location"{
-            return CGSize(width: colleVeiw.frame.width, height: 180)
+            if indexPath.row % 3 == 0{
+                return CGSize(width: colleVeiw.frame.width / 2, height: 200)
+            }else{
+                return CGSize(width: colleVeiw.frame.width / 2, height: 260)
+            }
+           
         }else if setvalue == "Cuisines"{
-            return CGSize(width: colleVeiw.frame.width, height: 180)
+            if indexPath.row % 3 == 0{
+                return CGSize(width: colleVeiw.frame.width / 2, height: 200)
+            }else{
+                return CGSize(width: colleVeiw.frame.width / 2, height: 260)
+            }
         }else if setvalue == "Category"{
-            return CGSize(width: colleVeiw.frame.width, height: 180)
+            if indexPath.row % 3 == 0{
+                return CGSize(width: colleVeiw.frame.width / 2, height: 200)
+            }else{
+                return CGSize(width: colleVeiw.frame.width / 2, height: 260)
+            }
         }else{
-            return CGSize(width: colleVeiw.frame.width, height: 180)
+            if indexPath.row % 3 == 0{
+                return CGSize(width: colleVeiw.frame.width / 2, height: 200)
+            }else{
+                return CGSize(width: colleVeiw.frame.width / 2, height: 260)
+            }
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if setvalue == "Location"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
-            vc.country = self.location[indexPath.row].country ?? ""
-            vc.city = self.location[indexPath.row].city ?? ""
+            vc.country = self.filterlocation[indexPath.row].country ?? ""
+            vc.city = self.filterlocation[indexPath.row].city ?? ""
             vc.setValue = "Location"
             vc.setimage = "PIN"
             self.navigationController?.pushViewController(vc, animated: true)
         }else if setvalue == "Cuisines"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
-            vc.cusinessID = self.cuisine[indexPath.row].id ?? 0
-            vc.lblName = self.cuisine[indexPath.row].name ?? ""
+            vc.cusinessID = self.filterCusine[indexPath.row].id ?? 0
+            vc.lblName = self.filterCusine[indexPath.row].name ?? ""
             vc.setimage = "soup"
             vc.setValue = "Cuisines"
             self.navigationController?.pushViewController(vc, animated: true)
         }else if setvalue == "Category"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
-            vc.cusinessID = self.category[indexPath.row].id ?? 0
-            vc.lblName = self.category[indexPath.row].title ?? ""
+            vc.cusinessID = self.filtercategory[indexPath.row].id ?? 0
+            vc.lblName = self.filtercategory[indexPath.row].title ?? ""
             vc.setimage = "category_icon"
             vc.setValue = "Category"
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
-            vc.themeID = themeArr[indexPath.row].id ?? 0
-            vc.lblName = self.themeArr[indexPath.row].productName ?? ""
+            vc.themeID = filterthemeAry[indexPath.row].id ?? 0
+            vc.lblName = self.filterthemeAry[indexPath.row].productName ?? ""
             vc.setValue = "Theme"
             vc.setimage = "mask"
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
+}
+
+extension newSeeMoreVC : UITextFieldDelegate {
+    //MARK: - Search
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if setvalue == "Location" {
+            let resultString = txtFldSearch.text ?? ""
+            if (resultString.count) > 1{
+                if let searchText = txtFldSearch.text {
+                    filterlocation = location.filter {$0.state?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+                }
+            }else{
+                filterlocation = location
+            }
+        }else if setvalue == "Cuisines"{
+            let resultString = txtFldSearch.text ?? ""
+            if (resultString.count) > 1{
+                if let searchText = txtFldSearch.text {
+                    filterCusine = cuisine.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+                }
+            }else{
+                filterCusine = cuisine
+            }
+        }else if setvalue == "Category" {
+            let resultString = txtFldSearch.text ?? ""
+            if (resultString.count) > 1{
+                if let searchText = txtFldSearch.text {
+                    filtercategory = category.filter {$0.title?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+                }
+            }else{
+                filtercategory = category
+            }
+        }else{
+            let resultString = txtFldSearch.text ?? ""
+            if (resultString.count) > 1{
+                if let searchText = txtFldSearch.text {
+                    filterthemeAry = themeArr.filter {$0.productName?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+                }
+            }else{
+                filtercategory = category
+            }
+        }
+        
+        colleVeiw.reloadData()
+        return true
+    }
 }

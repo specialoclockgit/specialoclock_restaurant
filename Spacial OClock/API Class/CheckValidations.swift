@@ -63,7 +63,7 @@ class CheckValidations: NSObject{
             CommonUtilities.shared.showAlert(message: "Password and confirm password should be same", isSuccess: .error)
             return false
         }else if isselected == false {
-            CommonUtilities.shared.showAlert(message: "Please select term & condition", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please select terms & conditions", isSuccess: .error)
             return false
         }
         return true

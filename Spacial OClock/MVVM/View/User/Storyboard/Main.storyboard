@@ -6548,7 +6548,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jcb-Fj-5wj">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileImg" translatesAutoresizingMaskIntoConstraints="NO" id="f7n-PE-osH">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder (1)" translatesAutoresizingMaskIntoConstraints="NO" id="f7n-PE-osH">
                                                 <rect key="frame" x="125" y="19" width="164" height="164"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="164" id="4uB-MA-5hP"/>
@@ -6776,7 +6776,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAP-rd-oxi">
                                                 <rect key="frame" x="125" y="19" width="164" height="164"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileImg" translatesAutoresizingMaskIntoConstraints="NO" id="CG8-na-lTN">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder (1)" translatesAutoresizingMaskIntoConstraints="NO" id="CG8-na-lTN">
                                                         <rect key="frame" x="0.0" y="0.0" width="164" height="164"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="164" id="8t2-xL-sRk"/>
@@ -8981,7 +8981,7 @@ EE1lbnU
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="SearchIcon"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1f-Ad-PfF">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1f-Ad-PfF">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <connections>
@@ -9021,7 +9021,7 @@ EE1lbnU
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Bgq-Q3-yQt">
                                         <rect key="frame" x="16" y="184" width="382" height="712"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Vhm-kS-Djn">
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Vhm-kS-Djn">
                                             <size key="itemSize" width="334" height="266"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -9031,18 +9031,15 @@ EE1lbnU
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="newSeeMoreCVC" id="nYK-Qk-dm3" customClass="newSeeMoreCVC" customModule="Spacial_OClock" customModuleProvider="target">
                                                 <rect key="frame" x="24" y="0.0" width="334" height="266"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EIM-bw-fi3">
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="c6X-PN-t3i">
                                                     <rect key="frame" x="0.0" y="0.0" width="334" height="266"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afw-xc-hyb" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="334" height="266"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image3" translatesAutoresizingMaskIntoConstraints="NO" id="Le7-Dv-MPD" customClass="CustomImageView" customModule="Spacial_OClock" customModuleProvider="target">
-                                                                    <rect key="frame" x="5" y="5" width="324" height="160"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="160" id="F12-2A-URu"/>
-                                                                    </constraints>
+                                                                    <rect key="frame" x="5" y="5" width="324" height="261"/>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                             <real key="value" value="10"/>
@@ -9052,17 +9049,17 @@ EE1lbnU
                                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </imageView>
-                                                                <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A00-Mw-sey">
-                                                                    <rect key="frame" x="5" y="116.5" width="324" height="48.5"/>
+                                                                <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A00-Mw-sey" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
+                                                                    <rect key="frame" x="11" y="212.5" width="312" height="41.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zm-19-fLr">
-                                                                            <rect key="frame" x="6" y="2" width="312" height="22.5"/>
+                                                                            <rect key="frame" x="6" y="2" width="300" height="19"/>
                                                                             <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="16"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vde-7n-I8q">
-                                                                            <rect key="frame" x="6" y="26.5" width="312" height="20"/>
+                                                                            <rect key="frame" x="6" y="23" width="300" height="16.5"/>
                                                                             <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -9078,22 +9075,28 @@ EE1lbnU
                                                                         <constraint firstAttribute="bottom" secondItem="Vde-7n-I8q" secondAttribute="bottom" constant="2" id="nbt-LP-zyt"/>
                                                                         <constraint firstItem="Vde-7n-I8q" firstAttribute="top" secondItem="6zm-19-fLr" secondAttribute="bottom" constant="2" id="y9t-qL-IGa"/>
                                                                     </constraints>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                            <real key="value" value="10"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </view>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstItem="Le7-Dv-MPD" firstAttribute="centerX" secondItem="afw-xc-hyb" secondAttribute="centerX" id="1q7-cR-u8q"/>
-                                                                <constraint firstItem="A00-Mw-sey" firstAttribute="bottom" secondItem="Le7-Dv-MPD" secondAttribute="bottom" id="5g5-r0-tOX"/>
                                                                 <constraint firstAttribute="trailing" secondItem="Le7-Dv-MPD" secondAttribute="trailing" constant="5" id="AdS-bf-Tx0"/>
                                                                 <constraint firstItem="Le7-Dv-MPD" firstAttribute="top" secondItem="afw-xc-hyb" secondAttribute="top" constant="5" id="CJ3-AC-4ax"/>
                                                                 <constraint firstItem="Le7-Dv-MPD" firstAttribute="leading" secondItem="afw-xc-hyb" secondAttribute="leading" constant="5" id="GWP-ga-rwM"/>
-                                                                <constraint firstItem="A00-Mw-sey" firstAttribute="trailing" secondItem="Le7-Dv-MPD" secondAttribute="trailing" id="qkW-bZ-LCH"/>
-                                                                <constraint firstItem="A00-Mw-sey" firstAttribute="leading" secondItem="Le7-Dv-MPD" secondAttribute="leading" id="rT5-qx-fII"/>
+                                                                <constraint firstItem="A00-Mw-sey" firstAttribute="bottom" secondItem="Le7-Dv-MPD" secondAttribute="bottom" constant="-12" id="Ofa-O1-YEl"/>
+                                                                <constraint firstAttribute="bottom" secondItem="Le7-Dv-MPD" secondAttribute="bottom" id="gLn-rn-TPR"/>
+                                                                <constraint firstItem="A00-Mw-sey" firstAttribute="trailing" secondItem="Le7-Dv-MPD" secondAttribute="trailing" constant="-6" id="qkW-bZ-LCH"/>
+                                                                <constraint firstItem="A00-Mw-sey" firstAttribute="leading" secondItem="Le7-Dv-MPD" secondAttribute="leading" constant="6" id="rT5-qx-fII"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isShadow" value="YES"/>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="10"/>
+                                                                    <real key="value" value="12"/>
                                                                 </userDefinedRuntimeAttribute>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                                     <real key="value" value="1"/>
@@ -9113,13 +9116,10 @@ EE1lbnU
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="afw-xc-hyb" secondAttribute="trailing" id="Iva-cv-W2l"/>
-                                                        <constraint firstItem="afw-xc-hyb" firstAttribute="leading" secondItem="EIM-bw-fi3" secondAttribute="leading" id="aP9-5w-WOK"/>
-                                                        <constraint firstItem="afw-xc-hyb" firstAttribute="top" secondItem="EIM-bw-fi3" secondAttribute="top" id="b3W-Pi-WEF"/>
+                                                        <constraint firstItem="afw-xc-hyb" firstAttribute="leading" secondItem="c6X-PN-t3i" secondAttribute="leading" id="aP9-5w-WOK"/>
+                                                        <constraint firstItem="afw-xc-hyb" firstAttribute="top" secondItem="c6X-PN-t3i" secondAttribute="top" id="b3W-Pi-WEF"/>
                                                         <constraint firstAttribute="bottom" secondItem="afw-xc-hyb" secondAttribute="bottom" id="rMk-Xd-axC"/>
                                                     </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
-                                                    </userDefinedRuntimeAttributes>
                                                 </collectionViewCellContentView>
                                                 <size key="customSize" width="334" height="266"/>
                                                 <userDefinedRuntimeAttributes>
@@ -9161,7 +9161,7 @@ EE1lbnU
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Rating &amp; Review" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OL9-GL-LAP">
-                                        <rect key="frame" x="102" y="67" width="210" height="28"/>
+                                        <rect key="frame" x="112.5" y="69.5" width="189" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -9203,6 +9203,7 @@ EE1lbnU
                         <outlet property="colleVeiw" destination="Bgq-Q3-yQt" id="1ZM-jc-jI8"/>
                         <outlet property="imgViewGif" destination="xYz-fa-cik" id="itg-kr-Ecd"/>
                         <outlet property="lblHeading" destination="OL9-GL-LAP" id="Vfs-Y6-XPY"/>
+                        <outlet property="txtFldSearch" destination="0rI-l8-Sza" id="lDe-2a-44f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nie-EJ-zk5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -9242,7 +9243,7 @@ EE1lbnU
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D14-zd-2Kz">
                                                 <rect key="frame" x="0.0" y="40" width="414" height="938.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileImg" translatesAutoresizingMaskIntoConstraints="NO" id="aDb-JM-OXH" customClass="CustomImageView" customModule="Spacial_OClock" customModuleProvider="target">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="aDb-JM-OXH" customClass="CustomImageView" customModule="Spacial_OClock" customModuleProvider="target">
                                                         <rect key="frame" x="132" y="-40" width="150" height="150"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="150" id="LYN-LB-9JC"/>
@@ -9256,7 +9257,7 @@ EE1lbnU
                                                     </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="mUj-qb-3d7" customClass="CustomImageView" customModule="Spacial_OClock" customModuleProvider="target">
                                                         <rect key="frame" x="191" y="22.5" width="32" height="25"/>
-                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="25" id="Hkx-Xj-6ut"/>
                                                             <constraint firstAttribute="width" constant="32" id="UQm-rn-U1g"/>
@@ -9469,7 +9470,7 @@ EE1lbnU
                                                                         <rect key="frame" x="4" y="32.5" width="366" height="56"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CfO-Ag-xGZ" customClass="CustomTextField" customModule="Spacial_OClock" customModuleProvider="target">
-                                                                                <rect key="frame" x="67" y="4" width="295" height="48"/>
+                                                                                <rect key="frame" x="58" y="4" width="304" height="48"/>
                                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
                                                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                                                 <userDefinedRuntimeAttributes>
@@ -9488,7 +9489,7 @@ EE1lbnU
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </textField>
                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="+1" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pX1-id-NMy" customClass="CustomTextField" customModule="Spacial_OClock" customModuleProvider="target">
-                                                                                <rect key="frame" x="5" y="0.0" width="49" height="56"/>
+                                                                                <rect key="frame" x="5" y="0.0" width="40" height="56"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="Vu8-DV-nil"/>
                                                                                 </constraints>
@@ -9507,7 +9508,7 @@ EE1lbnU
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </textField>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowtriangle.down.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="PU3-DF-zaV">
-                                                                                <rect key="frame" x="49" y="25" width="13" height="6"/>
+                                                                                <rect key="frame" x="40" y="25" width="13" height="6"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
@@ -9516,7 +9517,7 @@ EE1lbnU
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Rq-QT-Hz3">
-                                                                                <rect key="frame" x="5" y="0.0" width="57" height="56"/>
+                                                                                <rect key="frame" x="5" y="0.0" width="48" height="56"/>
                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                 <connections>
                                                                                     <action selector="btnCountryPicker:" destination="ib0-UI-Lln" eventType="touchUpInside" id="FDn-LM-oGl"/>
@@ -9840,25 +9841,13 @@ EE1lbnU
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2l-Zg-Nec" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
                                                         <rect key="frame" x="20" y="732" width="20" height="20"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="2eu-3D-yBI"/>
                                                             <constraint firstAttribute="height" constant="20" id="FQh-qr-s4x"/>
                                                         </constraints>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" image="uncheck"/>
-                                                        <state key="selected" image="tickCheck"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="1"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="5"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
+                                                        <state key="normal" image="elements-checkBox-off"/>
+                                                        <state key="selected" image="Group 7228 (2)"/>
                                                         <connections>
                                                             <action selector="btnCheckAct:" destination="ib0-UI-Lln" eventType="touchUpInside" id="v4T-hN-fXI"/>
                                                         </connections>
@@ -9904,7 +9893,7 @@ EE1lbnU
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcN-8L-IeD">
                                                         <rect key="frame" x="20" y="792.5" width="374" height="56"/>
-                                                        <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" red="0.96470588235294119" green="0.44705882352941173" blue="0.074509803921568626" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="ikY-DC-ATH"/>
                                                         </constraints>
@@ -10067,19 +10056,19 @@ EE1lbnU
     </scenes>
     <designables>
         <designable name="0rI-l8-Sza">
-            <size key="intrinsicContentSize" width="55" height="18.5"/>
+            <size key="intrinsicContentSize" width="45" height="18.5"/>
         </designable>
         <designable name="1zH-bN-lnf">
             <size key="intrinsicContentSize" width="45" height="18.5"/>
         </designable>
         <designable name="7sM-Vc-C1o">
-            <size key="intrinsicContentSize" width="113.5" height="21"/>
+            <size key="intrinsicContentSize" width="81.5" height="37"/>
         </designable>
         <designable name="9MQ-iP-qi7">
             <size key="intrinsicContentSize" width="118" height="36"/>
         </designable>
         <designable name="9cf-Zy-zp7">
-            <size key="intrinsicContentSize" width="113.5" height="21"/>
+            <size key="intrinsicContentSize" width="81.5" height="37"/>
         </designable>
         <designable name="9fg-I2-Ub6">
             <size key="intrinsicContentSize" width="79" height="36"/>
@@ -10088,10 +10077,10 @@ EE1lbnU
             <size key="intrinsicContentSize" width="340" height="252"/>
         </designable>
         <designable name="C9c-b3-Xpt">
-            <size key="intrinsicContentSize" width="120" height="22.5"/>
+            <size key="intrinsicContentSize" width="88" height="38.5"/>
         </designable>
         <designable name="CfO-Ag-xGZ">
-            <size key="intrinsicContentSize" width="186.5" height="22.5"/>
+            <size key="intrinsicContentSize" width="154.5" height="38.5"/>
         </designable>
         <designable name="EKs-eI-rIm">
             <size key="intrinsicContentSize" width="168" height="115.5"/>
@@ -10109,22 +10098,16 @@ EE1lbnU
             <size key="intrinsicContentSize" width="168" height="115.5"/>
         </designable>
         <designable name="N8h-m2-7ZI">
-            <size key="intrinsicContentSize" width="113.5" height="21"/>
-        </designable>
-        <designable name="NJT-yG-MO4">
-            <size key="intrinsicContentSize" width="111" height="19"/>
+            <size key="intrinsicContentSize" width="81.5" height="37"/>
         </designable>
         <designable name="RRZ-On-5Fg">
             <size key="intrinsicContentSize" width="45" height="18.5"/>
         </designable>
         <designable name="SHN-V2-Ikx">
-            <size key="intrinsicContentSize" width="157.5" height="19"/>
+            <size key="intrinsicContentSize" width="125.5" height="35"/>
         </designable>
         <designable name="VnG-nd-xE7">
             <size key="intrinsicContentSize" width="30" height="30"/>
-        </designable>
-        <designable name="XaK-IR-ZvE">
-            <size key="intrinsicContentSize" width="86" height="14"/>
         </designable>
         <designable name="Y8v-u6-zA0">
             <size key="intrinsicContentSize" width="42" height="33"/>
@@ -10133,28 +10116,25 @@ EE1lbnU
             <size key="intrinsicContentSize" width="13.5" height="20"/>
         </designable>
         <designable name="aDb-JM-OXH">
-            <size key="intrinsicContentSize" width="164" height="164"/>
+            <size key="intrinsicContentSize" width="180" height="161.5"/>
         </designable>
         <designable name="cY2-JT-n3k">
             <size key="intrinsicContentSize" width="62" height="36"/>
         </designable>
         <designable name="f9L-oD-Ob6">
-            <size key="intrinsicContentSize" width="211.5" height="21"/>
+            <size key="intrinsicContentSize" width="179.5" height="37"/>
         </designable>
         <designable name="fcG-Oe-2tl">
-            <size key="intrinsicContentSize" width="178.5" height="21"/>
+            <size key="intrinsicContentSize" width="146.5" height="37"/>
         </designable>
         <designable name="guM-zK-WYM">
             <size key="intrinsicContentSize" width="34" height="33"/>
         </designable>
         <designable name="h2l-Zg-Nec">
-            <size key="intrinsicContentSize" width="15" height="22"/>
+            <size key="intrinsicContentSize" width="48" height="48"/>
         </designable>
         <designable name="hSR-FW-rfd">
             <size key="intrinsicContentSize" width="288" height="105"/>
-        </designable>
-        <designable name="htu-DD-8LG">
-            <size key="intrinsicContentSize" width="83" height="15"/>
         </designable>
         <designable name="jlz-dY-RoH">
             <size key="intrinsicContentSize" width="30" height="35"/>
@@ -10169,13 +10149,13 @@ EE1lbnU
             <size key="intrinsicContentSize" width="32.5" height="28.5"/>
         </designable>
         <designable name="nns-3P-uqG">
-            <size key="intrinsicContentSize" width="115" height="22.5"/>
+            <size key="intrinsicContentSize" width="83" height="38.5"/>
         </designable>
         <designable name="pX1-id-NMy">
-            <size key="intrinsicContentSize" width="49" height="21"/>
+            <size key="intrinsicContentSize" width="17" height="37"/>
         </designable>
         <designable name="phb-GT-kcU">
-            <size key="intrinsicContentSize" width="144.5" height="20"/>
+            <size key="intrinsicContentSize" width="112.5" height="36"/>
         </designable>
         <designable name="prE-WT-kUz">
             <size key="intrinsicContentSize" width="168" height="115.5"/>
@@ -10184,19 +10164,16 @@ EE1lbnU
             <size key="intrinsicContentSize" width="375" height="256"/>
         </designable>
         <designable name="u6I-F8-ckZ">
-            <size key="intrinsicContentSize" width="120" height="22.5"/>
+            <size key="intrinsicContentSize" width="88" height="38.5"/>
         </designable>
         <designable name="u9i-YD-XUX">
-            <size key="intrinsicContentSize" width="146.5" height="21"/>
-        </designable>
-        <designable name="uou-KM-at9">
-            <size key="intrinsicContentSize" width="270" height="50"/>
+            <size key="intrinsicContentSize" width="114.5" height="37"/>
         </designable>
         <designable name="w4h-Sj-OJW">
             <size key="intrinsicContentSize" width="39" height="36"/>
         </designable>
         <designable name="wUb-PN-2bz">
-            <size key="intrinsicContentSize" width="187.5" height="19"/>
+            <size key="intrinsicContentSize" width="155.5" height="35"/>
         </designable>
         <designable name="yf7-Gp-AU7">
             <size key="intrinsicContentSize" width="30" height="34"/>
@@ -10216,6 +10193,7 @@ EE1lbnU
         <image name="Group 7059" width="192" height="192"/>
         <image name="Group 7081" width="507" height="507"/>
         <image name="Group 7169" width="104" height="50"/>
+        <image name="Group 7228 (2)" width="48" height="48"/>
         <image name="History0" width="51" height="42"/>
         <image name="Home" width="33" height="41.5"/>
         <image name="Icon awesome-camera" width="32.5" height="28.5"/>
@@ -10242,6 +10220,7 @@ EE1lbnU
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="cross" width="16" height="16"/>
         <image name="detailImage" width="340" height="252"/>
+        <image name="elements-checkBox-off" width="48" height="48"/>
         <image name="eye" catalog="system" width="128" height="79"/>
         <image name="eye.circle" catalog="system" width="128" height="123"/>
         <image name="eye.slash" catalog="system" width="128" height="84"/>
@@ -10262,12 +10241,11 @@ EE1lbnU
         <image name="nodataFound.gif" width="600" height="600"/>
         <image name="notification" width="15" height="17"/>
         <image name="pinPerson" width="13" height="18"/>
-        <image name="profileImg" width="164" height="164"/>
+        <image name="placeholder (1)" width="612" height="612"/>
+        <image name="profile" width="180" height="161.5"/>
         <image name="red h" width="12" height="11"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
-        <image name="tickCheck" width="15.5" height="12"/>
         <image name="transpirantIcon" width="74" height="55"/>
-        <image name="uncheck" width="15" height="13"/>
         <image name="user" width="22" height="25"/>
         <image name="user0" width="45" height="42.5"/>
         <image name="white h" width="12" height="11"/>

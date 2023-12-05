@@ -41,6 +41,11 @@ class RestoHomeVC: UIViewController {
     //MARK: - ACTIONS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        if self.accessibilityHint == "Restaurant"{
+//            setupAPI()
+//        }else{
+//            setupAPI()
+//        }
         setupAPI()
         tabBarController?.tabBar.isHidden = false
     }

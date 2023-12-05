@@ -42,7 +42,6 @@ class AlertBottomVC: UIViewController {
                 Store.authKey = nil
                 self.dismiss(animated: true)
                 self.callBack?()
-                
             }
         }
     }

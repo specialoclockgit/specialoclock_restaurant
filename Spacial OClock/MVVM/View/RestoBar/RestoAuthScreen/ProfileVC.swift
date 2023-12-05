@@ -26,13 +26,15 @@ class ProfileVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if self.accessibilityHint == "Restaurant"{
+        if Store.userDetails?.bussinesstype == 1{
+            setupAPi()
             btnViewProfile.setTitle("Restaurant Profile", for: .normal)
-        }else if self.accessibilityHint == "Bar"{
+        }else{
+            setupAPi()
             btnViewProfile.setTitle("Bar Profile", for: .normal)
         }
         initialLoad()
+        
     }
     
      func setupAPi(){
@@ -54,12 +56,6 @@ class ProfileVC: UIViewController {
     @IBAction func btnRestaurantProfileAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.RestoProfileVC) as! RestoProfileVC
         
-//        let status = UserDefaults.standard.status
-//        if status == 0 {
-//
-//        }else if status == 1{
-//            screen.heading = "Bar Profile"
-//        }
         self.navigationController?.pushViewController(screen, animated: true)
     }
     
@@ -75,10 +71,10 @@ extension ProfileVC{
     func initialLoad(){
         btnCheckStatus = UserDefaults.standard.status
         debugPrint(btnCheckStatus)
-        if btnCheckStatus == 0 {
-            btnViewProfile.setTitle("Restaurant Profile", for: .normal)
-        }else if btnCheckStatus == 1 {
-            btnViewProfile.setTitle("Bar Profile", for: .normal)
-        }
+//        if btnCheckStatus == 0 {
+//            btnViewProfile.setTitle("Restaurant Profile", for: .normal)
+//        }else if btnCheckStatus == 1 {
+//            btnViewProfile.setTitle("Bar Profile", for: .normal)
+//        }
     }
 }

@@ -47,6 +47,7 @@ class SignUPVC: UIViewController {
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        Store.status = "\(restoselctStatus)"
         tfName.delegate = self
         tfPhone.delegate = self
         tfPassword.delegate = self
@@ -129,6 +130,7 @@ class SignUPVC: UIViewController {
     
     @IBAction func btbnSelectBar(_ sender: UIButton) {
         restoselctStatus = 2
+        
         viewButton.isHidden = true
         restaurantBtn.setTitle("Bar ▼", for: .normal)
     }
@@ -170,10 +172,11 @@ class SignUPVC: UIViewController {
     
     @IBAction func btnCheckAct(_ sender : UIButton){
         sender.isSelected = !sender.isSelected
-        sender.isSelected == false ? (sender.layer.borderWidth = 0): (sender.layer.borderWidth = 1)
+        //sender.isSelected == false ? (sender.layer.borderWidth = 0): (sender.layer.borderWidth = 1)
         switch sender.isSelected {
         case true:
             isselected = true
+            
         default:
             isselected = false
         }

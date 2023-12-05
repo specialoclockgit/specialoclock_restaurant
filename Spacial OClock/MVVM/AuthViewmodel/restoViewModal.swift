@@ -118,6 +118,53 @@ class restoViewModal : NSObject{
             onsuccess(modaldata.body)
         }
     }
+    
+    //MARK: - Restaurent details
+    func restaurentDetails(onsuccess: @escaping ((RestaurentDetailsModelBody?)->())){
+        WebService.service(API.get_business_details, service: .get) {
+            (modaldata: RestaurentDetailsModel, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
+    //MARK: - EDIT RESTAURENT
+    func editRestaurent(isSingleImage:Bool,isImageSelected:Bool,restrorant_id:Int,profile_image:[FileuploadModelBody],name:String,image:[FileuploadModelBody],location:String,open_time:String,category_id:Int,themes_restrorant_id:String,short_description:String,closetime:String,onsuccess: @escaping (()->())){
+        
+            editRestaurentFunction(isSingleImage:isSingleImage,isImageSelected:isImageSelected,restrorant_id: restrorant_id, profile_image: profile_image, name: name, image: image, location: location, open_time: open_time, category_id: category_id, themes_restrorant_id: themes_restrorant_id, short_description: short_description, closetime: closetime) { data in
+                onsuccess()
+            }
+        
+      
+    }
+    func editRestaurentFunction(isSingleImage:Bool,isImageSelected:Bool,restrorant_id:Int,profile_image:[FileuploadModelBody],name:String,image:[FileuploadModelBody],location:String,open_time:String,category_id:Int,themes_restrorant_id:String,short_description:String,closetime:String,onsuccess: @escaping ((EditRestaurentModelBody?)->())){
+        let jsonEncoder = JSONEncoder()
+        do {
+            let jsonData = try jsonEncoder.encode(profile_image)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            guard let json = jsonString else{return}
+            
+            let jsonDataimage = try jsonEncoder.encode(image)
+            let jsonStringimage = String(data: jsonDataimage, encoding: .utf8)
+            guard let jsonimage = jsonStringimage else{return}
+            
+            var param: parameters = ["restrorant_id":restrorant_id,"name":name , "location":location, "open_time":open_time,"category_id":category_id,"themes_restrorant_id":themes_restrorant_id,"short_description":short_description,"close_time":closetime]
+            if isSingleImage == true {
+                param["profile_image"] = json
+            }
+            
+            if image.count !=  0{
+                param["image"] = jsonimage
+            }
+            
+            print(param)
+            WebService.service(API.edit_business,param:param, service: .post) {
+                (modaldata: EditRestaurentModel, Data , json) in
+                onsuccess(modaldata.body)
+            }
+        } catch {
+            print("error--\(error.localizedDescription)")
+        }
+    }
 
     //MARK: - HOME RESTO LIST DETAIL API
 //    func homeRestoDetailAPI(restoid:Int,onsuccess: @escaping ((restoDetailModalBody?)->())){
