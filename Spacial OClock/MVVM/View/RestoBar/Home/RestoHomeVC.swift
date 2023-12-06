@@ -31,7 +31,7 @@ class RestoHomeVC: UIViewController {
     }
     //MARK: - FUNCTIONS API'S
     func setupAPI(){
-        viewmodel.homeRestoAPI(restobarID: Store.userDetails?.id ?? 0) { dataa in
+        viewmodel.homeRestoAPI(restobarID: Store.userDetails?.restoid ?? 0) { dataa in
             self.modal = dataa?.rows ?? []
             self.filterdata = dataa?.rows ?? []
             self.lblNoOfuser.text = "Total number of bookings : \(dataa?.count ?? 0)"
@@ -87,7 +87,7 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.bookingDetailsVC) as! bookingDetailsVC
-        //screen.restoid = filterdata?[indexPath.row].id ?? 0
+        screen.restoid = filterdata?[indexPath.row].id ?? 0
         screen.isHidden = true
         self.navigationController?.pushViewController(screen, animated: true)
     }

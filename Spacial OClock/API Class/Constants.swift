@@ -178,6 +178,8 @@ enum API: String{
     case payment_sheet
     case get_business_details
     case edit_business
+    case complete_booking
+    case report_booking
    
 }
 

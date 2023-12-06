@@ -31,7 +31,7 @@ class bookingDetailsVC: UIViewController {
     var bookingTime = "16:00 to 22:00"
     var bookingDate = "21 May 2023 "
     var isHidden = Bool()
-    
+    var restoid = Int()
     
     //MARK: Variables
     var arrData  : [ModelItemDetail] = [ ModelItemDetail(img: "planeSanwich", itmeName: "Sandwich", newPrice: "40.00") , ModelItemDetail(img: "grilledSandwich", itmeName: "Grilled Sandwich", newPrice: "20.00")]

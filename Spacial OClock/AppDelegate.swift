@@ -122,7 +122,7 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
             print(userInfo)
             let userInfos = userInfo["aps"] as?  [String:Any]
             let Staustype = userInfos?["type"] as? Int
-//            if Store.userDetails?.body.role == 1 {
+            if Store.userDetails?.role == 0 {
                 if let topVc = UIApplication.topViewController(), topVc.isKind(of: RestoHomeVC.self) {
                     completionHandler([])
                 } else {
@@ -134,9 +134,9 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                     completionHandler([.sound,.banner,.badge])
                 }
                 
-//            }else{
-//                completionHandler([.sound,.banner,.badge])
-//            }
+            }else if Store.userDetails?.role == 2{
+                completionHandler([.sound,.banner,.badge])
+            }
         }
     }
     
@@ -144,58 +144,35 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
         if let userInfo = response.notification.request.content.userInfo as? [String:Any] {
             print("**********************")
             print(userInfo)
-//            let apnsData = userInfo["data"] as? [String:Any]
-//            let receiverId = apnsData?["receiver_id"] as? String
-//            let senderId = apnsData?["sender_id"] as? String
-//            let senderName = apnsData?["sender_name"] as? String
-//            let receiverName = apnsData?["receiver_name"] as? String
-//            let senderImage = apnsData?["sender_image"] as? String
-//            let receiverImage = apnsData?["receiver_image"] as? String
-//            let roomId = apnsData?["room_id"] as? String
-            
-//            if let notificationType = apnsData?["noti_type"] as? String {
-//                if Store.isCompanion == "2" {
-//                    let homeStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
-//                    if let tabBarController  = rootController1 as? UINavigationController  ,  let visibleViewController = tabBarController.visibleViewController {
-//                        if notificationType == "accept_event_request" {
-//                            let vc = homeStoryBoard.instantiateViewController(identifier: "NotificationsVC") as! NotificationsVC
-//                            visibleViewController.navigationController?.pushViewController(vc, animated: true)
-//                        }else if notificationType == "message" {
-//                            let vc = homeStoryBoard.instantiateViewController(identifier: "ChatVC") as! ChatVC
-//                            vc.roomId = roomId ?? ""
-//                            if senderId == Store.userDetails?.id {
-//                                vc.name = receiverName ?? ""
-//                                vc.receiverID = receiverId ?? ""
-//                                vc.image = receiverImage ?? ""
-//                            }else {
-//                                vc.name = senderName ?? ""
-//                                vc.receiverID = senderId ?? ""
-//                                vc.image = senderImage ?? ""
-//                            }
-//                            visibleViewController.navigationController?.pushViewController(vc, animated: true)
-//                        }else {
-//                            let vc = homeStoryBoard.instantiateViewController(identifier: "NotificationsVC") as! NotificationsVC
-//                            visibleViewController.navigationController?.pushViewController(vc, animated: true)
-//                        }
-//                    }
-//                }else {
-//                    let homeStoryBoard = UIStoryboard.init(name: "BusinessTabBar", bundle: nil)
-//                    if let tabBarController  = rootController1 as? UINavigationController  ,  let visibleViewController = tabBarController.visibleViewController {
-//                        if notificationType == "accept_event_request" {
-//                            let vc = homeStoryBoard.instantiateViewController(identifier: "NotificationsVC") as! NotificationsVC
-//                            visibleViewController.navigationController?.pushViewController(vc, animated: true)
-//                        }else {
-//                            let vc = homeStoryBoard.instantiateViewController(identifier: "NotificationsVC") as! NotificationsVC
-//                            visibleViewController.navigationController?.pushViewController(vc, animated: true)
-//                        }
-//                    }
-//                }
-//            }
+            let apnsData = userInfo["data"] as? [String:Any]
+            let receiverId = apnsData?["ReceiverId"] as? Int
+            let senderId = apnsData?["senderId"] as? Int
+            let senderName = apnsData?["SenderName"] as? String
+            let receiverName = apnsData?["ReceiverName"] as? String
+            let storyboard = UIStoryboard.init(name: "RestoBar", bundle: Bundle.main)
+            if let notificationType = userInfo["type"] as? Int {
+                if notificationType == 0{
+                    let tabVC = storyboard.instantiateViewController(withIdentifier: "RestoTabBarVC") as! RestoTabBarVC
+                    tabVC.selectedIndex = 0
+                    let navigationController = UINavigationController(rootViewController: tabVC)
+                    navigationController.navigationBar.isHidden = true
+                    navigationController.viewControllers = [tabVC]
+                    UIApplication.shared.windows.first?.rootViewController = navigationController
+                    UIApplication.shared.windows.first?.makeKeyAndVisible()
+                }else{
+                    let tabVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+                    // tabVC.selectedIndex = 0
+                    let navigationController = UINavigationController(rootViewController: tabVC)
+                    navigationController.navigationBar.isHidden = true
+                    navigationController.viewControllers = [tabVC]
+                    UIApplication.shared.windows.first?.rootViewController = navigationController
+                    UIApplication.shared.windows.first?.makeKeyAndVisible()
+                }
+            }
+            completionHandler()
         }
-        completionHandler()
     }
 }
-
 extension UIApplication {
     class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {

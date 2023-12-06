@@ -24,6 +24,9 @@ class BreakfastVC: UIViewController {
     var imageView: UIImageView?
     var menuid = Int()
     var heading = String()
+    var price = Int()
+    var offerpice = Int()
+    var offerlessprice = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +38,7 @@ class BreakfastVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         setupAPI()
-        
+       // calculation()
     }
     
     //MARK: - API SETUP
@@ -44,6 +47,13 @@ class BreakfastVC: UIViewController {
             self?.datagetAPI = data
             self?.tbBreakfast.reloadData()
         }
+    }
+    func calculation(){
+        offerpice = datagetAPI?.first?.offerpercentage ?? 0
+        price = datagetAPI?.first?.price ?? 0
+        let newprice = price * 100/offerpice
+        self.offerlessprice = price - newprice
+        
     }
     
     //MARK: Button Action
@@ -69,12 +79,15 @@ extension BreakfastVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellBreakfastTB, for: indexPath) as! CellBreakfastTB
         let data = datagetAPI?[indexPath.row]
         cell.lblTitle.text = data?.productName ?? ""
         cell.lblNewPrice.text = data?.price?.description
-        cell.img.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-        cell.img.sd_setImage(with: URL(string: productImgURL + (data?.image ?? "")),placeholderImage: UIImage(named: "Default_Image"))
+        cell.lblPrevPrice.text = "\(offerpice)"
+        let imageIndex = (productImgURL) + (data?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
+        cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
         return cell
     }
 }

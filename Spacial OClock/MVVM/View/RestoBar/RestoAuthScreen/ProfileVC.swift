@@ -26,13 +26,13 @@ class ProfileVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if Store.userDetails?.bussinesstype == 1{
-            setupAPi()
             btnViewProfile.setTitle("Restaurant Profile", for: .normal)
         }else{
-            setupAPi()
             btnViewProfile.setTitle("Bar Profile", for: .normal)
         }
+        setupAPi()
         initialLoad()
         
     }
@@ -71,10 +71,10 @@ extension ProfileVC{
     func initialLoad(){
         btnCheckStatus = UserDefaults.standard.status
         debugPrint(btnCheckStatus)
-//        if btnCheckStatus == 0 {
-//            btnViewProfile.setTitle("Restaurant Profile", for: .normal)
-//        }else if btnCheckStatus == 1 {
-//            btnViewProfile.setTitle("Bar Profile", for: .normal)
-//        }
+        if Store.userDetails?.bussinesstype == 1 {
+            btnViewProfile.setTitle("Restaurant Profile", for: .normal)
+        }else if Store.userDetails?.bussinesstype == 2 {
+            btnViewProfile.setTitle("Bar Profile", for: .normal)
+        }
     }
 }

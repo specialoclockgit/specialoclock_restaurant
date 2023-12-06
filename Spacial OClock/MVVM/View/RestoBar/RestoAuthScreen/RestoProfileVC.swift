@@ -82,11 +82,10 @@ class RestoProfileVC: UIViewController {
     }
     @IBAction func btnEdit(_ sender: UIButton) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.EditRestoProfileVC) as! EditRestoProfileVC
-        let status = UserDefaults.standard.status
-        if status  == 1 {
-            screen.heading = "Edit Bar Profile"
-        }else if status == 0{
+        if Store.userDetails?.bussinesstype == 1 {
             screen.heading = "Edit Restaurant Profile"
+        }else{
+            screen.heading = "Edit Bar Profile"
         }
         self.navigationController?.pushViewController(screen, animated: true)
     }

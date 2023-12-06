@@ -17,7 +17,7 @@ struct SignupModel: Codable {
 struct SignupBody: Codable {
     var id: Int?
     var name, aboutMe, nickName, dob: String?
-    var gender: Int?
+    var gender,restoid: Int?
     var email: String?
     var type, role: Int?
     var countryCode: String?
@@ -41,7 +41,7 @@ struct SignupBody: Codable {
         case bussinesstype = "bussiness_type"
         case aboutMe = "about_me"
         case nickName = "nick_name"
-        case dob, gender, email, type, role
+        case dob, gender, email, type, role, restoid
         case countryCode = "country_code"
         case phone, password
         case socialID = "social_id"

@@ -167,23 +167,32 @@ class restoViewModal : NSObject{
     }
 
     //MARK: - HOME RESTO LIST DETAIL API
-//    func homeRestoDetailAPI(restoid:Int,onsuccess: @escaping ((restoDetailModalBody?)->())){
-//        let param = ["booking_id":restoid]
-//        WebService.service(API.restro_BookingDetail, param: param, service: .post) {
-//            (modaldata: restoDetailModal, Data , json) in
-//            onsuccess(modaldata.body)
-//        }
-//    }
+    func homeRestoDetailAPI(restoid:Int,onsuccess: @escaping ((restoDetailModalsBody?)->())){
+        let param = ["booking_id":restoid]
+        WebService.service(API.restro_BookingDetail, param: param, service: .post) {
+            (modaldata: restoDetailModals, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
 
-//    func homeReportUser(restoid:String, reason: String, onsuccess: @escaping ((ForgotpasswordModel?)->())) {
-//        let param = ["booking_id": restoid, "reason": reason] as [String : Any]
-//
-//        WebService.service(API.report_booking, param: param, service: .post) {
-//            (modaldata: ForgotpasswordModel, Data , json) in
-//            onsuccess(modaldata)
-//        }
-//    }
+    //MARK: - MENU PRODUCT API
+    func Complete_bookingAPI(bookingid:String, onsuccess: @escaping ((CommonModel?)->())){
+        let param = ["booking_id":bookingid] as [String:Any]
+        print(param)
+        WebService.service(API.complete_booking, param: param, service: .post) {
+            (modaldata: CommonModel, Data , json) in
+            onsuccess(modaldata)
+        }
+    }
 
+    //MARK: - REPORT USER API
+    func homeReportUser(restoid:String, reason: String, onsuccess: @escaping ((ForgotpasswordModel?)->())) {
+        let param = ["booking_id": restoid, "reason": reason] as [String : Any]
+        WebService.service(API.report_booking, param: param, service: .post) {
+            (modaldata: ForgotpasswordModel, Data , json) in
+            onsuccess(modaldata)
+        }
+    }
     //MARK: - CURRENT PAST BOOKING API
 //    func currentPast_API(type:Int,genre:String,onsuccess: @escaping (([currentPastModalBody]?)->())){
 //        let param = ["type":type, "genre":"1"] as [String:Any]

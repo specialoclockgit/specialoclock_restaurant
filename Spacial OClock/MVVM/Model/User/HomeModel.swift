@@ -191,7 +191,7 @@ struct AllBarsResto: Codable {
 // MARK: - OfferTiminghome
 struct OfferTiminghome: Codable {
     let offer: String?
-    let percentage: Int?
+    let percentage, is_fifty: Int?
     let id: Int?
 }
 

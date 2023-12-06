@@ -326,12 +326,12 @@ extension EditRestoProfileVC{
 //        imgOptionOne.layer.cornerRadius = 10.0
 //        imgOptionTwo.layer.cornerRadius = 10.0
 //        imgOptionThree.layer.cornerRadius = 10.0
-        let status = UserDefaults.standard.status
-        if status == 0{
+        let status = Store.userDetails?.bussinesstype
+        if status == 1{
             lblName.text = "Restaurant Name"
             tfName.placeholder = "Enter Name"
             viewCategory.isHidden = true
-        }else if status == 1{
+        }else if status == 2{
             lblName.text = "Bar Name"
             tfName.placeholder = "Bar Name"
             viewCuisines.isHidden = true
