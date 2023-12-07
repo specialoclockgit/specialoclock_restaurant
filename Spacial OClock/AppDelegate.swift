@@ -18,7 +18,7 @@ import GoogleMaps
  
  */
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
-
+    
     private let locationManager = CLLocationManager()
     var locationUpdated = Bool()
     
@@ -41,19 +41,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }else{
             locationUpdated = false
         }
-    registerForPushNotifications()
+        registerForPushNotifications()
         // Override point for customization after application launch.
         return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
@@ -122,7 +122,9 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
             print(userInfo)
             let userInfos = userInfo["aps"] as?  [String:Any]
             let Staustype = userInfos?["type"] as? Int
-            if Store.userDetails?.role == 0 {
+            if Store.userDetails?.role == 1 {
+                completionHandler([.sound,.banner,.badge])
+            }else{
                 if let topVc = UIApplication.topViewController(), topVc.isKind(of: RestoHomeVC.self) {
                     completionHandler([])
                 } else {
@@ -134,8 +136,6 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                     completionHandler([.sound,.banner,.badge])
                 }
                 
-            }else if Store.userDetails?.role == 2{
-                completionHandler([.sound,.banner,.badge])
             }
         }
     }
@@ -151,25 +151,35 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
             let receiverName = apnsData?["ReceiverName"] as? String
             let storyboard = UIStoryboard.init(name: "RestoBar", bundle: Bundle.main)
             if let notificationType = userInfo["type"] as? Int {
-                if notificationType == 0{
-                    let tabVC = storyboard.instantiateViewController(withIdentifier: "RestoTabBarVC") as! RestoTabBarVC
-                    tabVC.selectedIndex = 0
-                    let navigationController = UINavigationController(rootViewController: tabVC)
-                    navigationController.navigationBar.isHidden = true
-                    navigationController.viewControllers = [tabVC]
-                    UIApplication.shared.windows.first?.rootViewController = navigationController
-                    UIApplication.shared.windows.first?.makeKeyAndVisible()
+                if Store.userDetails?.role == 1{
+                    
+                    if notificationType == 0{
+                        
+                    }else{
+                        
+                    }
+                    
+                    
                 }else{
-                    let tabVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
-                    // tabVC.selectedIndex = 0
-                    let navigationController = UINavigationController(rootViewController: tabVC)
-                    navigationController.navigationBar.isHidden = true
-                    navigationController.viewControllers = [tabVC]
-                    UIApplication.shared.windows.first?.rootViewController = navigationController
-                    UIApplication.shared.windows.first?.makeKeyAndVisible()
+                    if notificationType == 0{
+                        let tabVC = storyboard.instantiateViewController(withIdentifier: "RestoTabBarVC") as! RestoTabBarVC
+                        tabVC.selectedIndex = 0
+                        let navigationController = UINavigationController(rootViewController: tabVC)
+                        navigationController.navigationBar.isHidden = true
+                        navigationController.viewControllers = [tabVC]
+                        UIApplication.shared.windows.first?.rootViewController = navigationController
+                        UIApplication.shared.windows.first?.makeKeyAndVisible()
+                    }else{
+                        let tabVC = storyboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+                        // tabVC.selectedIndex = 0
+                        let navigationController = UINavigationController(rootViewController: tabVC)
+                        navigationController.navigationBar.isHidden = true
+                        navigationController.viewControllers = [tabVC]
+                        UIApplication.shared.windows.first?.rootViewController = navigationController
+                        UIApplication.shared.windows.first?.makeKeyAndVisible()
+                    }
                 }
             }
-            completionHandler()
         }
     }
 }

@@ -33,8 +33,12 @@ class BookingVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        currentpastAPI(status: 0)
-        super.viewWillAppear(animated)
+        if btnPast.titleLabel?.textColor == UIColor.white {
+            currentpastAPI(status: 1)
+        } else {
+            currentpastAPI(status: 0)
+        }
+         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
     }
 

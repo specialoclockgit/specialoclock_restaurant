@@ -75,7 +75,8 @@ class AuthViewModel : NSObject {
         }else if password.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
         }else {
-            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type,"role":role]
+            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type]
+            //,"role":role
             WebService.service(API.login, param: param, service: .post){
                 (modaldata: SignupModel , Data, Json) in
                 Store.userDetails = modaldata.body

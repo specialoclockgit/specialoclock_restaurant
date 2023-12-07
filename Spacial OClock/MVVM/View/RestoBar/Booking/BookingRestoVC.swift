@@ -35,7 +35,7 @@ class BookingRestoVC: UIViewController {
         tbBooking.register(nib, forCellReuseIdentifier: Cell.CellBookingRestoTB)
         tbBooking.delegate = self
         tbBooking.dataSource =  self
-        currentpastAPI(status:0)
+        
     }
     
     //MARK: - FUCNTIONS
@@ -51,7 +51,11 @@ class BookingRestoVC: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        if btnPast.titleLabel?.textColor == UIColor.white {
+            currentpastAPI(status: 1)
+        } else {
+            currentpastAPI(status: 0)
+        }
         tabBarController?.tabBar.isHidden = false
     }
     
@@ -117,8 +121,7 @@ extension BookingRestoVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         debugPrint(indexPath.row)
         let screen = storyboard?.instantiateViewController(withIdentifier: "bookingDetailsVC") as! bookingDetailsVC
-        //screen.restoid = modal?[indexPath.row].id ?? 0
-        
+        screen.restoid = modal?[indexPath.row].id ?? 0
         if statusButton == 0 {
             screen.status = 0
             screen.statusText = "Ongoing"
@@ -126,7 +129,7 @@ extension BookingRestoVC : UITableViewDelegate , UITableViewDataSource{
             screen.status = 1
             screen.statusText = "Completed"
         }
-       // screen.booking_id = modal?[indexPath.row].bookingID ?? ""
+        screen.booking_id = modal?[indexPath.row].bookingID ?? ""
         self.navigationController?.pushViewController(screen, animated: true)
     }
     

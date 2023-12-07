@@ -75,6 +75,7 @@ class bookingDetailsVC: UIViewController {
                 self.lblStatus.text = "Complete"
                 self.lblStatus.textColor = UIColor(named: "themeGreen")
                 self.btnComplete.isHidden = true
+                self.btnReportUser.isHidden = true
             }else{
                 self.lblStatus.text = "Cancelled"
             }
@@ -151,7 +152,7 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellBookingDetailTB, for: indexPath) as! CellBookingDetailTB
-        let imageIndex = (imageURL) + (self.products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
+        let imageIndex = (productImgURL) + (self.products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
       //  (self.products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Default_Image"))

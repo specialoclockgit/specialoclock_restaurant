@@ -165,13 +165,19 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
         }
     }
     @objc func notificationbtn(_ sender : UIButton){
-        viewmodel.NotificationStatus(notistatus: isSelected) {
-            let val = Store.userDetails?.notificationStatus == 0 ? 1 : 0
-            sender.isSelected = !sender.isSelected
+        let cell = tableVW.cellForRow(at: IndexPath.init(row: 0, section: 0)) as! RestoSettingTVC
+        if cell.notificationBtn.isOn {
+            setNotification()
+        }else {
+            setNotification()
+        }
+    }
+    func setNotification() {
+        let val = Store.userDetails?.notificationStatus == 0 ? 1 : 0
             self.viewmodel.NotificationStatus(notistatus: val) {
                 Store.userDetails?.notificationStatus = val
+                CommonUtilities.shared.showAlert(message: "Notification status update successfully", isSuccess: .success)
                 self.tableVW.reloadData()
-            }
         }
     }
 }

@@ -45,7 +45,7 @@ class VerificationVC: UIViewController {
         viewmodel.otpverification(otp: viewPin.getPin()) {
             
             //MARK: - USER SIDE STATUS 0
-            if self.btnCheckStatus == 0{
+            if self.btnCheckStatus == 1{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerifypopUpVC") as! VerifypopUpVC
                 vc.modalPresentationStyle = .overFullScreen
                 vc.callBack = {

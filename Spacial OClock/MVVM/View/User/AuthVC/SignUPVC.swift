@@ -40,8 +40,8 @@ class SignUPVC: UIViewController {
     var Location = String()
     var countryCode = String()
     var image = [FileuploadModelBody]()
-    var selectStatus = Int()
-    var restoselctStatus = Int()
+    var selectStatus = 1
+    var restoselctStatus = 1
     
     
     //MARK: ViewLife Cycle
@@ -107,7 +107,7 @@ class SignUPVC: UIViewController {
     }
     
     @IBAction func btnUser(_ sender: UIButton) {
-        selectStatus = 0
+        selectStatus = 1
         userBtn.setTitleColor(UIColor.white, for: .normal)
         restaurantBtn.setTitleColor(UIColor.black, for: .normal)
         userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)

@@ -25,6 +25,8 @@ var fromTabBar = false
 let iOSplatForm = "1"
 
 //let baseURL  = "http://202.164.42.227:9999"
+//let localURL = "http://192.168.1.60:9999/api/"
+//let clientURL = "https://app.specialoclock.com/api/"
 
 let baseURL = "https://app.specialoclock.com/api/"
 

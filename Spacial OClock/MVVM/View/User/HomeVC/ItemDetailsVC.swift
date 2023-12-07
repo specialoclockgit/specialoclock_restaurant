@@ -234,6 +234,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         txtFldDate.text = formatter.string(from: datePicker.date)
+        product_detail()
         self.view.endEditing(true)
     }
     
