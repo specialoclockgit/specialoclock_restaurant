@@ -42,7 +42,7 @@ class bookingDetailsVC: UIViewController {
     var viewmodal = restoViewModal()
     var modalDetail : restoDetailModalsBody?
     var APIcall = AuthViewModel()
-    var products: [Productdd]?
+    var productsUnderOffer: [Productdd]?
     var booking_id = String()
     var bookingnumber = Int()
     var totalamount = Int()
@@ -65,7 +65,7 @@ class bookingDetailsVC: UIViewController {
     func resto_Detail_Api(){
         viewmodal.homeRestoDetailAPI(restoid: restoid) { data in
             self.modalDetail = data
-            self.products = data?.restrorant?.products ?? []
+            self.productsUnderOffer = data?.restrorant?.products ?? []
             let imageIndex = (imageURL) + (self.modalDetail?.user?.image ?? "")
             self.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
@@ -88,7 +88,7 @@ class bookingDetailsVC: UIViewController {
             self.lblBookingTime.text = self.modalDetail?.bookingSlot ?? ""
             self.lblNumberOfPeople.text = "\(self.modalDetail?.numberOfPeople ?? 0)"
             self.lblBookingNumebr.text = self.modalDetail?.bookingID ?? ""
-            self.totalamount = self.products?.first?.price ?? 0
+            self.totalamount = self.productsUnderOffer?.first?.price ?? 0
             self.prsents = self.modalDetail?.restrorant?.offers?.first?.offerPrice ?? 0
             self.prsentsamount = self.totalamount * self.prsents/100
             self.specailofferless = self.totalamount - self.prsentsamount
@@ -147,18 +147,18 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
 //        }else{
 //            return 0
 //        }
-        return products?.count ?? 0
+        return productsUnderOffer?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellBookingDetailTB, for: indexPath) as! CellBookingDetailTB
-        let imageIndex = (productImgURL) + (self.products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
+        let imageIndex = (productImgURL) + (self.productsUnderOffer?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
       //  (self.products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Default_Image"))
-        cell.lblPrevPrice.text = "R\(self.products?[indexPath.row].price ?? 0)"
+        cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].price ?? 0)"
         cell.lblNewPrice.text = "R\(self.specailofferless)"
-        cell.lblItemName.text = products?[indexPath.row].productName ?? ""
+        cell.lblItemName.text = productsUnderOffer?[indexPath.row].productName ?? ""
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

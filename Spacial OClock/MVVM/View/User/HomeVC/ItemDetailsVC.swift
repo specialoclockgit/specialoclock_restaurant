@@ -124,7 +124,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         viewFullMenu.delegate = self
         viewFullMenu.dataSource = self
-        
         fetchdata()
         self.datecuurent = string(format: "yyyy-MM-dd")
         txtFldDate.text = datecuurent
@@ -170,7 +169,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         
     //MARK: - FUNCTION
     func product_detail(){
-        viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.datecuurent) { data in
+        viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.txtFldDate.text ?? "") { data in
             self.modal = data
             self.images = data?.images ?? []
             self.reviews = data?.reviews?.reversed() ?? []

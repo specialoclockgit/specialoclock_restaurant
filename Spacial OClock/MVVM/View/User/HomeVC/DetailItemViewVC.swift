@@ -186,6 +186,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblfirstLocaton.text = location?[indexPath.row].city ?? ""
             cell.lblDiscription.text = location?[indexPath.row].shortDescription ?? ""
             let fetchresto = location?[indexPath.row].offers?.first?.offerTimings ?? []
+            //cell.lblRaiting.text = location?[indexPath.row].
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
         } else if setValue == "Category"{
