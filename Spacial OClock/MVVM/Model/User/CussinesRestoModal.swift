@@ -28,6 +28,7 @@ struct CussinesRestoModalBody: Codable {
     let isLiked: Int?
     let availableOffer, offerDescription, offerPercentage, offerOpenTime: String?
     let offerCloseTime: String?
+    let avgRating: Int?
     let offers: [CuOffer]?
 
     enum CodingKeys: String, CodingKey {
@@ -35,6 +36,7 @@ struct CussinesRestoModalBody: Codable {
         case userID = "user_id"
         case shortDescription = "short_description"
         case status
+        case avgRating = "avg_rating"
         case openTime = "open_time"
         case closeTime = "close_time"
         case type

@@ -81,6 +81,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblLocationName.text = self.cuisine[indexPath.row].name ?? ""
             cell.lblTotalRestaurant.text = "\(self.cuisine[indexPath.row].restroCount ?? 0) Restaurants"
+//            cell.lblRating.text = self.cuisine[indexPath.row].
             cell.viewReview.isHidden = true
         } else  if objArray[collView.tag].name == "Category" {
             let image = "\(self.category[indexPath.row].image ?? "")"
@@ -97,6 +98,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblLocationName.text = self.location[indexPath.row].city
             cell.lblTotalRestaurant.text = "\(self.location[indexPath.row].restroCount ?? 0) Restaurants"
             cell.viewReview.isHidden = true
+            //cell.lblRating.text = self.location[indexPath.row].
         }else if objArray[collView.tag].name == "Popular"{
             if let val = objArray[collView.tag].objArray as? [AllBarsResto] {
                 print(val[0].offerTimings?.count ?? 0)

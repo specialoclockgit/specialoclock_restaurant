@@ -31,12 +31,14 @@ struct locationByRestoModalBody: Codable {
     let isLiked: Int?
     let availableOffer, offerDescription, offerPercentage, offerOpenTime: String?
     let offerCloseTime: String?
+    let avgRating : Int?
     let offers: [Offerv]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude
         case countryCode = "country_code"
         case mobile
+        case avgRating = "avg_rating"
         case userID = "user_id"
         case shortDescription = "short_description"
         case status

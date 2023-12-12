@@ -42,7 +42,7 @@ class bookingDetailsVC: UIViewController {
     var viewmodal = restoViewModal()
     var modalDetail : restoDetailModalsBody?
     var APIcall = AuthViewModel()
-    var productsUnderOffer: [Productdd]?
+    var productsUnderOffer: [ProductDetail]?
     var booking_id = String()
     var bookingnumber = Int()
     var totalamount = Int()
@@ -65,18 +65,19 @@ class bookingDetailsVC: UIViewController {
     func resto_Detail_Api(){
         viewmodal.homeRestoDetailAPI(restoid: restoid) { data in
             self.modalDetail = data
-            self.productsUnderOffer = data?.restrorant?.products ?? []
+            self.productsUnderOffer = data?.productsUnderOffer ?? []
             let imageIndex = (imageURL) + (self.modalDetail?.user?.image ?? "")
             self.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            if data?.status == 0{
+            if self.status == 0{
                 self.lblStatus.text = "Ongoing"
-            }else if data?.status == 1{
+            }else if self.status == 1{
                 self.lblStatus.text = "Complete"
                 self.lblStatus.textColor = UIColor(named: "themeGreen")
                 self.btnComplete.isHidden = true
                 self.btnReportUser.isHidden = true
             }else{
+                self.lblStatus.textColor = UIColor(named: "themeAlert")
                 self.lblStatus.text = "Cancelled"
             }
             self.lblUDNAme.text = self.modalDetail?.user?.name ?? ""

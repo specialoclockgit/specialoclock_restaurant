@@ -77,6 +77,7 @@ struct themeRestolistModalBody: Codable {
     let isLiked: Int?
     let availableOffer, offerDescription, offerPercentage, openTime: String?
     let closeTime: String?
+    let avgRating :Int?
     let offers: [CuOffer]?
     
     enum CodingKeys: String, CodingKey {
@@ -87,6 +88,7 @@ struct themeRestolistModalBody: Codable {
         case bodyOpenTime = "open_time"
         case bodyCloseTime = "close_time"
         case type
+        case avgRating = ""
         case categoryID = "category_id"
         case cuisineID = "cuisine_id"
         case themesRestrorantID = "themes_restrorant_id"

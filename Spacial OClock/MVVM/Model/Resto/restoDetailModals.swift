@@ -314,7 +314,7 @@ struct restoDetailModalsBody: Codable {
     let createdAt, updatedAt, offerName, offerPercentage: String?
     let user: Userr?
     let restrorant: Restrorant?
-    let productsUnderOffer: [Productdd]?
+    let productsUnderOffer: [ProductDetail]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -337,8 +337,8 @@ struct restoDetailModalsBody: Codable {
     }
 }
 
-// MARK: - Productdd
-struct Productdd: Codable {
+// MARK: - ProductDetail
+struct ProductDetail: Codable {
     let id, restrorantBarID, menuID, cuisineID: Int?
     let categoryID: Int?
     let productName: String?
@@ -372,7 +372,7 @@ struct Restrorant: Codable {
     let profileImage, commission: String?
     let avgRating: Int?
     let offers: [Offerd]?
-    let products: [Productdd]?
+    let products: [ProductDetail]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude

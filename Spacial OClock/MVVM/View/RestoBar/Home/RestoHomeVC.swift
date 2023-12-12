@@ -77,9 +77,12 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
         if filterdata?[indexPath.row].status == 0{
             cell.lblStatus.text = "Ongoing"
             cell.lblStatus.textColor = UIColor(named: "themeAlert")
-        }else{
+        }else if filterdata?[indexPath.row].status == 1{
             cell.lblStatus.text = "Completed"
             cell.lblStatus.textColor = UIColor(named: "themeGreen")
+        }else{
+            cell.lblStatus.text = "Cancelled"
+            cell.lblStatus.textColor = UIColor(named: "themeAlert")
         }
         cell.lblBookingNO.text = filterdata?[indexPath.row].bookingID ?? ""
         cell.lblUserNo.text = filterdata?[indexPath.row].user?.name ?? ""
@@ -88,6 +91,7 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.bookingDetailsVC) as! bookingDetailsVC
         screen.restoid = filterdata?[indexPath.row].id ?? 0
+        screen.status = filterdata?[indexPath.row].status ?? 0
         screen.isHidden = true
         self.navigationController?.pushViewController(screen, animated: true)
     }

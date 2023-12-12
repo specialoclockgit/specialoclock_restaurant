@@ -186,7 +186,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblfirstLocaton.text = location?[indexPath.row].city ?? ""
             cell.lblDiscription.text = location?[indexPath.row].shortDescription ?? ""
             let fetchresto = location?[indexPath.row].offers?.first?.offerTimings ?? []
-            //cell.lblRaiting.text = location?[indexPath.row].
+            cell.lblRaiting.text = "\(location?[indexPath.row].avgRating ?? 0)"
+            cell.cosmosView.rating = Double(location?[indexPath.row].avgRating ?? 0)
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
         } else if setValue == "Category"{
@@ -200,6 +201,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let fetchresto = categoryModal?[indexPath.row].offers?.first?.offerTimings ?? []
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
+//            cell.lblRaiting.text = "\(location?[indexPath.row].avgRating ?? 0)"
+//            cell.cosmosView.rating = Double(location?[indexPath.row].avgRating ?? 0)
 //            let arrayOffer: [[OfferTiming]] = ((categoryModal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
 //            sortArray(arrayOffer: arrayOffer,cell: cell)
 //            cell.stackHeight.constant = 46
@@ -212,6 +215,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblLocation.text = modal?[indexPath.row].location ?? ""
             cell.lblName.text = modal?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(modal?[indexPath.row].openTime ?? "") - " + "\(modal?[indexPath.row].closeTime ?? "")"
+            cell.lblRaiting.text = "\(modal?[indexPath.row].avgRating ?? 0)"
+            cell.cosmosView.rating = Double(modal?[indexPath.row].avgRating ?? 0)
             let fetchresto = modal?[indexPath.row].offers?.first?.offerTimings ?? []
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
@@ -223,6 +228,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblLocation.text = thememodla?[indexPath.row].location ?? ""
             cell.lblName.text = thememodla?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(thememodla?[indexPath.row].bodyOpenTime ?? "") - " + "\(thememodla?[indexPath.row].bodyCloseTime ?? "")"
+//            cell.lblRaiting.text = "\(thememodla?[indexPath.row].avgRating ?? 0)"
+//            cell.cosmosView.rating = Double(thememodla?[indexPath.row].avgRating ?? 0)
             let fetchresto = thememodla?[indexPath.row].offers?.first?.offerTimings
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
