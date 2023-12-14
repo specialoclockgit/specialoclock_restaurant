@@ -473,7 +473,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             let data = offer?[indexPath.row]
             cell.lblMenuSchedule.text = data?.menuName ?? ""
             cell.lblTime.text = data?.offer ?? ""
-            cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
+            if data?.is_fifty == 0{
+                cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
+            }else{
+                cell.lblOffer.text = "%\(50)"
+            }
+            
             return cell
         }else if collectionView == viewFullMenu{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "allMenuCVC", for: indexPath) as! allMenuCVC
