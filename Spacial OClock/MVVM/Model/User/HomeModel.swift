@@ -139,7 +139,7 @@ struct AllBarsResto: Codable {
     let profileImage: String?
     let commission: String?
     let avgRating: Int?
-    let offers: [CuOffer]?
+    let offers: [TimeSlotoffer]?
     var offerTimings: [OfferTiminghome]?
 
     enum CodingKeys: String, CodingKey {
@@ -173,7 +173,7 @@ struct AllBarsResto: Codable {
         self.userID = try container.decodeIfPresent(Int.self, forKey: .userID)
         self.shortDescription = try container.decodeIfPresent(String.self, forKey: .shortDescription)
         self.status = try container.decodeIfPresent(Int.self, forKey: .status)
-        self.offers = try container.decodeIfPresent([CuOffer].self, forKey: .offers)
+        self.offers = try container.decodeIfPresent([TimeSlotoffer].self, forKey: .offers)
         self.offerTimings = try container.decodeIfPresent([OfferTiminghome].self, forKey: .offerTimings)
         self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
         self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)

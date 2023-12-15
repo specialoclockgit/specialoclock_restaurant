@@ -66,29 +66,32 @@ struct themeRestolistModal: Codable {
 struct themeRestolistModalBody: Codable {
     let id: Int?
     let name, location, country, state: String?
-    let city, latitude, longitude: String?
+    let city, latitude, longitude, countryCode: String?
+    let mobile: String?
     let userID: Int?
     let shortDescription: String?
-    let status: Int?
-    let bodyOpenTime, bodyCloseTime: String?
+    let status, offerAvailable: Int?
+    let openTime, closeTime: String?
     let type, categoryID, cuisineID, themesRestrorantID: Int?
     let isBlocked: Int?
     let profileImage, commission: String?
     let isLiked: Int?
-    let availableOffer, offerDescription, offerPercentage, openTime: String?
-    let closeTime: String?
-    let avgRating :Int?
-    let offers: [CuOffer]?
-    
+    let availableOffer, offerDescription, offerPercentage, offerOpenTime: String?
+    let offerCloseTime: String?
+    let avgRating: Int?
+    let timeSlots: [TimeSlotoffer]?
+
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude
+        case countryCode = "country_code"
+        case mobile
         case userID = "user_id"
         case shortDescription = "short_description"
         case status
-        case bodyOpenTime = "open_time"
-        case bodyCloseTime = "close_time"
+        case offerAvailable = "offer_available"
+        case openTime = "open_time"
+        case closeTime = "close_time"
         case type
-        case avgRating = ""
         case categoryID = "category_id"
         case cuisineID = "cuisine_id"
         case themesRestrorantID = "themes_restrorant_id"
@@ -96,6 +99,54 @@ struct themeRestolistModalBody: Codable {
         case profileImage = "profile_image"
         case commission
         case isLiked = "is_liked"
-        case availableOffer, offerDescription, offerPercentage, openTime, closeTime, offers
+        case availableOffer, offerDescription, offerPercentage, offerOpenTime, offerCloseTime
+        case avgRating = "avg_rating"
+        case timeSlots = "time_slots"
+    }
+}
+
+// MARK: - TimeSlotoffer
+struct TimeSlotoffer: Codable {
+    let id, restrorantBarID, menuID, offerID: Int?
+    let startTime, endTime: String?
+    let isFifty: Int?
+    let offer: OfferFetch?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case restrorantBarID = "restrorant_bar_id"
+        case menuID = "menu_id"
+        case offerID = "offer_id"
+        case startTime = "start_time"
+        case endTime = "end_time"
+        case isFifty = "is_fifty"
+        case offer
+    }
+}
+
+// MARK: - OfferFetch
+struct OfferFetch: Codable {
+    let id, restrorantBarID: Int?
+    let offerName, description: String?
+    let menuID: Int?
+    let menuName: String?
+    let offerPrice: Int?
+    let openTime, closeTime, date: String?
+    let type, numberOfUserBook, totalBookings, status: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case restrorantBarID = "restrorant_bar_id"
+        case offerName = "offer_name"
+        case description
+        case menuID = "menu_id"
+        case menuName = "menu_name"
+        case offerPrice = "offer_price"
+        case openTime = "open_time"
+        case closeTime = "close_time"
+        case date, type
+        case numberOfUserBook = "number_of_user_book"
+        case totalBookings = "total_bookings"
+        case status
     }
 }

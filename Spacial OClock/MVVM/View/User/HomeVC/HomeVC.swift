@@ -76,7 +76,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         //MARK: Dine or Drink UserDefault for itemDetailOffer
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
         self.getUpdatedLocation()
-        setDine()
+        
     }
     
     
@@ -127,7 +127,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        setDine()
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
@@ -212,7 +212,9 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
             }
             
             if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
-                let obj = SectionModel(name: "Popular",objArray: objData?.highily_rated_bars_restos ?? [],image: "Popular")
+                let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0})
+                print("filterArray------------",filterArray)
+                let obj = SectionModel(name: "Popular",objArray: filterArray ?? [],image: "Popular")
                 self.sectionArray.append(obj)
             }
             
@@ -382,6 +384,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
                 cell.category = sectionArray[indexPath.section].objArray as? [Category] ?? []
                 cell.collView.reloadData()
             }else if sectionArray[indexPath.section].name == "Popular" {
+                //cell.isCellSelected = true
                 cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
             }else if sectionArray[indexPath.section].name == "Theme" {
@@ -399,7 +402,12 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
         if sectionArray[indexPath.section].name == "Banner" {
             return CGFloat(100)
         } else if sectionArray[indexPath.section].name == "Popular" {
-            return CGFloat(300)
+            if sectionArray[indexPath.section].objArray?.count  ==  0{
+                return CGFloat(0)
+            }else{
+                return CGFloat(300)
+            }
+           // return CGFloat(300)
         }else if sectionArray[indexPath.section].name == "A-Z"{
             return CGFloat(300)
         }else{

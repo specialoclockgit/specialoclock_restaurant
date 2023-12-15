@@ -21,7 +21,7 @@ class DetailItemCVC: UICollectionViewCell {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var imgView: CustomImageView!
     
-    var offerTimings: [OfferTimingd]?
+    var offerTimings: [TimeSlotoffer]?
     
     
 }
@@ -39,8 +39,13 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OfferCVC", for: indexPath) as! OfferCVC
-        cell.lblTime.text = offerTimings?[indexPath.row].offer ?? ""
-        cell.lblOfferPrecntage.text = "-\(offerTimings?[indexPath.row].percentage ?? 0)%"
+        cell.lblTime.text = (offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "") 
+        if offerTimings?[indexPath.row].isFifty == 0 {
+            cell.lblOfferPrecntage.text = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? 0)%"
+        }else{
+            cell.lblOfferPrecntage.text = "-\(50)%"
+        }
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

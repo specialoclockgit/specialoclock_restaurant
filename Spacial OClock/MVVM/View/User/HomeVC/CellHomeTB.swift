@@ -35,6 +35,7 @@ class CellHomeTB: UITableViewCell {
     var themeArr = [ThemeData]()
     var category = [Category]()
     var objArray: [SectionModel] = []
+    //var filterary = [SectionModel]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -236,7 +237,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             } else {
                 cell.stackHeight.constant = 46
             }
-            cell.viewReview.isHidden = false
+            cell.viewReview.isHidden = true
             let imageIndex = (imageURL) + (allresto[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgLocaiton.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgLocaiton.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))

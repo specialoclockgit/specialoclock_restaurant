@@ -469,16 +469,36 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblTime.text = ""
                     cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
-            }
-            let data = offer?[indexPath.row]
-            cell.lblMenuSchedule.text = data?.menuName ?? ""
-            cell.lblTime.text = data?.offer ?? ""
-            if data?.is_fifty == 0{
-                cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
+                let data = offer?[indexPath.row]
+                cell.lblMenuSchedule.text = data?.menuName ?? ""
+                cell.lblTime.text = data?.offer ?? ""
+                if data?.is_fifty == 0{
+                    cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
+                }else{
+                    cell.lblOffer.text = "%\(50)"
+                }
             }else{
-                cell.lblOffer.text = "%\(50)"
-            }
-            
+                if indexPath.row == isselectedoffer{
+                    self.viewButton.isHidden = false
+                    cell.img.image = UIImage(named: "greenRectangle")
+                    cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
+                    cell.lblTime.text = ""
+                    cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
+                }else{
+                    cell.img.image = UIImage(named: "BgOfferImg")
+                    cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
+                    cell.lblTime.text = ""
+                    cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
+                }
+                let data = offer?[indexPath.row]
+                cell.lblMenuSchedule.text = data?.menuName ?? ""
+                cell.lblTime.text = data?.offer ?? ""
+                if data?.is_fifty == 0{
+                    cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
+                }else{
+                    cell.lblOffer.text = "%\(50)"
+                }
+            }            
             return cell
         }else if collectionView == viewFullMenu{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "allMenuCVC", for: indexPath) as! allMenuCVC
@@ -536,14 +556,29 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             self.offerID = offer?[indexPath.row].offerID ?? 0
             
         } else if status == 2 {
-            let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
-                                                                 image: ["goose" , "belveder", "Ciroc" ],
-                                                                 itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
-                                                                 prevPrice: ["R50.00" , "R50.00" , "R50.00"],
-                                                                 newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
-            arrTBMenu.removeAll()
-            arrTBMenu.append(contentsOf: drinksArr)
-            tbMenu.reloadData()
+            if collectionView == collViewMenu{
+                isselectedoffer = indexPath.row
+                collViewMenu.reloadData()
+            }
+            //valueSelect = true
+            if let id = offer?[indexPath.row].menuID{
+                self.discount = offer?[indexPath.row].percentage ?? 0
+                menuProductAPI(id: id)
+            }
+            self.slottime = offer?[indexPath.row].offer ?? ""
+            self.slotid = offer?[indexPath.row].id ?? 0
+            self.menuid = offer?[indexPath.row].menuID ?? 0
+            self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
+            self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
+            self.offerID = offer?[indexPath.row].offerID ?? 0
+//            let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
+//                                                                 image: ["goose" , "belveder", "Ciroc" ],
+//                                                                 itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
+//                                                                 prevPrice: ["R50.00" , "R50.00" , "R50.00"],
+//                                                                 newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
+//            arrTBMenu.removeAll()
+//            arrTBMenu.append(contentsOf: drinksArr)
+//            tbMenu.reloadData()
         }
     }
     

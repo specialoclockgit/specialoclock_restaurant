@@ -195,7 +195,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qwp-yy-SCz">
                                 <rect key="frame" x="0.0" y="21" width="42.5" height="26"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUb-5Z-aGG">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUb-5Z-aGG">
                                         <rect key="frame" x="8" y="3" width="10.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -334,7 +334,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="BgOfferImg" width="118" height="112.33333587646484"/>
+        <image name="BgOfferImg" width="112.5" height="98"/>
         <image name="arrow.right" catalog="system" width="128" height="95"/>
         <image name="image3" width="168" height="115.5"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
