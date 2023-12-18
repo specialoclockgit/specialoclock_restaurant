@@ -198,14 +198,12 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblLocation.text = categoryModal?[indexPath.row].location ?? ""
             cell.lblName.text = categoryModal?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(categoryModal?[indexPath.row].openTime ?? "") - " + "\(categoryModal?[indexPath.row].closeTime ?? "")"
-//            let fetchresto = categoryModal?[indexPath.row].t ?? []
-//            cell.offerTimings = fetchresto
+            let fetchresto = categoryModal?[indexPath.row].offers ?? []
+            cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
-//            cell.lblRaiting.text = "\(location?[indexPath.row].avgRating ?? 0)"
-//            cell.cosmosView.rating = Double(location?[indexPath.row].avgRating ?? 0)
-//            let arrayOffer: [[OfferTiming]] = ((categoryModal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
-//            sortArray(arrayOffer: arrayOffer,cell: cell)
-//            cell.stackHeight.constant = 46
+            cell.lblRaiting.text = "\(categoryModal?[indexPath.row].avgrating ?? 0)"
+            cell.cosmosView.rating = Double(categoryModal?[indexPath.row].avgrating ?? 0)
+            
         }
         else if setValue == "Cuisines"{
             let imageIndex = (imageURL) + (modal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
@@ -259,6 +257,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+}
     
 //    func sortArray(arrayOffer: [[OfferTiming]], cell: DetailItemCVC) {
 //        var arrayOfferTime: [OfferTiming] = []
@@ -312,5 +311,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
 //            cell.stackHeight.constant = 46
 //        }
 //    }
-}
 
+
+//            let arrayOffer: [[OfferTiming]] = ((categoryModal?[indexPath.row].offers ?? []).map({$0.offerTimings ?? []}) )
+//            sortArray(arrayOffer: arrayOffer,cell: cell)
+//            cell.stackHeight.constant = 46

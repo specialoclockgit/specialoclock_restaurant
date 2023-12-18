@@ -260,7 +260,7 @@ class AuthViewModel : NSObject {
     
     
     //    NARK: - ADDBUSINESS
-    func addbusinessApi(singleimage:Bool,isImageSelected:Bool,country:String,state:String,city:String,latitude:Double,longitude:Double,Profileimage:[FileuploadModelBody],type:Int, name:String, image: [FileuploadModelBody], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String, onsuccess:@escaping (()->())) -> Bool{
+    func addbusinessApi(singleimage:Bool,isImageSelected:Bool,country:String,state:String,city:String,latitude:Double,longitude:Double,Profileimage:[FileuploadModelBody],type:Int, name:String, image: [FileuploadModelBody], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String, category:String,onsuccess:@escaping (()->())) -> Bool{
         if !(singleimage) {
             CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
             return false
@@ -288,8 +288,13 @@ class AuthViewModel : NSObject {
         }else if shortdescription.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter your short description", isSuccess: .error)
             return false
-        }else{
-            addResto(type: type,Profileimage:Profileimage, country:country,state:state,city:city,latitude:latitude,longitude:longitude,name: name, image: image, location: location, opentime: opentime, closetime: closetime, themesrestrorantid: themesrestrorantid, cusine: cusine, shortdescription: shortdescription) { (data) in
+        }else if category.trimmingCharacters(in: .whitespaces).isEmpty{
+            CommonUtilities.shared.showAlert(message: "Select your category", isSuccess: .error)
+            return false
+        }
+        else
+        {
+            addResto(type: type,Profileimage:Profileimage, country:country,state:state,city:city,latitude:latitude,longitude:longitude,name: name, image: image, location: location, opentime: opentime, closetime: closetime, themesrestrorantid: themesrestrorantid, cusine: cusine, shortdescription: shortdescription, category: category) { (data) in
                 onsuccess()
             }
             return true
@@ -298,7 +303,7 @@ class AuthViewModel : NSObject {
     }
     
     
-    func addResto(type:Int,Profileimage:[FileuploadModelBody],country:String,state:String,city:String,latitude:Double,longitude:Double, name:String, image: [FileuploadModelBody], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String, onsuccess: @escaping (((AddbusinessModel?)->()))) {
+    func addResto(type:Int,Profileimage:[FileuploadModelBody],country:String,state:String,city:String,latitude:Double,longitude:Double, name:String, image: [FileuploadModelBody], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String,category:String, onsuccess: @escaping (((AddbusinessModel?)->()))) {
         let jsonEncoder = JSONEncoder()
         do {
             let jsonData = try jsonEncoder.encode(Profileimage)
@@ -322,6 +327,7 @@ class AuthViewModel : NSObject {
                                      "country":country,
                                      "state":state,
                                      "city":city,
+                                     "category_id":category,
                                      "latitude":latitude,
                                      "country_code":Store.userDetails?.countryCode ?? "",
                                      "mobile":Store.userDetails?.phone ?? 0,

@@ -122,7 +122,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         } else if self.imgArr.count  <= 2{
             CommonUtilities.shared.showAlert(message: "Please select 3 image", isSuccess: .error)
         }else {
-            self.viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfLocation.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.Cuisinid.description, shortdescription: self.tvDescription.text ?? "") {
+            self.viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfLocation.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.Cuisinid.description, shortdescription: self.tvDescription.text ?? "", category: self.categoryID.description) {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "RestoVerificationAlertVC")as! RestoVerificationAlertVC
                 vc.callBack = {
                     for controller in self.navigationController!.viewControllers as Array {
@@ -162,6 +162,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         dropDown.bottomOffset = CGPoint(x: 0, y: (tfCategory as AnyObject).frame.size.height)
         dropDown.show()
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            self?.categoryID = self?.dataCategory?[index].id ?? 0
             guard let _ = self else { return }
             self?.tfCategory.text = "\(item) "
             

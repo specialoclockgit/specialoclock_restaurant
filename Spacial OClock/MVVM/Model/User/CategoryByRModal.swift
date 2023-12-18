@@ -53,6 +53,7 @@ struct CategoryByRModalBody: Codable {
         case profileImage = "profile_image"
         case commission
         case isLiked = "is_liked"
-        case availableOffer, offerDescription, offerPercentage, offerOpenTime, offerCloseTime, offers
+        case availableOffer, offerDescription, offerPercentage, offerOpenTime, offerCloseTime
+        case offers = "time_slots"
     }
 }

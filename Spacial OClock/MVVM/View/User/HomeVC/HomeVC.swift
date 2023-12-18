@@ -72,11 +72,10 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         initialLoad()
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
-        isSelected = true
         //MARK: Dine or Drink UserDefault for itemDetailOffer
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
         self.getUpdatedLocation()
-        
+        self.isSelected = true
     }
     
     
@@ -127,7 +126,12 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setDine()
+        if isSelected == false {
+            setDrink()
+        } else {
+            self.setDine()
+        }
+        
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
