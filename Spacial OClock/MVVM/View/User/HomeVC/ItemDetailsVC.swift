@@ -174,7 +174,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.images = data?.images ?? []
             self.reviews = data?.reviews?.reversed() ?? []
             self.ourMenu = data?.ourMenu ?? []
-            self.offer = data?.offer_timings ?? []
+            self.offer = data?.offer_timings?.reversed() ?? []
             let imageIndex = (imageURL) + (self.modal?.images?.first?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
