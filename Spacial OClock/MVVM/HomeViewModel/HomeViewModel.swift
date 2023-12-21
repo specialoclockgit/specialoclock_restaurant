@@ -51,7 +51,7 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - PRODUCT DETIALS
-    func restoDetial_API(resto_id:Int,currentdate:String,onsuccess: @escaping ((productDetailModalBody?)->())){
+    func restoDetial_API(resto_id:Int,currentdate:String,timezone:String,onsuccess: @escaping ((productDetailModalBody?)->())){
         let param:parameters = ["resto_id":resto_id, "date": currentdate]
         WebService.service(API.product_details, param: param, service: .post) {
             (modaldata: productDetailModal, Data , json) in

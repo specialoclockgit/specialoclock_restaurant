@@ -114,6 +114,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var slottime = String()
     var slotid = Int()
     var screenCheck = Int()
+    var timeZone = String()
     
     //full menu
     var modalfullmenu : [allMenuModalBody]?
@@ -122,6 +123,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.timeZone = TimeZone.current.identifier
+        print(timeZone)
         viewFullMenu.delegate = self
         viewFullMenu.dataSource = self
         fetchdata()
@@ -169,7 +172,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         
     //MARK: - FUNCTION
     func product_detail(){
-        viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.txtFldDate.text ?? "") { data in
+        viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.txtFldDate.text ?? "",timezone: self.timeZone ) { data in
             self.modal = data
             self.images = data?.images ?? []
             self.reviews = data?.reviews?.reversed() ?? []
