@@ -448,7 +448,7 @@ extension HomeVC {
             let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
-            screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
+            screen.filtercategory = sectionArray[sender.tag].objArray as? [Category] ?? []
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Popular" :

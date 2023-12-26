@@ -66,6 +66,9 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     var state = String()
     var city = String()
     var country = String()
+    var selectedCategory: [Int] = []
+    var selectedCusinis: [Int] = []
+    
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
@@ -122,7 +125,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         } else if self.imgArr.count  <= 2{
             CommonUtilities.shared.showAlert(message: "Please select 3 image", isSuccess: .error)
         }else {
-            self.viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfLocation.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.Cuisinid.description, shortdescription: self.tvDescription.text ?? "", category: self.categoryID.description) {
+            self.viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfLocation.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.selectedCusinis.description, shortdescription: self.tvDescription.text ?? "", category: self.selectedCategory.description) {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "RestoVerificationAlertVC")as! RestoVerificationAlertVC
                 vc.callBack = {
                     for controller in self.navigationController!.viewControllers as Array {
@@ -155,31 +158,30 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     }
     //MARK: - BUTTON CATEGORY DROP DOWN
     @IBAction func btnCategory(_ sender: Any) {
-        
+        let dropDown = DropDown()
         dropDown.dataSource = dataCategory?.map({$0.title}) ?? []
         dropDown.anchorView = tfCategory
         dropDown.width = tfCategory.frame.width
         dropDown.bottomOffset = CGPoint(x: 0, y: (tfCategory as AnyObject).frame.size.height)
         dropDown.show()
-        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
-            self?.categoryID = self?.dataCategory?[index].id ?? 0
-            guard let _ = self else { return }
-            self?.tfCategory.text = "\(item) "
-            
+        dropDown.multiSelectionAction = { [weak self] (indices: [Int], items: [String]) in
+            guard let self = self else { return }
+            self.selectedCategory = indices.map { self.dataCategory?[$0].id ?? 0 }
+            self.tfCategory.text = items.joined(separator: ", ")
         }
     }
     //MARK: - BUTTON CUISINE DROP DOWN
     @IBAction func btnCuisines(_ sender: Any) {
+        let dropDown = DropDown()
         dropDown.dataSource = dataCuisine?.map({$0.name}) ?? []
         dropDown.anchorView = tfCusinies
         dropDown.width = tfCusinies.frame.width
         dropDown.bottomOffset = CGPoint(x: 0, y: (tfCusinies as AnyObject).frame.size.height)
         dropDown.show()
-        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
-            self?.Cuisinid = self?.dataCuisine?[index].id ?? 0
-            guard let _ = self else { return }
-            self?.tfCusinies.text = "\(item) "
-            
+        dropDown.multiSelectionAction = { [weak self] (indices: [Int], items: [String]) in
+            guard let self = self else { return }
+            self.selectedCusinis = indices.map { self.dataCuisine?[$0].id ?? 0 }
+            self.tfCusinies.text = items.joined(separator: ", ")
         }
     }
     //MARK : - BUTTON CROSS

@@ -59,13 +59,13 @@ extension SceneDelegate {
                 nav.isNavigationBarHidden = true
                 UIApplication.shared.windows.first?.rootViewController = nav
             }
-            else{
-                let storyb = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-                let nav = UINavigationController.init(rootViewController: vc)
-                nav.isNavigationBarHidden = true
-                UIApplication.shared.windows.first?.rootViewController = nav
-            }
+//            else{
+//                let storyb = UIStoryboard(name: "Main", bundle: nil)
+//                let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+//                let nav = UINavigationController.init(rootViewController: vc)
+//                nav.isNavigationBarHidden = true
+//                UIApplication.shared.windows.first?.rootViewController = nav
+//            }
         }else{
             if Store.autoLogin == true {
                 let homeStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
@@ -74,13 +74,13 @@ extension SceneDelegate {
                 nav.isNavigationBarHidden = true
                 UIApplication.shared.windows.first?.rootViewController = nav
             }
-            else{
-                let storyb = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-                let nav = UINavigationController.init(rootViewController: vc)
-                nav.isNavigationBarHidden = true
-                UIApplication.shared.windows.first?.rootViewController = nav
-            }
+            //else{
+//                let storyb = UIStoryboard(name: "Main", bundle: nil)
+//                let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+//                let nav = UINavigationController.init(rootViewController: vc)
+//                nav.isNavigationBarHidden = true
+//                UIApplication.shared.windows.first?.rootViewController = nav
+          //  }
         }
     }
     

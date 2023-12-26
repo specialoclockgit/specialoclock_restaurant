@@ -20,6 +20,13 @@ class RestoWalkThroughVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if UserDefaults.standard.value(forKey: "AppInstalled") as? Bool == true {
+            let storyb = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            self.navigationController?.pushViewController(vc, animated: false)
+        }
+        
         if #available(iOS 14.0, *) {
             pgContl.backgroundStyle = .minimal
             pgContl.preferredIndicatorImage = UIImage(named: "pgCntrlIndicator")
@@ -33,6 +40,7 @@ class RestoWalkThroughVC: UIViewController {
         if sender.titleLabel?.text == "Next"{
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let secondViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC {
+                UserDefaults.standard.setValue(true, forKey: "AppInstalled")
                 self.navigationController?.pushViewController(secondViewController, animated: true)
             }
         }else{

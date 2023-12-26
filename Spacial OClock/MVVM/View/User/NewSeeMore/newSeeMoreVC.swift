@@ -48,6 +48,7 @@ class newSeeMoreVC: UIViewController {
         }else if setvalue == "Theme"{
             lblHeading.text = "Theme"
         }
+        
         colleVeiw.reloadData()
     }
     func setupCollectionView(){
@@ -138,7 +139,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             let image = "\(self.filterthemeAry[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            cell.lblTotalREs.text = "Restaurant \(self.filterthemeAry[indexPath.row].restroCount ?? 0)"
+            cell.lblTotalREs.text = "Restaurant \(self.filterthemeAry[indexPath.row].barCount ?? 0)"
             cell.lblName.text = self.filterthemeAry[indexPath.row].productName ?? ""
         }
         return cell

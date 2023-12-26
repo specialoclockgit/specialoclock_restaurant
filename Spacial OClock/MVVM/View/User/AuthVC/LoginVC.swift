@@ -22,6 +22,8 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialLoad()
+        
+        UserDefaults.standard.setValue(true, forKey: "AppInstalled")
        
         view.hideKeyboardWhenTappedAround()
         viewMain.clipsToBounds = true

@@ -215,6 +215,7 @@
 		ECA77A822B0B236700FC2285 /* LocationManager1.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA77A812B0B236700FC2285 /* LocationManager1.swift */; };
 		ECA8C76B2AD568850061F19C /* SlotsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76A2AD568850061F19C /* SlotsVc.swift */; };
 		ECA8C76D2AD568CD0061F19C /* slotsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */; };
+		ECAE86A12B3B00FE0049E586 /* SelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAE86A02B3B00FE0049E586 /* SelectVC.swift */; };
 		ECAF1D092AC18857006E20FB /* homeSeeMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */; };
 		ECAF1D0B2AC1887B006E20FB /* homeSeeMoreCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF1D0A2AC1887B006E20FB /* homeSeeMoreCVC.swift */; };
 		ECAF62EE2B1DBBB400BF242E /* CHTCollectionViewWaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAF62ED2B1DBBB400BF242E /* CHTCollectionViewWaterfallLayout.swift */; };
@@ -506,6 +507,7 @@
 		ECA77A812B0B236700FC2285 /* LocationManager1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager1.swift; sourceTree = "<group>"; };
 		ECA8C76A2AD568850061F19C /* SlotsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsVc.swift; sourceTree = "<group>"; };
 		ECA8C76C2AD568CD0061F19C /* slotsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slotsTVC.swift; sourceTree = "<group>"; };
+		ECAE86A02B3B00FE0049E586 /* SelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectVC.swift; sourceTree = "<group>"; };
 		ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreVC.swift; sourceTree = "<group>"; };
 		ECAF1D0A2AC1887B006E20FB /* homeSeeMoreCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeSeeMoreCVC.swift; sourceTree = "<group>"; };
 		ECAF62ED2B1DBBB400BF242E /* CHTCollectionViewWaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHTCollectionViewWaterfallLayout.swift; sourceTree = "<group>"; };
@@ -1078,6 +1080,7 @@
 				ECB549822AEB86C00041FA1C /* fullImageView.swift */,
 				ECA6A0622AFCAFA30094DCC1 /* OfferCVC.swift */,
 				ECA6A0642AFCF3360094DCC1 /* offerSeeMoreCVC.swift */,
+				ECAE86A02B3B00FE0049E586 /* SelectVC.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1648,6 +1651,7 @@
 				A58CCCAA2A5EDAAE00DFA478 /* EditProfileVC.swift in Sources */,
 				ECCB15CE2ACFEF17003B4B72 /* menuProductModal.swift in Sources */,
 				8B0EA6F02A85093E00353166 /* UploadImgCVC.swift in Sources */,
+				ECAE86A12B3B00FE0049E586 /* SelectVC.swift in Sources */,
 				ECA1A4D12B171198007748F3 /* NotificationRestoVC.swift in Sources */,
 				A5A8CF3F2A580E7C006F23ED /* RestoForgotpassVC.swift in Sources */,
 				C2B891232A4AEC820066E753 /* MyMenuTvc.swift in Sources */,
