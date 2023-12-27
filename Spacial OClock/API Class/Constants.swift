@@ -171,7 +171,7 @@ enum API: String{
     case restro_home
     case fetch_notifications
     case menu_listing
-    case menu_product_listing
+    case my_menu_products
     case offer_listing
     case review_listing = "fetch_reviews"
     case fetch_invoices

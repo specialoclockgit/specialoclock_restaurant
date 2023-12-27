@@ -275,12 +275,17 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         product_detail()
+        if Store.userDetails?.role == 1{
+            self.viewButton.isHidden = false
+        }else{
+            self.viewButton.isHidden = true
+        }
         valueSelect = false
         tabBarController?.tabBar.isHidden = true
     }
     //MARK: Button Action
     @IBAction func btnAudioCall(_ sender: UIButton) {
-        if let phoneURL = URL(string: "tel://+919079019971") {
+        if let phoneURL = URL(string: "\(Store.userDetails?.phone ?? 0)") {
             if UIApplication.shared.canOpenURL(phoneURL) {
                 UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
             }else {
@@ -461,7 +466,11 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
             if status == 1{
                 if indexPath.row == isselectedoffer{
-                    self.viewButton.isHidden = false
+                    if Store.userDetails?.role == 1{
+                        self.viewButton.isHidden = false
+                    }else{
+                        self.viewButton.isHidden = true
+                    }
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
@@ -482,7 +491,11 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }
             }else{
                 if indexPath.row == isselectedoffer{
-                    self.viewButton.isHidden = false
+                    if Store.userDetails?.role == 1{
+                        self.viewButton.isHidden = false
+                    }else{
+                        self.viewButton.isHidden = true
+                    }
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
