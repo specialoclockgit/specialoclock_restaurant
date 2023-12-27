@@ -300,10 +300,10 @@ extension restoCreateVC{
         tfTheme.inputView = pickerView
         tfCusinies.inputView = pickerView
         let check =  UserDefaults.standard.status
-        if check == 1 {
+        if btnCheckStatus == 1 {
             lblName.text = "Restaurant Name"
             viewCategory.isHidden = true
-        }else if check == 2 {
+        }else if btnCheckStatus == 2 {
             lblName.text = "Bar Name"
             lblHeading.text = "Pub & Bar Profiler"
             viewCuisines.isHidden = true

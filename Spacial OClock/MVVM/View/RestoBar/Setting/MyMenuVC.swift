@@ -28,7 +28,7 @@ class MyMenuVC: UIViewController {
     }
     //MARK: - API MENU
     func SetupAPI(){
-        viewmodel.getMenuapi { [weak self] data in
+        viewmodel.getMenuapi(resotbarid: Store.userDetails?.bussiness_id ?? 0) { [weak self] data in
             self?.datagetApi = data
             self?.tblView.reloadData()
             if self?.datagetApi?.count == 0 {

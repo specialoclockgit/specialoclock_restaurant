@@ -51,8 +51,9 @@ class restoViewModal : NSObject{
     }
     
     //MARK: - Menu
-    func getMenuapi(onsuccess: @escaping (([MenuListingModelBody]?)->())){
-        WebService.service(API.menu_listing, service: .get) {
+    func getMenuapi(resotbarid:Int, onsuccess: @escaping (([MenuListingModelBody]?)->())){
+        let param = ["restrorant_bar_id":resotbarid]
+        WebService.service(API.menu_listing, param: param,service: .post) {
             (modaldata: MenuListingModel, Data , json) in
             onsuccess(modaldata.body)
         }

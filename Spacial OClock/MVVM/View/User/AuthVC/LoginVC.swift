@@ -17,11 +17,15 @@ class LoginVC: UIViewController {
     //MARK: - VARIABLES
     var viewmodel = AuthViewModel()
     var swipeGesture = UISwipeGestureRecognizer()
+    var selectStatus = Int()
+    var restoselctStatus = Int()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         initialLoad()
+        
+        print(selectStatus)
         
         UserDefaults.standard.setValue(true, forKey: "AppInstalled")
        
@@ -33,9 +37,10 @@ class LoginVC: UIViewController {
         
     }
     //MARK: - ACTIONS
-    @IBAction func btnBack(_ sender: UIButton){
+    @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    
 
     @IBAction func btnSignIn(_ sender: UIButton){
         self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: Store.userDetails?.role ?? 0) {
@@ -74,6 +79,8 @@ class LoginVC: UIViewController {
     
     @IBAction func btnSignUp(_ sender: UIButton){
         let vc = storyboard?.instantiateViewController(withIdentifier: "SignUPVC")as! SignUPVC
+        vc.selectStatus = self.selectStatus
+        vc.restoselctStatus = self.restoselctStatus
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

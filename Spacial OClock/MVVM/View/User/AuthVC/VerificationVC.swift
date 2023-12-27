@@ -25,9 +25,7 @@ class VerificationVC: UIViewController {
         super.viewDidLoad()
         
         
-        
-        
-        CommonUtilities.shared.showAlert(Title: "Please enter otp 1111", message:  "\(String(describing: ""))", isSuccess: .success, duration: 2)
+       CommonUtilities.shared.showAlert(Title: "Please enter otp 1111", message:  "\(String(describing: ""))", isSuccess: .success, duration: 2)
         numberLbl.text = "\(Store.userDetails?.countryCode ?? "") \(Store.userDetails?.phone ?? 0)"
     }
     
