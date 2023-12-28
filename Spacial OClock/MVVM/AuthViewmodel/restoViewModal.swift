@@ -61,7 +61,7 @@ class restoViewModal : NSObject{
     
     //MARK: - MENU
     func ProductListingapi(menuid: Int,restobarId: Int, onsuccess: @escaping (([ProductListingModelBody]?)->())){
-        let param: parameters = ["restrorant_bar_id":menuid, "menu_id":menuid]
+        let param: parameters = ["restrorant_bar_id":restobarId, "menu_id":menuid]
         WebService.service(API.my_menu_products, param: param,service: .post) {
             (modaldata: ProductListingModel, Data , json) in
             onsuccess(modaldata.body)
