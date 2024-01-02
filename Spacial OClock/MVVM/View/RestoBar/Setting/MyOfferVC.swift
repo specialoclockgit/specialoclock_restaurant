@@ -31,20 +31,36 @@ struct ModelHeader {
 class MyOfferVC: UIViewController {
     
     //MARK: Outlets
+    @IBOutlet weak var lblOffer: UILabel!
     @IBOutlet weak var igmViewGif: UIImageView!
     @IBOutlet weak var tbMyOffer : UITableView!
     
     //MARK: Variable
     var arrCheck : [Bool] = []
     var viewmodal = restoViewModal()
+    var datagetApi : [LocationListBody]?
     var modal : [getOfferListModalBody]?
-    //var modelGetoffer = [Product]()
+    var callback : ((String,String)->())?
     var seletedIndex = 0
     var imageView: UIImageView?
+    var viewmodel = AuthViewModel()
+    var valueChange = ""
+    var getcountry = String()
+    var getstate = String()
+    var getcity = String()
+    var gettimezone = String()
+    
     //MARK: - LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        if valueChange == "My Offer"{
+            lblOffer.text = "My Offer"
+            getofferlisting()
+        }else if valueChange == "Select Country"{
+            lblOffer.text = "Select Country"
+            SetupApi()
+        }
+        
         tabBarController?.tabBar.isHidden = true
         
         let nib = UINib(nibName: Cell.CellMyOfferTB, bundle: nil)
@@ -55,15 +71,23 @@ class MyOfferVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getofferlisting()
         tabBarController?.tabBar.isHidden = true
+    }
+    
+    //MARK: - API SETUP
+    func SetupApi(){
+        viewmodel.locationGetapicall { data in
+            self.datagetApi = data
+            self.check(count: data?.count ?? 0)
+            self.tbMyOffer.reloadData()
+        }
     }
     
     //MARK: - FUCNTIONS
     func getofferlisting(){
         viewmodal.offerListingapi(restaurentbarid: Store.userDetails?.id ?? 0) { [weak self] data in
             self?.modal = data
-            self?.check()
+            self?.check(count: data?.count ?? 0)
             self?.tbMyOffer.reloadData()
             if self?.modal?.count == 0 {
                 self?.igmViewGif.image = UIImage.gif(name: "nodataFound")
@@ -118,53 +142,92 @@ class MyOfferVC: UIViewController {
 
 extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.modal?[section].products?.count ?? 0
+        if valueChange == "My Offer"{
+            return self.modal?[section].products?.count ?? 0
+        }else{
+            return self.datagetApi?[section].restaurants?.count ?? 0
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return modal?.count ?? 0
+        if valueChange == "My Offer"{
+            return modal?.count ?? 0
+        }else{
+            return datagetApi?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cellHeader = tbMyOffer.dequeueReusableCell(withIdentifier: Cell.HeaderMyOfferCell) as! HeaderMyOfferCell
-        cellHeader.lblHeading.text = "\(self.modal?[section].menuName ?? "") " +
-        "\(String(describing: self.modal?[section].offerPrice ?? 0))%"
-        cellHeader.lblTimming.text =  "(\(String(describing: self.modal?[section].openTime ?? ""))-\(self.modal?[section].closeTime ?? ""))"
-        cellHeader.viewHeader.layer.cornerRadius = 10.0
-        cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
-        cellHeader.btnHeader.tag = section
-        if arrCheck[section] == true{
-            cellHeader.btnHeader.isSelected = true
-            cellHeader.viewHeader.backgroundColor = .white
-            cellHeader.lblSubHeading.isHidden = true
+        if valueChange == "My Offer"{
+            cellHeader.lblHeading.text = "\(self.modal?[section].menuName ?? "") " +
+            "\(String(describing: self.modal?[section].offerPrice ?? 0))%"
+            cellHeader.lblTimming.text =  "(\(String(describing: self.modal?[section].openTime ?? ""))-\(self.modal?[section].closeTime ?? ""))"
+            cellHeader.viewHeader.layer.cornerRadius = 10.0
+            cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
+            cellHeader.btnHeader.tag = section
+            if arrCheck[section] == true{
+                cellHeader.btnHeader.isSelected = true
+                cellHeader.viewHeader.backgroundColor = .white
+                cellHeader.lblSubHeading.isHidden = true
+            }else{
+                cellHeader.btnHeader.isSelected = false
+                cellHeader.viewHeader.backgroundColor = .systemGray6
+                cellHeader.lblSubHeading.isHidden = true
+            }
         }else{
-            cellHeader.btnHeader.isSelected = false
-            cellHeader.viewHeader.backgroundColor = .systemGray6
-            cellHeader.lblSubHeading.isHidden = true
+            cellHeader.lblHeading.text =  self.datagetApi?[section].country ?? ""
+            cellHeader.viewHeader.layer.cornerRadius = 10.0
+            cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
+            cellHeader.btnHeader.tag = section
+            if arrCheck[section] == true{
+                cellHeader.btnHeader.isSelected = true
+                cellHeader.viewHeader.backgroundColor = .white
+                cellHeader.lblSubHeading.isHidden = false
+            }else{
+                cellHeader.btnHeader.isSelected = false
+                cellHeader.viewHeader.backgroundColor = .systemGray6
+                cellHeader.lblSubHeading.isHidden = true
+            }
         }
+        
         return cellHeader
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 68.0
+        if valueChange == "My Offer"{
+            return 68.0
+        }else{
+            return 50
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tbMyOffer.dequeueReusableCell(withIdentifier: Cell.CellMyOfferTB) as! CellMyOfferTB
-        cell.lblItemTitle.text = self.modal?[indexPath.section].products?[indexPath.row].productName ?? ""
-        cell.imgViwe.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-        cell.imgViwe.sd_setImage(with: URL(string: productImgURL + (self.modal?[indexPath.section].products?[indexPath.row].image?.description ?? "")),placeholderImage: UIImage(named: "pl"))
-        cell.lblActualPrice.text = "R\(self.modal?[indexPath.section].products?[indexPath.row].price ?? 0)"
-        let totalamount = self.modal?[indexPath.section].products?[indexPath.row].price ?? 0
-        let discount = self.modal?[indexPath.section].offerPrice ?? 0
-        cell.lblOfferPrice.text = "R\(calculate(total: totalamount, discount: discount).description)"
-        
+        if valueChange == "My Offer"{
+            cell.lblTittleName.text = self.modal?[indexPath.section].products?[indexPath.row].productName ?? ""
+            cell.imgViwe.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
+            cell.imgViwe.sd_setImage(with: URL(string: productImgURL + (self.modal?[indexPath.section].products?[indexPath.row].image?.description ?? "")),placeholderImage: UIImage(named: "pl"))
+            cell.lblActualPrice.text = "R\(self.modal?[indexPath.section].products?[indexPath.row].price ?? 0)"
+            let totalamount = self.modal?[indexPath.section].products?[indexPath.row].price ?? 0
+            let discount = self.modal?[indexPath.section].offerPrice ?? 0
+            cell.lblOfferPrice.text = "R\(calculate(total: totalamount, discount: discount).description)"
+            
+        }else{
+            let sections = datagetApi?[indexPath.section].restaurants
+            cell.lblTittleName.text = sections?[indexPath.row].city ?? ""
+            cell.lblActualPrice.isHidden = true
+            cell.lblOfferPrice.isHidden = true
+            
+        }
         //MARK: Hide And View Cell
         if arrCheck[seletedIndex] == false{
             cell.stackView.isHidden = true
         }else{
             cell.stackView.isHidden = false
         }
+        
         return cell
     }
 
@@ -175,8 +238,21 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (arrCheck[indexPath.section]) == true ? 60.0 : 0.0
+        if valueChange == "My Offer"{
+            return (arrCheck[indexPath.section]) == true ? 60.0 : 0.0
+        }else{
+            return (arrCheck[indexPath.section]) == true ? 45.0 : 0.0
+        }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sections = datagetApi?[indexPath.section].restaurants
+        self.getcity = sections?[indexPath.row].city ?? ""
+        self.gettimezone = sections?[indexPath.row].timezone ?? ""
+        self.callback?(self.getcity, self.gettimezone)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @objc func btnedit(_ sender : UIButton){
         let combinedTag = sender.tag
         let section = combinedTag / 1000
@@ -185,6 +261,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
         //screen.modal = (self.modal?[section])!
         self.navigationController?.pushViewController(screen, animated: true)
     }
+    
 }
 
 //MARK: Objective Functions
@@ -208,9 +285,9 @@ extension MyOfferVC{
 
 //MARK: InitialLoad
 extension MyOfferVC {
-    func check(){
+    func check(count:Int){
         
-        for _ in 0...(self.modal?.count ?? 0){
+        for _ in 0...(count){
             arrCheck.append(false)
         }
         print(arrCheck)

@@ -275,11 +275,11 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         product_detail()
-        if Store.userDetails?.role == 1{
-            self.viewButton.isHidden = false
-        }else{
-            self.viewButton.isHidden = true
-        }
+//        if Store.userDetails?.role == 1{
+//            self.viewButton.isHidden = false
+//        }else{
+//            self.viewButton.isHidden = true
+//        }
         valueSelect = false
         tabBarController?.tabBar.isHidden = true
     }

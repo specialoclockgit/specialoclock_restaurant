@@ -110,10 +110,12 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             if status == 0 {
                 let offerScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyOfferVC) as! MyOfferVC
+                offerScreen.valueChange = "My Offer"
                 self.navigationController?.pushViewController(offerScreen, animated: true)
                 debugPrint("My offer")
             }else if status == 1{
                 let barOfferScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyOfferVC) as! MyOfferVC
+                barOfferScreen.valueChange = "My Offer"
                 self.navigationController?.pushViewController(barOfferScreen, animated: true)
             }
             
