@@ -95,8 +95,8 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - MENU PRODUCT API
-    func menuProductAPI(restoid:Int, menutypeid:Int , onsuccess: @escaping ((menuProductModalBody?)->())){
-        let param = ["resto_id":restoid , "menu_type_id":menutypeid] as [String:Any]
+    func menuProductAPI(restoid:Int, menutypeid:Int ,isfifty:Int, onsuccess: @escaping ((menuProductModalBody?)->())){
+        let param = ["resto_id":restoid , "menu_type_id":menutypeid, "is_fifty":isfifty] as [String:Any]
         print(param)
         WebService.service(API.fetch_data_by_menutype, param: param, service: .post) {
             (modaldata: menuProductModal, Data , json) in

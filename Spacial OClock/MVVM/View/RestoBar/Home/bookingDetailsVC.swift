@@ -143,22 +143,16 @@ class bookingDetailsVC: UIViewController {
 }
 extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if products?.count ?? 0 != 0{
-//            return 3
-//        }else{
-//            return 0
-//        }
         return productsUnderOffer?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellBookingDetailTB, for: indexPath) as! CellBookingDetailTB
         let imageIndex = (productImgURL) + (self.productsUnderOffer?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
-      //  (self.products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Default_Image"))
         cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].price ?? 0)"
-        cell.lblNewPrice.text = "R\(self.specailofferless)"
+        cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(productsUnderOffer?[indexPath.row].price ?? 0), discount: Double(self.prsents)).description)"
         cell.lblItemName.text = productsUnderOffer?[indexPath.row].productName ?? ""
         return cell
     }

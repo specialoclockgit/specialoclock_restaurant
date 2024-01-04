@@ -16,6 +16,7 @@ var arrModel : [ItemsModel] = []
 class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate {
     
     //MARK: Outlets
+    @IBOutlet weak var txtFldSearch: CustomTextField!
     @IBOutlet weak var lblHeader: UILabel!
     @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var CollectionView: UICollectionView!
@@ -31,11 +32,15 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     var cusinessID = Int()
     var themeID = Int()
     var location : [locationByRestoModalBody]?
+    var filterlocations : [locationByRestoModalBody]?
     var cuisine = [Cuisine]()
     var viewmodal = HomeViewModel()
     var modal: [CussinesRestoModalBody]?
+    var filtercusin : [CussinesRestoModalBody]?
     var thememodla : [themeRestolistModalBody]?
+    var filtertheme : [themeRestolistModalBody]?
     var categoryModal : [CategoryByRModalBody]?
+    var filterCategory : [CategoryByRModalBody]?
     var lblName = ""
     var setimage = ""
     var setValue = ""
@@ -44,6 +49,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        txtFldSearch.delegate = self
         self.type = UserDefaults.standard.integer(forKey: "dineDrinkStatus")
         CollectionView.showAnimatedGradientSkeleton()
         print(cusinessID)
@@ -69,10 +75,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden  = true
     }
-    @IBAction func btnSearch(_ sender: Any) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+    
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -81,6 +84,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     func get_resto_list(){
         viewmodal.cusinsRestoAPI(cuisineid: cusinessID) { [weak self] fetchdata in
             self?.modal = fetchdata
+            self?.filtercusin = fetchdata
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
             }
@@ -92,6 +96,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     func theme_Resto_API(){
         viewmodal.restoThemelistAPI(restoid: themeID, type: type) { [weak self] dataa in
             self?.thememodla = dataa
+            self?.filtertheme = dataa
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
             }
@@ -103,6 +108,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     func fetch_Category_REsto(){
         viewmodal.categoryBYResto(categoryID: cusinessID) { [weak self] dataaa in
             self?.categoryModal = dataaa
+            self?.filterCategory = dataaa
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
             }
@@ -115,6 +121,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     func location_By_RestoAPI(){
         viewmodal.locationByRestoAPI(country: country, city: city,type: "1") { [weak self] dataa in
             self?.location = dataa
+            self?.filterlocations = dataa
            // self?.restrorants = dataa?.location?.first?.restrorants ?? []
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
@@ -138,38 +145,38 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
 extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setValue == "Location"{
-            if location?.count == 0 {
+            if filterlocations?.count == 0 {
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return location?.count ?? 0
+                return filterlocations?.count ?? 0
             }
         }else if setValue == "Category"{
-            if categoryModal?.count == 0 {
+            if filterCategory?.count == 0 {
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return categoryModal?.count ?? 0
+                return filterCategory?.count ?? 0
             }
         }
         else if setValue == "Cuisines"{
-            if modal?.count == 0 {
+            if filtercusin?.count == 0 {
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return modal?.count ?? 0
+                return filtercusin?.count ?? 0
             }
             
         }else {
-            if thememodla?.count == 0{
+            if filtertheme?.count == 0{
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
-                return thememodla?.count ?? 0
+                return filtertheme?.count ?? 0
             }
         }
         return 0
@@ -178,57 +185,57 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailItemCVC", for: indexPath) as! DetailItemCVC
         if setValue == "Location"{
-            let imageIndex = (imageURL) + (location?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            let imageIndex = (imageURL) + (filterlocations?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblName.text = location?[indexPath.row].name ?? ""
-            cell.lblLocation.text = location?[indexPath.row].location ?? ""
-            cell.lblfirstLocaton.text = location?[indexPath.row].city ?? ""
-            cell.lblDiscription.text = location?[indexPath.row].shortDescription ?? ""
-            let fetchresto = location?[indexPath.row].timeSlots ?? []
-            cell.lblRaiting.text = "\(location?[indexPath.row].avgRating ?? 0)"
-            cell.cosmosView.rating = Double(location?[indexPath.row].avgRating ?? 0)
+            cell.lblName.text = filterlocations?[indexPath.row].name ?? ""
+            cell.lblLocation.text = filterlocations?[indexPath.row].location ?? ""
+            cell.lblfirstLocaton.text = filterlocations?[indexPath.row].city ?? ""
+            cell.lblDiscription.text = filterlocations?[indexPath.row].shortDescription ?? ""
+            let fetchresto = filterlocations?[indexPath.row].timeSlots ?? []
+            cell.lblRaiting.text = "\(filterlocations?[indexPath.row].avgRating ?? 0)"
+            cell.cosmosView.rating = Double(filterlocations?[indexPath.row].avgRating ?? 0)
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
         } else if setValue == "Category"{
-            let imageIndex = (imageURL) + (categoryModal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            let imageIndex = (imageURL) + (filterCategory?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblfirstLocaton.text = categoryModal?[indexPath.row].city ?? ""
-            cell.lblLocation.text = categoryModal?[indexPath.row].location ?? ""
-            cell.lblName.text = categoryModal?[indexPath.row].name ?? ""
-            cell.lblDiscription.text = "\(categoryModal?[indexPath.row].openTime ?? "") - " + "\(categoryModal?[indexPath.row].closeTime ?? "")"
-            let fetchresto = categoryModal?[indexPath.row].offers ?? []
+            cell.lblfirstLocaton.text = filterCategory?[indexPath.row].city ?? ""
+            cell.lblLocation.text = filterCategory?[indexPath.row].location ?? ""
+            cell.lblName.text = filterCategory?[indexPath.row].name ?? ""
+            cell.lblDiscription.text = "\(filterCategory?[indexPath.row].openTime ?? "") - " + "\(filterCategory?[indexPath.row].closeTime ?? "")"
+            let fetchresto = filterCategory?[indexPath.row].offers ?? []
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
-            cell.lblRaiting.text = "\(categoryModal?[indexPath.row].avgrating ?? 0)"
-            cell.cosmosView.rating = Double(categoryModal?[indexPath.row].avgrating ?? 0)
+            cell.lblRaiting.text = "\(filterCategory?[indexPath.row].avgrating ?? 0)"
+            cell.cosmosView.rating = Double(filterCategory?[indexPath.row].avgrating ?? 0)
             
         }
         else if setValue == "Cuisines"{
-            let imageIndex = (imageURL) + (modal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            let imageIndex = (imageURL) + (filtercusin?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblfirstLocaton.text = modal?[indexPath.row].city ?? ""
-            cell.lblLocation.text = modal?[indexPath.row].location ?? ""
-            cell.lblName.text = modal?[indexPath.row].name ?? ""
-            cell.lblDiscription.text = "\(modal?[indexPath.row].openTime ?? "") - " + "\(modal?[indexPath.row].closeTime ?? "")"
-            cell.lblRaiting.text = "\(modal?[indexPath.row].avgRating ?? 0)"
-            cell.cosmosView.rating = Double(modal?[indexPath.row].avgRating ?? 0)
-            let fetchresto = modal?[indexPath.row].timeSlots ?? []
+            cell.lblfirstLocaton.text = filtercusin?[indexPath.row].city ?? ""
+            cell.lblLocation.text = filtercusin?[indexPath.row].location ?? ""
+            cell.lblName.text = filtercusin?[indexPath.row].name ?? ""
+            cell.lblDiscription.text = "\(filtercusin?[indexPath.row].openTime ?? "") - " + "\(filtercusin?[indexPath.row].closeTime ?? "")"
+            cell.lblRaiting.text = "\(filtercusin?[indexPath.row].avgRating ?? 0)"
+            cell.cosmosView.rating = Double(filtercusin?[indexPath.row].avgRating ?? 0)
+            let fetchresto = filtercusin?[indexPath.row].timeSlots ?? []
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
         }else{
-            let imageIndex = (imageURL) + (thememodla?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            let imageIndex = (imageURL) + (filtertheme?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblfirstLocaton.text = thememodla?[indexPath.row].city ?? ""
-            cell.lblLocation.text = thememodla?[indexPath.row].location ?? ""
-            cell.lblName.text = thememodla?[indexPath.row].name ?? ""
-            cell.lblDiscription.text = "\(thememodla?[indexPath.row].openTime ?? "") - " + "\(thememodla?[indexPath.row].closeTime ?? "")"
-            cell.lblRaiting.text = "\(thememodla?[indexPath.row].avgRating ?? 0)"
-            cell.cosmosView.rating = Double(thememodla?[indexPath.row].avgRating ?? 0)
-            let fetchresto = thememodla?[indexPath.row].timeSlots
+            cell.lblfirstLocaton.text = filtertheme?[indexPath.row].city ?? ""
+            cell.lblLocation.text = filtertheme?[indexPath.row].location ?? ""
+            cell.lblName.text = filtertheme?[indexPath.row].name ?? ""
+            cell.lblDiscription.text = "\(filtertheme?[indexPath.row].openTime ?? "") - " + "\(filtertheme?[indexPath.row].closeTime ?? "")"
+            cell.lblRaiting.text = "\(filtertheme?[indexPath.row].avgRating ?? 0)"
+            cell.cosmosView.rating = Double(filtertheme?[indexPath.row].avgRating ?? 0)
+            let fetchresto = filtertheme?[indexPath.row].timeSlots
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
         }
@@ -240,25 +247,46 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if setValue == "Location"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-            vc.ProductID = location?[indexPath.row].id ?? 0
+            vc.ProductID = filterlocations?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
         }else if setValue == "Category"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-            vc.ProductID = categoryModal?[indexPath.row].id ?? 0
+            vc.ProductID = filterCategory?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
         }
         else if setValue == "Cuisines"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-            vc.ProductID = modal?[indexPath.row].id ?? 0
+            vc.ProductID = filtercusin?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-            vc.ProductID = thememodla?[indexPath.row].id ?? 0
+            vc.ProductID = filtertheme?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
-    
+
+extension DetailItemViewVC : UITextFieldDelegate {
+    //MARK: - Search
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let resultString = txtFldSearch.text ?? ""
+        if (resultString.count) > 1{
+            if let searchText = txtFldSearch.text {
+                filtercusin = modal?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+                filterCategory = categoryModal?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+                filterlocations = location?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+                filtertheme = thememodla?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+            }
+        }else{
+            filtercusin = modal
+            filterCategory = categoryModal
+            filterlocations = location
+            filtertheme = thememodla
+        }
+        CollectionView.reloadData()
+        return true
+    }
+}
 //    func sortArray(arrayOffer: [[OfferTiming]], cell: DetailItemCVC) {
 //        var arrayOfferTime: [OfferTiming] = []
 //        for i in arrayOffer {

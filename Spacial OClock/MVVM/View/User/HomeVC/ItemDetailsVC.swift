@@ -115,7 +115,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var slotid = Int()
     var screenCheck = Int()
     var timeZone = String()
-    
+    var selectOffer = String()
     //full menu
     var modalfullmenu : [allMenuModalBody]?
     var restoid = Int()
@@ -202,7 +202,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.tbMenu.reloadData()
             if self.offer?.count ?? 0 > 0 {
                 self.discount = self.offer?[0].percentage ?? 0
-               self.menuProductAPI(id: self.offer?[0].menuID ?? 0)
+               self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0)
             }
         }
     }
@@ -245,8 +245,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - MENU PRODUCT API
-    func menuProductAPI(id: Int){
-        viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id) { dataa in
+    func menuProductAPI(id: Int,index:Int){
+        viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id, isfifty:offer?[index].is_fifty ?? 0) { dataa in
             self.productModal = dataa
             self.products = dataa?.products ?? []
             self.actualprice = "\(self.products?.first?.price ?? 0)"
@@ -512,7 +512,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 if data?.is_fifty == 0{
                     cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
                 }else{
-                    cell.lblOffer.text = "%\(50)"
+                    
+                    cell.lblOffer.text = "\(50)%"
                 }
             }            
             return cell
@@ -557,12 +558,13 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         if status == 1 {
             if collectionView == collViewMenu{
                 isselectedoffer = indexPath.row
+                
                 collViewMenu.reloadData()
             }
             //valueSelect = true
             if let id = offer?[indexPath.row].menuID{
                 self.discount = offer?[indexPath.row].percentage ?? 0
-                menuProductAPI(id: id)
+                menuProductAPI(id: id,index: indexPath.row)
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
             self.slotid = offer?[indexPath.row].id ?? 0
@@ -579,7 +581,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             //valueSelect = true
             if let id = offer?[indexPath.row].menuID{
                 self.discount = offer?[indexPath.row].percentage ?? 0
-                menuProductAPI(id: id)
+                menuProductAPI(id: id,index: indexPath.row)
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
             self.slotid = offer?[indexPath.row].id ?? 0
