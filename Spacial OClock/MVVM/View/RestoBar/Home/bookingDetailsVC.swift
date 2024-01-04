@@ -65,6 +65,7 @@ class bookingDetailsVC: UIViewController {
     func resto_Detail_Api(){
         viewmodal.homeRestoDetailAPI(restoid: restoid) { data in
             self.modalDetail = data
+            
             self.productsUnderOffer = data?.productsUnderOffer ?? []
             let imageIndex = (imageURL) + (self.modalDetail?.user?.image ?? "")
             self.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -74,8 +75,8 @@ class bookingDetailsVC: UIViewController {
             }else if self.status == 1{
                 self.lblStatus.text = "Complete"
                 self.lblStatus.textColor = UIColor(named: "themeGreen")
-                self.btnComplete.isHidden = true
-                self.btnReportUser.isHidden = true
+//                self.btnComplete.isHidden = true
+//                self.btnReportUser.isHidden = true
             }else{
                 self.lblStatus.textColor = UIColor(named: "themeAlert")
                 self.lblStatus.text = "Cancelled"
@@ -179,10 +180,10 @@ extension bookingDetailsVC{
         //Complete Buuton Hide and Show
         if status == 0{
             lblStatus.textColor = UIColor(named: "themeAlert")
-            btnComplete.isHidden = false
+            //btnComplete.isHidden = false
         }else{
             lblStatus.textColor = UIColor(named: "themeGreen")
-            btnComplete.isHidden = true
+           // btnComplete.isHidden = true
             //Invoice Button
             let barStatus = UserDefaults.standard.status
             if barStatus == 1 {

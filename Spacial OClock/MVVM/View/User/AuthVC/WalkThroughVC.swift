@@ -98,7 +98,7 @@ extension WalkThroughVC : UICollectionViewDelegate, UICollectionViewDataSource, 
         }
     }
     func navigateToNewScreen() {
-        let screen =  storyboard?.instantiateViewController(withIdentifier: "SelectVC") as! SelectVC
+        let screen =  storyboard?.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
         self.navigationController?.pushViewController(screen, animated: true)
     }
     

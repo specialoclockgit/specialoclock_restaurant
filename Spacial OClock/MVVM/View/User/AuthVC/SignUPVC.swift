@@ -47,14 +47,13 @@ class SignUPVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if selectStatus == 1 {
-            userBtn.setTitle("User", for: .normal)
-            self.tfName.text = "1111"
-        }else if selectStatus == 2 {
-            userBtn.setTitle("Restaurant", for: .normal)
-        }else{
-            userBtn.setTitle("Bar", for: .normal)
-        }
+//        if selectStatus == 1 {
+//            userBtn.setTitle("User", for: .normal)
+//        }else if selectStatus == 2 {
+//            userBtn.setTitle("Restaurant", for: .normal)
+//        }else{
+//            userBtn.setTitle("Bar", for: .normal)
+//        }
         
         
         tfName.delegate = self

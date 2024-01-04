@@ -9468,7 +9468,7 @@ EE1lbnU
                                                         <rect key="frame" x="20" y="140" width="374" height="52"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-Sj-OJW" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="179.5" height="52"/>
                                                                 <color key="backgroundColor" name="themeOrange"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="17"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -9484,8 +9484,8 @@ EE1lbnU
                                                                     <action selector="btnUser:" destination="ib0-UI-Lln" eventType="touchUpInside" id="hQP-FT-TdD"/>
                                                                 </connections>
                                                             </button>
-                                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9MQ-iP-qi7" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="52"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9MQ-iP-qi7" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
+                                                                <rect key="frame" x="194.5" y="0.0" width="179.5" height="52"/>
                                                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="17"/>
                                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -9925,7 +9925,7 @@ EE1lbnU
                                                             </view>
                                                         </subviews>
                                                     </stackView>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mVe-0E-1ZA" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mVe-0E-1ZA" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
                                                         <rect key="frame" x="229.5" y="187" width="150" height="70"/>
                                                         <subviews>
                                                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Uuf-fG-Xki">
