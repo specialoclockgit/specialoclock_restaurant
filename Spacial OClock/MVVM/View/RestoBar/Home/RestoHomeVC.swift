@@ -91,6 +91,7 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.bookingDetailsVC) as! bookingDetailsVC
         screen.restoid = filterdata?[indexPath.row].id ?? 0
+        screen.booking_id = filterdata?[indexPath.row].bookingID ?? ""
         screen.status = filterdata?[indexPath.row].status ?? 0
         screen.isHidden = true
         self.navigationController?.pushViewController(screen, animated: true)

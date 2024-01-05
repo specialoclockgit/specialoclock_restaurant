@@ -105,8 +105,8 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - BOOKING RESTO API
-    func booking_API(bookingDate:String, slotid:Int , numberofPeople:String,restoid:Int ,offerid:String ,  onsuccess: @escaping ((bookingRestoModalBody?)->())){
-        let param = ["booking_date":bookingDate, "slot_id":slotid, "number_of_people":numberofPeople, "restrorant_bar_id":restoid, "offer_id":offerid] as [String:Any]
+    func booking_API(bookingDate:String, slotid:Int , numberofPeople:String,restoid:Int ,offerid:String , persents:Int, onsuccess: @escaping ((bookingRestoModalBody?)->())){
+        let param = ["booking_date":bookingDate, "slot_id":slotid, "number_of_people":numberofPeople, "restrorant_bar_id":restoid, "offer_id":offerid, "booking_amount":persents] as [String:Any]
         WebService.service(API.booking, param: param, service: .post) {
             (modaldata: bookingRestoModal, Data , json) in
             onsuccess(modaldata.body)

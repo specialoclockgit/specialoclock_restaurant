@@ -40,22 +40,14 @@ class SignUPVC: UIViewController {
     var Location = String()
     var countryCode = String()
     var image = [FileuploadModelBody]()
-    var selectStatus = Int()
-    var restoselctStatus = Int()
+    var selectStatus = 1
+    var restoselctStatus = 1
+    
     
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        if selectStatus == 1 {
-//            userBtn.setTitle("User", for: .normal)
-//        }else if selectStatus == 2 {
-//            userBtn.setTitle("Restaurant", for: .normal)
-//        }else{
-//            userBtn.setTitle("Bar", for: .normal)
-//        }
-        
-        
+        Store.status = "\(restoselctStatus)"
         tfName.delegate = self
         tfPhone.delegate = self
         tfPassword.delegate = self
@@ -138,6 +130,7 @@ class SignUPVC: UIViewController {
     
     @IBAction func btbnSelectBar(_ sender: UIButton) {
         restoselctStatus = 2
+        
         viewButton.isHidden = true
         restaurantBtn.setTitle("Bar ▼", for: .normal)
     }

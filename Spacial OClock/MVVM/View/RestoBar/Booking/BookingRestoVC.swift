@@ -122,11 +122,12 @@ extension BookingRestoVC : UITableViewDelegate , UITableViewDataSource{
         debugPrint(indexPath.row)
         let screen = storyboard?.instantiateViewController(withIdentifier: "bookingDetailsVC") as! bookingDetailsVC
         screen.restoid = modal?[indexPath.row].id ?? 0
+        screen.status = modal?[indexPath.row].status ?? 0
         if statusButton == 0 {
-            screen.status = 0
+            //screen.status = 0
             screen.statusText = "Ongoing"
         }else{
-            screen.status = 1
+            //screen.status = 1
             screen.statusText = "Completed"
         }
         screen.booking_id = modal?[indexPath.row].bookingID ?? ""

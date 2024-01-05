@@ -333,7 +333,7 @@ class AuthViewModel : NSObject {
                                      "mobile":Store.userDetails?.phone ?? 0,
                                      "longitude":longitude]
             print(param)
-            WebService.service(API.add_business, param: param, service: .post){
+                WebService.service(API.add_business, param: param, service: .post){
                 (modeldata: AddbusinessModel, data, json) in
                 onsuccess(modeldata)
             }

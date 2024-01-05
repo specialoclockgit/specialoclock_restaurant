@@ -119,6 +119,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //full menu
     var modalfullmenu : [allMenuModalBody]?
     var restoid = Int()
+    var offerpresents = Int()
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
@@ -248,6 +249,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     func menuProductAPI(id: Int,index:Int){
         viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id, isfifty:offer?[index].is_fifty ?? 0) { dataa in
             self.productModal = dataa
+            self.offerpresents = dataa?.products?.first?.offerPercentage ?? 0
             self.products = dataa?.products ?? []
             self.actualprice = "\(self.products?.first?.price ?? 0)"
             self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? 0)"
@@ -381,6 +383,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBAction func btnBookAct(_ sender : UIButton){
         if btnBookStatus == 0{
             let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
+            screen.offerSelectePretns = self.offerpresents 
             screen.slotId = self.slotid
             screen.selectslot = self.slottime
             screen.oldDateSelect = txtFldDate.text ?? ""
@@ -512,7 +515,6 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 if data?.is_fifty == 0{
                     cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
                 }else{
-                    
                     cell.lblOffer.text = "\(50)%"
                 }
             }            

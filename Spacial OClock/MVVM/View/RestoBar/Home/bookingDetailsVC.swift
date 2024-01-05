@@ -53,6 +53,7 @@ class bookingDetailsVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tabBarController?.tabBar.isHidden = true
         initialLoad()
         tbItem.delegate = self
@@ -70,12 +71,12 @@ class bookingDetailsVC: UIViewController {
             let imageIndex = (imageURL) + (self.modalDetail?.user?.image ?? "")
             self.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            if self.status == 0{
+            if data?.status == 0{
                 self.lblStatus.text = "Ongoing"
             }else if self.status == 1{
                 self.lblStatus.text = "Complete"
                 self.lblStatus.textColor = UIColor(named: "themeGreen")
-//                self.btnComplete.isHidden = true
+                self.btnComplete.isHidden = true
 //                self.btnReportUser.isHidden = true
             }else{
                 self.lblStatus.textColor = UIColor(named: "themeAlert")
@@ -84,14 +85,14 @@ class bookingDetailsVC: UIViewController {
             self.lblUDNAme.text = self.modalDetail?.user?.name ?? ""
             self.lblUDEmail.text = self.modalDetail?.user?.email ?? ""
             self.lblUDPhoneNumber.text = "\(self.modalDetail?.user?.countryCode ?? "") " + "\(self.modalDetail?.user?.phone ?? 0)"
-            self.lblSOffer.text = "Special offer -\(self.modalDetail?.restrorant?.offers?.first?.offerPrice?.description ?? "")%"
+            self.lblSOffer.text = "Special offer -\(self.modalDetail?.bookingAmount ?? "")%"
             self.lblDis.text = self.modalDetail?.restrorant?.offers?.first?.description ?? ""
             self.lblBookingDate.text = self.modalDetail?.bookingDate ?? ""
             self.lblBookingTime.text = self.modalDetail?.bookingSlot ?? ""
             self.lblNumberOfPeople.text = "\(self.modalDetail?.numberOfPeople ?? 0)"
             self.lblBookingNumebr.text = self.modalDetail?.bookingID ?? ""
             self.totalamount = self.productsUnderOffer?.first?.price ?? 0
-            self.prsents = self.modalDetail?.restrorant?.offers?.first?.offerPrice ?? 0
+            self.prsents = Int(self.modalDetail?.bookingAmount ?? "") ?? 0
             self.prsentsamount = self.totalamount * self.prsents/100
             self.specailofferless = self.totalamount - self.prsentsamount
             self.tbItem.reloadData()
@@ -180,20 +181,20 @@ extension bookingDetailsVC{
         //Complete Buuton Hide and Show
         if status == 0{
             lblStatus.textColor = UIColor(named: "themeAlert")
-            //btnComplete.isHidden = false
+            btnComplete.isHidden = false
         }else{
             lblStatus.textColor = UIColor(named: "themeGreen")
-           // btnComplete.isHidden = true
+            btnComplete.isHidden = true
             //Invoice Button
             let barStatus = UserDefaults.standard.status
             if barStatus == 1 {
-                btnComplete.isHidden = false
+                //btnComplete.isHidden = false
                 btnComplete.setTitle("Invoice", for: .normal)
                 btnComplete.backgroundColor = UIColor(named: "themeOrange")
             }
         }
         if isHidden == true {
-            btnComplete.isHidden = true
+           // btnComplete.isHidden = true
         }
     }
 }

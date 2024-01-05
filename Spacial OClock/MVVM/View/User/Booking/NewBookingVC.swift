@@ -38,6 +38,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     var slotId = Int()
     var oldDateSelect = String()
     var selectslot = String()
+    var offerSelectePretns = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +97,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     @IBAction func btnContinueAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
         screen.callBack = {
-            self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id) { data in
+            self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns) { data in
                 let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
                 super.navigationController?.pushViewController(screen, animated: true)
             }
