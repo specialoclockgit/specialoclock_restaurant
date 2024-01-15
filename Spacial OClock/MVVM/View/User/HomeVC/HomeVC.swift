@@ -73,7 +73,12 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
         //MARK: Dine or Drink UserDefault for itemDetailOffer
-        UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
+        if UserDefaults.standard.value(forKey: "dineDrinkStatus") as? Int == 2{
+            setDrink()
+        }else{
+            setDine()
+        }
+        //UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
         self.getUpdatedLocation()
         self.isSelected = true
     }
@@ -126,11 +131,11 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if isSelected == false {
-            setDrink()
-        } else {
-            self.setDine()
-        }
+//        if isSelected == false {
+//            setDrink()
+//        } else {
+//            self.setDine()
+//        }
         
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
@@ -292,7 +297,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDrinks.textColor = UIColor.black
         isSelected = false
         UserDefaults.standard.set(2, forKey: "dineDrinkStatus")
-        setData(type: 2, country: "India", state: "ff", city: self.getcity)
+        setData(type: 2, country: self.getcountry, state: "ff", city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }
     @IBAction func btnMapView(_ sender: UIButton) {

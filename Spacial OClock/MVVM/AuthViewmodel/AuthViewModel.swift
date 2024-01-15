@@ -327,7 +327,7 @@ class AuthViewModel : NSObject {
                                      "country":country,
                                      "state":state,
                                      "city":city,
-                                     "category_id":category,
+                                     "category_ids":category,
                                      "latitude":latitude,
                                      "country_code":Store.userDetails?.countryCode ?? "",
                                      "mobile":Store.userDetails?.phone ?? 0,

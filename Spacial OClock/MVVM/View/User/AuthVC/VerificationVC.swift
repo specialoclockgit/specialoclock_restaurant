@@ -7,6 +7,7 @@
 
 import UIKit
 import SVPinView
+
 class VerificationVC: UIViewController {
     
     //MARK: Outlets
@@ -29,7 +30,7 @@ class VerificationVC: UIViewController {
         numberLbl.text = "\(Store.userDetails?.countryCode ?? "") \(Store.userDetails?.phone ?? 0)"
     }
     
-    @IBAction func btnSendAgain(_ sender: Any) {
+    @IBAction func btnSendAgain(_ sender: UIButton) {
         viewmodel.resendOtp(phone: "\(Store.userDetails?.phone ?? 0)", onSuccess: {
             CommonUtilities.shared.showAlert(Title: "Please enter otp 1111", message:  "\(String(describing: ""))", isSuccess: .success, duration: 2)
         })

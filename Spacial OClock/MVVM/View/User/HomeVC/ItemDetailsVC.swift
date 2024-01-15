@@ -477,11 +477,13 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
+                    cell.lblOffer.isHidden = false
                     cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
                 }else{
                     cell.img.image = UIImage(named: "BgOfferImg")
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
+                    cell.lblOffer.isHidden = false
                     cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
@@ -502,12 +504,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
-                    cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
+                    cell.lblOffer.isHidden = true
+                   // cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
                 }else{
                     cell.img.image = UIImage(named: "BgOfferImg")
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
-                    cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
+                    cell.lblOffer.isHidden = true
+                    //cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
@@ -534,7 +538,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
-            return CGSize (width: 100, height: 200.0)
+            if status == 1{
+                return CGSize (width: 100, height: 200.0)
+            }else{
+                return CGSize (width: 100, height: 162)
+            }
+            
         }else if collectionView == viewFullMenu{
             return CGSize(width: viewFullMenu.frame.width / 2.1, height: 166)
         }
@@ -652,7 +661,12 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             sectionV.layer.cornerRadius = 10
             let titleLbl = UILabel.init(frame: CGRect(x: 12, y: 10, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
-            titleLbl.text = "Recommended \(products?[section].menuTypeName ?? "") Special"
+            if status == 1{
+                titleLbl.text = "Recommended \(products?[section].menuTypeName ?? "") Special"
+            }else{
+                titleLbl.text = products?[section].menuTypeName ?? ""
+            }
+           
 //            \n\(self.promotionTxt)"
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-30, y: 6, width: 30, height: 30))
@@ -692,7 +706,13 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.lblItemName.text = products?[indexPath.row].productName ?? ""
             cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
             cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(products?[indexPath.row].offerPercentage ?? 0)).description)"
-            cell.lblDiscount.text = "(\(products?[indexPath.row].offerPercentage ?? 0)% Discount)"
+            if status == 1 {
+                cell.lblDiscount.text = "(\(products?[indexPath.row].offerPercentage ?? 0)% Discount)"
+            }else{
+//                cell.lblDiscount.text = "(\(products?[indexPath.row].offerPercentage ?? 0)% Discount)"
+                cell.lblDiscount.isHidden = true
+            }
+            
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellItemDetailReviewTB, for: indexPath) as! CellItemDetailReviewTB

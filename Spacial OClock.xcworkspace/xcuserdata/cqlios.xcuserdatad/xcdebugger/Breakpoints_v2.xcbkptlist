@@ -7,69 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E1CA6D9E-9AD9-4CBA-BF30-A57371EDA15F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/HomeVC/ItemDetailsVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "584"
-            endingLineNumber = "584"
-            landmarkName = "collectionView(_:didSelectItemAt:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E1CA6D9E-9AD9-4CBA-BF30-A57371EDA15F - 91008b1f30ecda59"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.ItemDetailsVC.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "Spacial OClock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/ItemDetailsVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "584"
-                  endingLineNumber = "584"
-                  offsetFromSymbolStart = "9686">
-               </Location>
-               <Location
-                  uuid = "E1CA6D9E-9AD9-4CBA-BF30-A57371EDA15F - 91008b1f30ecda59"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.ItemDetailsVC.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "Spacial OClock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/ItemDetailsVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "584"
-                  endingLineNumber = "584"
-                  offsetFromSymbolStart = "9330">
-               </Location>
-               <Location
-                  uuid = "E1CA6D9E-9AD9-4CBA-BF30-A57371EDA15F - 91008b1f30ecda59"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.ItemDetailsVC.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "Spacial OClock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/ItemDetailsVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "584"
-                  endingLineNumber = "584"
-                  offsetFromSymbolStart = "9653">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "6BF48E39-0AD2-4A5D-AA12-CB2E925B374C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -277,70 +214,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4701ABE9-C456-448A-958F-B5E7A03AA7E2"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/AuthVC/SignUPVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
-            landmarkName = "btnSignUp(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C610C904-6FA9-46F9-B880-B57639EC695E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/AuthVC/VerificationVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "verifyBtn(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B55DF750-A0CC-48DF-A634-BD45C3115451"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/AuthVC/VerificationVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "verifyBtn(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "608BA1AF-D6C7-4F4B-BFA5-C505A8A39C84"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/AuthVC/SignUPVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "btbnSelectBar(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "328567BB-1CF2-4560-83B2-89CFD1810F0D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -352,6 +225,102 @@
             endingLineNumber = "140"
             landmarkName = "btnSelectResto(_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E5BBD4C6-5F23-4189-9248-CD5BD02FFD7F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Spacial OClock/MVVM/AuthViewmodel/AuthViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
+            landmarkName = "addResto(type:Profileimage:country:state:city:latitude:longitude:name:image:location:opentime:closetime:themesrestrorantid:cusine:shortdescription:category:onsuccess:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E5BBD4C6-5F23-4189-9248-CD5BD02FFD7F - 8c5f65a2281d0197"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.AuthViewModel.addResto(type: Swift.Int, Profileimage: Swift.Array&lt;Spacial_OClock.FileuploadModelBody&gt;, country: Swift.String, state: Swift.String, city: Swift.String, latitude: Swift.Double, longitude: Swift.Double, name: Swift.String, image: Swift.Array&lt;Spacial_OClock.FileuploadModelBody&gt;, location: Swift.String, opentime: Swift.String, closetime: Swift.String, themesrestrorantid: Swift.String, cusine: Swift.String, shortdescription: Swift.String, category: Swift.String, onsuccess: (Swift.Optional&lt;Spacial_OClock.AddbusinessModel&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/AuthViewmodel/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "336"
+                  endingLineNumber = "336"
+                  offsetFromSymbolStart = "4289">
+               </Location>
+               <Location
+                  uuid = "E5BBD4C6-5F23-4189-9248-CD5BD02FFD7F - a196021672f53c8c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Spacial_OClock.AddbusinessModel, Foundation.Data, Any) -&gt; () in Spacial_OClock.AuthViewModel.addResto(type: Swift.Int, Profileimage: Swift.Array&lt;Spacial_OClock.FileuploadModelBody&gt;, country: Swift.String, state: Swift.String, city: Swift.String, latitude: Swift.Double, longitude: Swift.Double, name: Swift.String, image: Swift.Array&lt;Spacial_OClock.FileuploadModelBody&gt;, location: Swift.String, opentime: Swift.String, closetime: Swift.String, themesrestrorantid: Swift.String, cusine: Swift.String, shortdescription: Swift.String, category: Swift.String, onsuccess: (Swift.Optional&lt;Spacial_OClock.AddbusinessModel&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/AuthViewmodel/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "338"
+                  endingLineNumber = "338"
+                  offsetFromSymbolStart = "493">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6F9E14B0-6C70-4B41-8DED-EC842DC5FD89"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Spacial OClock/MVVM/View/User/HomeVC/HomeVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
+            landmarkName = "setDrink()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6F9E14B0-6C70-4B41-8DED-EC842DC5FD89 - 4202bf85d6eac476"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.HomeVC.btnMapView(__C.UIButton) -&gt; ()"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/HomeVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "300"
+                  endingLineNumber = "300"
+                  offsetFromSymbolStart = "327">
+               </Location>
+               <Location
+                  uuid = "6F9E14B0-6C70-4B41-8DED-EC842DC5FD89 - 280a1e315dfac266"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.HomeVC.setDrink() -&gt; ()"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlios/Documents/Amit/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/HomeVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "300"
+                  endingLineNumber = "300"
+                  offsetFromSymbolStart = "1152">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

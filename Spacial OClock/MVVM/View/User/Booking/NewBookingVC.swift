@@ -98,8 +98,13 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
         screen.callBack = {
             self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns) { data in
-                let screen   = self.storyboard?.instantiateViewController(withIdentifier:ViewController.HomeVC) as! HomeVC
-                super.navigationController?.pushViewController(screen, animated: true)
+                for controller in self.navigationController!.viewControllers as Array {
+                    if controller.isKind(of: HomeVC.self) {
+                        UserDefaults.standard.setValue("1", forKey: "Dine")
+                        self.navigationController!.popToViewController(controller, animated: true)
+                        break
+                    }
+                }
             }
         }
         self.navigationController?.present(screen, animated: true)
