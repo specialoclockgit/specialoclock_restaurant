@@ -203,7 +203,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.tbMenu.reloadData()
             if self.offer?.count ?? 0 > 0 {
                 self.discount = self.offer?[0].percentage ?? 0
-               self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0)
+                self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0)
             }
         }
     }
@@ -246,8 +246,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - MENU PRODUCT API
-    func menuProductAPI(id: Int,index:Int){
-        viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id, isfifty:offer?[index].is_fifty ?? 0) { dataa in
+    func menuProductAPI(id: Int,index:Int,isfifty:Int){
+        viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id, isfifty:isfifty) { dataa in
             self.productModal = dataa
             self.offerpresents = dataa?.products?.first?.offerPercentage ?? 0
             self.products = dataa?.products ?? []
@@ -437,12 +437,25 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
         else if collectionView == collViewMenu
         {
-            if offer?.count == 0 {
-                collView.setNoDataMessage("No Data found", txtColor: .white)
+            //new ourMenu old : offer
+            
+            if status == 1{
+                if offer?.count == 0 {
+                    collView.setNoDataMessage("No Data found", txtColor: .white)
+                }else{
+                    collView.backgroundView = nil
+                    return offer?.count ?? 0
+                }
             }else{
-                collView.backgroundView = nil
-                return offer?.count ?? 0
+                if ourMenu?.count == 0 {
+                    collView.setNoDataMessage("No Data found", txtColor: .white)
+                }else{
+                    collView.backgroundView = nil
+                    return ourMenu?.count ?? 0
+                }
             }
+            
+            
         }else if collectionView == viewFullMenu{
             if modalfullmenu?.count == 0{
                 collView.setNoDataMessage("No Data found", txtColor: .white)
@@ -513,14 +526,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblOffer.isHidden = true
                     //cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
-                let data = offer?[indexPath.row]
-                cell.lblMenuSchedule.text = data?.menuName ?? ""
-                cell.lblTime.text = data?.offer ?? ""
-                if data?.is_fifty == 0{
-                    cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
-                }else{
-                    cell.lblOffer.text = "\(50)%"
-                }
+                let data = ourMenu?[indexPath.row]
+                cell.lblMenuSchedule.text = data?.name ?? ""
+                cell.lblTime.text = data?.offers?.date ?? ""
+                //if data?.is_fifty == 0{
+                    //cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
+                //}else{
+                  //  cell.lblOffer.text = "\(50)%"
+               // }
             }            
             return cell
         }else if collectionView == viewFullMenu{
@@ -575,7 +588,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             //valueSelect = true
             if let id = offer?[indexPath.row].menuID{
                 self.discount = offer?[indexPath.row].percentage ?? 0
-                menuProductAPI(id: id,index: indexPath.row)
+                menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0)
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
             self.slotid = offer?[indexPath.row].id ?? 0
@@ -590,16 +603,16 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 collViewMenu.reloadData()
             }
             //valueSelect = true
-            if let id = offer?[indexPath.row].menuID{
-                self.discount = offer?[indexPath.row].percentage ?? 0
-                menuProductAPI(id: id,index: indexPath.row)
+            if let id = ourMenu?[indexPath.row].id{
+                self.discount = ourMenu?[indexPath.row].offers?.offerPrice ?? 0
+                menuProductAPI(id: id,index: indexPath.row,isfifty: 0)
             }
-            self.slottime = offer?[indexPath.row].offer ?? ""
-            self.slotid = offer?[indexPath.row].id ?? 0
-            self.menuid = offer?[indexPath.row].menuID ?? 0
-            self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
-            self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
-            self.offerID = offer?[indexPath.row].offerID ?? 0
+         //   self.slottime = ourMenu?[indexPath.row].offer ?? ""
+         //   self.slotid = ourMenu?[indexPath.row].id ?? 0
+            self.menuid = ourMenu?[indexPath.row].offers?.menuID ?? 0
+            self.restrorant_bar_id = ourMenu?[indexPath.row].offers?.restrorantBarID ?? 0
+            self.numberofperson = ourMenu?[indexPath.row].offers?.numberOfUserBook ?? 0
+            self.offerID = ourMenu?[indexPath.row].offers?.id ?? 0
 //            let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
 //                                                                 image: ["goose" , "belveder", "Ciroc" ],
 //                                                                 itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
@@ -632,7 +645,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             } else {
                 return products?.count ?? 0
             }
-        }else{
+        } else {
             if reviews?.count == 0{
                 ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
                 ImgViewgifReview.isHidden = false
@@ -647,10 +660,11 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
 //    func numberOfSections(in tableView: UITableView) -> Int {
 //        if tableView == tbMenu{
 //            return products?.count ?? 0
-//        }else{
+//        }  else{
 //            return self.reviews?.count ?? 0
+//
 //        }
-//        
+//
 //    }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -705,12 +719,13 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             cell.lblItemName.text = products?[indexPath.row].productName ?? ""
             cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
-            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(products?[indexPath.row].offerPercentage ?? 0)).description)"
+            
             if status == 1 {
+                cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(products?[indexPath.row].offerPercentage ?? 0)).description)"
                 cell.lblDiscount.text = "(\(products?[indexPath.row].offerPercentage ?? 0)% Discount)"
             }else{
-//                cell.lblDiscount.text = "(\(products?[indexPath.row].offerPercentage ?? 0)% Discount)"
-                cell.lblDiscount.isHidden = true
+                cell.lblNewPrice.text = "(\(products?[indexPath.row].discounted_price ?? 0))"
+                    cell.lblDiscount.isHidden = true
             }
             
             return cell

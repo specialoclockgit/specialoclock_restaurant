@@ -63,14 +63,14 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
                 imgViewGif.image = UIImage.gif(name: "nodataFound")
                 imgViewGif.isHidden = false
             }else{
-                imgViewGif.isHidden = true
+              imgViewGif.isHidden = true
                 return all_bars_restos.count
             }
         }else{
             self.collection.hideSkeleton()
             if highily_rated_bars_restos.count == 0{
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+               imgViewGif.image = UIImage.gif(name: "nodataFound")
+               imgViewGif.isHidden = false
             }else{
                 imgViewGif.isHidden = true
                 return highily_rated_bars_restos.count

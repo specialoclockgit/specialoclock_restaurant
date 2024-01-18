@@ -27,7 +27,7 @@ extension UserDefaults{
     }
     
     //MARK: Home User Dine and Drink button Check
-    var dineDrinkStatus : Int{
+    var dineDrinkStatus : Int {
         get {
             UserDefaults.standard.value(forKey: "dineDrinkStatus") as! Int
         }

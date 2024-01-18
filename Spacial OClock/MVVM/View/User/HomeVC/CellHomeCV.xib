@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Poppins-Medium.ttf">
+        <array key="Poppins-Medium.otf">
             <string>Poppins-Medium</string>
         </array>
-        <array key="Poppins-SemiBold.ttf">
+        <array key="Poppins-SemiBold.otf">
             <string>Poppins-SemiBold</string>
         </array>
     </customFonts>
@@ -49,14 +49,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDk-KH-c4F">
                                         <rect key="frame" x="0.0" y="0.0" width="55" height="46"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BgOfferImg" translatesAutoresizingMaskIntoConstraints="NO" id="Fff-Hx-zwb">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BgOfferImg" translatesAutoresizingMaskIntoConstraints="NO" id="Fff-Hx-zwb">
                                                 <rect key="frame" x="0.0" y="0.0" width="55" height="46"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95g-gz-ywC">
-                                                <rect key="frame" x="23.5" y="6" width="8" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95g-gz-ywC">
+                                                <rect key="frame" x="10" y="6" width="35" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -82,6 +82,8 @@
                                             <constraint firstItem="95g-gz-ywC" firstAttribute="centerX" secondItem="Fff-Hx-zwb" secondAttribute="centerX" id="VRm-6C-jyC"/>
                                             <constraint firstItem="Fff-Hx-zwb" firstAttribute="top" secondItem="pDk-KH-c4F" secondAttribute="top" id="aOd-x6-qTB"/>
                                             <constraint firstItem="Fff-Hx-zwb" firstAttribute="leading" secondItem="pDk-KH-c4F" secondAttribute="leading" id="dFi-Sh-x15"/>
+                                            <constraint firstItem="95g-gz-ywC" firstAttribute="leading" secondItem="pDk-KH-c4F" secondAttribute="leading" constant="10" id="dH7-Ph-j4s"/>
+                                            <constraint firstAttribute="trailing" secondItem="95g-gz-ywC" secondAttribute="trailing" constant="10" id="dh2-Nw-gmS"/>
                                             <constraint firstItem="61T-84-s35" firstAttribute="centerX" secondItem="95g-gz-ywC" secondAttribute="centerX" id="o0V-5K-J5V"/>
                                             <constraint firstAttribute="bottom" secondItem="Fff-Hx-zwb" secondAttribute="bottom" id="r0d-uP-kXU"/>
                                         </constraints>
@@ -95,14 +97,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8E6-v8-LMp">
                                         <rect key="frame" x="60" y="0.0" width="55" height="46"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BgOfferImg" translatesAutoresizingMaskIntoConstraints="NO" id="ewS-M5-Rc6">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BgOfferImg" translatesAutoresizingMaskIntoConstraints="NO" id="ewS-M5-Rc6">
                                                 <rect key="frame" x="0.0" y="0.0" width="55" height="46"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFr-uc-oFD">
-                                                <rect key="frame" x="23.5" y="6" width="8" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFr-uc-oFD">
+                                                <rect key="frame" x="10" y="6" width="35" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -123,9 +125,11 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="78s-4F-uUc" firstAttribute="top" secondItem="eFr-uc-oFD" secondAttribute="bottom" constant="-2" id="6TO-yD-Eh0"/>
+                                            <constraint firstItem="eFr-uc-oFD" firstAttribute="leading" secondItem="8E6-v8-LMp" secondAttribute="leading" constant="10" id="LTI-ig-e7l"/>
                                             <constraint firstAttribute="trailing" secondItem="ewS-M5-Rc6" secondAttribute="trailing" id="LuD-G9-Qv7"/>
                                             <constraint firstItem="ewS-M5-Rc6" firstAttribute="leading" secondItem="8E6-v8-LMp" secondAttribute="leading" id="Mr5-Qz-K2g"/>
                                             <constraint firstAttribute="bottom" secondItem="ewS-M5-Rc6" secondAttribute="bottom" id="Tk6-He-5cf"/>
+                                            <constraint firstAttribute="trailing" secondItem="eFr-uc-oFD" secondAttribute="trailing" constant="10" id="ZU3-qL-9Ry"/>
                                             <constraint firstItem="ewS-M5-Rc6" firstAttribute="top" secondItem="8E6-v8-LMp" secondAttribute="top" id="jmd-fV-nL8"/>
                                             <constraint firstItem="78s-4F-uUc" firstAttribute="centerX" secondItem="eFr-uc-oFD" secondAttribute="centerX" id="loo-vL-MCf"/>
                                             <constraint firstItem="eFr-uc-oFD" firstAttribute="centerX" secondItem="ewS-M5-Rc6" secondAttribute="centerX" id="qfm-ay-T33"/>
@@ -141,14 +145,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vwz-fa-9JB">
                                         <rect key="frame" x="120" y="0.0" width="55" height="46"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BgOfferImg" translatesAutoresizingMaskIntoConstraints="NO" id="Z1e-FB-aV3">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BgOfferImg" translatesAutoresizingMaskIntoConstraints="NO" id="Z1e-FB-aV3">
                                                 <rect key="frame" x="0.0" y="0.0" width="55" height="46"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfY-EW-b91">
-                                                <rect key="frame" x="23.5" y="6" width="8" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfY-EW-b91">
+                                                <rect key="frame" x="10" y="6" width="35" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -170,7 +174,9 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Z1e-FB-aV3" secondAttribute="trailing" id="CCd-um-XAl"/>
                                             <constraint firstItem="Z1e-FB-aV3" firstAttribute="top" secondItem="vwz-fa-9JB" secondAttribute="top" id="DDG-EX-Lmt"/>
+                                            <constraint firstItem="FfY-EW-b91" firstAttribute="leading" secondItem="vwz-fa-9JB" secondAttribute="leading" constant="10" id="Gpf-iL-BET"/>
                                             <constraint firstItem="mgI-Ku-gtd" firstAttribute="centerX" secondItem="FfY-EW-b91" secondAttribute="centerX" id="MLo-Qg-EMa"/>
+                                            <constraint firstAttribute="trailing" secondItem="FfY-EW-b91" secondAttribute="trailing" constant="10" id="WXD-6k-j2J"/>
                                             <constraint firstItem="FfY-EW-b91" firstAttribute="top" secondItem="vwz-fa-9JB" secondAttribute="top" constant="6" id="Wzp-IL-HXU"/>
                                             <constraint firstAttribute="bottom" secondItem="Z1e-FB-aV3" secondAttribute="bottom" id="dNA-4b-Pgf"/>
                                             <constraint firstItem="Z1e-FB-aV3" firstAttribute="leading" secondItem="vwz-fa-9JB" secondAttribute="leading" id="j5Z-sX-vvf"/>
@@ -186,7 +192,7 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="WFr-Cq-eer"/>
+                                    <constraint firstAttribute="height" constant="46" id="gJp-GT-Mxk"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -316,7 +322,7 @@
                 <outlet property="offerImg1" destination="Fff-Hx-zwb" id="xOu-Jg-TpL"/>
                 <outlet property="offerImg2" destination="ewS-M5-Rc6" id="baO-m1-9aY"/>
                 <outlet property="offerImg3" destination="Z1e-FB-aV3" id="j5I-E1-AUS"/>
-                <outlet property="stackHeight" destination="WFr-Cq-eer" id="xWL-ta-ytd"/>
+                <outlet property="stackHeight" destination="gJp-GT-Mxk" id="eU4-mh-rM5"/>
                 <outlet property="viewOffer1" destination="pDk-KH-c4F" id="T7l-Ji-RNh"/>
                 <outlet property="viewOffer2" destination="8E6-v8-LMp" id="kUQ-aw-CfO"/>
                 <outlet property="viewOffer3" destination="vwz-fa-9JB" id="5Zg-Lr-fkx"/>

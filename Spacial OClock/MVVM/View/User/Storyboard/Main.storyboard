@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7DK-Wo-bIw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7DK-Wo-bIw">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -7872,6 +7872,13 @@
                                             <outlet property="delegate" destination="rCg-iP-h9j" id="qqL-o1-520"/>
                                         </connections>
                                     </collectionView>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uzs-7j-59C">
+                                        <rect key="frame" x="47" y="399" width="320" height="320"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="320" id="QZ8-Y8-hQ3"/>
+                                            <constraint firstAttribute="width" constant="320" id="uSL-Hl-TgS"/>
+                                        </constraints>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEf-5O-Tea">
                                         <rect key="frame" x="20" y="56" width="30" height="50"/>
                                         <constraints>
@@ -7897,7 +7904,9 @@
                                     <constraint firstAttribute="trailing" secondItem="jFs-ip-Eft" secondAttribute="trailing" constant="20" id="1mq-tk-DZz"/>
                                     <constraint firstItem="ePD-m1-Kdr" firstAttribute="top" secondItem="Uqr-VZ-LNj" secondAttribute="bottom" constant="16" id="3az-bF-C17"/>
                                     <constraint firstItem="aEf-5O-Tea" firstAttribute="leading" secondItem="HMw-hn-acV" secondAttribute="leading" constant="20" id="4BG-R7-60E"/>
+                                    <constraint firstItem="Uzs-7j-59C" firstAttribute="centerY" secondItem="ePD-m1-Kdr" secondAttribute="centerY" id="9RE-v4-BEy"/>
                                     <constraint firstAttribute="trailing" secondItem="ePD-m1-Kdr" secondAttribute="trailing" constant="16" id="B6y-u3-odb"/>
+                                    <constraint firstItem="Uzs-7j-59C" firstAttribute="centerX" secondItem="ePD-m1-Kdr" secondAttribute="centerX" id="BRL-Zt-KN9"/>
                                     <constraint firstItem="Uqr-VZ-LNj" firstAttribute="top" secondItem="1zH-bN-lnf" secondAttribute="bottom" constant="16" id="NVn-tm-7zv"/>
                                     <constraint firstAttribute="trailing" secondItem="Lxn-6R-bZM" secondAttribute="trailing" id="STW-zJ-285"/>
                                     <constraint firstItem="jFs-ip-Eft" firstAttribute="leading" secondItem="HMw-hn-acV" secondAttribute="leading" constant="20" id="Vgt-FE-5s0"/>
@@ -7924,6 +7933,7 @@
                     </view>
                     <connections>
                         <outlet property="collection" destination="ePD-m1-Kdr" id="bea-lw-Fs4"/>
+                        <outlet property="imgViewGif" destination="Uzs-7j-59C" id="Srx-aC-axH"/>
                         <outlet property="imgViewHeader" destination="aIg-XE-aYt" id="sWg-1Q-8bW"/>
                         <outlet property="lblHeader" destination="cj5-Wm-7U5" id="Baw-t1-NAb"/>
                         <outlet property="lblHeaderTExt" destination="4sd-tC-B8I" id="J1F-TL-6k9"/>

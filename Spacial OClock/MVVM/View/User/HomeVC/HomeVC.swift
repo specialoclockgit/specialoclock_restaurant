@@ -296,6 +296,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDineIn.textColor = UIColor.lightGray
         lblDrinks.textColor = UIColor.black
         isSelected = false
+        
         UserDefaults.standard.set(2, forKey: "dineDrinkStatus")
         setData(type: 2, country: self.getcountry, state: "ff", city: self.getcity)
         self.tbHomeData.layoutSubviews()
@@ -339,7 +340,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 print("error in reverseGeocode")
             }
             let placemark = placemarks as? [CLPlacemark]
-            if placemark?.count ?? 0>0{
+            if placemark?.count ?? 0 > 0{
                 let placemark = placemarks![0]
                 print(placemark.locality!)
                 print(placemark.administrativeArea!)

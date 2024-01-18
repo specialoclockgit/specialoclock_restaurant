@@ -131,12 +131,12 @@ struct Product: Codable {
     let id, restrorantBarID, menuID, cuisineID: Int?
     let categoryID: Int?
     let productName: String?
-    let price: Int?
+    let price,discounted_price: Int?
     let image, menuTypeName: String?
     let offerPercentage: Int?
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case id,discounted_price
         case restrorantBarID = "restrorant_bar_id"
         case menuID = "menu_id"
         case cuisineID = "cuisine_id"
