@@ -85,7 +85,13 @@ class bookingDetailsVC: UIViewController {
             self.lblUDNAme.text = self.modalDetail?.user?.name ?? ""
             self.lblUDEmail.text = self.modalDetail?.user?.email ?? ""
             self.lblUDPhoneNumber.text = "\(self.modalDetail?.user?.countryCode ?? "") " + "\(self.modalDetail?.user?.phone ?? 0)"
-            self.lblSOffer.text = "Special offer -\(self.modalDetail?.bookingAmount ?? "")%"
+            if self.modalDetail?.restrorant?.type == 1 {
+                self.lblSOffer.text = "Special offer -\(self.modalDetail?.bookingAmount ?? "")%"
+            } else {
+                self.lblSOffer.text = ""
+            }
+            
+            
             self.lblDis.text = self.modalDetail?.restrorant?.offers?.first?.description ?? ""
             self.lblBookingDate.text = self.modalDetail?.bookingDate ?? ""
             self.lblBookingTime.text = self.modalDetail?.bookingSlot ?? ""
@@ -153,8 +159,15 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
         let imageIndex = (productImgURL) + (self.productsUnderOffer?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Default_Image"))
-        cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].price ?? 0)"
-        cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(productsUnderOffer?[indexPath.row].price ?? 0), discount: Double(self.prsents)).description)"
+        
+        if self.modalDetail?.restrorant?.type == 2 {
+            cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].actual_price ?? 0)"
+            cell.lblNewPrice.text = "R\(self.productsUnderOffer?[indexPath.row].discounted_price ?? 0)"
+        }else {
+            cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].price ?? 0)"
+            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(productsUnderOffer?[indexPath.row].price ?? 0), discount: Double(self.prsents)).description)"
+        }
+        
         cell.lblItemName.text = productsUnderOffer?[indexPath.row].productName ?? ""
         return cell
     }

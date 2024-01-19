@@ -20,7 +20,7 @@ class DetailItemCVC: UICollectionViewCell {
     @IBOutlet weak var lblDiscription: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var imgView: CustomImageView!
-    
+    var screen = Store.screenType
     var offerTimings: [TimeSlotoffer]?
     
     
@@ -39,12 +39,22 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OfferCVC", for: indexPath) as! OfferCVC
-        cell.lblTime.text = (offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "") 
-        if offerTimings?[indexPath.row].isFifty == 0 {
-            cell.lblOfferPrecntage.text = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? 0)%"
-        }else{
-            cell.lblOfferPrecntage.text = "-\(50)%"
+        
+        if screen == 1 {
+            var percentage = String()
+            if offerTimings?[indexPath.row].isFifty == 0 {
+                percentage = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? 0)%"
+            }else{
+                percentage = "-\(50)%"
+            }
+            cell.lblTime.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")) \n \(percentage)"
+        }else {
+            cell.lblTime.text = "\(offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")"
+            
         }
+        
+        cell.lblOfferPrecntage.text = ""
+        
         
         return cell
     }

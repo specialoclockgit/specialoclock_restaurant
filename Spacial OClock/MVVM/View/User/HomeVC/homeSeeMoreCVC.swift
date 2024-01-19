@@ -24,7 +24,7 @@ class homeSeeMoreCVC: UICollectionViewCell {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var imgVirw: CustomImageView!
-    
+    let screen = Store.screenType
     var offerTimings: [OfferTiminghome]?
     
     
@@ -37,8 +37,13 @@ extension homeSeeMoreCVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "offerSeeMoreCVC", for: indexPath) as! offerSeeMoreCVC
-        cell.lblName.text = offerTimings?[indexPath.row].offer ?? ""
-        cell.lblDescription.text = "-\(offerTimings?[indexPath.row].percentage ?? 0)%"
+        if screen == 1 {
+            cell.lblName.text = "\(offerTimings?[indexPath.row].offer ?? "") \n -\((offerTimings?[indexPath.row].percentage ?? 0))%"
+            //cell.lblDescription.text = "-\(offerTimings?[indexPath.row].percentage ?? 0)%"
+        }else {
+            cell.lblName.text = (offerTimings?[indexPath.row].offer ?? "")
+        }
+        cell.lblDescription.text = ""
         return cell
     }
     

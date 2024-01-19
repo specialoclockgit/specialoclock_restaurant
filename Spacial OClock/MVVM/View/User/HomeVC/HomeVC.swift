@@ -73,7 +73,8 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
         //MARK: Dine or Drink UserDefault for itemDetailOffer
-        if UserDefaults.standard.value(forKey: "dineDrinkStatus") as? Int == 2{
+        if Store.screenType == 2{
+            //UserDefaults.standard.value(forKey: "dineDrinkStatus") as? Int == 2{
             setDrink()
         }else{
             setDine()
@@ -267,16 +268,18 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     @IBAction func btnDine(_ sender: UIButton) {
         if sender.isSelected == false{
-            setDine()
+           
             sender.isSelected = false
         }
+        setDine()
     }
     
     @IBAction func btnDrinks(_ sender: UIButton) {
         if sender.isSelected == false{
-            setDrink()
+            
             sender.isSelected = false
         }
+        setDrink()
     }
     
     func setDine() {
@@ -286,6 +289,8 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         lblDineIn.textColor = UIColor.black
         isSelected = true
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
+        UserDefaults.standard.synchronize()
+        Store.screenType = 1
         setData(type: 1, country:self.getcountry, state: "", city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }
@@ -298,6 +303,8 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         isSelected = false
         
         UserDefaults.standard.set(2, forKey: "dineDrinkStatus")
+        UserDefaults.standard.synchronize()
+        Store.screenType = 2
         setData(type: 2, country: self.getcountry, state: "ff", city: self.getcity)
         self.tbHomeData.layoutSubviews()
     }

@@ -27,12 +27,12 @@ extension UserDefaults{
     }
     
     //MARK: Home User Dine and Drink button Check
-    var dineDrinkStatus : Int {
-        get {
-            UserDefaults.standard.value(forKey: "dineDrinkStatus") as! Int
-        }
-        set{
-            UserDefaults.standard.set(newValue, forKey: "dineDrinkStatus")
-        }
-    }
+//    var dineDrinkStatus : Int {
+//        get {
+//            UserDefaults.standard.value(forKey: "dineDrinkStatus") as! Int
+//        }
+//        set{
+//            UserDefaults.standard.set(newValue, forKey: "dineDrinkStatus")
+//        }
+//    }
 }

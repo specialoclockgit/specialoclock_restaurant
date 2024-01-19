@@ -104,7 +104,7 @@ class EditRestoProfileVC: UIViewController {
             self.tfCusinies.text = data?.cuisineNames?.first?.name ?? ""
             self.themeId = data?.themesRestrorantID ?? 0
             self.imgMain.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-            self.imgMain.sd_setImage(with: URL(string: imageURL + (data?.profileImage ?? "")),placeholderImage: UIImage(named: "placeholder 1"))
+            self.imgMain.sd_setImage(with: URL(string: imageURL + (data?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "placeholder 1"))
             self.arrayimage = self.datagetApi?.restaurantImages ?? []
             
             DispatchQueue.main.async {

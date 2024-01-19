@@ -18,6 +18,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var viewSelectPeople : UIView!
     @IBOutlet weak var tfSelectPeople : UITextField!
     @IBOutlet weak var lblMonth : UILabel!
+    @IBOutlet weak var viewPeopleTitleVw : UIView!
     
     //MARK: Variable
     var pickerSelectPeople = UIPickerView()
@@ -42,6 +43,12 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpVw()
+    
+    }
+    
+    
+    func setUpVw(){
         tfSelectTime.text = selectslot
         
         for i in 0...numberofperson{
@@ -66,7 +73,6 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         viewFSCalendar.calendarHeaderView.reloadData()
         currentDate = result
         now = result
-    
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {

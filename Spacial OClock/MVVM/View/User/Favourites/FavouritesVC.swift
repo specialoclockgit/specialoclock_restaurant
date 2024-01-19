@@ -70,7 +70,7 @@ extension FavouritesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavouritesCell", for: indexPath)as! FavouritesCell
-        let imageIndex = (imageURL) + (self.modal?[indexPath.row].profileImage ?? "")
+        let imageIndex = (imageURL) + (self.modal?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.itemImg.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.itemImg.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
         cell.lblOpenTime.text = "\(modal?[indexPath.row].openTime ?? "") - " + "\(modal?[indexPath.row].closeTime ?? "")"

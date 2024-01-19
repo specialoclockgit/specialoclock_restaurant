@@ -74,7 +74,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Variable
     let promotionTxt = "Promotion cannot be applied with any other in-house promotions.Please refer to the special condition below for more details."
-    
+    var offerDescription = String()
     var lat : Double?
     var long : Double?
     var discount : Int?
@@ -99,7 +99,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var imgName = UIImage()
     var arrCheck : [Bool] = []
     var btnBookStatus = Int()
-    let status = UserDefaults.standard.dineDrinkStatus
+    let status = Store.screenType
+    //UserDefaults.standard.value(forKey: "dineDrinkStatus") as? Int
     var actualprice = String()
     var offerlessprice = String()
     var idsave = Int()
@@ -178,7 +179,17 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.images = data?.images ?? []
             self.reviews = data?.reviews?.reversed() ?? []
             self.ourMenu = data?.ourMenu ?? []
-            self.offer = data?.offer_timings ?? []
+            if self.status == 1 {
+                self.offer = data?.offer_timings ?? []
+            }else{
+                self.offer = data?.offer_timings?.sorted { (offer1, offer2) -> Bool in
+                    guard let menuName1 = offer1.menuName, let menuName2 = offer2.menuName else {
+                            return false // Handle the case where menuName is nil if needed
+                        }
+                        return menuName1.localizedCaseInsensitiveCompare(menuName2) == .orderedAscending
+                } ?? []
+            }
+         
             let imageIndex = (imageURL) + (self.modal?.images?.first?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
@@ -191,6 +202,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             }else{
                 self.imgFav.image = UIImage(named: "red h")
             }
+            self.lblOfferDiscription.text = data?.shortDescription ?? ""
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
             self.lblRating.text = self.modal?.avgRating ?? ""
             self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
@@ -253,7 +265,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.products = dataa?.products ?? []
             self.actualprice = "\(self.products?.first?.price ?? 0)"
             self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? 0)"
-            self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
+            self.offerDescription = dataa?.offerdetails?.description ?? ""
             self.tbMenu.reloadData()
             self.collViewMenu.reloadData()
             self.arrCheck.removeAll()
@@ -447,11 +459,11 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     return offer?.count ?? 0
                 }
             }else{
-                if ourMenu?.count == 0 {
+                if offer?.count == 0 {
                     collView.setNoDataMessage("No Data found", txtColor: .white)
                 }else{
                     collView.backgroundView = nil
-                    return ourMenu?.count ?? 0
+                    return offer?.count ?? 0
                 }
             }
             
@@ -481,6 +493,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         else if collectionView == collViewMenu{
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
             if status == 1{
+                cell.lblSpecial.isHidden = false
                 if indexPath.row == isselectedoffer{
                     if Store.userDetails?.role == 1{
                         self.viewButton.isHidden = false
@@ -508,6 +521,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblOffer.text = "%\(50)"
                 }
             }else{
+                cell.lblSpecial.isHidden = true
                 if indexPath.row == isselectedoffer{
                     if Store.userDetails?.role == 1{
                         self.viewButton.isHidden = false
@@ -526,9 +540,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblOffer.isHidden = true
                     //cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
-                let data = ourMenu?[indexPath.row]
-                cell.lblMenuSchedule.text = data?.name ?? ""
-                cell.lblTime.text = data?.offers?.date ?? ""
+                let data = offer?[indexPath.row]
+                cell.lblMenuSchedule.text = data?.menuName ?? ""
+                cell.lblTime.text = data?.offer ?? ""
                 //if data?.is_fifty == 0{
                     //cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
                 //}else{
@@ -603,16 +617,16 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 collViewMenu.reloadData()
             }
             //valueSelect = true
-            if let id = ourMenu?[indexPath.row].id{
-                self.discount = ourMenu?[indexPath.row].offers?.offerPrice ?? 0
+            if let id = offer?[indexPath.row].menuID{
+                self.discount = offer?[indexPath.row].percentage ?? 0
                 menuProductAPI(id: id,index: indexPath.row,isfifty: 0)
             }
-         //   self.slottime = ourMenu?[indexPath.row].offer ?? ""
-         //   self.slotid = ourMenu?[indexPath.row].id ?? 0
-            self.menuid = ourMenu?[indexPath.row].offers?.menuID ?? 0
-            self.restrorant_bar_id = ourMenu?[indexPath.row].offers?.restrorantBarID ?? 0
-            self.numberofperson = ourMenu?[indexPath.row].offers?.numberOfUserBook ?? 0
-            self.offerID = ourMenu?[indexPath.row].offers?.id ?? 0
+            self.slottime = offer?[indexPath.row].offer ?? ""
+            self.slotid = offer?[indexPath.row].id ?? 0
+            self.menuid = offer?[indexPath.row].menuID ?? 0
+            self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
+            self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
+            self.offerID = offer?[indexPath.row].offerID ?? 0
 //            let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
 //                                                                 image: ["goose" , "belveder", "Ciroc" ],
 //                                                                 itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
@@ -717,14 +731,29 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             let imageIndex = (productImgURL) + (products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
-            cell.lblItemName.text = products?[indexPath.row].productName ?? ""
-            cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
+           
+            
             
             if status == 1 {
+                cell.desLbl.text = ""
+                cell.lblItemName.text = products?[indexPath.row].productName ?? ""
                 cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(products?[indexPath.row].offerPercentage ?? 0)).description)"
-                cell.lblDiscount.text = "(\(products?[indexPath.row].offerPercentage ?? 0)% Discount)"
-            }else{
-                cell.lblNewPrice.text = "(\(products?[indexPath.row].discounted_price ?? 0))"
+                cell.lblDiscount.text = "\(products?[indexPath.row].offerPercentage ?? 0)% Discount"
+                cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
+            } else {
+                if products?[indexPath.row].discounted_price == 0 && products?[indexPath.row].actual_price == 0 {
+                    cell.lblNewPrice.text = ""
+                    cell.lblPrePrice.text = ""
+                   cell.lblItemName.text = (products?[indexPath.row].productName ?? "")
+                    cell.desLbl.text = (self.offerDescription)
+                    
+                } else {
+                    cell.desLbl.text = ""
+                    cell.lblItemName.text = products?[indexPath.row].productName ?? ""
+                    cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
+                    cell.lblNewPrice.text = "R\(products?[indexPath.row].discounted_price ?? 0)"
+                }
+                
                     cell.lblDiscount.isHidden = true
             }
             

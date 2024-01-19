@@ -105,7 +105,6 @@ class ChatVC: UIViewController, UITextViewDelegate {
         let string = self.msgTextView.text?.trimmingCharacters(in: .whitespaces)
         if string != "" {
             SocketIOManager.sharedInstance.send_message_emitter(user2Id: 1, msg_type: 1, message: string ?? "")
-            
             self.msgTextView.text = ""
             scroolTOLast()
             chatTbleView.reloadData()

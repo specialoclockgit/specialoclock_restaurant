@@ -50,7 +50,8 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     override func viewDidLoad() {
         super.viewDidLoad()
         txtFldSearch.delegate = self
-        self.type = UserDefaults.standard.integer(forKey: "dineDrinkStatus")
+        self.type = Store.screenType ?? 1
+        //UserDefaults.standard.integer(forKey: "dineDrinkStatus")
         CollectionView.showAnimatedGradientSkeleton()
         print(cusinessID)
         lblTwo.text = lblName
@@ -119,7 +120,8 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource,Skele
     
     //MARK: - LOCATION BY RESTO
     func location_By_RestoAPI(){
-        viewmodal.locationByRestoAPI(country: country, city: city,type: "1") { [weak self] dataa in
+        viewmodal.locationByRestoAPI(country: country, city: city,type: String(Store.screenType ?? 1)) { [weak self] dataa in
+            
             self?.location = dataa
             self?.filterlocations = dataa
            // self?.restrorants = dataa?.location?.first?.restrorants ?? []

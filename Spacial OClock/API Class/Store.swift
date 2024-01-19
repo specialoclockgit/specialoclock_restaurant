@@ -93,6 +93,17 @@ class Store {
         }
     }
     
+    
+    class var screenType: Int? {
+        set{
+            Store.saveValue(newValue, .screenType)
+
+        }
+        get{
+            return Store.getValue(.screenType) as? Int ?? 1
+        }
+    }
+    
     static var remove: DefaultKeys!{
         didSet{
             Store.removeKey(remove)

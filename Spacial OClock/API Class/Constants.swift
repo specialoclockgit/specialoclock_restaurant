@@ -212,6 +212,7 @@ enum DefaultKeys: String
     case lat
     case long
     case sociallogin
+    case screenType
    
 }
 
