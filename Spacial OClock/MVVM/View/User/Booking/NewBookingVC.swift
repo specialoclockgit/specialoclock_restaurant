@@ -19,8 +19,12 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tfSelectPeople : UITextField!
     @IBOutlet weak var lblMonth : UILabel!
     @IBOutlet weak var viewPeopleTitleVw : UIView!
-    
+    @IBOutlet weak var pickerVw: UIView!
     //MARK: Variable
+    enum isFrom {
+        case restaurant
+        case bar
+    }
     var pickerSelectPeople = UIPickerView()
     var pickerSelectTime = UIPickerView()
     var arrNumberOfPeople : [Int] = []
@@ -40,20 +44,28 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     var oldDateSelect = String()
     var selectslot = String()
     var offerSelectePretns = Int()
-    
+    var bookingType = isFrom.restaurant
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpVw()
-    
+        if bookingType == .bar {
+            viewPeopleTitleVw.isHidden = true
+            viewSelectPeople.isHidden = true
+        }else {
+            viewPeopleTitleVw.isHidden = false
+            viewSelectPeople.isHidden = false
+        }
     }
     
     
     func setUpVw(){
         tfSelectTime.text = selectslot
-        
-        for i in 0...numberofperson{
-            arrNumberOfPeople.append(i)
+        if bookingType == .restaurant {
+            for i in 1...numberofperson{
+                arrNumberOfPeople.append(i)
+            }
         }
+        
         initialLoad()
         viewFSCalendar.scope = .month
         viewFSCalendar.placeholderType = .none
@@ -103,7 +115,8 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     @IBAction func btnContinueAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
         screen.callBack = {
-            self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: self.tfSelectPeople.text ?? "", restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns) { data in
+            let noOfPerson = self.bookingType == .restaurant ? self.tfSelectPeople.text ?? "" : "1"
+            self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: noOfPerson , restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns) { data in
                 for controller in self.navigationController!.viewControllers as Array {
                     if controller.isKind(of: HomeVC.self) {
                         UserDefaults.standard.setValue("1", forKey: "Dine")
@@ -141,7 +154,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     }
 
     private var currDate: Date?
-        private lazy var today: Date = {
+    private lazy var today: Date = {
             return Date()
         }()
     

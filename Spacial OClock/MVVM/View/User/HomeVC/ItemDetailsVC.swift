@@ -263,6 +263,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.productModal = dataa
             self.offerpresents = dataa?.products?.first?.offerPercentage ?? 0
             self.products = dataa?.products ?? []
+            self.numberofperson = dataa?.offerdetails?.numberOfUserPerBooking ?? 0
             self.actualprice = "\(self.products?.first?.price ?? 0)"
             self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? 0)"
             self.offerDescription = dataa?.offerdetails?.description ?? ""
@@ -404,6 +405,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             screen.resto_id = ProductID
             screen.offer_id = "\(self.offerID)"
             screen.restrorant_bar_id = self.restrorant_bar_id
+            screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
             self.navigationController?.pushViewController(screen, animated: true)
         }
         else if btnBookStatus == 1{
@@ -556,8 +558,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             return cell
-        }else
-        {
+        }else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.CellItemDetailVC, for: indexPath) as! CellItemDetailVC
             cell.img.image = imgName
             return cell
@@ -608,7 +609,6 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             self.slotid = offer?[indexPath.row].id ?? 0
             self.menuid = offer?[indexPath.row].menuID ?? 0
             self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
-            self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
             self.offerID = offer?[indexPath.row].offerID ?? 0
             
         } else if status == 2 {
@@ -625,7 +625,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             self.slotid = offer?[indexPath.row].id ?? 0
             self.menuid = offer?[indexPath.row].menuID ?? 0
             self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
-            self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
+          //  self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
             self.offerID = offer?[indexPath.row].offerID ?? 0
 //            let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
 //                                                                 image: ["goose" , "belveder", "Ciroc" ],

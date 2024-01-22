@@ -98,16 +98,16 @@ struct menuProductModalBody: Codable {
 
 // MARK: - Offerdetails
 struct Offerdetails: Codable {
-    let id, restrorantBarID: Int?
-    let offerName, description: String?
-    let menuID: Int?
-    let menuName: String?
-    let offerPrice: Int?
-    let openTime, closeTime, date: String?
-    let type, numberOfUserBook, totalBookings: Int?
-    let offerTimings: String?
-    let status: Int?
-
+    var id, restrorantBarID: Int?
+    var offerName, description: String?
+    var menuID: Int?
+    var menuName: String?
+    var productID, offerPrice, actualPrice, discountedPrice: Int?
+    var openTime, closeTime, date: String?
+    var type, numberOfUserBook, numberOfUserPerBooking, totalBookings: Int?
+    var offerTimings: String?
+    var status: Int?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case restrorantBarID = "restrorant_bar_id"
@@ -115,11 +115,15 @@ struct Offerdetails: Codable {
         case description
         case menuID = "menu_id"
         case menuName = "menu_name"
+        case productID = "product_id"
         case offerPrice = "offer_price"
+        case actualPrice = "actual_price"
+        case discountedPrice = "discounted_price"
         case openTime = "open_time"
         case closeTime = "close_time"
         case date, type
         case numberOfUserBook = "number_of_user_book"
+        case numberOfUserPerBooking = "number_of_user_per_booking"
         case totalBookings = "total_bookings"
         case offerTimings = "offer_timings"
         case status
@@ -134,7 +138,7 @@ struct Product: Codable {
     let price,discounted_price: Int?
     let image, menuTypeName: String?
     let offerPercentage,actual_price: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case id,discounted_price,actual_price
         case restrorantBarID = "restrorant_bar_id"
