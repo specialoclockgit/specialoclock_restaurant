@@ -36,7 +36,7 @@ extension CellImageViewTB : UICollectionViewDelegate , UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellImageViewCB, for: indexPath) as! CellImageViewCB
-        let imageIndex = (imageBaseURL) + (banners?[indexPath.row].image ?? "")
+        let imageIndex = (imageBaseURL) + (banners?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
         return cell

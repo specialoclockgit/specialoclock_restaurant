@@ -93,7 +93,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 var percentage = ""
                 var latitude = "0.0"
                 var longitude = "0.0"
-                
+                var image = ""
                 if let name = returnedPlace.offerPercentage {
                     percentage = name
                 }
@@ -106,6 +106,11 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                     longitude = longis
                 }
                 
+                if let img = returnedPlace.profileImage {
+                    image = img
+                
+                }
+                
                 let marker = GMSMarker()
                 
                 
@@ -114,7 +119,15 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 marker.position = checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
                 
                 let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-                view.lblPersot.text = "\(percentage)%"
+                if Store.screenType == 1 {
+                    view.lblPersot.text = "\(percentage)%"
+                    view.providerImageView.isHidden = true
+                }else {
+                    view.providerImageView.isHidden = false
+                    view.lblPersot.text = ""
+                    view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
+                }
+                
                 marker.iconView = view
                 marker.map = self.gmsMapView
                 marker.userData = returnedPlace

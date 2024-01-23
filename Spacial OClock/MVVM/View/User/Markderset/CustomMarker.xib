@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nPM-Nm-kho">
-                    <rect key="frame" x="21" y="37" width="46" height="46"/>
+                    <rect key="frame" x="21" y="54" width="46" height="46"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2F9-fC-QvA">
                             <rect key="frame" x="8" y="8" width="30" height="30"/>
@@ -29,13 +29,25 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZKP-mb-wem">
+                            <rect key="frame" x="0.0" y="0.0" width="46" height="46"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="23"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" name="orange"/>
                     <constraints>
+                        <constraint firstItem="ZKP-mb-wem" firstAttribute="leading" secondItem="nPM-Nm-kho" secondAttribute="leading" id="4wi-JE-yW3"/>
                         <constraint firstAttribute="height" constant="46" id="GPX-jA-Gux"/>
                         <constraint firstAttribute="width" constant="46" id="JY7-g3-Car"/>
+                        <constraint firstAttribute="bottom" secondItem="ZKP-mb-wem" secondAttribute="bottom" id="Lxl-Rs-44r"/>
+                        <constraint firstItem="ZKP-mb-wem" firstAttribute="top" secondItem="nPM-Nm-kho" secondAttribute="top" id="R54-Ia-buw"/>
                         <constraint firstItem="2F9-fC-QvA" firstAttribute="top" secondItem="nPM-Nm-kho" secondAttribute="top" constant="8" id="fZU-kb-qdS"/>
                         <constraint firstAttribute="trailing" secondItem="2F9-fC-QvA" secondAttribute="trailing" constant="8" id="gJj-Wp-OEZ"/>
+                        <constraint firstAttribute="trailing" secondItem="ZKP-mb-wem" secondAttribute="trailing" id="jH1-WX-zwc"/>
                         <constraint firstAttribute="bottom" secondItem="2F9-fC-QvA" secondAttribute="bottom" constant="8" id="maJ-nk-feo"/>
                         <constraint firstItem="2F9-fC-QvA" firstAttribute="leading" secondItem="nPM-Nm-kho" secondAttribute="leading" constant="8" id="wNu-5F-aLb"/>
                     </constraints>
@@ -56,6 +68,7 @@
             <connections>
                 <outlet property="bgView" destination="nPM-Nm-kho" id="l0v-Ha-rrt"/>
                 <outlet property="lblPersot" destination="2F9-fC-QvA" id="7mM-RI-EqY"/>
+                <outlet property="providerImageView" destination="ZKP-mb-wem" id="wZs-MR-r8X"/>
             </connections>
             <point key="canvasLocation" x="-104.34782608695653" y="349.55357142857139"/>
         </view>

@@ -13,13 +13,12 @@ extension UIImageView {
             self.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.sd_imageIndicator?.startAnimatingIndicator()
             self.sd_setImage(with: url,placeholderImage: UIImage(named: "user")) { (img, err, type, urll) in
-               
                 self.sd_imageIndicator?.stopAnimatingIndicator()
             }
            // sd_setImage(with: url!, placeholderImage: UIImage(named: "user"))
            // self.sd_imageIndicator?.stopAnimatingIndicator()
         } else {
-            image = #imageLiteral(resourceName: "alert")
+            image = #imageLiteral(resourceName: "image1")
         }
     }
     

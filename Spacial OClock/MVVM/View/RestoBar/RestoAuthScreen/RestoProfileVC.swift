@@ -55,21 +55,21 @@ class RestoProfileVC: UIViewController {
             self.lblLocation.text = data?.city ?? ""
             self.lblTime.text =  "\((data?.openTime ?? "").components(separatedBy: " ").first ?? "") - \((String(describing: data?.closeTime ?? "")).components(separatedBy: " ").first ?? "")"
             self.profileimgVW.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-            self.profileimgVW.sd_setImage(with: URL(string: imageURL + (data?.profileImage ?? "")),placeholderImage: UIImage(named: "rectAlbum"))
+            self.profileimgVW.sd_setImage(with: URL(string: imageURL + (data?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "rectAlbum"))
             self.cosmosView.rating = Double(data?.avgRating ?? 0)
             self.lblREview.text = "\(data?.avgRating ?? 0)"
             self.arrayimage = self.datagetApi?.restaurantImages ?? []
             for i in 0..<(self.arrayimage?.count ?? 0){
                 if i == 0{
-                    let imgUrl = (imageURL) + (self.arrayimage?[i].image ?? "" )
+                    let imgUrl = (imageURL) + (self.arrayimage?[i].image?.replacingOccurrences(of: " ", with: "%20") ?? "" )
                     self.imgFirst.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
                     self.imgFirst.sd_setImage(with: URL.init(string: imgUrl),placeholderImage:UIImage.init(named: "rectAlbum"), completed: nil)
                 }else if i == 1{
-                    let imgUrl = (imageURL) + (self.arrayimage?[i].image ?? "" )
+                    let imgUrl = (imageURL) + (self.arrayimage?[i].image?.replacingOccurrences(of: " ", with: "%20") ?? "" )
                     self.imgSecond.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
                     self.imgSecond.sd_setImage(with: URL.init(string: imgUrl),placeholderImage:UIImage.init(named: "rectAlbum"), completed: nil)
                 }else if i == 2{
-                    let imgUrl = (imageURL) + (self.arrayimage?[i].image ?? "" )
+                    let imgUrl = (imageURL) + (self.arrayimage?[i].image?.replacingOccurrences(of: " ", with: "%20") ?? "" )
                     self.imgThird.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
                     self.imgThird.sd_setImage(with: URL.init(string: imgUrl),placeholderImage:UIImage.init(named: "rectAlbum"), completed: nil)
                 }

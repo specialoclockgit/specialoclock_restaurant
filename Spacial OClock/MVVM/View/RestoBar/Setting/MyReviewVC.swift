@@ -96,7 +96,7 @@ extension MyReviewVC: UITableViewDelegate, UITableViewDataSource{
         cell.lblName.text = dataget?[indexPath.row].user?.name ?? ""
         cell.lblDis.text = dataget?[indexPath.row].review ?? ""
         cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-        cell.imgView.sd_setImage(with: URL(string: imageURL + (dataget?[indexPath.row].user?.image ?? "")),placeholderImage: UIImage(named: "pl"))
+        cell.imgView.sd_setImage(with: URL(string: imageURL + (dataget?[indexPath.row].user?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "pl"))
         cell.cosmosView.rating  = Double(dataget?[indexPath.row].rating ?? 0)
         return cell
     }

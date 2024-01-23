@@ -108,7 +108,7 @@ extension BookingRestoVC : UITableViewDelegate , UITableViewDataSource{
             cell.lblStatus.text = "Cancelled"
             cell.lblStatus.textColor = UIColor(named: "themeAlert")
         }
-        let imageIndex = (imageURL) + (modal?[indexPath.row].userImage ?? "")
+        let imageIndex = (imageURL) + (modal?[indexPath.row].userImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Default_Image"))
         cell.lblUserIndex.text = modal?[indexPath.row].userName ?? ""

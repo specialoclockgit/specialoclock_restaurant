@@ -68,7 +68,7 @@ class bookingDetailsVC: UIViewController {
             self.modalDetail = data
             
             self.productsUnderOffer = data?.productsUnderOffer ?? []
-            let imageIndex = (imageURL) + (self.modalDetail?.user?.image ?? "")
+            let imageIndex = (imageURL) + (self.modalDetail?.user?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             if data?.status == 0{

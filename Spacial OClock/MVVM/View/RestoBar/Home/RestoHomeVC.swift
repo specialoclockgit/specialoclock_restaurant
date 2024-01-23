@@ -69,7 +69,7 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RestoHomeTVC", for: indexPath) as! RestoHomeTVC
-        let imageIndex = (imageURL) + (filterdata?[indexPath.row].user?.image ?? "")
+        let imageIndex = (imageURL) + (filterdata?[indexPath.row].user?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.imgVW.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.imgVW.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Default_Image"))
         cell.lblDate.text = filterdata?[indexPath.row].bookingDate ?? ""

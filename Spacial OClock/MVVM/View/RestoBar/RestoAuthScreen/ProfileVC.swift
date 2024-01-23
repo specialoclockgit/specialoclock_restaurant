@@ -44,7 +44,7 @@ class ProfileVC: UIViewController {
             self.lblEmail.text = data?.email ?? ""
             self.lblPhoneNumber.text =  data?.phone.description ?? ""
             self.profileImg.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-            self.profileImg.sd_setImage(with: URL(string: imageURL + (data?.image ?? "")),placeholderImage: UIImage(named: "placeholder 1"))
+            self.profileImg.sd_setImage(with: URL(string: imageURL + (data?.image.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "placeholder 1"))
         }
     }
     

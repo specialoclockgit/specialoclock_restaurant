@@ -80,6 +80,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var discount : Int?
     let locationManager = CLLocationManager()
     var ProductID = Int()
+    var pendingSlots = Int()
     var datePicker = UIDatePicker()
     var viewmodal = HomeViewModel()
     var modal : productDetailModalBody?
@@ -202,7 +203,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             }else{
                 self.imgFav.image = UIImage(named: "red h")
             }
-            self.lblOfferDiscription.text = data?.shortDescription ?? ""
+            
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
             self.lblRating.text = self.modal?.avgRating ?? ""
             self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
@@ -263,10 +264,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.productModal = dataa
             self.offerpresents = dataa?.products?.first?.offerPercentage ?? 0
             self.products = dataa?.products ?? []
+            self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
             self.numberofperson = dataa?.offerdetails?.numberOfUserPerBooking ?? 0
             self.actualprice = "\(self.products?.first?.price ?? 0)"
             self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? 0)"
             self.offerDescription = dataa?.offerdetails?.description ?? ""
+            self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
+            self.pendingSlots = dataa?.offerdetails?.numberOfUserBook ?? 0
             self.tbMenu.reloadData()
             self.collViewMenu.reloadData()
             self.arrCheck.removeAll()
@@ -395,18 +399,23 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //Book Button
     @IBAction func btnBookAct(_ sender : UIButton){
         if btnBookStatus == 0{
-            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
-            screen.offerSelectePretns = self.offerpresents 
-            screen.slotId = self.slotid
-            screen.selectslot = self.slottime
-            screen.oldDateSelect = txtFldDate.text ?? ""
-            screen.pickmenuid = self.menuid
-            screen.numberofperson = self.numberofperson
-            screen.resto_id = ProductID
-            screen.offer_id = "\(self.offerID)"
-            screen.restrorant_bar_id = self.restrorant_bar_id
-            screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
-            self.navigationController?.pushViewController(screen, animated: true)
+            if self.pendingSlots != 0 {
+                let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
+                screen.offerSelectePretns = self.offerpresents
+                screen.slotId = self.slotid
+                screen.selectslot = self.slottime
+                screen.oldDateSelect = txtFldDate.text ?? ""
+                screen.pickmenuid = self.menuid
+                screen.numberofperson = self.numberofperson
+                screen.resto_id = ProductID
+                screen.offer_id = "\(self.offerID)"
+                screen.restrorant_bar_id = self.restrorant_bar_id
+                screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
+                self.navigationController?.pushViewController(screen, animated: true)
+            } else {
+                CommonUtilities.shared.showAlert(message: "Booking are full for this time slot", isSuccess: .error)
+            }
+           
         }
         else if btnBookStatus == 1{
             let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
@@ -545,11 +554,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
                 cell.lblTime.text = data?.offer ?? ""
-                //if data?.is_fifty == 0{
-                    //cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
-                //}else{
-                  //  cell.lblOffer.text = "\(50)%"
-               // }
+                
             }            
             return cell
         }else if collectionView == viewFullMenu{
@@ -741,20 +746,20 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 cell.lblDiscount.text = "\(products?[indexPath.row].offerPercentage ?? 0)% Discount"
                 cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
             } else {
-                if products?[indexPath.row].discounted_price == 0 && products?[indexPath.row].actual_price == 0 {
+                if products?[indexPath.row].discounted_price == 0 || products?[indexPath.row].actual_price == 0 {
                     cell.lblNewPrice.text = ""
                     cell.lblPrePrice.text = ""
-                   cell.lblItemName.text = (products?[indexPath.row].productName ?? "")
-                    cell.desLbl.text = (self.offerDescription)
+                    cell.lblItemName.text = (products?[indexPath.row].productName ?? "")
+                    cell.desLbl.text =  "" /*(self.offerDescription)*/
                     
                 } else {
                     cell.desLbl.text = ""
                     cell.lblItemName.text = products?[indexPath.row].productName ?? ""
-                    cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
+                    cell.lblPrePrice.text = "R\(products?[indexPath.row].actual_price ?? 0)"
                     cell.lblNewPrice.text = "R\(products?[indexPath.row].discounted_price ?? 0)"
                 }
-                
-                    cell.lblDiscount.isHidden = true
+                cell.lblDiscount.text = ""
+                cell.lblDiscount.isHidden = true
             }
             
             return cell

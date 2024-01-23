@@ -55,7 +55,7 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
                 var percentage = ""
                 var latitude = "0.0"
                 var longitude = "0.0"
-                
+                var image = ""
                 if let name = returnedPlace.offerPercentage {
                     percentage = name
                 }
@@ -68,6 +68,12 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
                     longitude = longis
                 }
                 
+                
+                if let img = returnedPlace.profileImage {
+                    image = img
+                    print("mapImg",image)
+                }
+                
                 let marker = GMSMarker()
                 
                 let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 16)
@@ -75,7 +81,15 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
                 print("=====map loc",latitude,longitude)
                 marker.position = checkIfMutlipleCoordinates(latitude: Float(Double(latitude) ?? 0.0), longitude: Float(Double(longitude) ?? 0.0))
                 let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-                view.lblPersot.text = "-\(percentage)%"
+                if Store.screenType == 1 {
+                    view.lblPersot.text = "\(percentage)%"
+                    view.providerImageView.isHidden = true
+                }else {
+                    view.providerImageView.isHidden = false
+                    view.lblPersot.text = ""
+                    view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
+                }
+                
                 marker.iconView = view
                 mapView.animate(to: camera)
                 marker.map = self.mapView

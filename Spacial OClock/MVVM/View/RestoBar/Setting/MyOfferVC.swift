@@ -208,7 +208,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
         if valueChange == "My Offer"{
             cell.lblTittleName.text = self.modal?[indexPath.section].products?[indexPath.row].productName ?? ""
             cell.imgViwe.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-            cell.imgViwe.sd_setImage(with: URL(string: productImgURL + (self.modal?[indexPath.section].products?[indexPath.row].image?.description ?? "")),placeholderImage: UIImage(named: "pl"))
+            cell.imgViwe.sd_setImage(with: URL(string: productImgURL + (self.modal?[indexPath.section].products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "pl"))
             cell.lblActualPrice.text = "R\(self.modal?[indexPath.section].products?[indexPath.row].price ?? 0)"
             let totalamount = self.modal?[indexPath.section].products?[indexPath.row].price ?? 0
             let discount = self.modal?[indexPath.section].offerPrice ?? 0
