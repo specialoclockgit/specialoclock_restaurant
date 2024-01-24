@@ -28,7 +28,7 @@ class BookingVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        bookingTV.showSkeleton()
+        
         
     }
     
@@ -44,6 +44,7 @@ class BookingVC: UIViewController {
 
     //MARK: - FUNCTIONS
     func currentpastAPI(status:Int){
+        bookingTV.showSkeleton()
         self.modal?.removeAll()
         self.bookingTV.reloadData()
         viewmodal.currentPast_API(type: status, genre: "0") { [weak self] dataa in

@@ -49,9 +49,9 @@ PODS:
   - PhoneNumberKit/PhoneNumberKitCore (3.6.7)
   - PhoneNumberKit/UIKit (3.6.7):
     - PhoneNumberKit/PhoneNumberKitCore
-  - SDWebImage (5.17.0):
-    - SDWebImage/Core (= 5.17.0)
-  - SDWebImage/Core (5.17.0)
+  - SDWebImage (5.18.8):
+    - SDWebImage/Core (= 5.18.8)
+  - SDWebImage/Core (5.18.8)
   - ShimmerSwift (2.1.1)
   - SKCountryPicker (2.0.2)
   - SkeletonView (1.30.4)
@@ -164,7 +164,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PhoneNumberKit: 43b5169526cc417398c8f13f77c97552c1c6ed76
-  SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
+  SDWebImage: a81bbb3ba4ea5f810f4069c68727cb118467a04a
   ShimmerSwift: f7ed2daf9c246de8299dfd9e12c6ab465cba9842
   SKCountryPicker: f4882c36fa432d6450099a3e07da60eceda0a8f0
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
@@ -184,4 +184,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 734008084e8e5dd4569ec30b2a40330b59ec01a7
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.12.0

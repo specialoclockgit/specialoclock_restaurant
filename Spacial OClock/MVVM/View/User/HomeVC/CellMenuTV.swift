@@ -14,7 +14,7 @@ class CellMenuTV: UITableViewCell {
     //    @IBOutlet weak var lblHeading : UILabel!
 //    @IBOutlet weak var btn : UIButton!
     @IBOutlet weak var viewCell : UIView!
-    @IBOutlet weak var heightStackView : NSLayoutConstraint!
+    @IBOutlet weak var itemNameTop : NSLayoutConstraint!
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var lblItemName : UILabel!
     @IBOutlet weak var lblPrePrice : UILabel!

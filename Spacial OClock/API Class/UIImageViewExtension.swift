@@ -26,7 +26,7 @@ extension UIImageView {
     func showIndicator(baseUrl:String,imageUrl:String){
         self.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.sd_imageIndicator?.startAnimatingIndicator()
-            print("image \(baseUrl + imageUrl)")
+        print("image \(baseUrl + imageUrl)")
         self.sd_setImage(with: URL(string:baseUrl + imageUrl.replacingOccurrences(of: " ", with: "%20")),placeholderImage: UIImage(named: "Group 9309")) { (img, err, type, urll) in
                 if img == nil{
                     print("Error is",err)

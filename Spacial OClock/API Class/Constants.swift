@@ -188,8 +188,7 @@ enum API: String{
 }
 
 //MARK: - User Default keys
-enum DefaultKeys: String
-{
+enum DefaultKeys: String {
     case restoStatus
     case Authorization
     case userId

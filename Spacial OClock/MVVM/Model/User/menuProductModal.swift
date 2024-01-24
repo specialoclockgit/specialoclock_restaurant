@@ -128,6 +128,46 @@ struct Offerdetails: Codable {
         case offerTimings = "offer_timings"
         case status
     }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decodeIfPresent(Int.self, forKey: .id)
+        self.restrorantBarID = try container.decodeIfPresent(Int.self, forKey: .restrorantBarID)
+        self.offerName = try container.decodeIfPresent(String.self, forKey: .offerName)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
+        self.menuID = try container.decodeIfPresent(Int.self, forKey: .menuID)
+        self.menuName = try container.decodeIfPresent(String.self, forKey: .menuName)
+        self.productID = try container.decodeIfPresent(Int.self, forKey: .productID)
+        self.offerPrice = try container.decodeIfPresent(Int.self, forKey: .offerPrice)
+        self.actualPrice = try container.decodeIfPresent(Int.self, forKey: .actualPrice)
+        self.discountedPrice = try container.decodeIfPresent(Int.self, forKey: .discountedPrice)
+        self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
+        self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
+        self.date = try container.decodeIfPresent(String.self, forKey: .date)
+        self.type = try container.decodeIfPresent(Int.self, forKey: .type)
+        //self.numberOfUserBook = try container.decodeIfPresent(Int.self, forKey: .numberOfUserBook)
+        if let val = try? container.decodeIfPresent(Int.self, forKey: .numberOfUserBook){
+            self.numberOfUserBook = val
+        }else if let val =  try? container.decodeIfPresent(String.self, forKey: .numberOfUserBook){
+            self.numberOfUserBook = Int(val)
+        }else {
+            self.numberOfUserBook = nil
+        }
+        
+        
+       // self.numberOfUserPerBooking = try container.decodeIfPresent(Int.self, forKey: .numberOfUserPerBooking)
+        
+        if let val = try? container.decodeIfPresent(Int.self, forKey: .numberOfUserPerBooking){
+            self.numberOfUserPerBooking = val
+        }else if let val =  try? container.decodeIfPresent(String.self, forKey: .numberOfUserPerBooking){
+            self.numberOfUserPerBooking = Int(val)
+        }else {
+            self.numberOfUserPerBooking = nil
+        }
+        
+        self.totalBookings = try container.decodeIfPresent(Int.self, forKey: .totalBookings)
+        self.offerTimings = try container.decodeIfPresent(String.self, forKey: .offerTimings)
+        self.status = try container.decodeIfPresent(Int.self, forKey: .status)
+    }
 }
 
 // MARK: - Product

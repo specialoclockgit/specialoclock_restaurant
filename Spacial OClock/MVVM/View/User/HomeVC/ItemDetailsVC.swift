@@ -111,6 +111,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var isselectedoffer = -1
     var restrorant_bar_id = Int()
     var offer : [OfferTimingDetail]?
+    
     var currentDate = Date()
     var datecuurent = String()
     var slottime = String()
@@ -177,18 +178,15 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     func product_detail(){
         viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.txtFldDate.text ?? "",timezone: self.timeZone ) { data in
             self.modal = data
+           
             self.images = data?.images ?? []
             self.reviews = data?.reviews?.reversed() ?? []
             self.ourMenu = data?.ourMenu ?? []
             if self.status == 1 {
                 self.offer = data?.offer_timings ?? []
-            }else{
-                self.offer = data?.offer_timings?.sorted { (offer1, offer2) -> Bool in
-                    guard let menuName1 = offer1.menuName, let menuName2 = offer2.menuName else {
-                            return false // Handle the case where menuName is nil if needed
-                        }
-                        return menuName1.localizedCaseInsensitiveCompare(menuName2) == .orderedAscending
-                } ?? []
+            } else {
+               // self.offer = self.processOfferResponse()
+                self.offer = data?.offer_timings?.unique(map: {$0.menuName})
             }
          
             let imageIndex = (imageURL) + (self.modal?.images?.first?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
@@ -220,6 +218,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    
+    
+    
     //MARK: - FUNCTION
     func fetchdata(){
         viewmodal.allMenu_API(resto_bar_id: ProductID) { [weak self] data in
@@ -464,14 +466,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
             if status == 1{
                 if offer?.count == 0 {
-                    collView.setNoDataMessage("No Data found", txtColor: .white)
+                    collView.setNoDataMessage("No Data found", txtColor: .black)
                 }else{
                     collView.backgroundView = nil
                     return offer?.count ?? 0
                 }
             }else{
                 if offer?.count == 0 {
-                    collView.setNoDataMessage("No Data found", txtColor: .white)
+                    collView.setNoDataMessage("No Data found", txtColor: .black)
                 }else{
                     collView.backgroundView = nil
                     return offer?.count ?? 0
@@ -494,14 +496,13 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == collView{
+        if collectionView == collView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellItemDetailVC", for: indexPath) as! CellItemDetailVC
             let imageIndex = (imageURL) + (self.images?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             return cell
-        }
-        else if collectionView == collViewMenu{
+        } else if collectionView == collViewMenu {
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
             if status == 1{
                 cell.lblSpecial.isHidden = false
@@ -516,7 +517,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = false
                     cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
-                }else{
+                } else {
                     cell.img.image = UIImage(named: "BgOfferImg")
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
@@ -528,10 +529,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 cell.lblTime.text = data?.offer ?? ""
                 if data?.is_fifty == 0{
                     cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
-                }else{
+                } else {
                     cell.lblOffer.text = "%\(50)"
                 }
-            }else{
+            } else {
                 cell.lblSpecial.isHidden = true
                 if indexPath.row == isselectedoffer{
                     if Store.userDetails?.role == 1{
@@ -543,8 +544,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = true
-                   // cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
-                }else{
+                    // cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
+                } else {
                     cell.img.image = UIImage(named: "BgOfferImg")
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
@@ -555,15 +556,15 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
                 cell.lblTime.text = data?.offer ?? ""
                 
-            }            
+            }
             return cell
-        }else if collectionView == viewFullMenu{
+        } else if collectionView == viewFullMenu {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "allMenuCVC", for: indexPath) as! allMenuCVC
             let imageIndex = (self.modalfullmenu?[indexPath.row].baseurl ?? "") + (self.modalfullmenu?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             return cell
-        }else {
+        } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.CellItemDetailVC, for: indexPath) as! CellItemDetailVC
             cell.img.image = imgName
             return cell
@@ -583,8 +584,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         return CGSize(width: 120.0, height: 80.0)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(status)
-        debugPrint(indexPath.row)
+       // print(status)
+        //debugPrint(indexPath.row)
         if collectionView == collView{
             let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
             vc.settype = 0
@@ -598,7 +599,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
-        let index = indexPath.row
+        _ = indexPath.row
         if status == 1 {
             if collectionView == collViewMenu{
                 isselectedoffer = indexPath.row
@@ -741,6 +742,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             
             if status == 1 {
                 cell.desLbl.text = ""
+                cell.itemNameTop.constant = 5
                 cell.lblItemName.text = products?[indexPath.row].productName ?? ""
                 cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(products?[indexPath.row].offerPercentage ?? 0)).description)"
                 cell.lblDiscount.text = "\(products?[indexPath.row].offerPercentage ?? 0)% Discount"
@@ -749,11 +751,13 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 if products?[indexPath.row].discounted_price == 0 || products?[indexPath.row].actual_price == 0 {
                     cell.lblNewPrice.text = ""
                     cell.lblPrePrice.text = ""
+                    cell.itemNameTop.constant = 14
                     cell.lblItemName.text = (products?[indexPath.row].productName ?? "")
                     cell.desLbl.text =  "" /*(self.offerDescription)*/
                     
                 } else {
                     cell.desLbl.text = ""
+                    cell.itemNameTop.constant = 5
                     cell.lblItemName.text = products?[indexPath.row].productName ?? ""
                     cell.lblPrePrice.text = "R\(products?[indexPath.row].actual_price ?? 0)"
                     cell.lblNewPrice.text = "R\(products?[indexPath.row].discounted_price ?? 0)"
@@ -986,3 +990,18 @@ func distanceBetween(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> 
 
     return distanceInMiles
 }
+extension Array {
+    func unique<T:Hashable>(map: ((Element) -> (T)))  -> [Element] {
+        var set = Set<T>() //the unique list kept in a Set for fast retrieval
+        var arrayOrdered = [Element]() //keeping the unique list of elements but ordered
+        for value in self {
+            if !set.contains(map(value)) {
+                set.insert(map(value))
+                arrayOrdered.append(value)
+            }
+        }
+        return arrayOrdered
+    }
+}
+
+

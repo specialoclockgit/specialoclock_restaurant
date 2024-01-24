@@ -2015,6 +2015,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TSH4MBVHWY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = TSH4MBVHWY;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "x86_64-apple-ios-simulator\nx86_64-apple-ios-simulator\n\n";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spacial OClock/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock User";

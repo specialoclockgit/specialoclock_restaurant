@@ -67,13 +67,30 @@ class bookingDetailVC: UIViewController {
         lblstatus.textColor = UIColor(named: statusColor)
         img.image = UIImage(named: image)
         bookingDetial()
+       // tblView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(true)
+//        tblView.removeObserver(self, forKeyPath: "contentSize")
+//    }
+//
+//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//            if(keyPath == "contentSize"){
+//                if let newvalue = change?[.newKey]
+//                {
+//                    let newsize  = newvalue as! CGSize
+//                    hostTableHeightCons.constant = newsize.height
+//                }
+//            }
+//        }
     
     //MARK: - FUNCTIONS
     func bookingDetial(){
         viewmodal.bookingDetail_API(bookingId: booking_id) { fetchdata in
             self.modal = fetchdata
             self.products = fetchdata?.restrorant?.products ?? []
+            
             let imageIndex = (imageURL) + (fetchdata?.restrorant?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
