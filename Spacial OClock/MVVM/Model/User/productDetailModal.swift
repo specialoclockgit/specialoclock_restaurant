@@ -32,7 +32,7 @@ struct productDetailModalBody: Codable {
     let images: [Imaged]?
     let reviews: [Reviewsd]?
     let ourMenu: [OurMenud]?
-    let offer_timings : [OfferTimingDetail]?
+    let offer_timings : [OfferTimingDetail]? 
 
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude, offer_timings
@@ -104,7 +104,9 @@ struct OfferTimingDetail: Codable {
     let description: String?
     let menuName: String?
     let menuID, offerID, is_fifty: Int?
-
+    var openTime: String?
+    var closeTime: String?
+    
     enum CodingKeys: String, CodingKey {
         case offer, percentage, id
         case offerAvailable = "offer_available"
@@ -114,6 +116,8 @@ struct OfferTimingDetail: Codable {
         case menuName = "menu_name"
         case menuID = "menu_id"
         case offerID = "offer_id"
+        case openTime = "open_time"
+        case closeTime = "close_time"
     }
 }
 

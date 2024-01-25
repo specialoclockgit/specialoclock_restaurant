@@ -187,6 +187,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             } else {
                // self.offer = self.processOfferResponse()
                 self.offer = data?.offer_timings?.unique(map: {$0.menuName})
+                    //
             }
          
             let imageIndex = (imageURL) + (self.modal?.images?.first?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
@@ -507,11 +508,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             if status == 1{
                 cell.lblSpecial.isHidden = false
                 if indexPath.row == isselectedoffer{
-                    if Store.userDetails?.role == 1{
-                        self.viewButton.isHidden = false
-                    }else{
-                        self.viewButton.isHidden = true
-                    }
+                    self.viewButton.isHidden = Store.userDetails?.role == 1 ?  false : true
+                    
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
@@ -527,19 +525,13 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
                 cell.lblTime.text = data?.offer ?? ""
-                if data?.is_fifty == 0{
-                    cell.lblOffer.text = "-\(data?.percentage ?? 0)%"
-                } else {
-                    cell.lblOffer.text = "%\(50)"
-                }
+                cell.lblOffer.text = data?.is_fifty == 0 ? "-\(data?.percentage ?? 0)%" : "%\(50)"
+                
             } else {
                 cell.lblSpecial.isHidden = true
                 if indexPath.row == isselectedoffer{
-                    if Store.userDetails?.role == 1{
-                        self.viewButton.isHidden = false
-                    }else{
-                        self.viewButton.isHidden = true
-                    }
+                    self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
+                    
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
@@ -554,7 +546,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
-                cell.lblTime.text = data?.offer ?? ""
+                cell.lblTime.text = "\(data?.openTime ?? "") - \(data?.closeTime ?? "")"
                 
             }
             return cell
@@ -578,7 +570,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 return CGSize (width: 100, height: 162)
             }
             
-        }else if collectionView == viewFullMenu{
+        } else if collectionView == viewFullMenu {
             return CGSize(width: viewFullMenu.frame.width / 2.1, height: 166)
         }
         return CGSize(width: 120.0, height: 80.0)

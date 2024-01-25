@@ -25,7 +25,7 @@ target 'Spacial OClock' do
   pod 'ShimmerSwift'
   pod 'SkeletonView'
   pod 'SwiftGifOrigin'
-  pod 'GoogleMaps'
+  pod 'GoogleMaps', '~> 3.7.0'
   pod 'Socket.IO-Client-Swift'
   pod 'SwiftyJSON'
   pod 'StripePaymentSheet'

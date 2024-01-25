@@ -25,7 +25,8 @@ struct bookingDetailModalBody: Codable {
     let createdAt, updatedAt, offerName, offerPercentage: String?
     let user: Userrr?
     let restrorant: Restrorantd?
-
+    var productsUnderOffer: [Product]?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case userID = "user_id"
@@ -38,6 +39,7 @@ struct bookingDetailModalBody: Codable {
         case numberOfPeople = "number_of_people"
         case status
         case offerID = "offer_id"
+        case productsUnderOffer = "products_under_offer"
         case createdAt, updatedAt, offerName, offerPercentage, user, restrorant
     }
 }

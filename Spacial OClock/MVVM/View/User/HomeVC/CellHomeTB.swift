@@ -251,7 +251,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             } else {
                 cell.stackHeight.constant = 0
             }
-            print(cell.lblTime1.text,cell.lblTime2.text,cell.lblTime3.text)
+           // print(cell.lblTime1.text,cell.lblTime2.text,cell.lblTime3.text)
             cell.viewReview.isHidden = true
             let imageIndex = (imageURL) + (allresto[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgLocaiton.sd_imageIndicator = SDWebImageActivityIndicator.gray

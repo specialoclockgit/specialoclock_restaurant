@@ -24,10 +24,10 @@ PODS:
   - FBSDKLoginKit/Login (5.15.1):
     - FBSDKCoreKit (~> 5.0)
   - FSCalendar (2.8.4)
-  - GoogleMaps (8.1.0):
-    - GoogleMaps/Maps (= 8.1.0)
-  - GoogleMaps/Base (8.1.0)
-  - GoogleMaps/Maps (8.1.0):
+  - GoogleMaps (3.7.0):
+    - GoogleMaps/Maps (= 3.7.0)
+  - GoogleMaps/Base (3.7.0)
+  - GoogleMaps/Maps (3.7.0):
     - GoogleMaps/Base
   - GooglePlaces (8.1.0)
   - GoogleSignIn (7.0.0):
@@ -90,7 +90,7 @@ DEPENDENCIES:
   - DropDown
   - FacebookLogin
   - FSCalendar
-  - GoogleMaps
+  - GoogleMaps (~> 3.7.0)
   - GooglePlaces
   - GoogleSignIn
   - IQKeyboardManagerSwift
@@ -155,7 +155,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
   FBSDKLoginKit: f1ea8026a58b52d30c9f2e6a58ca7d813619fb83
   FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
-  GoogleMaps: 97300a4b89a3641563782c52228c4530f5fe0d89
+  GoogleMaps: 55da829c68aa931f3ae982b9e341cc2f3d89c587
   GooglePlaces: 6a219644272d9c0f40d0b9ef2f111bfb2043bafc
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
@@ -182,6 +182,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   WaterfallLayout: 030e04b041e5c6c47ae2c1eaa685c60289fab0b1
 
-PODFILE CHECKSUM: 734008084e8e5dd4569ec30b2a40330b59ec01a7
+PODFILE CHECKSUM: 35df3c527907d1e17c096d0f8328650dc0c45988
 
 COCOAPODS: 1.12.0

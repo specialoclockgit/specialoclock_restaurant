@@ -236,7 +236,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
             
             if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
                 let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0})
-                print("filterArray------------",filterArray)
                 let obj = SectionModel(name: "Popular",objArray: filterArray ?? [],image: "Popular")
                 self.sectionArray.append(obj)
             }
@@ -261,7 +260,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
             self.tabBarController?.tabBar.isHidden  = false
             self.tbHomeData.layoutSubviews()
             self.tbHomeData.reloadData()
-            print("themeArr",self.viewModel.homeData?.theme?.count)
+            
         }
     }
     
@@ -296,6 +295,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     }
     
     func setDine() {
+
         imgViewDinein.image = UIImage(named: "DiningGreen")
         imgViewDrinks.image = UIImage(named: "greyDrink")
         lblDrinks.textColor = UIColor.lightGray
@@ -388,6 +388,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if sectionArray[indexPath.section].name == "Banner" {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellImageViewTB, for: indexPath) as! CellImageViewTB
             cell.banners = self.viewModel.homeData?.banners ?? [Banner]()

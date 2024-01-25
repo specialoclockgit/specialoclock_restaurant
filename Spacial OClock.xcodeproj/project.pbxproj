@@ -175,7 +175,7 @@
 		C2B891232A4AEC820066E753 /* MyMenuTvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B891222A4AEC810066E753 /* MyMenuTvc.swift */; };
 		C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */; };
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
-		EB755F062B5913990098871E /* RestoHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB755F052B5913990098871E /* RestoHomeTVC.swift */; };
+		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EC0484E72B174B9000BFDF4B /* MyInvoiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484E62B174B9000BFDF4B /* MyInvoiceVC.swift */; };
 		EC0484E92B174BE300BFDF4B /* getInvoiceListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484E82B174BE300BFDF4B /* getInvoiceListModal.swift */; };
 		EC0484EB2B17514900BFDF4B /* RestoCardListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484EA2B17514900BFDF4B /* RestoCardListVC.swift */; };
@@ -467,7 +467,7 @@
 		C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailVC.swift; sourceTree = "<group>"; };
 		C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailTVC.swift; sourceTree = "<group>"; };
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
-		EB755F052B5913990098871E /* RestoHomeTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestoHomeTVC.swift; path = ../../../../../../../../Downloads/RestoHomeTVC.swift; sourceTree = "<group>"; };
+		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EC0484E62B174B9000BFDF4B /* MyInvoiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvoiceVC.swift; sourceTree = "<group>"; };
 		EC0484E82B174BE300BFDF4B /* getInvoiceListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInvoiceListModal.swift; sourceTree = "<group>"; };
 		EC0484EA2B17514900BFDF4B /* RestoCardListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoCardListVC.swift; sourceTree = "<group>"; };
@@ -1004,10 +1004,10 @@
 		C284FB702A402E2F006949B4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				EB755F052B5913990098871E /* RestoHomeTVC.swift */,
 				A5A8CF462A581CCB006F23ED /* RestoTabBarVC.swift */,
 				ECBAD2E12B161021005E9B6E /* RestoHomeVC.swift */,
 				EC38C44D2B20491B0000D937 /* bookingDetailsVC.swift */,
+				EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1827,7 +1827,7 @@
 				EC43798F2B0604650017FBA8 /* newSeeMoreVC.swift in Sources */,
 				ECA1A4DB2B1715D0007748F3 /* MyMenuVC.swift in Sources */,
 				A5046FEF2A4DACB800C23627 /* CellNotificationVC.swift in Sources */,
-				EB755F062B5913990098871E /* RestoHomeTVC.swift in Sources */,
+				EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */,
 				ECA1A4E72B1726B2007748F3 /* getOfferListModal.swift in Sources */,
 				C29CDB132A42BC4C0035E03D /* TabbarVC.swift in Sources */,
 				C284FB802A402EE8006949B4 /* CustomImageView.swift in Sources */,
@@ -2015,7 +2015,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TSH4MBVHWY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = TSH4MBVHWY;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "x86_64-apple-ios-simulator\nx86_64-apple-ios-simulator\n\n";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spacial OClock/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock User";
