@@ -13,10 +13,9 @@ import GooglePlaces
 import GoogleMaps
 import SDWebImage
 
-struct Header{
+struct Header {
     var heading : String
     var img : String
-    
 }
 var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Central Cape Town","Rondebosch" ],
                                                   img: ["location1" ,"location2"],  restoClub: ["32 Restaurants" , "7 Restaurants"]) ,
@@ -26,7 +25,7 @@ var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Ce
 
 var arrHome = ["Location","Cuisines","","Theme"]
 
-class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GMSMapViewDelegate{
+class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GMSMapViewDelegate {
     
     //MARK: - OUTLETS
     

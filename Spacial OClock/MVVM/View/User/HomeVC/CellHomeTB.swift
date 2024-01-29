@@ -82,6 +82,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellHomeCV, for: indexPath) as! CellHomeCV
+        cell.btnNext.isUserInteractionEnabled = false
         if objArray[collView.tag].name == "Cuisines" {
             let image = "\(self.cuisine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -310,7 +311,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setValue = "Theme"
             vc.setimage = "mask"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
-        }else{
+        } else{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
             vc.ProductID = allresto[indexPath.row].id ?? 0
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)

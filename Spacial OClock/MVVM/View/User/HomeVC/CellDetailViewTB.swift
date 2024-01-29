@@ -53,6 +53,7 @@ extension CellDetailViewTB : UICollectionViewDelegate , UICollectionViewDataSour
         return cell
     }
     @objc func btnnextClick (_ sender:UIButton){
+        
         let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
         vc.imgName = arrModel[sender.tag].img
         super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)

@@ -207,14 +207,14 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblLocation.text = filterCategory?[indexPath.row].location ?? ""
             cell.lblName.text = filterCategory?[indexPath.row].name ?? ""
             cell.lblDiscription.text = "\(filterCategory?[indexPath.row].openTime ?? "") - " + "\(filterCategory?[indexPath.row].closeTime ?? "")"
+           // let fetchresto = Store.screenType == 1 ? filterCategory?[indexPath.row].offers ?? [] : filterCategory?[indexPath.row].offers?.unique(map: {$0.offer?.id ?? 0}) ?? []
             let fetchresto = filterCategory?[indexPath.row].offers ?? []
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
             cell.lblRaiting.text = "\(filterCategory?[indexPath.row].avgrating ?? 0)"
             cell.cosmosView.rating = Double(filterCategory?[indexPath.row].avgrating ?? 0)
             
-        }
-        else if setValue == "Cuisines"{
+        } else if setValue == "Cuisines"{
             let imageIndex = (imageURL) + (filtercusin?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))

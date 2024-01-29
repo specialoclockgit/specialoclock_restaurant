@@ -67,6 +67,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var btnBook : UIButton!
     @IBOutlet weak var viewButton : UIView!
     @IBOutlet weak var heightViewButton : NSLayoutConstraint!
+    @IBOutlet weak var collViewMenuHeight : NSLayoutConstraint!
     @IBOutlet weak var viewFM: UIView!
     @IBOutlet weak var lblFullMenu: UILabel!
     @IBOutlet weak var lblUserLOcation: UILabel!
@@ -164,8 +165,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         for i in 0...(self.products?.count ?? 0){
             self.arrCheck.append(false)
         }
-       
+   
+        
     }
+    
     
     func string(format: String) -> String {
         let formatter = DateFormatter()
@@ -213,9 +216,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.collView.reloadData()
             self.tbReview.reloadData()
             self.tbMenu.reloadData()
+            self.view.layoutIfNeeded()
             if self.offer?.count ?? 0 > 0 {
                 self.discount = self.offer?[0].percentage ?? 0
-                self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0)
+                self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
             }
         }
     }
@@ -262,8 +266,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - MENU PRODUCT API
-    func menuProductAPI(id: Int,index:Int,isfifty:Int){
-        viewmodal.menuProductAPI(restoid: ProductID, menutypeid: id, isfifty:isfifty) { dataa in
+    func menuProductAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
+        viewmodal.menuProductAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { dataa in
             self.productModal = dataa
             self.offerpresents = dataa?.products?.first?.offerPercentage ?? 0
             self.products = dataa?.products ?? []
@@ -575,6 +579,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
         return CGSize(width: 120.0, height: 80.0)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 4
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+         return 4
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        // print(status)
         //debugPrint(indexPath.row)
@@ -593,15 +605,16 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         
         _ = indexPath.row
         if status == 1 {
+            
             if collectionView == collViewMenu{
                 isselectedoffer = indexPath.row
                 
                 collViewMenu.reloadData()
             }
             //valueSelect = true
-            if let id = offer?[indexPath.row].menuID{
+            if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
                 self.discount = offer?[indexPath.row].percentage ?? 0
-                menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0)
+                menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
             self.slotid = offer?[indexPath.row].id ?? 0
@@ -615,9 +628,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 collViewMenu.reloadData()
             }
             //valueSelect = true
-            if let id = offer?[indexPath.row].menuID{
+            
+            if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
                 self.discount = offer?[indexPath.row].percentage ?? 0
-                menuProductAPI(id: id,index: indexPath.row,isfifty: 0)
+                menuProductAPI(id: id,index: indexPath.row,isfifty: 0, offerID: offerId)
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
             self.slotid = offer?[indexPath.row].id ?? 0
@@ -636,9 +650,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
     }
     
+    
+    
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            if self.modalfullmenu?.count == 0{
+            if self.modalfullmenu?.count == 0 {
                 self.viewFCHeight.constant = 260
                 self.ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
                 self.ImgViewgifReview.isHidden = false
@@ -646,6 +663,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 self.ImgViewgifReview.isHidden = true
                 self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
             }
+            //self.collViewMenuHeight.constant  = self.collViewMenu.contentSize.height
         }
     }
 }
@@ -778,10 +796,11 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 self.heightTBReview.constant = 220
                 self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
                 self.imgViewGifReview.isHidden = false
-            }else{
+            } else {
                 self.imgViewGifReview.isHidden = true
                 self.heightTBReview.constant = self.tbReview.contentSize.height
             }
+            
             self.heightTBMenu.constant = self.tbMenu.contentSize.height
         }
     }
