@@ -41,8 +41,6 @@ let productImgURL = "https://app.specialoclock.com/assets/img/"
 
 //let imagePickerSources = ImagePickerClass()
 
-
-
 let securitykey = "sk_Dac1t2GMfvvgO1+ZtLvOjwEhQluidxzVy9Av5fiV5kCZzCr+PjdB0ap0Qx6zCPkBDRS8gSGyFw=="
 
 let publishedkey = "pk_ndhUQm9z9VVAEDQAKUjM5nQ6F690crObNnPPobC36LUWJcUKQQC/aSzj9kqTQ22rurF2B6DvyiI="
@@ -74,8 +72,7 @@ var agoraToken = ""
 var rootVC: UIViewController?{
     get{
         return UIApplication.shared.windows.first?.rootViewController
-    }
-    set{
+    }set{
         UIApplication.shared.windows.first?.rootViewController = newValue
     }
 }
@@ -184,7 +181,7 @@ enum API: String{
     case edit_business
     case complete_booking
     case report_booking
-   
+    case fetch_bardata_by_menutype
 }
 
 //MARK: - User Default keys

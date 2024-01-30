@@ -24,16 +24,16 @@ class fullImageView: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScrollView()
-        if settype == 0{
+        if settype == 0 {
             let imageIndex = (imageURL) + (self.setImage.replacingOccurrences(of: " ", with: "%20") )
             self.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
-        }else if settype == 1{
+        } else if settype == 1 {
             let imageIndex1 = (url) + (self.setImage.replacingOccurrences(of: " ", with: "%20"))
             self.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgView.sd_setImage(with: URL(string: imageIndex1), placeholderImage: UIImage(named: "placeholder (1)"))
-        }else{
-            let imageIndex1 = (imageBaseURL) + (self.setImage.replacingOccurrences(of: " ", with: "%20"))
+        } else {
+            let imageIndex1 = (productImgURL) + (self.setImage.replacingOccurrences(of: " ", with: "%20"))
             self.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgView.sd_setImage(with: URL(string: imageIndex1), placeholderImage: UIImage(named: "placeholder (1)"))
         }

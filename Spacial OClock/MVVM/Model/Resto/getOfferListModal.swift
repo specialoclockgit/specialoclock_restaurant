@@ -12,16 +12,17 @@ struct getOfferListModal: Codable {
 
 // MARK: - getOfferListModalBody
 struct getOfferListModalBody: Codable {
-    let id, restrorantBarID: Int?
-    let offerName, description: String?
-    let menuID: Int?
-    let menuName: String?
-    let offerPrice: Int?
-    let openTime, closeTime, date: String?
-    var type, numberOfUserBook, totalBookings: Int?
-    let offerTimings: String?
+    var id, restrorantBarID: Int?
+    var offerName, description: String?
+    var menuID: Int?
+    var menuName: String?
+    var productID, offerPrice, actualPrice, discountedPrice: Int?
+    var openTime, closeTime, date: String?
+    var type, numberOfUserBook, numberOfUserPerBooking, totalBookings: Int?
+    var offerTimings: String?
+    var status: Int?
     let products: [offerProduct]?
-
+    
     enum CodingKeys: String, CodingKey {
         case id
         case restrorantBarID = "restrorant_bar_id"
@@ -51,8 +52,6 @@ struct getOfferListModalBody: Codable {
         self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
         self.date = try container.decodeIfPresent(String.self, forKey: .date)
         self.type = try container.decodeIfPresent(Int.self, forKey: .type)
-      //  self.numberOfUserBook = try container.decodeIfPresent(Int.self, forKey: .numberOfUserBook)
-        
         if let val = try? container.decodeIfPresent(Int.self, forKey: .numberOfUserBook){
             self.numberOfUserBook = val
         }else if let val =  try? container.decodeIfPresent(String.self, forKey: .numberOfUserBook){
@@ -60,7 +59,6 @@ struct getOfferListModalBody: Codable {
         }else {
             self.numberOfUserBook = nil
         }
-        
         self.totalBookings = try container.decodeIfPresent(Int.self, forKey: .totalBookings)
         self.offerTimings = try container.decodeIfPresent(String.self, forKey: .offerTimings)
         self.products = try container.decodeIfPresent([offerProduct].self, forKey: .products)

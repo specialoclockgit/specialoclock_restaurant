@@ -189,7 +189,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.offer = data?.offer_timings ?? []
             } else {
                // self.offer = self.processOfferResponse()
-                self.offer = data?.offer_timings?.unique(map: {$0.menuName})
+                self.offer = data?.offer_timings?.unique(map: {$0.offerID})
                     //
             }
          
@@ -219,7 +219,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.view.layoutIfNeeded()
             if self.offer?.count ?? 0 > 0 {
                 self.discount = self.offer?[0].percentage ?? 0
-                self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
+                //if Store.screenType == 1 {
+                    self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
+               // }else {
+                //   self.menuProductForBarAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
+             // }
+             
+                
             }
         }
     }
@@ -266,6 +272,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - MENU PRODUCT API
+    func menuProductForBarAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
+        viewmodal.menuProductForBarAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { resp in
+            
+        }
+    }
+    
+    
     func menuProductAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
         viewmodal.menuProductAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { dataa in
             self.productModal = dataa
@@ -420,7 +433,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
                 self.navigationController?.pushViewController(screen, animated: true)
             } else {
-                CommonUtilities.shared.showAlert(message: "Booking are full for this time slot", isSuccess: .error)
+                CommonUtilities.shared.showAlert(message: "No more bookings available for this slot", isSuccess: .error)
             }
            
         }
@@ -614,7 +627,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             //valueSelect = true
             if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
                 self.discount = offer?[indexPath.row].percentage ?? 0
-                menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+             // if Store.screenType == 1 {
+                   menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+              // }else {
+              //     menuProductForBarAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+            // }
+                
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
             self.slotid = offer?[indexPath.row].id ?? 0
@@ -631,7 +649,11 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
             if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
                 self.discount = offer?[indexPath.row].percentage ?? 0
-                menuProductAPI(id: id,index: indexPath.row,isfifty: 0, offerID: offerId)
+              // if Store.screenType == 1 {
+                   menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+              // }else {
+                //   menuProductForBarAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+              // }
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
             self.slotid = offer?[indexPath.row].id ?? 0
@@ -639,14 +661,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
           //  self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
             self.offerID = offer?[indexPath.row].offerID ?? 0
-//            let drinksArr : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Vodka",
-//                                                                 image: ["goose" , "belveder", "Ciroc" ],
-//                                                                 itemName: ["Grey Goose" , "Belvedere" , "Ciroc"],
-//                                                                 prevPrice: ["R50.00" , "R50.00" , "R50.00"],
-//                                                                 newPrice: ["R40.00" , "R20.00" ,"R30.00"])]
-//            arrTBMenu.removeAll()
-//            arrTBMenu.append(contentsOf: drinksArr)
-//            tbMenu.reloadData()
+
         }
     }
     

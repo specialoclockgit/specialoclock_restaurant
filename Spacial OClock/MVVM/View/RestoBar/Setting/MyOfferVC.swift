@@ -85,7 +85,7 @@ class MyOfferVC: UIViewController {
     
     //MARK: - FUCNTIONS
     func getofferlisting(){
-        viewmodal.offerListingapi(restaurentbarid: Store.userDetails?.id ?? 0) { [weak self] data in
+        viewmodal.offerListingapi(restaurentbarid: Store.userDetails?.bussiness_id ?? 91) { [weak self] data in
             self?.modal = data
             self?.check(count: data?.count ?? 0)
             self?.tbMyOffer.reloadData()
@@ -162,7 +162,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
         if valueChange == "My Offer"{
             cellHeader.lblHeading.text = "\(self.modal?[section].menuName ?? "") " +
             "\(String(describing: self.modal?[section].offerPrice ?? 0))%"
-            cellHeader.lblTimming.text =  "(\(String(describing: self.modal?[section].openTime ?? ""))-\(self.modal?[section].closeTime ?? ""))"
+           // cellHeader.lblTimming.text =  "(\(String(describing: self.modal?[section].openTime ?? ""))-\(self.modal?[section].closeTime ?? ""))"
             cellHeader.viewHeader.layer.cornerRadius = 10.0
             cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
             cellHeader.btnHeader.tag = section
@@ -209,10 +209,17 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
             cell.lblTittleName.text = self.modal?[indexPath.section].products?[indexPath.row].productName ?? ""
             cell.imgViwe.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
             cell.imgViwe.sd_setImage(with: URL(string: productImgURL + (self.modal?[indexPath.section].products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "pl"))
-            cell.lblActualPrice.text = "R\(self.modal?[indexPath.section].products?[indexPath.row].price ?? 0)"
-            let totalamount = self.modal?[indexPath.section].products?[indexPath.row].price ?? 0
-            let discount = self.modal?[indexPath.section].offerPrice ?? 0
-            cell.lblOfferPrice.text = "R\(calculate(total: totalamount, discount: discount).description)"
+
+//            if Store.userDetails?.bussinesstype == 2 {
+//                cell.lblActualPrice.text = "R\(self.modal?[indexPath.section].products?[indexPath.row]. ?? 0)"
+//            }else {
+                
+                let totalamount = self.modal?[indexPath.section].products?[indexPath.row].price ?? 0
+                let discount = self.modal?[indexPath.section].offerPrice ?? 0
+                cell.lblOfferPrice.text = "R\(calculate(total: totalamount, discount: discount).description)"
+          // }
+            
+            
             
         }else{
             let sections = datagetApi?[indexPath.section].restaurants

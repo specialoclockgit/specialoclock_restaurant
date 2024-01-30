@@ -104,6 +104,17 @@ class HomeViewModel : NSObject {
         }
     }
     
+    
+    //MARK: - MENU PRODUCT API
+    func menuProductForBarAPI(offerID:Int,restoid:Int, menutypeid:Int ,isfifty:Int, onsuccess: @escaping ((menuProductModalBody?)->())){
+        let param : parameters = ["resto_id":restoid , "menu_type_id":menutypeid, "is_fifty":isfifty,"offer_id":offerID]
+        print(param)
+        WebService.service(API.fetch_bardata_by_menutype, param: param, service: .post) {
+            (modaldata: menuProductModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
     //MARK: - BOOKING RESTO API
     func booking_API(bookingDate:String, slotid:Int , numberofPeople:String,restoid:Int ,offerid:String , persents:Int, onsuccess: @escaping ((bookingRestoModalBody?)->())){
         let param = ["booking_date":bookingDate, "slot_id":slotid, "number_of_people":numberofPeople, "restrorant_bar_id":restoid, "offer_id":offerid, "booking_amount":persents] as [String:Any]

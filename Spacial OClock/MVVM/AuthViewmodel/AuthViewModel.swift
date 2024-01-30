@@ -53,7 +53,7 @@ class AuthViewModel : NSObject {
         WebService.service(API.file_upload, param: param, service: .post, showHud: true) {
             (userData: FileuploadModel , data, json) in
            
-            for indx in 0..<(userData.body.count ?? 0){
+            for indx in 0..<(userData.body.count ){
                 let image = userData.body[indx].image
                 let thumbnail = userData.body[indx].thumbnail
                 let fileName = userData.body[indx].fileName

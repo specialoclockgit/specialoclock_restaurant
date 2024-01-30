@@ -86,6 +86,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     //MARK: - MARK SHOW IN GOOGLE MAP
     func getalllocations() {
+        gmsMapView.clear()
         for index in 0..<(nearBy.count) {
             if let returnedPlace = nearBy[index] as? NearbyRestaurant {
                 
@@ -332,7 +333,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     @IBAction func btnSearch(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
         vc.city = self.getcity
-        vc.type = 1
+        vc.type = Store.screenType ?? 1
         vc.latitude = self.lat ?? 0.0
         vc.longitude = self.long ?? 0.0
         self.navigationController?.pushViewController(vc, animated: true)

@@ -18,10 +18,10 @@ struct ReviewListingModel: Codable {
 
 // MARK: - ReviewListingModelBody
 struct ReviewListingModelBody: Codable {
-    var id, userID, restrorantBarID, rating: Int?
+    var id, userID, restrorantBarID: Int?
     var review: String?
     var user: Userc?
-
+    var rating : String?
     enum CodingKeys: String, CodingKey {
         case id
         case userID = "user_id"

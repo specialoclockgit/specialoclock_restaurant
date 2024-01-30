@@ -51,17 +51,17 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         if bookingType == .bar {
             viewPeopleTitleVw.isHidden = true
             viewSelectPeople.isHidden = true
-        }else {
+        } else {
             viewPeopleTitleVw.isHidden = false
             viewSelectPeople.isHidden = false
         }
     }
     
     
-    func setUpVw(){
+    func setUpVw() {
         tfSelectTime.text = selectslot
         if bookingType == .restaurant {
-            for i in 1...numberofperson{
+            for i in 1...numberofperson {
                 arrNumberOfPeople.append(i)
             }
         }

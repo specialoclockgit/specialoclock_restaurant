@@ -7,81 +7,79 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "546A65D7-8B88-44E1-A74E-FE4123BBE6B9"
+            uuid = "7A76FADB-07FD-40CC-8CB3-BD4435E6B22B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellDetailViewTB.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "collectionView(_:cellForItemAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E5D64308-2C16-4D92-9F14-B6D03CC65596"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/HomeVC/CellDetailViewTB.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "btnnextClick(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E5D64308-2C16-4D92-9F14-B6D03CC65596 - c26148bd1c81a1b3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.CellDetailViewTB.btnnextClick(__C.UIButton) -&gt; ()"
-                  moduleName = "Spacial OClock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlm2/Documents/Ajay%20Git/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellDetailViewTB.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "57"
-                  endingLineNumber = "57"
-                  offsetFromSymbolStart = "90">
-               </Location>
-               <Location
-                  uuid = "E5D64308-2C16-4D92-9F14-B6D03CC65596 - c26148bd1c81a1b3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Spacial_OClock.CellDetailViewTB.btnnextClick(__C.UIButton) -&gt; ()"
-                  moduleName = "Spacial OClock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cqlm2/Documents/Ajay%20Git/specialoclockuser/Spacial%20OClock/MVVM/View/User/HomeVC/CellDetailViewTB.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "57"
-                  endingLineNumber = "57"
-                  offsetFromSymbolStart = "284">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1159E7C0-4497-4365-B7FA-033C01C94BF6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/HomeVC/DetailItemViewVC.swift"
+            filePath = "Spacial OClock/MVVM/View/RestoBar/Setting/MyOfferVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "213"
             endingLineNumber = "213"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7A76FADB-07FD-40CC-8CB3-BD4435E6B22B - 117d7dfd3d4a8909"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.MyOfferVC.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlm2/Documents/Ajay%20Git/specialoclockuser/Spacial%20OClock/MVVM/View/RestoBar/Setting/MyOfferVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "213"
+                  endingLineNumber = "213"
+                  offsetFromSymbolStart = "5530">
+               </Location>
+               <Location
+                  uuid = "7A76FADB-07FD-40CC-8CB3-BD4435E6B22B - 117d7dfd3d4a8909"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.MyOfferVC.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlm2/Documents/Ajay%20Git/specialoclockuser/Spacial%20OClock/MVVM/View/RestoBar/Setting/MyOfferVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "213"
+                  endingLineNumber = "213"
+                  offsetFromSymbolStart = "5978">
+               </Location>
+               <Location
+                  uuid = "7A76FADB-07FD-40CC-8CB3-BD4435E6B22B - 117d7dfd3d4a89b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.MyOfferVC.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlm2/Documents/Ajay%20Git/specialoclockuser/Spacial%20OClock/MVVM/View/RestoBar/Setting/MyOfferVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "217"
+                  endingLineNumber = "217"
+                  offsetFromSymbolStart = "4209">
+               </Location>
+               <Location
+                  uuid = "7A76FADB-07FD-40CC-8CB3-BD4435E6B22B - 117d7dfd3d4a89b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.MyOfferVC.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlm2/Documents/Ajay%20Git/specialoclockuser/Spacial%20OClock/MVVM/View/RestoBar/Setting/MyOfferVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "217"
+                  endingLineNumber = "217"
+                  offsetFromSymbolStart = "4657">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

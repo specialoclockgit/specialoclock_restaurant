@@ -160,7 +160,7 @@ struct Offerdetails: Codable {
             self.numberOfUserPerBooking = val
         }else if let val =  try? container.decodeIfPresent(String.self, forKey: .numberOfUserPerBooking){
             self.numberOfUserPerBooking = Int(val)
-        }else {
+        } else {
             self.numberOfUserPerBooking = nil
         }
         
