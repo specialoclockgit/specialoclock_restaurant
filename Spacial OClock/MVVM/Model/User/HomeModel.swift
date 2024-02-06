@@ -326,13 +326,13 @@ struct CuisineRestrorant: Codable {
 // MARK: - Location
 struct HomeListLocation: Codable {
     var id: Int?
-    var country, state, city: String?
+    var country, state, city,locality_area: String?
     var image: String?
     var restroCount: Int?
     var restrorants: [LocationRestrorant]?
 
     enum CodingKeys: String, CodingKey {
-        case id, country, state, city, image
+        case id, country, state, city, image, locality_area
         case restroCount = "restro_count"
         case restrorants
     }

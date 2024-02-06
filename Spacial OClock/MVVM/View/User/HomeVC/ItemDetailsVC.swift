@@ -537,12 +537,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = false
-                    cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
+                    cell.lblOffer.backgroundColor = offer?[indexPath.row].is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red.withAlphaComponent(0.65)
+                  //  cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
                 cell.lblTime.text = data?.offer ?? ""
                 cell.lblOffer.text = data?.is_fifty == 0 ? "-\(data?.percentage ?? 0)%" : "%\(50)"
+               // cell.lblOffer.backgroundColor = data?.is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red
                 
             } else {
                 cell.lblSpecial.isHidden = true

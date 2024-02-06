@@ -280,7 +280,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     @IBAction func btnDine(_ sender: UIButton) {
         if sender.isSelected == false{
-           
             sender.isSelected = false
         }
         setDine()

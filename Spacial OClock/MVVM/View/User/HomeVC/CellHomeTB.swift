@@ -104,7 +104,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         else if objArray[collView.tag].name == "Location" {
             cell.stackHeight.constant = 0
             cell.imgLocaiton.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
-            cell.lblLocationName.text = self.location[indexPath.row].city
+            cell.lblLocationName.text = self.location[indexPath.row].locality_area
             cell.lblTotalRestaurant.text = Store.screenType == 1 ? "\(self.location[indexPath.row].restroCount ?? 0) Restaurants" : "\(self.location[indexPath.row].restroCount ?? 0) Bars"
             cell.viewReview.isHidden = true
             //cell.lblRating.text = self.location[indexPath.row].
@@ -279,7 +279,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.country = location[indexPath.row].country ?? ""
             vc.city = location[indexPath.row].city ?? ""
-            vc.lblName = location[indexPath.row].city ?? ""
+            vc.lblName = location[indexPath.row].locality_area ?? ""
             vc.setValue = "Location"
             vc.setimage = "pinPerson"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)

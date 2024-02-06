@@ -223,7 +223,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
             
         }else{
             let sections = datagetApi?[indexPath.section].restaurants
-            cell.lblTittleName.text = sections?[indexPath.row].city ?? ""
+            cell.lblTittleName.text = sections?[indexPath.row].localityArea ?? ""
             cell.lblActualPrice.isHidden = true
             cell.lblOfferPrice.isHidden = true
             
@@ -254,7 +254,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sections = datagetApi?[indexPath.section].restaurants
-        self.getcity = sections?[indexPath.row].city ?? ""
+        self.getcity = sections?[indexPath.row].localityArea ?? ""
         self.gettimezone = sections?[indexPath.row].timezone ?? ""
         self.callback?(self.getcity, self.gettimezone)
         self.navigationController?.popViewController(animated: true)
