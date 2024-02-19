@@ -81,7 +81,7 @@ class AuthViewModel : NSObject {
                 (modaldata: SignupModel , Data, Json) in
                 Store.userDetails = modaldata.body
                 Store.authKey = modaldata.body?.token ?? ""
-                Store.autoLogin = true
+                //Store.autoLogin = true
                 onSuccess()
             }
         }
@@ -261,13 +261,14 @@ class AuthViewModel : NSObject {
     
     //    NARK: - ADDBUSINESS
     func addbusinessApi(singleimage:Bool,isImageSelected:Bool,country:String,state:String,city:String,latitude:Double,longitude:Double,Profileimage:[FileuploadModelBody],type:Int, name:String, image: [FileuploadModelBody], location:String, opentime:String, closetime:String,  themesrestrorantid:String, cusine: String,shortdescription: String, category:String,onsuccess:@escaping (()->())) -> Bool{
-        if !(singleimage) {
-            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
-            return false
-        }  else if !(isImageSelected) {
-            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
-            return false
-        } else if name.trimmingCharacters(in: .whitespaces).isEmpty{
+//        if !(singleimage) {
+//            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
+//            return false
+//        }  else if !(isImageSelected) {
+//            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
+//            return false
+//        } else
+        if name.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter your restaurant name", isSuccess: .error)
             return false
         } else if location.trimmingCharacters(in: .whitespaces).isEmpty{
@@ -276,13 +277,15 @@ class AuthViewModel : NSObject {
         }else if opentime.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter open time", isSuccess: .error)
             return false
-        }else if closetime.trimmingCharacters(in: .whitespaces).isEmpty{
+        } else if closetime.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter close time", isSuccess: .error)
             return false
-        }else if themesrestrorantid.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Select your theme", isSuccess: .error)
-            return false
-        }else if cusine.trimmingCharacters(in: .whitespaces).isEmpty{
+        }
+//        else if themesrestrorantid.trimmingCharacters(in: .whitespaces).isEmpty{
+//            CommonUtilities.shared.showAlert(message: "Select your theme", isSuccess: .error)
+//            return false
+//        }
+        else if cusine.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Select your cuisines", isSuccess: .error)
             return false
         }else if shortdescription.trimmingCharacters(in: .whitespaces).isEmpty{

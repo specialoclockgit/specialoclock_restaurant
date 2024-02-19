@@ -13,24 +13,31 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
 
     //MARK: - OUTLETS
     @IBOutlet weak var mapView: GMSMapView!
-    
+    @IBOutlet weak var collVw: UICollectionView!
     //MARK: - VARIABELS
     var latitude = Double()
     var longitude = Double()
+    var locMarkers = [GMSMarker]()
     var nearBy = [NearbyRestaurant]()
+    var tempNearBy = [NearbyRestaurant]()
     var iscomeFrom = Int()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        collVw.isHidden = true
+       // collVw.isHidden = iscomeFrom == 0 ? true : false
+        collVw.delegate = self
+        collVw.dataSource = self
         mapView.delegate = self
         if iscomeFrom == 0{
             setLocation()
-        }else{
+        } else {
             getalllocations()
+            print("countis",nearBy.count)
         }
        
-        print("countis",nearBy.count)
+       
         //getalllocations()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +75,6 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
                     longitude = longis
                 }
                 
-                
                 if let img = returnedPlace.profileImage {
                     image = img
                     print("mapImg",image)
@@ -89,7 +95,7 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
                     view.lblPersot.text = ""
                     view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
                 }
-                
+                self.locMarkers.append(marker)
                 marker.iconView = view
                 mapView.animate(to: camera)
                 marker.map = self.mapView
@@ -101,9 +107,16 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
         if iscomeFrom == 0{
             
         }else{
-            let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
-            vc.ProductID = self.nearBy[0].id ?? 0
-            self.navigationController?.pushViewController(vc, animated: true)
+          //  self.tempNearBy = self.nearBy.filter({$0.offerPercentage == })
+            if let selectedindex = locMarkers.firstIndex(of: marker){
+                self.tempNearBy = self.nearBy.filter({$0.offerPercentage == self.nearBy[selectedindex].offerPercentage})
+                self.collVw.isHidden = self.tempNearBy.count == 0 ? true : false
+                self.collVw.reloadData()
+//                let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
+//                vc.ProductID = self.nearBy[selectedindex].id ?? 0
+//                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            
         }
         return true
     }
@@ -148,4 +161,22 @@ extension mapViewController{
     func randomFloat(min: Float, max:Float) -> Float {
         return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
     }
+}
+
+
+extension mapViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tempNearBy.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collVw.dequeueReusableCell(withReuseIdentifier: "mapViewCVC", for: indexPath) as! mapViewCVC
+        cell.listing = tempNearBy[indexPath.row]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collVw.frame.size.width, height: 120)
+    }
+    
 }

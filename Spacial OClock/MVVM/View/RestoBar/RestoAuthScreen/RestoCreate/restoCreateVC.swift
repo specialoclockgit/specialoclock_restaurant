@@ -141,6 +141,12 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    @IBAction func btnInfo(_ sender: UIButton) {
+        CommonUtilities.shared.showAlert(message: "You can select multiple cuisine")
+    }
+    
+    
     //MARK: - BUTTON THEME DROP DOWN
     @IBAction func btnTheme(_ sender: UIButton) {
         let data = dataTheme

@@ -14,6 +14,30 @@ class CommonUtilities{
     
 //    static let shared = CommonUtilities()
 
+    
+    func showAlert(message :String){
+        DispatchQueue.main.async
+        {
+            let alert = UIAlertController(title: appName, message: message, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Ok" , style: .default, handler: { action in
+                DispatchQueue.main.async {
+                alert.dismiss(animated: true, completion: nil)
+                }
+               })
+            
+            alert.addAction(ok)
+            
+            DispatchQueue.main.async {
+                //if let window = UIApplication.shared.keyWindow
+                if let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first{
+                    DispatchQueue.main.async {
+                        window.rootViewController!.present(alert, animated: true)
+                    }
+                }
+            }
+        }
+    }
+    
  func showAlert( Title :String = "", message: String , isSuccess : Theme,  duration: TimeInterval = 3){
         SwiftMessages.hideAll()
         DispatchQueue.main.async {

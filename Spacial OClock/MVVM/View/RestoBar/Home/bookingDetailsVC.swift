@@ -85,22 +85,27 @@ class bookingDetailsVC: UIViewController {
             self.lblUDNAme.text = self.modalDetail?.user?.name ?? ""
             self.lblUDEmail.text = self.modalDetail?.user?.email ?? ""
             self.lblUDPhoneNumber.text = "\(self.modalDetail?.user?.countryCode ?? "") " + "\(self.modalDetail?.user?.phone ?? 0)"
-            if self.modalDetail?.restrorant?.type == 1 {
-                self.lblSOffer.text = "Special offer -\(self.modalDetail?.bookingAmount ?? "")%"
-            } else {
-                self.lblSOffer.text = ""
-            }
-            
-            
             self.lblDis.text = self.modalDetail?.restrorant?.offers?.first?.description ?? ""
             self.lblBookingDate.text = self.modalDetail?.bookingDate ?? ""
-            self.lblBookingTime.text = self.modalDetail?.bookingSlot ?? ""
             self.lblNumberOfPeople.text = "\(self.modalDetail?.numberOfPeople ?? 0)"
             self.lblBookingNumebr.text = self.modalDetail?.bookingID ?? ""
             self.totalamount = self.productsUnderOffer?.first?.price ?? 0
             self.prsents = Int(self.modalDetail?.bookingAmount ?? "") ?? 0
             self.prsentsamount = self.totalamount * self.prsents/100
             self.specailofferless = self.totalamount - self.prsentsamount
+            
+            
+            if self.modalDetail?.restrorant?.type == 1 {
+                self.lblSOffer.text = "Special offer -\(self.modalDetail?.bookingAmount ?? "")%"
+                self.lblOfferTime.text = "Offer from " + (self.modalDetail?.bookingSlot ?? "")
+                self.lblBookingTime.text = self.modalDetail?.bookingSlot ?? ""
+            } else {
+                let offer = self.modalDetail?.restrorant?.offers?.filter({$0.id == self.modalDetail?.offerID ?? 0})
+                self.lblOfferTime.text = "Offer from  \(offer?.first?.openTime ?? "") \(offer?.first?.closeTime ?? "")"
+                self.lblBookingTime.text = "\(offer?.first?.openTime ?? "") \(offer?.first?.closeTime ?? "")"
+                self.lblSOffer.text = ""
+            }
+            
             self.tbItem.reloadData()
         }
     }
@@ -183,12 +188,12 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
 
 extension bookingDetailsVC{
     func initialLoad(){
-        imgUser.image = UIImage(named: imgstring)
-        lblStatus.text = statusText
-        lblBookingNumebr.text = bookingNumber
-        lblBookingTime.text = bookingTime
-        lblBookingDate.text = bookingDate
-        lblOfferTime.text = "Offer from " + bookingTime
+        //imgUser.image = UIImage(named: imgstring)
+       // lblStatus.text = statusText
+       // lblBookingNumebr.text = bookingNumber
+      //  lblBookingTime.text = bookingTime
+      //  lblBookingDate.text = bookingDate
+       // lblOfferTime.text = "Offer from " + bookingTime
         viewOffer.isHidden = true
         
         //Complete Buuton Hide and Show

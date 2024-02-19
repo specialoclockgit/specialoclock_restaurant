@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftMessages
 
 public typealias parameters = [String:Any]
-let appName = "DoveCute"
+let appName = "Special O'clock"
 var DEVICE_TOKEN = "ios"
 
 var noInternetConnection = "No Internet Connection Available"

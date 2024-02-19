@@ -128,6 +128,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.timeZone = TimeZone.current.identifier
         print(timeZone)
         viewFullMenu.delegate = self

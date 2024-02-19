@@ -26,10 +26,10 @@ class ProfileVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       // self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         if Store.userDetails?.bussinesstype == 1{
             btnViewProfile.setTitle("Restaurant Profile", for: .normal)
-        }else{
+        } else {
             btnViewProfile.setTitle("Bar Profile", for: .normal)
         }
         setupAPi()

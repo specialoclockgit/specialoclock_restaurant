@@ -192,9 +192,11 @@ extension bookingDetailVC : UITableViewDelegate, UITableViewDataSource{
                 cell.lblNewPrice.text = "R"+(dataIs?.discounted_price?.description ?? "")
             }
             
-        }else {
-            cell.lblPreviousPrice.text =  "R"+String(calculation(actualPrice: dataIs?.price ?? 0, offerPrice: Int(self.presntsPrice) ?? 0))+".00"
-            cell.lblNewPrice.text = "R\(products?[indexPath.row].price ?? 0)"
+        } else {
+            cell.lblPreviousPrice.text = "R\(products?[indexPath.row].price ?? 0)"
+            let offer = calculation(actualPrice: dataIs?.price ?? 0, offerPrice: Int(self.presntsPrice) ?? 0)
+            cell.lblNewPrice.text = "R"+String((products?[indexPath.row].price ?? 0) - offer)+".00"
+            
         }
         
         cell.imgItem.showIndicator(baseUrl: productImgURL, imageUrl: dataIs?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
