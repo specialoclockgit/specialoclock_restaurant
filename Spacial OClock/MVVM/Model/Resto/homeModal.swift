@@ -23,34 +23,35 @@ struct homeModalBody: Codable {
 
 // MARK: - Rows
 struct Rows: Codable {
-    let id, userID, restrorantBarID: Int?
-    let bookingDate, bookingSlot: String?
-    let slotID: Int?
-    let bookingID, cancelationReason, invoiceNumber, bookingAmount: String?
-    let numberOfPeople, status, slotesFull: Int?
-    let availableSlotes: String?
-    let offerID: Int?
-    let createdAt, updatedAt: String?
-    let user: Userd?
+    var id, userID, restrorantBarID: Int?
+        var bookingDate, bookingSlot: String?
+        var slotID: Int?
+        var bookingID, cancelationReason, invoiceNumber, bookingAmount: String?
+        var numberOfPeople, status, slotesFull: Int?
+        var availableSlotes: String?
+        var offerID: Int?
+        var createdAt, updatedAt, offerName: String?
+        var user: User?
+        var restrorant: Restrorant?
 
-    enum CodingKeys: String, CodingKey {
-        case id
-        case userID = "user_id"
-        case restrorantBarID = "restrorant_bar_id"
-        case bookingDate = "booking_date"
-        case bookingSlot = "booking_slot"
-        case slotID = "slot_id"
-        case bookingID = "booking_id"
-        case cancelationReason = "cancelation_reason"
-        case invoiceNumber = "invoice_number"
-        case bookingAmount = "booking_amount"
-        case numberOfPeople = "number_of_people"
-        case status
-        case slotesFull = "slotes_full"
-        case availableSlotes = "available_slotes"
-        case offerID = "offer_id"
-        case createdAt, updatedAt, user
-    }
+        enum CodingKeys: String, CodingKey {
+            case id
+            case userID = "user_id"
+            case restrorantBarID = "restrorant_bar_id"
+            case bookingDate = "booking_date"
+            case bookingSlot = "booking_slot"
+            case slotID = "slot_id"
+            case bookingID = "booking_id"
+            case cancelationReason = "cancelation_reason"
+            case invoiceNumber = "invoice_number"
+            case bookingAmount = "booking_amount"
+            case numberOfPeople = "number_of_people"
+            case status
+            case slotesFull = "slotes_full"
+            case availableSlotes = "available_slotes"
+            case offerID = "offer_id"
+            case createdAt, updatedAt, offerName, user, restrorant
+        }
 }
 
 // MARK: - Userd

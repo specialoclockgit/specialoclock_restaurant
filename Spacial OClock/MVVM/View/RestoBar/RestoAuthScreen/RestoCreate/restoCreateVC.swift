@@ -33,6 +33,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var viewCuisines : UIView!
     @IBOutlet weak var viewOffer : UIView!
     @IBOutlet weak var tfCategory: CustomTextField!
+    @IBOutlet weak var tfCity : UITextField!
     
     //MARK: - VARIABELS
     var heading = String()
@@ -56,7 +57,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     var dataCuisine: [CuisineListingModelBody]?
     var imgString:String?
     var imgmultiple = String()
-    var themeId = Int()
+    var themeId = [Int]()
     var Cuisinid = Int()
     var categoryID = Int()
     var image:[FileuploadModelBody]?
@@ -68,8 +69,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     var country = String()
     var selectedCategory: [Int] = []
     var selectedCusinis: [Int] = []
-    
-    
+    var restoVM = restoViewModal()
+    var datagetApi : [LocationListBody]?
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,11 +81,19 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         tfCusinies.delegate = self
         tfCategory.delegate = self
         tfLocation.delegate = self
+        tfCity.delegate = self
         self.setupThemeApi()
         self.setupCuisineApi()
         self.setupCategoryApi()
-        
+        self.setupLocations()
     }
+    
+    func setupLocations(){
+        viewmodel.locationGetapicall { data in
+            self.datagetApi = data
+        }
+    }
+    
     //MARK: - THEME API
     func setupThemeApi() {
         self.viewmodel.themeapicall { data in
@@ -120,12 +129,12 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     }
     //MARK : - BUTTON SIGNUP
     @IBAction func btnSignUPAct(_ sender : UIButton){
-        if !(singleimage){
-            CommonUtilities.shared.showAlert(message: "Please select  image", isSuccess: .error)
-        } else if self.imgArr.count  <= 2{
-            CommonUtilities.shared.showAlert(message: "Please select 3 image", isSuccess: .error)
-        }else {
-            self.viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfLocation.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.selectedCusinis.description, shortdescription: self.tvDescription.text ?? "", category: self.selectedCategory.description) {
+//        if !(singleimage){
+//            CommonUtilities.shared.showAlert(message: "Please select  image", isSuccess: .error)
+//        } else if self.imgArr.count  <= 2{
+//            CommonUtilities.shared.showAlert(message: "Please select 3 image", isSuccess: .error)
+//        }else {
+        viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: Double(latitude) ?? 0.0,longitude: Double(longitude) ?? 0.0, Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfCity.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.selectedCusinis.description, shortdescription: self.tvDescription.text ?? "", category: self.selectedCategory.description) {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "RestoVerificationAlertVC")as! RestoVerificationAlertVC
                 vc.callBack = {
                     for controller in self.navigationController!.viewControllers as Array {
@@ -140,7 +149,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
                 
             }
         }
-    }
+    //}
     
     @IBAction func btnInfo(_ sender: UIButton) {
         CommonUtilities.shared.showAlert(message: "You can select multiple cuisine")
@@ -155,12 +164,17 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         dropDown.width = tfTheme.frame.width
         dropDown.bottomOffset = CGPoint(x: 0, y: (tfTheme as AnyObject).frame.size.height)
         dropDown.show()
-        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
-            self?.themeId = self?.dataTheme?[index].id ?? 0
-            guard let _ = self else { return }
-            self?.tfTheme.text = "\(item) "
-            
+        dropDown.multiSelectionAction = { [weak self] (indices: [Int], items: [String]) in
+            guard let self = self else { return }
+            self.themeId = indices.map { self.dataTheme?[$0].id ?? 0 }
+            self.tfTheme.text = items.joined(separator: ", ")
         }
+//        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+//            self?.themeId = self?.dataTheme?[index].id ?? 0
+//            guard let _ = self else { return }
+//            self?.tfTheme.text = "\(item) "
+//
+//        }
     }
     //MARK: - BUTTON CATEGORY DROP DOWN
     @IBAction func btnCategory(_ sender: Any) {
@@ -506,7 +520,7 @@ extension restoCreateVC:GMSAutocompleteViewControllerDelegate {
                     }
 //                    self.locationLbl.text = addressString
                     self.tfLocation.text = addressString
-                     self.city = pm.locality ?? ""
+                    self.city = pm.locality ?? ""
                     self.state = pm.administrativeArea  ?? ""
                     self.country = pm.country ?? ""
                 }
@@ -514,73 +528,49 @@ extension restoCreateVC:GMSAutocompleteViewControllerDelegate {
         })
         
     }
-    
-//    func getAddressFromLatLon(pdblLatitude: String, withLongitude pdblLongitude: String) {
-//        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
-//        let lat: Double = Double("\(pdblLatitude)") ?? 0.0
-//        //21.228124
-//        let lon: Double = Double("\(pdblLongitude)") ?? 0.0
-//        //72.833770
-//
-//        let ceo: CLGeocoder = CLGeocoder()
-//        center.latitude = lat
-//        center.longitude = lon
-//
-//        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
-//        ceo.reverseGeocodeLocation(loc, completionHandler:
-//                                    {(placemarks, error) in
-//            if (error != nil)
-//            {
-//                print("reverse geodcode fail: \(error!.localizedDescription)")
-//            }
-//            let pm = placemarks! as [CLPlacemark]
-//            if pm.count > 0 {
-//                let pm = placemarks![0]
-//                var addressString : String = ""
-//                if pm.subLocality != nil {
-//                    addressString = addressString + pm.subLocality! + ", "
-//                }
-//                if pm.thoroughfare != nil {
-//                    addressString = addressString + pm.thoroughfare! + ", "
-//                }
-//                if pm.locality != nil {
-//                    addressString = addressString + pm.locality! + ", "
-//                }
-//                if pm.administrativeArea != nil {
-//                    addressString = addressString + pm.administrativeArea! + ", "
-//                }
-//                if pm.country != nil {
-//                    addressString = addressString + pm.country! + ", "
-//                }
-//                if pm.postalCode != nil {
-//                    addressString = addressString + pm.postalCode! + " "
-//                }
-//                print(pm.postalCode)
-//                print(pm.country)
-//                print(pm.locality)
-//                print(pm.administrativeArea)
-//                print(addressString)
-//
-//                self.tfLocation.text = addressString
-//                self.city = pm.locality ?? ""
-//                self.state = pm.administrativeArea  ?? ""
-//                self.country = pm.country ?? ""
-//
-//
-//
-//            }
-//        })
-//    }
-    
 }
 // MARK: - EXTENSION OF TEXTFIELD
 extension restoCreateVC{
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == tfLocation {
-            let placePickerController = GMSAutocompleteViewController()
-            placePickerController.delegate = self
-            present(placePickerController, animated: true, completion: nil)
+            let dropDown = DropDown()
+            dropDown.dataSource = datagetApi?.map({$0.country ?? ""}) ?? []
+            dropDown.anchorView = tfLocation
+            dropDown.width = tfLocation.frame.width
+            dropDown.bottomOffset = CGPoint(x: 0, y: (tfLocation as AnyObject).frame.size.height)
+            dropDown.show()
+            dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+                self?.tfLocation.text = item
+                self?.country = item
+                self?.tfCity.text = ""
+            }
+//            let placePickerController = GMSAutocompleteViewController()
+//            placePickerController.delegate = self
+//            present(placePickerController, animated: true, completion: nil)
+            return false
+        }else if textField == tfCity {
+            
+            if self.tfLocation.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+                CommonUtilities.shared.showAlert(message: "Please select country", isSuccess: .error)
+            }else {
+                let dropDown = DropDown()
+                let data = datagetApi?.first(where: {$0.country == self.tfLocation.text})?.restaurants?.map({$0.localityArea ?? ""})
+                let states = datagetApi?.first(where: {$0.country == self.tfLocation.text})?.restaurants?.map({$0.state ?? ""})
+                let citys = datagetApi?.first(where: {$0.country == self.tfLocation.text})?.restaurants?.map({$0.city ?? ""})
+                dropDown.dataSource = data ?? []
+                //datagetApi?.map({$0.country ?? ""}) ?? []
+                dropDown.anchorView = tfLocation
+                dropDown.width = tfLocation.frame.width
+                dropDown.bottomOffset = CGPoint(x: 0, y: (tfLocation as AnyObject).frame.size.height)
+                dropDown.show()
+                dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+                    self?.tfCity.text = item
+                    self?.city = citys?[index] ?? ""
+                    self?.state = states?[index] ?? ""
+                    
+                }
+            }
             return false
         }
         return true

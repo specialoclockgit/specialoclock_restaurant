@@ -10,7 +10,7 @@ import SDWebImage
 import SkeletonView
 import SwiftGifOrigin
 
-class BookingVC: UIViewController {
+class BookingVC: UIViewController, UIGestureRecognizerDelegate {
 
     //MARK: - OUTLETS
     @IBOutlet weak var imgView: UIImageView!
@@ -28,7 +28,7 @@ class BookingVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
     }
     

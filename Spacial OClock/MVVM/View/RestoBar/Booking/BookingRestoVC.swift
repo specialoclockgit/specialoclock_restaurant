@@ -16,7 +16,7 @@ struct ModelBooking {
     var bookingDate : String
     var  bookingTime : String
 }
-class BookingRestoVC: UIViewController {
+class BookingRestoVC: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK: Outlets
     @IBOutlet weak var imgViewGif: UIImageView!
@@ -35,7 +35,7 @@ class BookingRestoVC: UIViewController {
         tbBooking.register(nib, forCellReuseIdentifier: Cell.CellBookingRestoTB)
         tbBooking.delegate = self
         tbBooking.dataSource =  self
-        
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     //MARK: - FUCNTIONS

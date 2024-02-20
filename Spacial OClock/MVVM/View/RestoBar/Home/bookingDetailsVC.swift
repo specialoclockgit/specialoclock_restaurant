@@ -96,15 +96,61 @@ class bookingDetailsVC: UIViewController {
             
             
             if self.modalDetail?.restrorant?.type == 1 {
-                self.lblSOffer.text = "Special offer -\(self.modalDetail?.bookingAmount ?? "")%"
+                self.lblSOffer.text = "\(self.modalDetail?.offerName ?? "") -\(self.modalDetail?.bookingAmount ?? "")%"
                 self.lblOfferTime.text = "Offer from " + (self.modalDetail?.bookingSlot ?? "")
-                self.lblBookingTime.text = self.modalDetail?.bookingSlot ?? ""
+                let timeString = self.modalDetail?.bookingSlot ?? ""
+                let components = timeString.components(separatedBy: "-")
+                if let startTime = components.first, let endTime = components.last {
+                    if let startTimeConverted = convertTimeFormat(startTime), let endTimeConverted = convertTimeFormat(endTime) {
+                        print("\(startTimeConverted)-\(endTimeConverted)")
+                        self.lblBookingTime.text = "\(startTimeConverted)-\(endTimeConverted)"
+                    }
+                }
+                
+                let dateString = self.modalDetail?.bookingDate ?? ""
+                let dateTimeString = "\(dateString) \(timeString.components(separatedBy: "-").last ?? "")"
+                if isDateTimePassed(dateTimeString: dateTimeString) {
+                    print("Complete button enabled")
+                    self.btnComplete.isUserInteractionEnabled = true
+                    self.btnReportUser.isUserInteractionEnabled = true
+                    self.btnComplete.backgroundColor = UIColor(named: "themeGreen")
+                    self.btnReportUser.backgroundColor = UIColor(named: "themeOrange")
+                } else {
+                    self.btnComplete.isUserInteractionEnabled = false
+                    self.btnReportUser.isUserInteractionEnabled = false
+                    self.btnComplete.backgroundColor = .lightGray
+                    self.btnReportUser.backgroundColor = .lightGray
+                    print("Complete button disabled")
+                }
+                
             } else {
                 let offer = self.modalDetail?.restrorant?.offers?.filter({$0.id == self.modalDetail?.offerID ?? 0})
                 self.lblOfferTime.text = "Offer from  \(offer?.first?.openTime ?? "") \(offer?.first?.closeTime ?? "")"
-                self.lblBookingTime.text = "\(offer?.first?.openTime ?? "") \(offer?.first?.closeTime ?? "")"
+                self.lblBookingTime.text = "\(offer?.first?.openTime ?? "")-\(offer?.first?.closeTime ?? "")"
                 self.lblSOffer.text = ""
+                let timeString = self.lblBookingTime.text ?? ""
+                let dateString = self.modalDetail?.bookingDate ?? ""
+                let dateTimeString = "\(dateString) \(timeString.components(separatedBy: "-").last ?? "")"
+                if isDateTimePassed(dateTimeString: dateTimeString) {
+                    print("Complete button enabled")
+                    self.btnComplete.isUserInteractionEnabled = true
+                    self.btnReportUser.isUserInteractionEnabled = true
+                    self.btnComplete.backgroundColor = UIColor(named: "themeGreen")
+                    self.btnReportUser.backgroundColor = UIColor(named: "themeOrange")
+                } else {
+                    self.btnComplete.isUserInteractionEnabled = false
+                    self.btnReportUser.isUserInteractionEnabled = false
+                    self.btnComplete.backgroundColor = .lightGray
+                    self.btnReportUser.backgroundColor = .lightGray
+                    print("Complete button disabled")
+                }
+                
+                
             }
+            
+            
+            
+            
             
             self.tbItem.reloadData()
         }
@@ -181,7 +227,7 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async { [self] in
-            heightTBItem.constant = tbItem.contentSize.height
+           // heightTBItem.constant = tbItem.contentSize.height
         }
     }
 }
@@ -215,4 +261,26 @@ extension bookingDetailsVC{
            // btnComplete.isHidden = true
         }
     }
+}
+func convertTimeFormat(_ timeString: String) -> String? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    
+    if let time = dateFormatter.date(from: timeString) {
+        dateFormatter.dateFormat = "hh:mm a"
+        return dateFormatter.string(from: time)
+    }
+    
+    return nil
+}
+func isDateTimePassed(dateTimeString: String) -> Bool {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+    
+    if let dateTime = dateFormatter.date(from: dateTimeString) {
+        let currentDate = Date()
+        return currentDate > dateTime
+    }
+    
+    return false
 }

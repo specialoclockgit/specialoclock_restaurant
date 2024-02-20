@@ -12,7 +12,7 @@ class selectDateVC: UIViewController {
 
     //MARK: - OUTLETS
     @IBOutlet weak var viewFsCalendar: FSCalendar!
-    
+    var callBack: ((String)->())?
     
     //MARK: - VARIABLES
     var pickerSelectTime = UIPickerView()
@@ -24,7 +24,8 @@ class selectDateVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewFsCalendar.delegate = self
+        viewFsCalendar.dataSource = self
     }
     //MARK: - ACTIONS
     
@@ -51,5 +52,19 @@ extension selectDateVC{
         let yearString = dateFormatter.string(from: Date())
         let heading = monthString + yearString
        // lblMonth.text = heading
+    }
+}
+extension selectDateVC :FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+    
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        let now = df.string(from: date)
+        self.dismiss(animated: true){
+            self.callBack?(now)
+        }
+        
     }
 }

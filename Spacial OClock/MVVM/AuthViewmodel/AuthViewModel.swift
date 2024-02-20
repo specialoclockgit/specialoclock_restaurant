@@ -271,8 +271,11 @@ class AuthViewModel : NSObject {
         if name.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter your restaurant name", isSuccess: .error)
             return false
-        } else if location.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Enter your location", isSuccess: .error)
+        } else if country.trimmingCharacters(in: .whitespaces).isEmpty{
+            CommonUtilities.shared.showAlert(message: "Select your country", isSuccess: .error)
+            return false
+        }else if location.trimmingCharacters(in: .whitespaces).isEmpty{
+            CommonUtilities.shared.showAlert(message: "Select your location", isSuccess: .error)
             return false
         }else if opentime.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter open time", isSuccess: .error)
@@ -285,10 +288,11 @@ class AuthViewModel : NSObject {
 //            CommonUtilities.shared.showAlert(message: "Select your theme", isSuccess: .error)
 //            return false
 //        }
-        else if cusine.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Select your cuisines", isSuccess: .error)
-            return false
-        }else if shortdescription.trimmingCharacters(in: .whitespaces).isEmpty{
+//        else if cusine.trimmingCharacters(in: .whitespaces).isEmpty{
+//            CommonUtilities.shared.showAlert(message: "Select your cuisines", isSuccess: .error)
+//            return false
+//        }
+        else if shortdescription.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter your short description", isSuccess: .error)
             return false
         }else if category.trimmingCharacters(in: .whitespaces).isEmpty{
@@ -316,16 +320,12 @@ class AuthViewModel : NSObject {
             let jsonDataimage = try jsonEncoder.encode(image)
             let jsonStringimage = String(data: jsonDataimage, encoding: .utf8)
             guard let jsonimage = jsonStringimage else{return}
-            
-            let param: parameters = ["type":type,
-                                     "profile_image":json,
-                                     "name": name,
-                                     "image":jsonimage,
+            var param =  parameters()
+             param = ["type":type,"name": name,
                                      "location":location,
                                      "open_time": opentime,
                                      "close_time":closetime,
                                      "short_description": shortdescription,
-                                     "themes_restrorant_id":themesrestrorantid,
                                      "cuisine_ids":cusine,
                                      "country":country,
                                      "state":state,
@@ -335,7 +335,20 @@ class AuthViewModel : NSObject {
                                      "country_code":Store.userDetails?.countryCode ?? "",
                                      "mobile":Store.userDetails?.phone ?? 0,
                                      "longitude":longitude]
-            print(param)
+            
+            if json != "[]"{
+                param["profile_image"] = json
+            }
+            
+            if jsonimage != "[]"{
+                param["image"] = jsonimage
+            }
+            
+            if themesrestrorantid != "0"{
+                param["themes_restrorant_id"] = themesrestrorantid
+            }
+            
+                print(param)
                 WebService.service(API.add_business, param: param, service: .post){
                 (modeldata: AddbusinessModel, data, json) in
                 onsuccess(modeldata)

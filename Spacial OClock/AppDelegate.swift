@@ -135,6 +135,7 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                 }
             }else{
                 if let topVc = UIApplication.topViewController(), topVc.isKind(of: RestoHomeVC.self) {
+                    topVc.viewWillAppear(true)
                     completionHandler([])
                 } else {
                     completionHandler([.sound,.banner,.badge])

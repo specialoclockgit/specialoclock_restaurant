@@ -72,7 +72,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblFullMenu: UILabel!
     @IBOutlet weak var lblUserLOcation: UILabel!
     @IBOutlet weak var lblOpenClose: UILabel!
-    
+    @IBOutlet weak var favIconVw: UIView!
     //MARK: Variable
     let promotionTxt = "Promotion cannot be applied with any other in-house promotions.Please refer to the special condition below for more details."
     var offerDescription = String()
@@ -128,7 +128,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
         self.timeZone = TimeZone.current.identifier
         print(timeZone)
         viewFullMenu.delegate = self
@@ -207,6 +207,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.imgFav.image = UIImage(named: "red h")
             }
             
+            if self.modal?.userID == Store.userDetails?.id {
+                self.viewButton.isHidden = true
+            }
+            
+          //  self.viewButton.isHidden = self.modal?.userID == Store.userDetails?.id ? true : false
+            self.favIconVw.isHidden = self.modal?.userID == Store.userDetails?.id ? true : false
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
             self.lblRating.text = self.modal?.avgRating ?? ""
             self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
@@ -346,6 +352,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func isSelected(sender : UIButton){
+        
         switch sender.tag {
         case 0 :
             ChangebgColor(viewSelected: viewAbout, viewUnselected: viewMenu, viewUnselected2: viewReview, ViewUnselected3: viewFullMeny, labelSelected: lblAbout, labelUnselected: lblMenu, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
@@ -381,7 +388,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             viewM.isHidden = true
             viewR.isHidden = false
             viewFM.isHidden = true
-            viewButton.isHidden = false
+            viewButton.isHidden = self.modal?.userID == Store.userDetails?.id ? true : false
             btnBookStatus = 1
             btnBook.setTitle("Write a Review", for: .normal)
             debugPrint("2")
@@ -526,7 +533,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             if status == 1{
                 cell.lblSpecial.isHidden = false
                 if indexPath.row == isselectedoffer{
-                    self.viewButton.isHidden = Store.userDetails?.role == 1 ?  false : true
+                    self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                     
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
@@ -538,8 +545,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = false
-                    cell.lblOffer.backgroundColor = offer?[indexPath.row].is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red.withAlphaComponent(0.65)
-                  //  cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
+                  //  cell.lblOffer.backgroundColor = offer?[indexPath.row].is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red.withAlphaComponent(0.65)
+                    cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
@@ -706,14 +713,14 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     }
     
 //    func numberOfSections(in tableView: UITableView) -> Int {
-//        if tableView == tbMenu{
-//            return products?.count ?? 0
+//        if tableView == tbReview{
+//            return reviews?.count ?? 0
 //        }  else{
-//            return self.reviews?.count ?? 0
-//
+//            return  0
 //        }
-//
 //    }
+    
+    
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if tableView == tbMenu{

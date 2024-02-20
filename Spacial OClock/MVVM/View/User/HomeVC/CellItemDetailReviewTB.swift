@@ -16,7 +16,7 @@ class CellItemDetailReviewTB: UITableViewCell {
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var lblReview : UILabel!
     @IBOutlet weak var lblName : UILabel!
-
+    @IBOutlet weak var replyBtn: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -10,8 +10,13 @@ import Foundation
 class restoViewModal : NSObject{
     
     //MARK: - HOME RESTO LIST API
-    func homeRestoAPI(restobarID:Int,onsuccess: @escaping ((homeModalBody?)->())){
-        let param = ["restrorant_bar_id":restobarID]
+    func homeRestoAPI(restobarID:Int,date:String,onsuccess: @escaping ((homeModalBody?)->())){
+        var param = parameters()
+        param = ["restrorant_bar_id":restobarID]
+        if date != ""{
+            param["date"] = date
+        }
+        
         WebService.service(API.restro_home, param: param, service: .post) {
             (modaldata: homeModal, Data , json) in
             onsuccess(modaldata.body)

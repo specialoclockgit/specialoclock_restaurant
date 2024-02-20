@@ -14,5 +14,6 @@ import UIKit
         @IBOutlet weak var lblBookingNO: UILabel!
         @IBOutlet weak var imgVW: UIImageView!
         @IBOutlet weak var lblUserNo: UILabel!
+        @IBOutlet weak var offerNameLbl: UILabel!
     }
 

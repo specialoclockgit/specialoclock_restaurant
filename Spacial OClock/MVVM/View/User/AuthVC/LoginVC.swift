@@ -63,6 +63,7 @@ class LoginVC: UIViewController {
                 }else if Store.userDetails?.isCompleted != 1{
                     let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
                     vc.heading = "Restaurant Profile"
+                    vc.btnCheckStatus = Store.userDetails?.role ?? 0
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if Store.userDetails?.is_approved == 0{
                     CommonUtilities.shared.showAlert(message: "Your Business approval is pending from admin.", isSuccess: .error)

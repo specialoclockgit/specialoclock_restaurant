@@ -10,7 +10,7 @@ import SDWebImage
 import SwiftGifOrigin
 import SkeletonView
 
-class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate {
+class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate, UIGestureRecognizerDelegate {
 
     //MARK: - Outlets
     @IBOutlet weak var imgViewGif: UIImageView!
@@ -26,7 +26,7 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
         super.viewDidLoad()
         btnBack.isHidden = true
         favouriteCV.showAnimatedGradientSkeleton()
-        
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
         get_list()

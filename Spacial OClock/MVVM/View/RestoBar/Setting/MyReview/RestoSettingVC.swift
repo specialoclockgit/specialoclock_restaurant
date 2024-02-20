@@ -8,14 +8,16 @@
 import UIKit
 import Foundation
 
-class RestoSettingVC: UIViewController {
+class RestoSettingVC: UIViewController, UIGestureRecognizerDelegate {
 
     //MARK: - OUTLETS
 
     @IBOutlet weak var tableVW: UITableView!
     //MARK: - VARIABLES
-    var nameary = ["Notifications","Chat","Change Password", "Privacy Policy", "Terms and Conditions", "My Menu", "My Offers", "My Review", "My Invoices", "Help & FAQ’s", "Contact Us", "Delete Account", "Logout"]
-    var image = ["bell","unlock","unlock","question","books","menu","specialOffer","reviews", "invoice","helpCircle", "phone","delete-user-1","logout-1"]
+    var nameary = ["Notifications","Chat","Change Password", "Privacy Policy", "Terms and Conditions","My Review", "My Invoices", "Help & FAQ’s", "Contact Us", "Delete Account", "Logout"]
+    //"My Menu", "My Offers",
+    var image = ["bell","unlock","unlock","question","books","reviews", "invoice","helpCircle", "phone","delete-user-1","logout-1"]
+    //"menu","specialOffer",
     var viewmodel = AuthViewModel()
     var isSelected = 0
     
@@ -23,7 +25,7 @@ class RestoSettingVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
    
     override func viewWillAppear(_ animated: Bool) {
@@ -97,34 +99,34 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
             let termScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.PrivacyVC) as! PrivacyVC
             termScreen.heading = "Terms and Conditions"
             self.navigationController?.pushViewController(termScreen, animated: true)
-        case 5 :
-            let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-            if status == 0 {
-                let menuScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyMenuVC) as! MyMenuVC
-                self.navigationController?.pushViewController(menuScreen, animated: true)
-            }else if status == 1{
-                let barMenuScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyMenuVC) as! MyMenuVC
-                self.navigationController?.pushViewController(barMenuScreen, animated: true)
-            }
-        case 6:
-            let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-            if status == 0 {
-                let offerScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyOfferVC) as! MyOfferVC
-                offerScreen.valueChange = "My Offer"
-                self.navigationController?.pushViewController(offerScreen, animated: true)
-                debugPrint("My offer")
-            }else if status == 1{
-                let barOfferScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyOfferVC) as! MyOfferVC
-                barOfferScreen.valueChange = "My Offer"
-                self.navigationController?.pushViewController(barOfferScreen, animated: true)
-            }
+//        case 5 :
+//            let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+//            if status == 0 {
+//                let menuScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyMenuVC) as! MyMenuVC
+//                self.navigationController?.pushViewController(menuScreen, animated: true)
+//            }else if status == 1{
+//                let barMenuScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyMenuVC) as! MyMenuVC
+//                self.navigationController?.pushViewController(barMenuScreen, animated: true)
+//            }
+//        case 6:
+//            let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+//            if status == 0 {
+//                let offerScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyOfferVC) as! MyOfferVC
+//                offerScreen.valueChange = "My Offer"
+//                self.navigationController?.pushViewController(offerScreen, animated: true)
+//                debugPrint("My offer")
+//            }else if status == 1{
+//                let barOfferScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyOfferVC) as! MyOfferVC
+//                barOfferScreen.valueChange = "My Offer"
+//                self.navigationController?.pushViewController(barOfferScreen, animated: true)
+//            }
             
-        case 7:
+        case 5:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let reviewScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyReviewVC) as! MyReviewVC
             self.navigationController?.pushViewController(reviewScreen, animated: true)
             debugPrint("My reviews")
-        case 8:
+        case 6:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let invoiceScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyInvoiceVC) as! MyInvoiceVC
             self.navigationController?.pushViewController(invoiceScreen, animated: true)
@@ -134,15 +136,15 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
 //            let manageCScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.RestoCardListVC) as! RestoCardListVC
 //            self.navigationController?.pushViewController(manageCScreen, animated: true)
 //            debugPrint("Manage Card")
-        case 9:
+        case 7:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let helpFAQScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.HelpFAQRestoVC) as! HelpFAQRestoVC
             self.navigationController?.pushViewController(helpFAQScreen, animated: true)
-        case 10:
+        case 8:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let contactUsScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.ContactUsRestoVC) as! ContactUsRestoVC
             self.navigationController?.pushViewController(contactUsScreen, animated: true)
-        case 11:
+        case 9:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let deleteAcccount = StoryBoard.instantiateViewController(withIdentifier: Alert.AlertBottomVC) as! AlertBottomVC
             deleteAcccount.statuschange = 0
@@ -152,7 +154,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
                 SceneDelegate().setLoginRoot()
             }
             self.navigationController?.present(deleteAcccount, animated: true)
-        case 12:
+        case 10:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let logOutScreen = StoryBoard.instantiateViewController(withIdentifier: Alert.AlertBottomVC) as! AlertBottomVC
             logOutScreen.statuschange = 4

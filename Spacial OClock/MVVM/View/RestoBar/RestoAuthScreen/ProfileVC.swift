@@ -32,7 +32,7 @@ class ProfileVC: UIViewController {
         } else {
             btnViewProfile.setTitle("Bar Profile", for: .normal)
         }
-        setupAPi()
+        
         initialLoad()
         
     }
@@ -51,11 +51,11 @@ class ProfileVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
+        setupAPi()
     }
     //MARK: Button Actions
     @IBAction func btnRestaurantProfileAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.RestoProfileVC) as! RestoProfileVC
-        
         self.navigationController?.pushViewController(screen, animated: true)
     }
     

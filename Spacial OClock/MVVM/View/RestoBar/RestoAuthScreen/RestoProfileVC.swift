@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 import Cosmos
 
-class RestoProfileVC: UIViewController {
+class RestoProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK: - OUTLETS
     @IBOutlet weak var cosmosView: CosmosView!
@@ -39,6 +39,7 @@ class RestoProfileVC: UIViewController {
         super.viewDidLoad()
         initialLoad()
         tabBarController?.tabBar.isHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,13 +82,16 @@ class RestoProfileVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func btnEdit(_ sender: UIButton) {
-        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.EditRestoProfileVC) as! EditRestoProfileVC
-        if Store.userDetails?.bussinesstype == 1 {
-            screen.heading = "Edit Restaurant Profile"
-        }else{
-            screen.heading = "Edit Bar Profile"
-        }
-        self.navigationController?.pushViewController(screen, animated: true)
+        let StoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        let notificationVC =  StoryBoard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+        self.navigationController?.pushViewController(notificationVC, animated: true)
+//        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.EditRestoProfileVC) as! EditRestoProfileVC
+//        if Store.userDetails?.bussinesstype == 1 {
+//            screen.heading = "Edit Restaurant Profile"
+//        }else{
+//            screen.heading = "Edit Bar Profile"
+//        }
+//        self.navigationController?.pushViewController(screen, animated: true)
     }
     @IBAction func btnPreviewAct(sender : UIButton){
         let main = UIStoryboard.init(name: "Main", bundle: nil)
@@ -106,10 +110,10 @@ extension RestoProfileVC{
         debugPrint(heading)
         lblname.text = UserDefaults.standard.name
         btnCheckStatus = UserDefaults.standard.status
-        if btnCheckStatus == 0 {
+       // if btnCheckStatus == 0 {
             viewPreview.isHidden = false
-        }else if btnCheckStatus == 1{
-            viewPreview.isHidden = true
-        }
+       // }else if btnCheckStatus == 1{
+        //    viewPreview.isHidden = true
+        //}
     }
 }

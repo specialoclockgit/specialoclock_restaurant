@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsVC: UIViewController {
+class SettingsVC: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK: - Outlets
     @IBOutlet weak var settingTV: UITableView!
@@ -19,7 +19,7 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false

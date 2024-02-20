@@ -25,7 +25,7 @@ var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Ce
 
 var arrHome = ["Location","Cuisines","","Theme"]
 
-class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GMSMapViewDelegate {
+class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GMSMapViewDelegate, UIGestureRecognizerDelegate {
     
     //MARK: - OUTLETS
     
@@ -64,6 +64,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.timeZone = TimeZone.current.identifier
         print(timeZone)
         gmsMapView.isMyLocationEnabled = true
