@@ -69,10 +69,12 @@ class BreakfastVC: UIViewController {
 extension BreakfastVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if datagetAPI?.count == 0{
-            imgGif.image = UIImage.gif(name: "nodataFound")
-            imgGif.isHidden = false
+            tableView.setNoDataMessage("No data found")
+          //  imgGif.image = UIImage.gif(name: "nodataFound")
+           // imgGif.isHidden = false
         }else{
-            imgGif.isHidden = false
+            tableView.backgroundView = nil
+           // imgGif.isHidden = false
             return datagetAPI?.count ?? 0
         }
         return 0

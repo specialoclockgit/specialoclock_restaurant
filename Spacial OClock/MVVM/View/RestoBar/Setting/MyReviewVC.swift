@@ -33,13 +33,13 @@ class MyReviewVC: UIViewController {
         viewmodel.reviewListing(restoid: Store.userDetails?.bussiness_id ?? 91) { data in
             self.dataget = data
             self.tableVW.reloadData()
-            if self.dataget?.count == 0 {
-                self.showBackgroundGIF()
-                
-            } else {
-                self.removeBackgroundGIF()
-                
-            }
+//            if self.dataget?.count == 0 {
+//                self.showBackgroundGIF()
+//                
+//            } else {
+//                self.removeBackgroundGIF()
+//                
+//            }
         }
     }
     //MARK: - ACTIONS
@@ -83,10 +83,12 @@ class MyReviewVC: UIViewController {
 extension MyReviewVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if dataget?.count == 0{
-            imgViewGif.image = UIImage.gif(name: "nodataFound")
-            imgViewGif.isHidden = false
+            tableView.setNoDataMessage("No review found", txtColor: .black)
+           // imgViewGif.image = UIImage.gif(name: "nodataFound")
+            //imgViewGif.isHidden = false
         }else{
-            imgViewGif.isHidden = true
+            tableView.backgroundView = nil
+            //imgViewGif.isHidden = true
             return dataget?.count ?? 0
         }
         return 0

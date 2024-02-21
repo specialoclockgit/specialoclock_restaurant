@@ -149,36 +149,44 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setValue == "Location" {
             if filterlocations?.count == 0 {
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No data found")
+               // imgViewGif.image = UIImage.gif(name: "nodataFound")
+                //imgViewGif.isHidden = false
             } else {
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+               // imgViewGif.isHidden = true
                 return filterlocations?.count ?? 0
             }
         } else if setValue == "Category" {
             if filterCategory?.count == 0 {
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No data found")
+//                imgViewGif.image = UIImage.gif(name: "nodataFound")
+//                imgViewGif.isHidden = false
             } else {
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+               // imgViewGif.isHidden = true
                 return filterCategory?.count ?? 0
             }
         }
         else if setValue == "Cuisines" {
             if filtercusin?.count == 0 {
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No data found")
+               // imgViewGif.image = UIImage.gif(name: "nodataFound")
+                //imgViewGif.isHidden = false
             } else {
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+               // imgViewGif.isHidden = true
                 return filtercusin?.count ?? 0
             }
             
         } else {
             if filtertheme?.count == 0 {
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No data found")
+               // imgViewGif.image = UIImage.gif(name: "nodataFound")
+               // imgViewGif.isHidden = false
             } else {
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+              //  imgViewGif.isHidden = true
                 return filtertheme?.count ?? 0
             }
         }

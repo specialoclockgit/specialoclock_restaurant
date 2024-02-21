@@ -59,10 +59,12 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
 extension FavouritesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if modal?.count == 0{
-            imgViewGif.image = UIImage.gif(name: "nodataFound")
-            imgViewGif.isHidden = false
+            collectionView.setNoDataMessage("No favorites found")
+           // imgViewGif.image = UIImage.gif(name: "nodataFound")
+           // imgViewGif.isHidden = false
         }else{
-            imgViewGif.isHidden = true
+            collectionView.backgroundView = nil
+          //  imgViewGif.isHidden = true
             return modal?.count ?? 0
         }
         return 0

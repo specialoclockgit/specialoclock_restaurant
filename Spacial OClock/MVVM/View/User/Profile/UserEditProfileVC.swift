@@ -29,6 +29,7 @@ class UserEditProfileVC: UIViewController {
     //MARK: VIEW LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        tfEmail.isUserInteractionEnabled = false
         tabBarController?.tabBar.isHidden = true
         viewProfile.layer.cornerRadius = viewProfile.frame.height / 2
         imgProfile.layer.cornerRadius = imgProfile.frame.height / 2

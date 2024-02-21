@@ -81,37 +81,45 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
         if setvalue == "Cuisines"{
             self.colleVeiw.hideSkeleton()
             if cuisine.count == 0{
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No cuisines found", txtColor: .black)
+               // imgViewGif.image = UIImage.gif(name: "nodataFound")
+               // imgViewGif.isHidden = false
             }else{
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+                //imgViewGif.isHidden = true
                 return filterCusine.count
             }
         }else if setvalue == "Category"{
             self.colleVeiw.hideSkeleton()
             if category.count == 0{
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No category found", txtColor: .black)
+                //imgViewGif.image = UIImage.gif(name: "nodataFound")
+                //imgViewGif.isHidden = false
             }else{
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+               // imgViewGif.isHidden = true
                 return filtercategory.count
             }
         }else if setvalue == "Theme"{
             self.colleVeiw.hideSkeleton()
             if themeArr.count == 0{
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No theme found", txtColor: .black)
+                //imgViewGif.image = UIImage.gif(name: "nodataFound")
+                //imgViewGif.isHidden = false
             }else{
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+                //imgViewGif.isHidden = true
                 return filterthemeAry.count
             }
         }else if setvalue == "Location"{
             self.colleVeiw.hideSkeleton()
             if location.count == 0{
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No location found", txtColor: .black)
+                //imgViewGif.image = UIImage.gif(name: "nodataFound")
+                //imgViewGif.isHidden = false
             }else{
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+              //  imgViewGif.isHidden = true
                 return filterlocation.count
             }
         }

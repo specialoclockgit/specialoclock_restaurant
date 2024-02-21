@@ -22,15 +22,20 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
     var viewmodel = restoViewModal()
     var modal : [Rows]?
     var filterdata : [Rows]?
+    var selectedDate : String?
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         tfSearch.delegate = self
+        img.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     //MARK: - FUNCTIONS API'S
     func setupAPI(date:String){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        selectedDate = date == "" ? formatter.string(from: Date()) : date
         viewmodel.homeRestoAPI(restobarID: Store.userDetails?.restoid ?? 0,date: date) { dataa in
             self.modal = dataa?.rows ?? []
             self.filterdata = dataa?.rows ?? []
@@ -71,10 +76,12 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
 extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if filterdata?.count == 0 {
-            img.image = UIImage.gif(name: "nodataFound")
-            img.isHidden = false
+            tableView.setNoDataMessage("No bookings found for date \(selectedDate ?? "")", txtColor: .black)
+            //img.image = UIImage.gif(name: "nodataFound")
+           // img.isHidden = false
         }else{
-            img.isHidden = true
+            tableView.backgroundView = nil
+           // img.isHidden = true
             return filterdata?.count ?? 0
         }
         return 0

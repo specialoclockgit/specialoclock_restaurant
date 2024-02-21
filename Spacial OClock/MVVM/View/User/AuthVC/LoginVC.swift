@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginVC: UIViewController {
+class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK: - OUTLETS
     @IBOutlet weak var viewMain: UIView!
@@ -28,7 +28,7 @@ class LoginVC: UIViewController {
         print(selectStatus)
         
         UserDefaults.standard.setValue(true, forKey: "AppInstalled")
-       
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         view.hideKeyboardWhenTappedAround()
         viewMain.clipsToBounds = true
         viewMain.layer.cornerRadius = 40

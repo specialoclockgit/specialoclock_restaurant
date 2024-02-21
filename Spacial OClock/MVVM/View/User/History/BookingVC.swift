@@ -20,7 +20,6 @@ class BookingVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var bookingTV: UITableView!
     
     //MARK: - VARIABLES
-    var arrImg = ["Rectangle1","Rectangle 351"]
     var status = 0
     var modal : [currentPastModalBody]?
     var viewmodal = HomeViewModel()
@@ -86,10 +85,12 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if modal?.count == 0{
-            self.imgView.image = UIImage.gif(name: "nodataFound")
-            self.imgView.isHidden = false
+            tableView.setNoDataMessage("No booking found")
+            //self.imgView.image = UIImage.gif(name: "nodataFound")
+           // self.imgView.isHidden = false
         }else{
-            self.imgView.isHidden = true
+            tableView.backgroundView = nil
+           // self.imgView.isHidden = true
             return modal?.count ?? 0
         }
         return 0
@@ -119,7 +120,7 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.bookingDetailVC) as! bookingDetailVC
         screen.status = modal?[indexPath.row].status ?? 0
-        if status == 1{
+        if status == 1 {
             screen.buttonTitle = "Add Rating & Review"
             screen.buttonColor = "themeOrange"
             screen.statusColor = "themeGreen"

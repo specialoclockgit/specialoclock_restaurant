@@ -62,11 +62,14 @@ class bookingDetailVC: UIViewController {
         viewReview.layer.cornerRadius = 12
         viewReview.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
         tabBarController?.tabBar.isHidden = true
-        btnMain.setTitle(buttonTitle, for: .normal)
         btnMain.backgroundColor = UIColor(named : buttonColor)
         lblstatus.textColor = UIColor(named: statusColor)
         img.image = UIImage(named: image)
         bookingDetial()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         tblView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     
@@ -97,11 +100,14 @@ class bookingDetailVC: UIViewController {
             self.lblCity.text = fetchdata?.restrorant?.city ?? ""
             self.lblLocation.text = fetchdata?.restrorant?.location ?? ""
             self.lblRestoName.text = fetchdata?.restrorant?.name ?? ""
-            if self.status == 0{
+            if self.modal?.status == 0{
                 self.lblstatus.text = "Ongoing"
-            }else if self.status == 1{
+                self.btnMain.setTitle("Cancel Booking", for: .normal)
+            }else if self.modal?.status == 1{
                 self.lblstatus.text = "Complete"
+                self.btnMain.setTitle("Add Rating & Review", for: .normal)
             }else{
+                self.btnMain.isHidden = true
                 self.lblstatus.text = "Cancelled"
             }
             if fetchdata?.restrorant?.type == 2 {
@@ -150,12 +156,14 @@ class bookingDetailVC: UIViewController {
     @IBAction func btnMainAct(_ sender : UIButton){
         debugPrint(statusVerify)
         //Add Ratting
-        if statusVerify == 1{
+        if self.modal?.status == 1{
             let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.AddRatingVC) as! AddRatingVC
+            screen.restoID = self.modal?.restrorant?.id ?? 0
+            screen.imgUrl = self.modal?.restrorant?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? ""
             self.navigationController?.pushViewController(screen, animated: true)
         }
         //Cancel Booking
-        else if statusVerify == 0{
+        else if self.modal?.status == 0{
             let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CancelBookingAlertVC) as! CancelBookingAlertVC
             screen.callBack = {
                 let reasonScreen = self.storyboard?.instantiateViewController(withIdentifier: ViewController.CancelBookingReasonVC) as! CancelBookingReasonVC

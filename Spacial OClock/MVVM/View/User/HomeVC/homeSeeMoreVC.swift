@@ -60,19 +60,23 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         if setvalue == "Popular"{
             self.collection.hideSkeleton()
             if all_bars_restos.count == 0{
-                imgViewGif.image = UIImage.gif(name: "nodataFound")
-                imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No result found")
+               // imgViewGif.image = UIImage.gif(name: "nodataFound")
+                //imgViewGif.isHidden = false
             }else{
-              imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+              //imgViewGif.isHidden = true
                 return all_bars_restos.count
             }
         }else{
             self.collection.hideSkeleton()
             if highily_rated_bars_restos.count == 0{
-               imgViewGif.image = UIImage.gif(name: "nodataFound")
-               imgViewGif.isHidden = false
+                collectionView.setNoDataMessage("No result found")
+               //imgViewGif.image = UIImage.gif(name: "nodataFound")
+               //imgViewGif.isHidden = false
             }else{
-                imgViewGif.isHidden = true
+                collectionView.backgroundView = nil
+               // imgViewGif.isHidden = true
                 return highily_rated_bars_restos.count
             }
         }

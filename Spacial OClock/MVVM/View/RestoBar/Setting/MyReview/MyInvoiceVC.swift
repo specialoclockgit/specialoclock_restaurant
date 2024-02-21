@@ -47,10 +47,12 @@ class MyInvoiceVC: UIViewController {
 extension MyInvoiceVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if modal?.count == 0{
-            imgViewGif.image = UIImage.gif(name: "nodataFound")
-            imgViewGif.isHidden = false
+            tableView.setNoDataMessage("No invoice found")
+            //imgViewGif.image = UIImage.gif(name: "nodataFound")
+           // imgViewGif.isHidden = false
         }else{
-            imgViewGif.isHidden = true
+            tableView.backgroundView = nil
+           // imgViewGif.isHidden = true
             return modal?.count ?? 0
         }
         return 0

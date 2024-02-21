@@ -28,7 +28,7 @@ class bookingDetailsVC: UIViewController {
     @IBOutlet weak var lblOfferTime : UILabel!
     @IBOutlet weak var btnComplete : UIButton!
     @IBOutlet weak var heightTBItem : NSLayoutConstraint!
-    
+    @IBOutlet weak var cnclTitleVw: UIView!
     //MARK: - VARIABELS
     var offershow = -1
     var status = Int()
@@ -66,26 +66,35 @@ class bookingDetailsVC: UIViewController {
     func resto_Detail_Api(){
         viewmodal.homeRestoDetailAPI(restoid: restoid) { data in
             self.modalDetail = data
-            
             self.productsUnderOffer = data?.productsUnderOffer ?? []
             let imageIndex = (imageURL) + (self.modalDetail?.user?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             if data?.status == 0{
                 self.lblStatus.text = "Ongoing"
-            }else if self.status == 1{
+                self.cnclTitleVw.isHidden = true
+                self.viewOffer.isHidden = true
+            }else if data?.status == 1{
                 self.lblStatus.text = "Complete"
                 self.lblStatus.textColor = UIColor(named: "themeGreen")
                 self.btnComplete.isHidden = true
+                self.btnReportUser.isHidden = true
 //                self.btnReportUser.isHidden = true
-            }else{
+                self.cnclTitleVw.isHidden = true
+                self.viewOffer.isHidden = true
+            } else {
                 self.lblStatus.textColor = UIColor(named: "themeAlert")
                 self.lblStatus.text = "Cancelled"
+                self.btnComplete.isHidden = true
+                self.btnReportUser.isHidden = true
+                self.cnclTitleVw.isHidden = false
+                self.viewOffer.isHidden = false
+                self.lblDis.text = data?.cancelationReason ?? ""
             }
             self.lblUDNAme.text = self.modalDetail?.user?.name ?? ""
             self.lblUDEmail.text = self.modalDetail?.user?.email ?? ""
             self.lblUDPhoneNumber.text = "\(self.modalDetail?.user?.countryCode ?? "") " + "\(self.modalDetail?.user?.phone ?? 0)"
-            self.lblDis.text = self.modalDetail?.restrorant?.offers?.first?.description ?? ""
+            //self.lblDis.text = self.modalDetail?.restrorant?.offers?.first?.description ?? ""
             self.lblBookingDate.text = self.modalDetail?.bookingDate ?? ""
             self.lblNumberOfPeople.text = "\(self.modalDetail?.numberOfPeople ?? 0)"
             self.lblBookingNumebr.text = self.modalDetail?.bookingID ?? ""
@@ -152,7 +161,7 @@ class bookingDetailsVC: UIViewController {
             
             
             
-            self.tbItem.reloadData()
+           // self.tbItem.reloadData()
         }
     }
     
@@ -243,20 +252,20 @@ extension bookingDetailsVC{
         viewOffer.isHidden = true
         
         //Complete Buuton Hide and Show
-        if status == 0{
-            lblStatus.textColor = UIColor(named: "themeAlert")
-            btnComplete.isHidden = false
-        }else{
-            lblStatus.textColor = UIColor(named: "themeGreen")
-            btnComplete.isHidden = true
-            //Invoice Button
-            let barStatus = UserDefaults.standard.status
-            if barStatus == 1 {
-                //btnComplete.isHidden = false
-                btnComplete.setTitle("Invoice", for: .normal)
-                btnComplete.backgroundColor = UIColor(named: "themeOrange")
-            }
-        }
+//        if status == 0{
+//            lblStatus.textColor = UIColor(named: "themeAlert")
+//            btnComplete.isHidden = false
+//        }else{
+//            lblStatus.textColor = UIColor(named: "themeGreen")
+//            btnComplete.isHidden = true
+//            //Invoice Button
+//            let barStatus = UserDefaults.standard.status
+//            if barStatus == 1 {
+//                //btnComplete.isHidden = false
+//                btnComplete.setTitle("Invoice", for: .normal)
+//                btnComplete.backgroundColor = UIColor(named: "themeOrange")
+//            }
+//        }
         if isHidden == true {
            // btnComplete.isHidden = true
         }

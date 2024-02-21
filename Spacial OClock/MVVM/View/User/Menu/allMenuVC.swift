@@ -43,10 +43,12 @@ class allMenuVC: UIViewController {
 extension allMenuVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if modal?.count == 0{
-            imgVeiwGif.image = UIImage.gif(name: "nodataFound")
-            imgVeiwGif.isHidden = false
+            collectionView.setNoDataMessage("No menu found")
+           // imgVeiwGif.image = UIImage.gif(name: "nodataFound")
+           // imgVeiwGif.isHidden = false
         }else{
-            imgVeiwGif.isHidden = true
+            collectionView.backgroundView = nil
+            //imgVeiwGif.isHidden = true
             return modal?.count ?? 0
         }
         return 0

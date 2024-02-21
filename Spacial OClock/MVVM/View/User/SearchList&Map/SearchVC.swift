@@ -55,10 +55,12 @@ class SearchVC: UIViewController {
 extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if filterdata?.count == 0{
-            imgViewGif.image = UIImage.gif(name: "nodataFound")
-            imgViewGif.isHidden = false
+            collectionView.setNoDataMessage("No result found")
+            //imgViewGif.image = UIImage.gif(name: "nodataFound")
+            //imgViewGif.isHidden = false
         }else{
-            imgViewGif.isHidden = true
+            collectionView.backgroundView = nil
+           // imgViewGif.isHidden = true
             return filterdata?.count ?? 0
         }
         return 0

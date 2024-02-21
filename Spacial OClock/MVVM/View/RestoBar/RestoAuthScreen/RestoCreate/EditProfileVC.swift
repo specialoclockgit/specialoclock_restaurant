@@ -19,10 +19,10 @@ class EditProfileVC: UIViewController {
     
     //MARK: Variables
     var heading = String()
-    var name = ""
-    var email = ""
-    var phoneNumber = ""
-    var getdataApi : EditProfileModel?
+    var getdataApi : GetprofileModelBody?
+    var viewmodel = AuthViewModel()
+    var imageData = [FileuploadModelBody]()
+    var isImage = false
     
     //MARK: VIEW LIFE CYCLE
     override func viewDidLoad() {
@@ -40,22 +40,30 @@ class EditProfileVC: UIViewController {
     @IBAction func btnCameraAct(_ sender: UIButton) {
         ImagePicker().pickImage(self) { (image) in
             self.imgProfile.image = image
+            self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
+                self?.imageData = imageData ?? [FileuploadModelBody]()
+                self?.isImage = true
+            }
         }
     }
     
    
     @IBAction func btnSaveAct(_ sender : UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        viewmodel.editprofile(isImage:self.isImage, name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "",countrySymbol: getdataApi?.countryCode ?? "",countryCode: getdataApi?.countryCode ?? "", email: tfEmail.text ?? "", image: self.imageData) {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
 
 extension EditProfileVC{
     func initialLoad(){
-        tfName.text = name
-        tfEmail.text = email
-        tfPhoneNumber.text = phoneNumber
+        tfName.text = getdataApi?.name ?? ""
+        tfEmail.text = getdataApi?.email ?? ""
+        tfEmail.isUserInteractionEnabled = false
+        tfPhoneNumber.text = getdataApi?.phone.description ?? ""
         imgProfile.layer.cornerRadius = imgProfile.frame.height / 2
         viewProfile.layer.cornerRadius = viewProfile.frame.height / 2
+        self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: getdataApi?.image.replacingOccurrences(of: " ", with: "%20") ?? "")
         view.hideKeyboardWhenTappedAround()
     }
 }

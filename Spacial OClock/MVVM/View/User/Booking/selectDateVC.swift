@@ -30,7 +30,11 @@ class selectDateVC: UIViewController {
     //MARK: - ACTIONS
     
     //MARK: - FUNCTIONS
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.first?.view == self.view {
+            self.dismiss(animated: true)
+        }
+    }
 }
 extension selectDateVC{
     func initialLoad(){

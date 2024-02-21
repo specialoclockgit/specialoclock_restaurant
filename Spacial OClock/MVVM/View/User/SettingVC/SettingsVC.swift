@@ -64,8 +64,11 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0{
-            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NotificationVC) as! NotificationVC
-            self.navigationController?.pushViewController(screen, animated: true)
+            let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+            let notificationVC =  StoryBoard.instantiateViewController(withIdentifier: ViewController.NotificationRestoVC) as! NotificationRestoVC
+            self.navigationController?.pushViewController(notificationVC, animated: true)
+//            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NotificationVC) as! NotificationVC
+//            self.navigationController?.pushViewController(screen, animated: true)
         }else if indexPath.row == 1{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ChangePasswordVC")as! ChangePasswordVC
             self.navigationController?.pushViewController(vc, animated: true)

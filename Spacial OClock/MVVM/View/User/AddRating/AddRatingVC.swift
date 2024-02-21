@@ -14,17 +14,17 @@ class AddRatingVC: UIViewController {
     //MARK: - OUTLETS
     @IBOutlet weak var txtView: IQTextView!
     @IBOutlet weak var cosmosView: CosmosView!
-    
+    @IBOutlet weak var ImgVw: UIImageView!
     //MARK: - VARIABLES
     var viewmodal = HomeViewModel()
     var restoID = Int()
     var ratig = Double()
-    
+    var imgUrl = ""
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden  = true
-
+        ImgVw.showIndicator(baseUrl: imageURL, imageUrl: imgUrl)
     }
     
     

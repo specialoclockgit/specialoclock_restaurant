@@ -448,6 +448,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         else if btnBookStatus == 1{
             let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
             screenReview.restoID = ProductID
+            screenReview.imgUrl = self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? ""
             self.navigationController?.pushViewController(screenReview, animated: true)
         }
     }
@@ -509,9 +510,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
         }else if collectionView == viewFullMenu{
             if modalfullmenu?.count == 0{
-                collView.setNoDataMessage("No Data found", txtColor: .white)
+                viewFullMenu.setNoDataMessage("No full menu found", txtColor: .black)
             }else{
-                collView.backgroundView = nil
+                viewFullMenu.backgroundView = nil
                 return modalfullmenu?.count ?? 0
             }
         }
@@ -682,10 +683,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         DispatchQueue.main.async {
             if self.modalfullmenu?.count == 0 {
                 self.viewFCHeight.constant = 260
-                self.ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
-                self.ImgViewgifReview.isHidden = false
+               // self.ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
+               // self.ImgViewgifReview.isHidden = false
             }else{
-                self.ImgViewgifReview.isHidden = true
+               // self.ImgViewgifReview.isHidden = true
                 self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
             }
             //self.collViewMenuHeight.constant  = self.collViewMenu.contentSize.height
@@ -702,10 +703,12 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             }
         } else {
             if reviews?.count == 0{
-                ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
-                ImgViewgifReview.isHidden = false
+                tbReview.setNoDataMessage("No review found", txtColor: .black)
+                //ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
+               // ImgViewgifReview.isHidden = false
             }else{
-                ImgViewgifReview.isHidden = true
+                tbReview.backgroundView = nil
+               // ImgViewgifReview.isHidden = true
                 return reviews?.count ?? 0
             }
         }
@@ -819,10 +822,10 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         DispatchQueue.main.async {
             if self.reviews?.count == 0{
                 self.heightTBReview.constant = 220
-                self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
-                self.imgViewGifReview.isHidden = false
+               // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
+               // self.imgViewGifReview.isHidden = false
             } else {
-                self.imgViewGifReview.isHidden = true
+                //self.imgViewGifReview.isHidden = true
                 self.heightTBReview.constant = self.tbReview.contentSize.height
             }
             

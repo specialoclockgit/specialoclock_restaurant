@@ -61,9 +61,7 @@ class ProfileVC: UIViewController {
     
     @IBAction func btnEditProfileAct(sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.EditProfileVC) as! EditProfileVC
-        screen.name = lblName.text ?? ""
-        screen.email = lblEmail.text ?? ""
-        screen.phoneNumber = lblPhoneNumber.text ?? ""
+        screen.getdataApi = self.getdataget
         self.navigationController?.pushViewController(screen, animated: true)
     }
 }

@@ -40,6 +40,11 @@ class NotificationRestoVC: UIViewController {
 }
 extension NotificationRestoVC  : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if modal?.count == 0 {
+            tableView.setNoDataMessage("No notification found")
+        }else {
+            tableView.backgroundView = nil
+        }
         return modal?.count ?? 0
     }
     
@@ -50,7 +55,7 @@ extension NotificationRestoVC  : UITableViewDelegate , UITableViewDataSource{
         cell.lblDay.text = modal?[indexPath.row].createdAt ?? ""
         let imageIndex = (imageURL) + (modal?[indexPath.row].userImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        cell.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+        cell.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

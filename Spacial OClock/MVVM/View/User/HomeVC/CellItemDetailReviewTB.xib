@@ -89,9 +89,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Enh-Ye-WdS">
-                                <rect key="frame" x="248" y="109.5" width="33" height="20"/>
+                                <rect key="frame" x="248" y="109.5" width="33" height="0.0"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="6Sd-1R-0w2"/>
+                                    <constraint firstAttribute="height" id="6Sd-1R-0w2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -111,7 +111,7 @@
                             <constraint firstItem="AGx-Cr-PWK" firstAttribute="leading" secondItem="TvW-xz-bS0" secondAttribute="trailing" constant="-125" id="ay8-qG-Qf5"/>
                             <constraint firstAttribute="trailing" secondItem="Enh-Ye-WdS" secondAttribute="trailing" constant="10" id="bSw-wY-agB"/>
                             <constraint firstItem="UPh-IF-nvi" firstAttribute="top" secondItem="ndd-6b-ZeW" secondAttribute="top" constant="5" id="drc-aS-POJ"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Enh-Ye-WdS" secondAttribute="bottom" constant="10" id="iDh-WK-0bk"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Enh-Ye-WdS" secondAttribute="bottom" constant="6" id="iDh-WK-0bk"/>
                             <constraint firstItem="AGx-Cr-PWK" firstAttribute="leading" secondItem="ndd-6b-ZeW" secondAttribute="leading" constant="10" id="ifW-g6-uLG"/>
                             <constraint firstAttribute="trailing" secondItem="AGx-Cr-PWK" secondAttribute="trailing" constant="10" id="kOG-Oi-QDx"/>
                             <constraint firstItem="AGx-Cr-PWK" firstAttribute="top" secondItem="TvW-xz-bS0" secondAttribute="bottom" constant="20" id="l5O-fU-oaA"/>
