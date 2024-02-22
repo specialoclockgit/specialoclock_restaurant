@@ -25,8 +25,6 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         initialLoad()
         
-        print(selectStatus)
-        
         UserDefaults.standard.setValue(true, forKey: "AppInstalled")
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         view.hideKeyboardWhenTappedAround()
@@ -40,6 +38,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    
     
 
     @IBAction func btnSignIn(_ sender: UIButton){

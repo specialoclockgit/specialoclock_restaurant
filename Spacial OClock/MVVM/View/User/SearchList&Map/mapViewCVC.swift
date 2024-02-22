@@ -18,6 +18,7 @@ class mapViewCVC: UICollectionViewCell {
     
     var listing : NearbyRestaurant?{
         didSet {
+           // lblRating.text = listing?.distance?.description ?? ""
             lblName.text = listing?.name ?? ""
             lbldesc.text = listing?.offerDescription ?? ""
             lblReservations.text  = "\(listing?.openTime ?? "") - \(listing?.closeTime ?? "")"

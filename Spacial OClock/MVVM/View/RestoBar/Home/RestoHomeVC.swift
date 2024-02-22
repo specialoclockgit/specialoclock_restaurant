@@ -32,7 +32,7 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     //MARK: - FUNCTIONS API'S
-    func setupAPI(date:String){
+    func setupAPI(date:String) {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         selectedDate = date == "" ? formatter.string(from: Date()) : date
@@ -43,6 +43,7 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
             self.tableVW.reloadData()
         }
     }
+    
     //MARK: - ACTIONS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -10,7 +10,7 @@ import GooglePlaces
 import GoogleMaps
 
 class mapViewController: UIViewController,GMSMapViewDelegate {
-
+    
     //MARK: - OUTLETS
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var collVw: UICollectionView!
@@ -26,7 +26,7 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         collVw.isHidden = true
-       // collVw.isHidden = iscomeFrom == 0 ? true : false
+        // collVw.isHidden = iscomeFrom == 0 ? true : false
         collVw.delegate = self
         collVw.dataSource = self
         mapView.delegate = self
@@ -36,8 +36,8 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
             getalllocations()
             print("countis",nearBy.count)
         }
-       
-       
+        
+        
         //getalllocations()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -107,14 +107,13 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
         if iscomeFrom == 0{
             
         }else{
-          //  self.tempNearBy = self.nearBy.filter({$0.offerPercentage == })
             if let selectedindex = locMarkers.firstIndex(of: marker){
                 self.tempNearBy = self.nearBy.filter({$0.offerPercentage == self.nearBy[selectedindex].offerPercentage})
                 self.collVw.isHidden = self.tempNearBy.count == 0 ? true : false
                 self.collVw.reloadData()
-//                let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
-//                vc.ProductID = self.nearBy[selectedindex].id ?? 0
-//                self.navigationController?.pushViewController(vc, animated: true)
+                //                let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
+                //                vc.ProductID = self.nearBy[selectedindex].id ?? 0
+                //                self.navigationController?.pushViewController(vc, animated: true)
             }
             
         }
@@ -127,27 +126,27 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
 
 extension mapViewController{
     func checkIfMutlipleCoordinates(latitude : Float , longitude : Float) -> CLLocationCoordinate2D{
-
+        
         var lat = latitude
         var lng = longitude
-
+        
         // arrFilterData is array of model which is giving lat long
-
+        
         let arrTemp = self.nearBy.filter {
-
+            
             return (((latitude == Float($0.latitude ?? "")) && (longitude == Float($0.longitude ?? ""))))
         }
-
+        
         // arrTemp giving array of objects with similar lat long
-        if (arrTemp.count ?? 0 ) > 1{
+        if (arrTemp.count ) > 1{
             // Core Logic giving minor variation to similar lat long
             let variation = (randomFloat(min: 0.0, max: 1.0) - 0.5) / 1500
             lat = lat + variation
             lng = lng + variation
-
+            
             let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
             return  finalPos
-
+            
         }else{
             let variation = (randomFloat(min: 0.0, max: 1.0) - 0.5) / 1500
             lat = lat + variation
@@ -155,9 +154,9 @@ extension mapViewController{
             let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
             return  finalPos
         }
-
+        
     }
-
+    
     func randomFloat(min: Float, max:Float) -> Float {
         return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
     }
@@ -172,7 +171,14 @@ extension mapViewController : UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collVw.dequeueReusableCell(withReuseIdentifier: "mapViewCVC", for: indexPath) as! mapViewCVC
         cell.listing = tempNearBy[indexPath.row]
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
+        vc.ProductID = self.tempNearBy[indexPath.row].id ?? 0
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
