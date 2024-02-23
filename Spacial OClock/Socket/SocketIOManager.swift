@@ -40,6 +40,10 @@ class SocketIOManager: NSObject {
         
         socket.on(clientEvent: .connect) {data, ack in
             print("socket connected")
+            if Store.userDetails != nil{
+                self.connect_user()
+            }
+            
         }
         
         socket.on(clientEvent: .reconnectAttempt) {data, ack in

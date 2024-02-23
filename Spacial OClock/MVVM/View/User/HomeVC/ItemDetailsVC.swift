@@ -16,13 +16,15 @@ struct ModelMenuCollView {
     var name : [String]
     var time :[String]
 }
-struct ModelMenuTBCell{
+
+struct ModelMenuTBCell {
     var heading : String
     var image : [String]
     var itemName : [String]
     var prevPrice : [String]
     var newPrice : [String]
 }
+
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet

@@ -56,6 +56,18 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
         tabBarController?.tabBar.isHidden = false
     }
     
+    
+    func isToday(dateString: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        if let date = dateFormatter.date(from: dateString) {
+            return Calendar.current.isDateInToday(date)
+        } else {
+            return false // Invalid date format
+        }
+    }
+    
     @IBAction func btnNotification(_ sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NotificationRestoVC) as! NotificationRestoVC
         self.navigationController?.pushViewController(screen, animated: true)
@@ -77,7 +89,14 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
 extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if filterdata?.count == 0 {
-            tableView.setNoDataMessage("No bookings found for date \(selectedDate ?? "")", txtColor: .black)
+            
+            if isToday(dateString: selectedDate ?? ""){
+                tableView.setNoDataMessage("Currently there is no booking for today", txtColor: .black)
+            }else {
+                tableView.setNoDataMessage("Currently there is no booking for date \(selectedDate ?? "")", txtColor: .black)
+            }
+            
+            
             //img.image = UIImage.gif(name: "nodataFound")
            // img.isHidden = false
         }else{

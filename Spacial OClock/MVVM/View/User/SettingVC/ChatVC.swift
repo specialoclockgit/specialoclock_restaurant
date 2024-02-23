@@ -9,6 +9,8 @@ import UIKit
 import IQKeyboardManagerSwift
 import DropDown
 import SDWebImage
+import MBProgressHUD
+
 
 class ChatVC: UIViewController, UITextViewDelegate {
     
@@ -31,11 +33,11 @@ class ChatVC: UIViewController, UITextViewDelegate {
         
         self.scroolTOLast()
         keyboardHandling()
-        if SocketIOManager.sharedInstance.socket.status != .connected
-        {
-            SocketIOManager.sharedInstance.connectMySocket()
-        }
-        SocketIOManager.sharedInstance.connect_user()
+//        if SocketIOManager.sharedInstance.socket.status != .connected
+//        {
+//            SocketIOManager.sharedInstance.connectMySocket()
+//        }
+//        SocketIOManager.sharedInstance.connect_user()
         allsockets()
         
         IQKeyboardManager.shared.enable = true
@@ -44,6 +46,9 @@ class ChatVC: UIViewController, UITextViewDelegate {
             viewBottom.layer.cornerRadius = 30
         }else {
             viewBottom.layer.cornerRadius = 25
+        }
+        DispatchQueue.main.async {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         }
     }
     
@@ -58,8 +63,8 @@ class ChatVC: UIViewController, UITextViewDelegate {
             }
         } else{
             SocketIOManager.sharedInstance.connectMySocket()
-            SocketIOManager.sharedInstance.connect_user()
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+//            SocketIOManager.sharedInstance.connect_user()
+            DispatchQueue.main.asyncAfter(deadline: .now()+2.0) {
                 self.sockectConnnet()
             }
         }
@@ -237,7 +242,9 @@ extension ChatVC {
                 }
             }
             self.chatTbleView.reloadData()
-            
+            DispatchQueue.main.async {
+                    MBProgressHUD.hide(for: self.view, animated: true)
+            }
         }
     }
     

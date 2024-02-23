@@ -11,7 +11,7 @@ import GooglePlaces
 import CoreLocation
 import AVFoundation
 
-class SignUPVC: UIViewController {
+class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK: - Outlets
     @IBOutlet weak var tfPhone: CustomTextField!
@@ -76,7 +76,21 @@ class SignUPVC: UIViewController {
         tapGesture()
         view.hideKeyboardWhenTappedAround()
         viewButton.isHidden = true
+//        let anywhereSwipeGestureRecognizer = AnywhereSwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+//        anywhereSwipeGestureRecognizer.edges = .left
+//        anywhereSwipeGestureRecognizer.delegate = self
+//        view.addGestureRecognizer(anywhereSwipeGestureRecognizer)
     }
+    
+//    @objc func handleSwipe(_ gestureRecognizer: AnywhereSwipeGestureRecognizer) {
+//        if gestureRecognizer.state == .ended {
+//            navigationController?.popViewController(animated: true)
+//        }
+//    }
+//
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return true
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -297,5 +311,12 @@ extension SignUPVC {
         })
         
         present(alertController, animated: true)
+    }
+}
+
+
+class AnywhereSwipeGestureRecognizer: UIScreenEdgePanGestureRecognizer {
+    override func shouldReceive(_ event: UIEvent) -> Bool {
+        return true
     }
 }

@@ -178,6 +178,7 @@
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2170C2B85DB4E007947C6 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EBA2170B2B85DB4E007947C6 /* nodataFound.gif */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
+		EBEE940C2B88C44700A32DDA /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE940B2B88C44700A32DDA /* NavigationVC.swift */; };
 		EC0484E72B174B9000BFDF4B /* MyInvoiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484E62B174B9000BFDF4B /* MyInvoiceVC.swift */; };
 		EC0484E92B174BE300BFDF4B /* getInvoiceListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484E82B174BE300BFDF4B /* getInvoiceListModal.swift */; };
 		EC0484EB2B17514900BFDF4B /* RestoCardListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484EA2B17514900BFDF4B /* RestoCardListVC.swift */; };
@@ -471,6 +472,7 @@
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2170B2B85DB4E007947C6 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
+		EBEE940B2B88C44700A32DDA /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
 		EC0484E62B174B9000BFDF4B /* MyInvoiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvoiceVC.swift; sourceTree = "<group>"; };
 		EC0484E82B174BE300BFDF4B /* getInvoiceListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInvoiceListModal.swift; sourceTree = "<group>"; };
 		EC0484EA2B17514900BFDF4B /* RestoCardListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoCardListVC.swift; sourceTree = "<group>"; };
@@ -945,6 +947,7 @@
 				C284FB412A402A0E006949B4 /* Assets.xcassets */,
 				C284FB432A402A0E006949B4 /* LaunchScreen.storyboard */,
 				C284FB462A402A0E006949B4 /* Info.plist */,
+				EBEE940B2B88C44700A32DDA /* NavigationVC.swift */,
 			);
 			path = "Spacial OClock";
 			sourceTree = "<group>";
@@ -1803,6 +1806,7 @@
 				ECA600372AD7D03A00C97493 /* AvalSlotModal.swift in Sources */,
 				A53B4A902A4EB77800E79265 /* NewBookingVC.swift in Sources */,
 				ECB699712B19B09100344356 /* EditRestaurentModel.swift in Sources */,
+				EBEE940C2B88C44700A32DDA /* NavigationVC.swift in Sources */,
 				A5A8CF3D2A580D7E006F23ED /* RestoLoginVC.swift in Sources */,
 				A5A8CF382A57DBCD006F23ED /* CellPopOverTV.swift in Sources */,
 				29A8E4A92A90AECE0062E142 /* getProfileModel.swift in Sources */,
