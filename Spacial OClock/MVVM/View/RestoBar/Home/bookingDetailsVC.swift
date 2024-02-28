@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import Cosmos
 
 class bookingDetailsVC: UIViewController {
 
@@ -29,14 +30,18 @@ class bookingDetailsVC: UIViewController {
     @IBOutlet weak var btnComplete : UIButton!
     @IBOutlet weak var heightTBItem : NSLayoutConstraint!
     @IBOutlet weak var cnclTitleVw: UIView!
+    @IBOutlet weak var replyBottom : NSLayoutConstraint!
+    @IBOutlet weak var reviewVw: UIView!
+    @IBOutlet weak var reviewImgVw: UIImageView!
+    @IBOutlet weak var reviewUserName: UILabel!
+    @IBOutlet weak var reviewTimelbl: UILabel!
+    @IBOutlet weak var reviewRatingVw: CosmosView!
+    @IBOutlet weak var reviewCommentLbl: UILabel!
+    @IBOutlet weak var replyTF: UITextField!
+    @IBOutlet weak var replyVw: UIView!
+    @IBOutlet weak var btnShowSendReply: UIButton!
     //MARK: - VARIABELS
-    var offershow = -1
     var status = Int()
-    var imgstring = "Ellipse 119"
-    var statusText = String()
-    var bookingNumber = "05"
-    var bookingTime = "16:00 to 22:00"
-    var bookingDate = "21 May 2023 "
     var isHidden = Bool()
     var restoid = Int()
     var viewmodal = restoViewModal()
@@ -44,7 +49,6 @@ class bookingDetailsVC: UIViewController {
     var APIcall = AuthViewModel()
     var productsUnderOffer: [ProductDetail]?
     var booking_id = String()
-    var bookingnumber = Int()
     var totalamount = Int()
     var prsents = Int()
     var prsentsamount = Int()
@@ -53,7 +57,7 @@ class bookingDetailsVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        keyboardHandling()
         tabBarController?.tabBar.isHidden = true
         initialLoad()
         tbItem.delegate = self
@@ -74,6 +78,8 @@ class bookingDetailsVC: UIViewController {
                 self.lblStatus.text = "Ongoing"
                 self.cnclTitleVw.isHidden = true
                 self.viewOffer.isHidden = true
+                self.btnComplete.isHidden = false
+                self.btnReportUser.isHidden = false
             }else if data?.status == 1{
                 self.lblStatus.text = "Complete"
                 self.lblStatus.textColor = UIColor(named: "themeGreen")
@@ -184,6 +190,14 @@ class bookingDetailsVC: UIViewController {
     @IBAction func btnContinueAct(_ sender : UIButton){
         complete_booking()
     }
+    @IBAction func btnShowReplyVw(_ sender: UIButton) {
+        replyVw.isHidden = false
+        replyTF.becomeFirstResponder()
+    }
+    
+    @IBAction func btnSendReply(_ sender: UIButton) {
+        
+    }
     
     
     @IBAction func onClickReportUser(_ sender: UIButton) {
@@ -292,4 +306,38 @@ func isDateTimePassed(dateTimeString: String) -> Bool {
     }
     
     return false
+}
+
+
+
+extension bookingDetailsVC {
+    private func keyboardHandling(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+    
+        self.replyBottom.constant = 10
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification){
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if UIDevice().userInterfaceIdiom == .phone {
+                switch UIScreen.main.nativeBounds.height {
+                case 1136,1334,1920, 2208:
+                    print("")
+                    self.replyBottom.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+3)
+                case 2436,2688,1792:
+                    print("")
+                    self.replyBottom.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+10)
+                default:
+                    print("")
+                    self.replyBottom.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+10)
+                }
+            }
+            self.view.layoutIfNeeded()
+            self.view.setNeedsLayout()
+        }
+    }
 }

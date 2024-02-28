@@ -390,7 +390,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             viewM.isHidden = true
             viewR.isHidden = false
             viewFM.isHidden = true
-            viewButton.isHidden = self.modal?.userID == Store.userDetails?.id ? true : false
+            viewButton.isHidden = true
+            //self.modal?.userID == Store.userDetails?.id ? true : false
             btnBookStatus = 1
             btnBook.setTitle("Write a Review", for: .normal)
             debugPrint("2")
