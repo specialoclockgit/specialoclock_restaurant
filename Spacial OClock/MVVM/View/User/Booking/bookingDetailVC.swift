@@ -39,6 +39,18 @@ class bookingDetailVC: UIViewController {
     @IBOutlet weak var lblNOP: UILabel!
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var bookingSlotStartEndTime : UILabel!
+    @IBOutlet weak var reviewUserImgVw: UIImageView!
+    @IBOutlet weak var reviewUserNamelbl: UILabel!
+    @IBOutlet weak var reviewUserTimeLbl: UILabel!
+    @IBOutlet weak var reviewUserCommentLbl: UILabel!
+    @IBOutlet weak var reviewUserRatingVw: CosmosView!
+    @IBOutlet weak var reviewUserVw: UIView!
+    @IBOutlet weak var replyVw: UIView!
+    @IBOutlet weak var replyRestroImgVw: UIImageView!
+    @IBOutlet weak var replyRestroNameLbl: UILabel!
+    @IBOutlet weak var replyTimeLbl: UILabel!
+    @IBOutlet weak var replyCommentLbl: UILabel!
+    @IBOutlet weak var replyRestroType: UILabel!
     //MARK: - VARIABLES
     var buttonTitle = String()
     var buttonColor = String()
@@ -84,6 +96,7 @@ class bookingDetailVC: UIViewController {
                 {
                     let newsize  = newvalue as! CGSize
                     tblViewHeight.constant = newsize.height
+                    //newsize.height
                 }
             }
         }
@@ -101,12 +114,36 @@ class bookingDetailVC: UIViewController {
             self.lblLocation.text = fetchdata?.restrorant?.location ?? ""
             self.lblRestoName.text = fetchdata?.restrorant?.name ?? ""
             if self.modal?.status == 0{
+                self.reviewUserVw.isHidden = true
+                self.replyVw.isHidden = true
                 self.lblstatus.text = "Ongoing"
                 self.btnMain.setTitle("Cancel Booking", for: .normal)
             }else if self.modal?.status == 1{
+                if let review = self.modal?.review, review.review != ""{
+                    self.btnMain.isHidden = true
+                    self.reviewUserVw.isHidden = false
+                    self.reviewUserTimeLbl.text = self.string_date_ToDate(review.createdAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
+                    self.reviewUserNamelbl.text = review.userName ?? ""
+                    self.reviewUserImgVw.showIndicator(baseUrl: imageURL, imageUrl: review.userImage ?? "")
+                    self.reviewUserRatingVw.rating = Double(review.rating ?? "") ?? 0
+                    self.reviewUserCommentLbl.text = review.review ?? ""
+                    
+                    self.replyVw.isHidden = review.reply == "" ? true : false
+                    self.replyTimeLbl.text = self.string_date_ToDate(review.updatedAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
+                    self.replyCommentLbl.text = review.reply ?? ""
+                    self.replyRestroNameLbl.text = self.modal?.restrorant?.name ?? ""
+                    self.replyRestroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.modal?.restrorant?.profileImage ?? "")
+                    self.replyRestroType.text = self.modal?.restrorant?.type == 1 ? "Restaurant Reply" : "Bar Reply"
+                }else {
+                    self.replyVw.isHidden = true
+                    self.btnMain.isHidden = false
+                    self.reviewUserVw.isHidden = true
+                }
                 self.lblstatus.text = "Complete"
                 self.btnMain.setTitle("Add Rating & Review", for: .normal)
             }else{
+                self.reviewUserVw.isHidden = true
+                self.replyVw.isHidden = true
                 self.btnMain.isHidden = true
                 self.lblstatus.text = "Cancelled"
             }
@@ -132,7 +169,7 @@ class bookingDetailVC: UIViewController {
             self.lblNOP.text = "\(fetchdata?.numberOfPeople ?? 0)"
             self.actualprice = fetchdata?.restrorant?.offers?.first?.offerPrice ?? 0
             self.presntsPrice = fetchdata?.offerPercentage ?? ""
-            self.tblView.reloadData()
+           // self.tblView.reloadData()
         }
     }
     
@@ -160,6 +197,7 @@ class bookingDetailVC: UIViewController {
             let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.AddRatingVC) as! AddRatingVC
             screen.restoID = self.modal?.restrorant?.id ?? 0
             screen.imgUrl = self.modal?.restrorant?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? ""
+            screen.bookingID = self.booking_id
             self.navigationController?.pushViewController(screen, animated: true)
         }
         //Cancel Booking

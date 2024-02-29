@@ -86,8 +86,8 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - REVIEE ADD API
-    func addReviewAPI(restoid:Int, rating:Double,review:String , onsuccess: @escaping ((createReviewModalBody?)->())){
-        let param = ["restrorant_bar_id":restoid , "rating":rating, "review":review] as [String:Any]
+    func addReviewAPI(restoid:Int, rating:Double,review:String ,bookingId:Int, onsuccess: @escaping ((createReviewModalBody?)->())){
+        let param = ["restrorant_bar_id":restoid , "rating":rating, "review":review,"booking_id":bookingId] as [String:Any]
         WebService.service(API.write_review, param: param, service: .post) {
             (modaldata: createReviewModal, Data , json) in
             onsuccess(modaldata.body)

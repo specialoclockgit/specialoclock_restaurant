@@ -110,6 +110,21 @@ class bookingDetailsVC: UIViewController {
             self.specailofferless = self.totalamount - self.prsentsamount
             
             
+            if let reviewData = self.modalDetail?.review, reviewData.review != ""{
+                
+                self.reviewVw.isHidden = reviewData.reply == "" ? false : true
+                self.reviewRatingVw.rating = Double(reviewData.rating ?? "") ?? 0.0
+                self.reviewUserName.text = reviewData.userName ?? ""
+                let imageIndex = (imageURL) + (reviewData.userImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+                self.reviewImgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
+                self.reviewImgVw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+                self.reviewTimelbl.text = convertDateToString(formatString: reviewData.createdAt ?? "")
+                self.reviewCommentLbl.text = reviewData.review ?? ""
+            } else {
+                self.reviewVw.isHidden = true
+            }
+            
+            
             if self.modalDetail?.restrorant?.type == 1 {
                 self.lblSOffer.text = "\(self.modalDetail?.offerName ?? "") -\(self.modalDetail?.bookingAmount ?? "")%"
                 self.lblOfferTime.text = "Offer from " + (self.modalDetail?.bookingSlot ?? "")
@@ -196,7 +211,10 @@ class bookingDetailsVC: UIViewController {
     }
     
     @IBAction func btnSendReply(_ sender: UIButton) {
-        
+        viewmodal.replyReviewAPI(review_id: self.modalDetail?.review?.id ?? 0, reply: replyTF.text ?? "") {
+            self.replyVw.isHidden = true
+            self.resto_Detail_Api()
+        }
     }
     
     
@@ -340,4 +358,19 @@ extension bookingDetailsVC {
             self.view.setNeedsLayout()
         }
     }
+}
+
+
+func convertDateToString(formatString:String) -> String {
+    let dateString = formatString
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    
+    let date = dateFormatter.date(from: dateString)
+    let outputFormatter = DateFormatter()
+    outputFormatter.dateFormat = "MMM d, yyyy h:mm a"
+    
+    return outputFormatter.string(from: date ?? Date())
+    
 }

@@ -131,7 +131,7 @@ extension BookingRestoVC : UITableViewDelegate , UITableViewDataSource{
 //        }else{
 //            //screen.status = 1
 //            screen.statusText = "Completed"
-//        } 
+//        }
         screen.booking_id = modal?[indexPath.row].bookingID ?? ""
         self.navigationController?.pushViewController(screen, animated: true)
     }

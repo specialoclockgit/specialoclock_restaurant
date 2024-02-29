@@ -313,11 +313,12 @@ struct restoDetailModalsBody: Codable {
     let offerID: Int?
     let createdAt, updatedAt, offerName, offerPercentage: String?
     let user: Userr?
+    var review: ReviewData?
     let restrorant: Restrorant?
     let productsUnderOffer: [ProductDetail]?
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case id,review
         case userID = "user_id"
         case restrorantBarID = "restrorant_bar_id"
         case bookingDate = "booking_date"
@@ -336,6 +337,22 @@ struct restoDetailModalsBody: Codable {
         case productsUnderOffer = "products_under_offer"
     }
 }
+
+// MARK: - ReviewData
+struct ReviewData: Codable {
+    var id, userID, restrorantBarID, bookingID: Int?
+    var rating, review, reply, createdAt: String?
+    var updatedAt, userName, userImage: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case userID = "user_id"
+        case restrorantBarID = "restrorant_bar_id"
+        case bookingID = "booking_id"
+        case rating, review, reply, createdAt, updatedAt, userName, userImage
+    }
+}
+
 
 // MARK: - ProductDetail
 struct ProductDetail: Codable {

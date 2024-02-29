@@ -182,6 +182,7 @@ enum API: String{
     case complete_booking
     case report_booking
     case fetch_bardata_by_menutype
+    case reply_review
 }
 
 //MARK: - User Default keys

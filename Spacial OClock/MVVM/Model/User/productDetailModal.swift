@@ -222,14 +222,17 @@ struct Offersd: Codable {
     }
 }
 
+
+
+
 // MARK: - Reviewsd
 struct Reviewsd: Codable {
     var id, userID, restrorantBarID: Int?
-    var review, createdAt, rating, updatedAt: String?
+    var review, createdAt, rating, updatedAt,reply: String?
     let user: User?
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case id,reply
         case userID = "user_id"
         case restrorantBarID = "restrorant_bar_id"
         case rating, review, createdAt, updatedAt, user
@@ -251,6 +254,7 @@ struct Reviewsd: Codable {
         }else if let value = try? container.decode(Int.self, forKey: .review) {
             self.review = "\(value)"
         }
+        self.reply = try container.decodeIfPresent(String.self, forKey: .reply)
         self.createdAt = try container.decodeIfPresent(String.self, forKey: .createdAt)
         self.updatedAt = try container.decodeIfPresent(String.self, forKey: .updatedAt)
         self.user = try container.decodeIfPresent(User.self, forKey: .user)

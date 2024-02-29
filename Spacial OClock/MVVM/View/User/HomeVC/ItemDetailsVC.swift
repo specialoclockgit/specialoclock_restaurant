@@ -186,7 +186,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.modal = data
            
             self.images = data?.images ?? []
-            self.reviews = data?.reviews?.reversed() ?? []
+            self.reviews = data?.reviews ?? []
             self.ourMenu = data?.ourMenu ?? []
             if self.status == 1 {
                 self.offer = data?.offer_timings ?? []
@@ -449,10 +449,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
            
         }
         else if btnBookStatus == 1{
-            let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
-            screenReview.restoID = ProductID
-            screenReview.imgUrl = self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? ""
-            self.navigationController?.pushViewController(screenReview, animated: true)
+//            let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
+//            screenReview.restoID = ProductID
+//            screenReview.imgUrl = self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? ""
+//            self.navigationController?.pushViewController(screenReview, animated: true)
         }
     }
     @IBAction func btnMap(_ sender: UIButton) {
@@ -817,6 +817,14 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.lblReview.text = self.reviews?[indexPath.row].review ?? ""
             cell.cosmosView.rating = Double(self.reviews?[indexPath.row].rating ?? "") ?? 0.0
             cell.lblDate.text = string_date_ToDate(reviews?[indexPath.row].createdAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
+            cell.replyVw.isHidden = self.reviews?[indexPath.row].reply == "" ? true : false
+            cell.replyName.text = self.modal?.name ?? ""
+            let restImage = (imageURL) + (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            cell.replyImgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.replyImgVw.sd_setImage(with: URL(string: restImage), placeholderImage: UIImage(named: "placeholder (1)"))
+            cell.replyDateLbl.text = string_date_ToDate(reviews?[indexPath.row].updatedAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
+            cell.replyTypeLbl.text = self.modal?.type == 1 ? "Restaurant Reply" : "Bar Reply"
+            cell.replyComment.text = self.reviews?[indexPath.row].reply ?? ""
             return cell
         }
         

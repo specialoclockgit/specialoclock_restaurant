@@ -12450,7 +12450,7 @@
                                 <rect key="frame" x="0.0" y="116" width="414" height="746"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-bI-EWQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="528"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6kn-Zd-3EQ" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
                                                 <rect key="frame" x="22" y="16" width="370" height="106"/>
@@ -13072,10 +13072,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="gEb-yK-bAp">
-                                                <rect key="frame" x="22" y="374" width="370" height="128"/>
+                                                <rect key="frame" x="22" y="374" width="370" height="0.0"/>
                                                 <subviews>
-                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uZh-XR-0Ht">
-                                                        <rect key="frame" x="0.0" y="0.0" width="370" height="128"/>
+                                                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uZh-XR-0Ht">
+                                                        <rect key="frame" x="0.0" y="0.0" width="370" height="78"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JVb-YQ-pjl">
                                                                 <rect key="frame" x="6" y="10" width="40" height="40"/>
@@ -13090,13 +13090,13 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V64-0C-XT3">
-                                                                <rect key="frame" x="56" y="10" width="15.5" height="33"/>
+                                                                <rect key="frame" x="56" y="10" width="15.5" height="0.0"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="13"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vHu-cj-RWP" customClass="CosmosView" customModule="Cosmos">
-                                                                <rect key="frame" x="56" y="47" width="100" height="20"/>
+                                                                <rect key="frame" x="56" y="14" width="100" height="20"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="100" id="alO-8s-ETF"/>
@@ -13118,13 +13118,13 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJY-z7-pnQ">
-                                                                <rect key="frame" x="56" y="71" width="308" height="17"/>
+                                                                <rect key="frame" x="56" y="38" width="308" height="0.0"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eWy-OX-R2v">
-                                                                <rect key="frame" x="56" y="98" width="81" height="20"/>
+                                                                <rect key="frame" x="56" y="48" width="81" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="ZBc-Fp-RYP"/>
                                                                 </constraints>
@@ -13170,7 +13170,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </stackView>
                                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZAI-Ab-7Os">
-                                                <rect key="frame" x="22" y="518" width="370" height="0.0"/>
+                                                <rect key="frame" x="22" y="390" width="370" height="0.0"/>
                                                 <subviews>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q49-zz-Ct3">
                                                         <rect key="frame" x="0.0" y="0.0" width="370" height="56"/>
@@ -13185,7 +13185,7 @@
                                                                             <constraint firstAttribute="height" constant="36" id="Ttt-bi-8zy"/>
                                                                         </constraints>
                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                        <state key="normal" image="SendIconm"/>
+                                                                        <state key="normal" image="Page-1"/>
                                                                         <connections>
                                                                             <action selector="btnSendReply:" destination="RIt-H0-gVd" eventType="touchUpInside" id="QSk-WL-EKl"/>
                                                                         </connections>
@@ -13876,8 +13876,8 @@
         <image name="Locatin" width="12" height="17"/>
         <image name="Notification-1" width="64" height="64"/>
         <image name="PIN" width="8" height="11.5"/>
+        <image name="Page-1" width="30.5" height="30.5"/>
         <image name="SearchIcon" width="16.5" height="16.5"/>
-        <image name="SendIconm" width="150" height="153"/>
         <image name="TICK" width="62.5" height="62.5"/>
         <image name="Top Background" width="750" height="501"/>
         <image name="Top Background-1" width="750" height="501"/>

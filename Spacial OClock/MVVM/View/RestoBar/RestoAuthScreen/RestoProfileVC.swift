@@ -56,7 +56,7 @@ class RestoProfileVC: UIViewController, UIGestureRecognizerDelegate {
             self.lblLocation.text = data?.city ?? ""
             self.lblTime.text =  "\((data?.openTime ?? "").components(separatedBy: " ").first ?? "") - \((String(describing: data?.closeTime ?? "")).components(separatedBy: " ").first ?? "")"
             self.profileimgVW.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-            self.profileimgVW.sd_setImage(with: URL(string: imageURL + (data?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "rectAlbum"))
+            self.profileimgVW.sd_setImage(with: URL(string: imageURL + (data?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "placeholder (1)"))
             self.cosmosView.rating = Double(data?.avgRating ?? 0)
             self.lblREview.text = "\(data?.avgRating ?? 0)"
             self.arrayimage = self.datagetApi?.restaurantImages ?? []

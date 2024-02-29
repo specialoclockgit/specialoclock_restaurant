@@ -18,6 +18,7 @@ class AddRatingVC: UIViewController {
     //MARK: - VARIABLES
     var viewmodal = HomeViewModel()
     var restoID = Int()
+    var bookingID = Int()
     var ratig = Double()
     var imgUrl = ""
     //MARK: - VIEW LIFECYCLE
@@ -30,7 +31,7 @@ class AddRatingVC: UIViewController {
     
     //MARK: - FUCNTION
     func add_Review(){
-        viewmodal.addReviewAPI(restoid: restoID, rating: Double(cosmosView.rating) , review: txtView.text) { dataa in
+        viewmodal.addReviewAPI(restoid: restoID, rating: Double(cosmosView.rating) , review: txtView.text,bookingId: self.bookingID) { dataa in
             self.navigationController?.popViewController(animated: true)
         }
     }

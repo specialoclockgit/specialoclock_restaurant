@@ -199,6 +199,19 @@ class restoViewModal : NSObject{
             onsuccess(modaldata)
         }
     }
+    
+    //MARK: Reply to user review API
+    func replyReviewAPI(review_id:Int ,reply:String,onSuccess: @escaping(()->())){
+        if reply.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            CommonUtilities.shared.showAlert(message: "Please enter your reply", isSuccess: .error)
+        }else {
+            let params : parameters = ["review_id":review_id,"reply":reply]
+            WebService.service(.reply_review,param: params,service: .post) {(resp:CommonModel, data, json) in
+                onSuccess()
+            }
+        }
+    }
+
     //MARK: - CURRENT PAST BOOKING API
 //    func currentPast_API(type:Int,genre:String,onsuccess: @escaping (([currentPastModalBody]?)->())){
 //        let param = ["type":type, "genre":"1"] as [String:Any]
@@ -207,6 +220,6 @@ class restoViewModal : NSObject{
 //            onsuccess(modaldata.body)
 //        }
 //    }
-
+    
 }
 

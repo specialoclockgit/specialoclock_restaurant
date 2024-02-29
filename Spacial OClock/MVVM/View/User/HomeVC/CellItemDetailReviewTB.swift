@@ -21,6 +21,7 @@ class CellItemDetailReviewTB: UITableViewCell {
     @IBOutlet weak var replyName: UILabel!
     @IBOutlet weak var replyComment: UILabel!
     @IBOutlet weak var replyDateLbl: UILabel!
+    @IBOutlet weak var replyTypeLbl : UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
