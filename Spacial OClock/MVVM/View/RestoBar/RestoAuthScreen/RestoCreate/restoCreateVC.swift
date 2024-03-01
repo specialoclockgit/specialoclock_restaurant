@@ -273,7 +273,6 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     func ShowtimePicker2() {
         timePicker2.datePickerMode = .time
         timePicker2.minuteInterval = 30
-        timePicker2.minuteInterval = 30
         if #available(iOS 14.0, *) {
             timePicker2.preferredDatePickerStyle = .wheels
         } else {
@@ -298,17 +297,17 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         //        formatter.dateFormat = "HH:mm a"
         tfCloseTime.text = formatter.string(from: timePicker2.date)
         CloseTime =  formatter.string(from: timePicker2.date)
-        
-        if CloseTime > openTime{
-            tfCloseTime.text = formatter.string(from: timePicker2.date)
-            
-            print(tfCloseTime ?? "")
-            self.view.endEditing(true)
-        }else {
-            // Show an error message or prevent setting the end time
-            // For example, you can show an alert:
-            showAlert(message: "End time must be after start time")
-        }
+        self.view.endEditing(true)
+//        if CloseTime > openTime{
+//            tfCloseTime.text = formatter.string(from: timePicker2.date)
+//
+//            print(tfCloseTime ?? "")
+//            self.view.endEditing(true)
+//        }else {
+//            // Show an error message or prevent setting the end time
+//            // For example, you can show an alert:
+//            showAlert(message: "End time must be after start time")
+//        }
     }
     
     func showAlert(message: String) {

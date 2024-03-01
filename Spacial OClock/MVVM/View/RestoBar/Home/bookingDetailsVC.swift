@@ -174,14 +174,7 @@ class bookingDetailsVC: UIViewController {
                     self.btnReportUser.backgroundColor = .lightGray
                     print("Complete button disabled")
                 }
-                
-                
             }
-            
-            
-            
-            
-            
            // self.tbItem.reloadData()
         }
     }
@@ -213,6 +206,7 @@ class bookingDetailsVC: UIViewController {
     @IBAction func btnSendReply(_ sender: UIButton) {
         viewmodal.replyReviewAPI(review_id: self.modalDetail?.review?.id ?? 0, reply: replyTF.text ?? "") {
             self.replyVw.isHidden = true
+            CommonUtilities.shared.showAlert(message: "Review reply submitted successfully", isSuccess: .success)
             self.resto_Detail_Api()
         }
     }

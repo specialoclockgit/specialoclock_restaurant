@@ -179,7 +179,23 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                         navigationController.viewControllers = [tabVC]
                         UIApplication.shared.windows.first?.rootViewController = navigationController
                         UIApplication.shared.windows.first?.makeKeyAndVisible()
-                    } else {
+                    } else if notificationType == 1 {
+                        if let booking_id = userInfo["booking_primary_id"] as? Int {
+                            let vc = mainStoryboard.instantiateViewController(withIdentifier: "bookingDetailVC") as! bookingDetailVC
+                            let navigationController = UINavigationController(rootViewController: vc)
+                            navigationController.navigationBar.isHidden = true
+                            let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                            vc.booking_id = booking_id
+                            vc.buttonTitle = "Cancel Booking"
+                            vc.buttonColor = "themeRed"
+                            vc.statusColor = "themeRed"
+                            vc.statusVerify = 0
+                            navigationController.viewControllers = [tabVC,vc]
+                            UIApplication.shared.windows.first?.rootViewController = navigationController
+                            UIApplication.shared.windows.first?.makeKeyAndVisible()
+                        }//booking_primary_id
+                       
+                    }else {
                         let vc = mainStoryboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
                         let navigationController = UINavigationController(rootViewController: vc)
                         navigationController.navigationBar.isHidden = true
