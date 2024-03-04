@@ -117,7 +117,9 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
         if let userInfo = notification.request.content.userInfo as? [String:Any] {
+            
             print("**********************")
             print(userInfo)
             let userInfos = userInfo["aps"] as?  [String:Any]
@@ -141,8 +143,13 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                 }
             }else{
                 if let topVc = UIApplication.topViewController(), topVc.isKind(of: RestoHomeVC.self) {
-                    topVc.viewWillAppear(true)
-                    completionHandler([])
+                    if Staustype == 7 || Staustype != 0{
+                        completionHandler([.sound,.banner,.badge])
+                    }else {
+                        topVc.viewWillAppear(true)
+                        completionHandler([])
+                    }
+                    
                 } else {
                     completionHandler([.sound,.banner,.badge])
                 }
@@ -161,10 +168,6 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
             print("**********************")
             print(userInfo)
             let apnsData = userInfo["data"] as? [String:Any]
-            let receiverId = apnsData?["ReceiverId"] as? Int
-            let senderId = apnsData?["senderId"] as? Int
-            let senderName = apnsData?["SenderName"] as? String
-            let receiverName = apnsData?["ReceiverName"] as? String
             let storyboard = UIStoryboard.init(name: "RestoBar", bundle: Bundle.main)
             let mainStoryboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
             if let notificationType = userInfo["type"] as? Int {
@@ -195,6 +198,22 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                             UIApplication.shared.windows.first?.makeKeyAndVisible()
                         }//booking_primary_id
                        
+                    } else if notificationType == 7 {
+                        if let booking_id = userInfo["booking_id"] as? Int{
+                            let vc = mainStoryboard.instantiateViewController(withIdentifier: ViewController.bookingDetailVC) as! bookingDetailVC
+                            let navigationController = UINavigationController(rootViewController: vc)
+                            navigationController.navigationBar.isHidden = true
+                            let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                            navigationController.viewControllers = [tabVC,vc]
+                            //vc.cancelid =
+                            vc.booking_id = booking_id
+                            vc.buttonTitle = "Cancel Booking"
+                            vc.buttonColor = "themeRed"
+                            vc.statusColor = "themeRed"
+                            vc.statusVerify = 0
+                            UIApplication.shared.windows.first?.rootViewController = navigationController
+                            UIApplication.shared.windows.first?.makeKeyAndVisible()
+                        }
                     }else {
                         let vc = mainStoryboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
                         let navigationController = UINavigationController(rootViewController: vc)
@@ -214,7 +233,23 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                         navigationController.viewControllers = [tabVC]
                         UIApplication.shared.windows.first?.rootViewController = navigationController
                         UIApplication.shared.windows.first?.makeKeyAndVisible()
-                    }else{
+                    }else if notificationType == 7 {
+                        
+                        if let restrorant_bar_id = userInfo["restrorant_bar_id"] as? String, let booking_id = userInfo["booking_id"] as? String{
+                            let vc = storyboard.instantiateViewController(withIdentifier: ViewController.bookingDetailsVC) as! bookingDetailsVC
+                            let navigationController = UINavigationController(rootViewController: vc)
+                            navigationController.navigationBar.isHidden = true
+                            let tabVC = storyboard.instantiateViewController(withIdentifier: "RestoTabBarVC") as! RestoTabBarVC
+                            navigationController.viewControllers = [tabVC,vc]
+                            vc.restoid = Int(restrorant_bar_id) ?? 0
+                            vc.booking_id = booking_id
+                            vc.isHidden = true
+                            UIApplication.shared.windows.first?.rootViewController = navigationController
+                            UIApplication.shared.windows.first?.makeKeyAndVisible()
+                        }
+                        
+                        
+                    } else{
 //                        let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
 //                        let navigationController = UINavigationController(rootViewController: tabVC)
 //                        navigationController.navigationBar.isHidden = true
@@ -228,11 +263,7 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                         navigationController.viewControllers = [tabVC,vc]
                         UIApplication.shared.windows.first?.rootViewController = navigationController
                         UIApplication.shared.windows.first?.makeKeyAndVisible()
-                        
-                        
-                        
-                        
-                        
+                 
                     }
                 }
             }

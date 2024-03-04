@@ -77,11 +77,11 @@ class bookingDetailVC: UIViewController {
         btnMain.backgroundColor = UIColor(named : buttonColor)
         lblstatus.textColor = UIColor(named: statusColor)
         img.image = UIImage(named: image)
-        bookingDetial()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        bookingDetial()
         tblView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     

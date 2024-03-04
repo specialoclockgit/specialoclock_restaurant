@@ -47,6 +47,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        selectStatus = 1
         Store.status = "\(restoselctStatus)"
         tfName.delegate = self
         tfPhone.delegate = self
@@ -160,6 +161,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func btnSignUp(_ sender: UIButton) {
+        
         self.viewmodel.signUpapi(isImage: self.isImageSelected, image: self.image , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location, role: self.selectStatus) {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
             vc.btnCheckStatus = self.selectStatus
