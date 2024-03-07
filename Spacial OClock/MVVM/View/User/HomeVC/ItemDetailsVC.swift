@@ -664,58 +664,62 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
-        _ = indexPath.row
-        if status == 1 {
-            
-            if collectionView == collViewMenu{
-                isselectedoffer = indexPath.row
+        if collectionView == collViewMenu{
+            _ = indexPath.row
+            if status == 1 {
                 
-                collViewMenu.reloadData()
-            }
-            //valueSelect = true
-            if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
-            
-                if let is_fifty = self.offer?[indexPath.row].is_fifty{
-                    self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
-                }else {
-                    self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
+                if collectionView == collViewMenu{
+                    isselectedoffer = indexPath.row
+                    
+                    collViewMenu.reloadData()
                 }
+                //valueSelect = true
+                if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
                 
-            menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
-                
-            }
-            self.slottime = offer?[indexPath.row].offer ?? ""
-            self.slotid = offer?[indexPath.row].id ?? 0
-            self.menuid = offer?[indexPath.row].menuID ?? 0
-            self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
-            self.offerID = offer?[indexPath.row].offerID ?? 0
-            
-        } else if status == 2 {
-            if collectionView == collViewMenu{
-                isselectedoffer = indexPath.row
-                collViewMenu.reloadData()
-            }
-            //valueSelect = true
-            
-            if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
-              
-                if let is_fifty = self.offer?[indexPath.row].is_fifty{
-                    self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
-                }else {
-                    self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
-                }
-                
+                    if let is_fifty = self.offer?[indexPath.row].is_fifty{
+                        self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
+                    }else {
+                        self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
+                    }
+                    
                 menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
-              
-            }
-            self.slottime = offer?[indexPath.row].offer ?? ""
-            self.slotid = offer?[indexPath.row].id ?? 0
-            self.menuid = offer?[indexPath.row].menuID ?? 0
-            self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
-          //  self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
-            self.offerID = offer?[indexPath.row].offerID ?? 0
+                    
+                }
+                self.slottime = offer?[indexPath.row].offer ?? ""
+                self.slotid = offer?[indexPath.row].id ?? 0
+                self.menuid = offer?[indexPath.row].menuID ?? 0
+                self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
+                self.offerID = offer?[indexPath.row].offerID ?? 0
+                
+            } else if status == 2 {
+                if collectionView == collViewMenu{
+                    isselectedoffer = indexPath.row
+                    collViewMenu.reloadData()
+                }
+                //valueSelect = true
+                
+                if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
+                  
+                    if let is_fifty = self.offer?[indexPath.row].is_fifty{
+                        self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
+                    }else {
+                        self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
+                    }
+                    
+                    menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+                  
+                }
+                self.slottime = offer?[indexPath.row].offer ?? ""
+                self.slotid = offer?[indexPath.row].id ?? 0
+                self.menuid = offer?[indexPath.row].menuID ?? 0
+                self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
+              //  self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
+                self.offerID = offer?[indexPath.row].offerID ?? 0
 
+            }
         }
+        
+        
     }
     
     
