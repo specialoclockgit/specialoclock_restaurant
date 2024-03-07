@@ -95,7 +95,7 @@ extension MyReviewVC: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyReviewTVC", for: indexPath) as! MyReviewTVC
-        cell.lblName.text = dataget?[indexPath.row].user?.name ?? ""
+        cell.lblName.text = dataget?[indexPath.row].user?.name?.capitalized ?? ""
         cell.lblDis.text = dataget?[indexPath.row].review ?? ""
         cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
         cell.imgView.sd_setImage(with: URL(string: imageURL + (dataget?[indexPath.row].user?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "pl"))

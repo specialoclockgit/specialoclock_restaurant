@@ -129,14 +129,14 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newSeeMoreCVC", for: indexPath) as! newSeeMoreCVC
         if setvalue == "Location"{
             cell.imgView.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
-            cell.lblName.text = self.filterlocation[indexPath.row].city ?? ""
+            cell.lblName.text = self.filterlocation[indexPath.row].locality_area ?? ""
             cell.lblTotalREs.text = "Restaurant \(self.filterlocation[indexPath.row].restroCount ?? 0)"
         }else if setvalue == "Cuisines"{
             let image = "\(self.filterCusine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblTotalREs.text = "Restaurant \(self.filterCusine[indexPath.row].restroCount ?? 0)"
-            cell.lblName.text = self.filterCusine[indexPath.row].name ?? ""
+            cell.lblName.text = self.filterCusine[indexPath.row].name?.capitalized ?? ""
         }else if setvalue == "Category"{
             let image = "\(self.filtercategory[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -191,7 +191,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
         }else if setvalue == "Cuisines"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.cusinessID = self.filterCusine[indexPath.row].id ?? 0
-            vc.lblName = self.filterCusine[indexPath.row].name ?? ""
+            vc.lblName = self.filterCusine[indexPath.row].name?.capitalized ?? ""
             vc.setimage = "soup"
             vc.setValue = "Cuisines"
             self.navigationController?.pushViewController(vc, animated: true)

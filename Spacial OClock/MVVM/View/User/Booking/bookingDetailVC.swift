@@ -112,7 +112,7 @@ class bookingDetailVC: UIViewController {
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             self.lblCity.text = fetchdata?.restrorant?.city ?? ""
             self.lblLocation.text = fetchdata?.restrorant?.location ?? ""
-            self.lblRestoName.text = fetchdata?.restrorant?.name ?? ""
+            self.lblRestoName.text = fetchdata?.restrorant?.name?.capitalized ?? ""
             if self.modal?.status == 0{
                 self.reviewUserVw.isHidden = true
                 self.replyVw.isHidden = true
@@ -126,12 +126,12 @@ class bookingDetailVC: UIViewController {
                     self.reviewUserNamelbl.text = review.userName ?? ""
                     self.reviewUserImgVw.showIndicator(baseUrl: imageURL, imageUrl: review.userImage ?? "")
                     self.reviewUserRatingVw.rating = Double(review.rating ?? "") ?? 0
-                    self.reviewUserCommentLbl.text = review.review ?? ""
+                    self.reviewUserCommentLbl.text = review.review?.capitalized ?? ""
                     
                     self.replyVw.isHidden = review.reply == "" ? true : false
                     self.replyTimeLbl.text = self.string_date_ToDate(review.updatedAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
-                    self.replyCommentLbl.text = review.reply ?? ""
-                    self.replyRestroNameLbl.text = self.modal?.restrorant?.name ?? ""
+                    self.replyCommentLbl.text = review.reply?.capitalized ?? ""
+                    self.replyRestroNameLbl.text = self.modal?.restrorant?.name?.capitalized ?? ""
                     self.replyRestroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.modal?.restrorant?.profileImage ?? "")
                     self.replyRestroType.text = self.modal?.restrorant?.type == 1 ? "Restaurant Reply" : "Bar Reply"
                 }else {

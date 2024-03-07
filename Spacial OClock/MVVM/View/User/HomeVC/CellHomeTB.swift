@@ -275,7 +275,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if objArray[collView.tag].name == "Location"{
+        if objArray[collView.tag].name == "Location" {
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.country = location[indexPath.row].country ?? ""
             vc.city = location[indexPath.row].city ?? ""
@@ -283,7 +283,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setValue = "Location"
             vc.setimage = "pinPerson"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
-        }else if objArray[collView.tag].name == "Category"{
+        }else if objArray[collView.tag].name == "Category" {
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.cusinessID = category[indexPath.row].id ?? 0
             vc.lblName = category[indexPath.row].title ?? ""
@@ -291,7 +291,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setimage = "category_icon"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
-        else if objArray[collView.tag].name == "Cuisines"{
+        else if objArray[collView.tag].name == "Cuisines" {
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.cusinessID = cuisine[indexPath.row].id ?? 0
             vc.lblName = cuisine[indexPath.row].name ?? ""
@@ -299,12 +299,12 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setimage = "soup"
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
-        else if objArray[collView.tag].name == "Popular"{
+        else if objArray[collView.tag].name == "Popular" {
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
             
             vc.ProductID = heishtresto[indexPath.row].id ?? 0
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
-        }else if objArray[collView.tag].name == "Theme"{
+        }else if objArray[collView.tag].name == "Theme" {
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.themeID = themeArr[indexPath.row].id ?? 0
             vc.lblName = themeArr[indexPath.row].productName ?? ""

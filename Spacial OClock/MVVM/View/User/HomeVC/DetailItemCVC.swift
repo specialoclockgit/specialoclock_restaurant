@@ -20,6 +20,10 @@ class DetailItemCVC: UICollectionViewCell {
     @IBOutlet weak var lblDiscription: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var imgView: CustomImageView!
+    @IBOutlet weak var whiteBlurVw: UIView!
+    @IBOutlet weak var closeDateVw: UIView!
+    @IBOutlet weak var lblcloseDate: UILabel!
+    
     var screen = Store.screenType
     var offerTimings: [TimeSlotoffer]?
     

@@ -90,7 +90,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
             cell.lblDis.text = ((self.all_bars_restos[indexPath.row].openTime)?.components(separatedBy: " ").first ?? "") + " - " +  ((self.all_bars_restos[indexPath.row].closeTime)?.components(separatedBy: " ").first ?? "")
-            cell.lblName.text = self.all_bars_restos[indexPath.row].name ?? ""
+            cell.lblName.text = self.all_bars_restos[indexPath.row].name?.capitalized ?? ""
             cell.offerTimings = self.all_bars_restos[indexPath.row].offerTimings ?? []
             cell.lblCity.text = self.all_bars_restos[indexPath.row].city ?? ""
             cell.lblLocation.text = self.all_bars_restos[indexPath.row].location ?? ""
@@ -105,7 +105,7 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             let imageIndex = (imageURL) + (highily_rated_bars_restos[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblName.text = self.highily_rated_bars_restos[indexPath.row].name ?? ""
+            cell.lblName.text = self.highily_rated_bars_restos[indexPath.row].name?.capitalized ?? ""
             cell.lblDis.text = (self.highily_rated_bars_restos[indexPath.row].openTime ?? "") +  "-" + (self.highily_rated_bars_restos[indexPath.row].closeTime ?? "")
             cell.lblCity.text = self.highily_rated_bars_restos[indexPath.row].city ?? ""
             cell.lblLocation.text = self.highily_rated_bars_restos[indexPath.row].location ?? ""

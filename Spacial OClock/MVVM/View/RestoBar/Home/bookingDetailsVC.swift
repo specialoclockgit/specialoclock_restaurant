@@ -97,7 +97,7 @@ class bookingDetailsVC: UIViewController {
                 self.viewOffer.isHidden = false
                 self.lblDis.text = data?.cancelationReason ?? ""
             }
-            self.lblUDNAme.text = self.modalDetail?.user?.name ?? ""
+            self.lblUDNAme.text = self.modalDetail?.user?.name?.capitalized ?? ""
             self.lblUDEmail.text = self.modalDetail?.user?.email ?? ""
             self.lblUDPhoneNumber.text = "\(self.modalDetail?.user?.countryCode ?? "") " + "\(self.modalDetail?.user?.phone ?? 0)"
             //self.lblDis.text = self.modalDetail?.restrorant?.offers?.first?.description ?? ""

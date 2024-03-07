@@ -828,7 +828,7 @@
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUM-Xv-RAW" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
                                                         <rect key="frame" x="36" y="1256.5" width="342" height="56"/>
-                                                        <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="themeOrange"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="k7k-lc-r9y"/>
                                                         </constraints>
@@ -1051,7 +1051,7 @@
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0a2-p2-xKE">
                                                         <rect key="frame" x="0.0" y="0.0" width="342" height="56"/>
-                                                        <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" name="themeOrange"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="c8v-QR-syg"/>
                                                         </constraints>
@@ -1071,7 +1071,7 @@
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QWc-I3-5ay">
                                                         <rect key="frame" x="0.0" y="79" width="342" height="56"/>
-                                                        <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" name="themeOrange"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="1t1-zD-7Q2"/>
                                                         </constraints>
@@ -1377,7 +1377,7 @@
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osL-M4-jAy">
                                                 <rect key="frame" x="36" y="565" width="342" height="56"/>
-                                                <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="themeOrange"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="56" id="Ytg-Ww-xZt"/>
                                                 </constraints>
@@ -4105,7 +4105,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YjS-t9-FhS">
                                                     <rect key="frame" x="344" y="22.5" width="32" height="20"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="onTintColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" name="themeOrange"/>
                                                     <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </switch>
                                             </subviews>
@@ -4807,7 +4807,7 @@
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AXq-BV-ZUn">
                                                 <rect key="frame" x="31" y="573" width="352" height="56"/>
-                                                <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="themeOrange"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="56" id="DCh-x4-H4G"/>
                                                 </constraints>
@@ -6474,7 +6474,7 @@
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xVZ-Ls-4Nd">
                                                 <rect key="frame" x="40" y="468" width="334" height="56"/>
-                                                <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="themeOrange"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="56" id="4w3-EU-mN9"/>
                                                 </constraints>
@@ -6588,7 +6588,7 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uZ9-Xg-NGr">
                                                 <rect key="frame" x="134.5" y="0.0" width="119.5" height="50"/>
-                                                <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="themeOrange"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="No">
@@ -7630,7 +7630,7 @@
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Co-DF-pWT">
                                                         <rect key="frame" x="38" y="382" width="338" height="56"/>
-                                                        <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="themeOrange"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="FVd-2X-wFl"/>
                                                         </constraints>
@@ -7931,7 +7931,7 @@
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZm-U7-b3m">
                                                 <rect key="frame" x="35" y="344" width="344" height="56"/>
-                                                <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="themeOrange"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="56" id="5rH-4t-lHL"/>
                                                 </constraints>
@@ -8933,7 +8933,7 @@
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xxd-mp-Gx2">
                                                         <rect key="frame" x="30" y="341.5" width="354" height="56"/>
-                                                        <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="themeOrange"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="Lpq-d1-c00"/>
                                                         </constraints>
@@ -9102,7 +9102,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIX-c1-Upt">
                                         <rect key="frame" x="40" y="180" width="264" height="56"/>
-                                        <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="themeOrange"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="56" id="R3i-AQ-rcI"/>
                                         </constraints>
@@ -9357,7 +9357,7 @@
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RkW-LL-0WL" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
                                                 <rect key="frame" x="312" y="728" width="72" height="56"/>
-                                                <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="themeOrange"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="56" id="MOK-NN-jhy"/>
                                                     <constraint firstAttribute="width" constant="72" id="fWu-0R-Id9"/>
@@ -10790,7 +10790,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.96341496709999996" green="0.44764912130000001" blue="0.072597049179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="themeOrange"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="pEo-6T-b8S" secondAttribute="bottom" constant="4" id="2uM-ga-JSh"/>
                                     <constraint firstAttribute="trailing" secondItem="pEo-6T-b8S" secondAttribute="trailing" constant="4" id="DkJ-Sw-jir"/>
@@ -11437,7 +11437,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQ6-2q-Mnc">
                                                                 <rect key="frame" x="0.0" y="0.0" width="344" height="56"/>
-                                                                <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="backgroundColor" name="themeOrange"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="56" id="5hg-HQ-Tia"/>
                                                                 </constraints>
@@ -11469,7 +11469,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDY-De-upn">
                                                                 <rect key="frame" x="0.0" y="0.0" width="344" height="56"/>
-                                                                <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="backgroundColor" name="themeOrange"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="56" id="hHE-ob-FVI"/>
                                                                 </constraints>
@@ -12553,7 +12553,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="themeOrange"/>
                                                 <constraints>
                                                     <constraint firstItem="Zdm-UP-Yiz" firstAttribute="centerY" secondItem="dWh-fd-Mj5" secondAttribute="centerY" id="8y5-66-aKw"/>
                                                     <constraint firstAttribute="height" constant="32" id="9pt-Dx-Ba5"/>
@@ -13407,7 +13407,7 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pZ-DK-GMl">
                                                 <rect key="frame" x="123" y="0.0" width="111" height="56"/>
-                                                <color key="backgroundColor" red="0.99607843139999996" green="0.44705882349999998" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="themeOrange"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="18"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="No">
@@ -13937,13 +13937,13 @@
             <color red="0.85900002717971802" green="0.027000000700354576" blue="0.027000000700354576" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="themeGreen">
-            <color red="0.4309999942779541" green="0.79199999570846558" blue="0.10199999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.43137254901960786" green="0.792156862745098" blue="0.10196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="themeOrange">
-            <color red="0.99599999189376831" green="0.44699999690055847" blue="0.075000002980232239" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.99607843137254903" green="0.44705882352941173" blue="0.074509803921568626" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="themeRed">
-            <color red="0.97600001096725464" green="0.25499999523162842" blue="0.0040000001899898052" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.97647058823529409" green="0.25490196078431371" blue="0.0039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

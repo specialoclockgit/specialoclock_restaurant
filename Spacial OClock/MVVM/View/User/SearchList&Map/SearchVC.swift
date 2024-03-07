@@ -74,7 +74,7 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
         }
        
-        cell.lblName.text = filterdata?[indexPath.row].name ?? ""
+        cell.lblName.text = filterdata?[indexPath.row].name?.capitalized ?? ""
         cell.lblDis.text = filterdata?[indexPath.row].shortDescription ?? ""
         return cell
     }

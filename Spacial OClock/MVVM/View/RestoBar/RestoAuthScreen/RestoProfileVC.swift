@@ -50,7 +50,7 @@ class RestoProfileVC: UIViewController, UIGestureRecognizerDelegate {
     func setupAPI() {
         viewmodel.restaurentDetails { data in
             self.datagetApi = data
-            self.lblname.text = data?.name ?? ""
+            self.lblname.text = data?.name?.capitalized ?? ""
             self.lblDiscription.text = data?.shortDescription ?? ""
             self.openLocationss.text = data?.location ?? ""
             self.lblLocation.text = data?.city ?? ""
@@ -108,7 +108,7 @@ extension RestoProfileVC{
             self.lblHeading.text = "Bar Profile"
         }
         debugPrint(heading)
-        lblname.text = UserDefaults.standard.name
+        lblname.text = UserDefaults.standard.name.capitalized
         btnCheckStatus = UserDefaults.standard.status
        // if btnCheckStatus == 0 {
             viewPreview.isHidden = false

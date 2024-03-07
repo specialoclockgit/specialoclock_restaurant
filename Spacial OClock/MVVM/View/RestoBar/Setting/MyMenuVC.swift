@@ -90,13 +90,13 @@ extension MyMenuVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyMenuTvc", for: indexPath) as! MyMenuTvc
-        cell.lblName.text = datagetApi?[indexPath.row].name ?? ""
+        cell.lblName.text = datagetApi?[indexPath.row].name.capitalized ?? ""
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.BreakfastVC) as! BreakfastVC
-        screen.heading = datagetApi?[indexPath.row].name ?? ""
+        screen.heading = datagetApi?[indexPath.row].name.capitalized ?? ""
         screen.menuid =  datagetApi?[indexPath.row].id ?? 0
         self.navigationController?.pushViewController(screen, animated: true)
     }

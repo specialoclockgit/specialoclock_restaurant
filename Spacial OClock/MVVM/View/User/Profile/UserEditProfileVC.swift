@@ -45,7 +45,7 @@ class UserEditProfileVC: UIViewController {
         self.viewmodel.ProfileAPI { data in
             self.profileBody = data
             self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: data?.image ?? "")
-            self.tfName.text = data?.name ?? ""
+            self.tfName.text = data?.name.capitalized ?? ""
             self.tfEmail.text = data?.email ?? ""
             self.tfPhoneNumber.text = "\(data?.phone ?? 0)"
             self.tfCountryCode.text = "\(data?.countryCode ?? "")"

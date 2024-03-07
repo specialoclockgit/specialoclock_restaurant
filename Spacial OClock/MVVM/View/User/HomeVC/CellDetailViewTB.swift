@@ -46,7 +46,7 @@ extension CellDetailViewTB : UICollectionViewDelegate , UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellHomeCV, for: indexPath) as! CellHomeCV
         cell.imgLocaiton.image = arrModel[indexPath.row].img
-        cell.lblLocationName.text = arrModel[indexPath.row].name
+        cell.lblLocationName.text = arrModel[indexPath.row].name.capitalized
         cell.lblTotalRestaurant.text = arrModel[indexPath.row].totalRestaurant
         cell.btnNext.tag = indexPath.row
         cell.btnNext.addTarget(self, action: #selector(btnnextClick), for: .touchUpInside)

@@ -30,14 +30,14 @@ struct CategoryByRModalBody: Codable {
     let profileImage, commission: String?
     let isLiked: Int?
     let availableOffer, offerDescription, offerPercentage, offerOpenTime: String?
-    let offerCloseTime: String?
+    let offerCloseTime, disable_dates: String?
     let avgrating : Int?
     let offers: [TimeSlotoffer]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude
         case countryCode = "country_code"
-        case mobile
+        case mobile, disable_dates
         case avgrating = "avg_rating"
         case userID = "user_id"
         case shortDescription = "short_description"

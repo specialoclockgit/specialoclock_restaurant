@@ -76,7 +76,7 @@ extension FavouritesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         cell.itemImg.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.itemImg.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
         cell.lblOpenTime.text = "\(modal?[indexPath.row].openTime ?? "") - " + "\(modal?[indexPath.row].closeTime ?? "")"
-        cell.lblNAme.text = modal?[indexPath.row].name ?? ""
+        cell.lblNAme.text = modal?[indexPath.row].name?.capitalized ?? ""
 //        cell.lblOffer.text = modal?[indexPath.row].
         
         cell.btnImg.addTarget(self, action: #selector(btnfavourite(_:)), for: .touchUpInside)

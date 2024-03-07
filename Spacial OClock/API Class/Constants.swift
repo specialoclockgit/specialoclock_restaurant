@@ -288,24 +288,7 @@ enum constantMessages:String{
 }
 
 //MARK: SHOW SWIFTY MESSAGE
-func showSwiftyAlert(_ Title :String,_ body: String ,_ isSuccess : Bool){
-    DispatchQueue.main.async {
-        let warning = MessageView.viewFromNib(layout: .cardView)
-        if isSuccess == true{
-            warning.configureTheme(.success)
-        }else{
-            warning.configureTheme(.error)
-        }
-        warning.configureDropShadow()
-        warning.configureContent(title: Title, body: body)
-        warning.button?.isHidden = true
-        // warning.iconImageView?.image = #imageLiteral(resourceName: "imgNavLogo")
-        var warningConfig = SwiftMessages.defaultConfig
-        warningConfig.presentationContext = .window(windowLevel: UIWindow.Level.statusBar)
-        warningConfig.duration = .seconds(seconds: 1)
-        SwiftMessages.show(config: warningConfig, view: warning)
-    }
-}
+
 func goToLogin() {
    let login = AppStoryboard.Main.instance.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
    let navigationController = UINavigationController.init(rootViewController: login)
@@ -318,3 +301,62 @@ func goToLogin() {
        navigationController.isNavigationBarHidden = true
        rootVC = navigationController
    }
+
+func isToday(dateString: String) -> Bool {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    
+    if let date = dateFormatter.date(from: dateString) {
+        return Calendar.current.isDateInToday(date)
+    } else {
+        return false // Invalid date format
+    }
+}
+
+func checkDatesAreInSequence(array: [String]) -> Bool {
+    let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dates = array.compactMap { dateFormatter.date(from: $0) }
+        
+        for i in 0..<(dates.count - 1) {
+            let calendar = Calendar.current
+            if let nextDate = calendar.date(byAdding: .day, value: 1, to: dates[i]) {
+                if nextDate != dates[i + 1] {
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+        return true
+}
+func formatDate(inputDate: String) -> String? {
+    let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "yyyy-MM-dd"
+      
+      guard let date = dateFormatter.date(from: inputDate) else {
+          return nil
+      }
+      
+      dateFormatter.dateFormat = "MMMM"
+      let formattedDate = dateFormatter.string(from: date)
+      
+      let dayFormatter = DateFormatter()
+      dayFormatter.dateFormat = "dd"
+      let day = dayFormatter.string(from: date)
+      
+      var ordinalSuffix = "th"
+      let lastTwoDigits = Int(day)! % 100
+      if lastTwoDigits >= 11 && lastTwoDigits <= 13 {
+          ordinalSuffix = "th"
+      } else {
+          switch Int(day)! % 10 {
+          case 1: ordinalSuffix = "st"
+          case 2: ordinalSuffix = "nd"
+          case 3: ordinalSuffix = "rd"
+          default: break
+          }
+      }
+      
+      return "\(day)\(ordinalSuffix) \(formattedDate)"
+}

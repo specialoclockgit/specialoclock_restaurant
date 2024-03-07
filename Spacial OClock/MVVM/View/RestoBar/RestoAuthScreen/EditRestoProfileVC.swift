@@ -95,7 +95,7 @@ class EditRestoProfileVC: UIViewController {
     func setupAPI() {
         viewmodelresto.restaurentDetails { data in
             self.datagetApi = data
-            self.tfName.text = data?.name ?? ""
+            self.tfName.text = data?.name?.capitalized ?? ""
             self.tvDescription.text = data?.shortDescription
             self.tfLocation.text = data?.location ?? ""
             self.tfOpen.text =  data?.openTime ?? ""

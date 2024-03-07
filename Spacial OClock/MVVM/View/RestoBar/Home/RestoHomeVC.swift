@@ -57,16 +57,7 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
-    func isToday(dateString: String) -> Bool {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        if let date = dateFormatter.date(from: dateString) {
-            return Calendar.current.isDateInToday(date)
-        } else {
-            return false // Invalid date format
-        }
-    }
+    
     
     @IBAction func btnNotification(_ sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NotificationRestoVC) as! NotificationRestoVC
@@ -136,7 +127,7 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
             cell.offerNameLbl.text = ""
         }
         
-        cell.lblUserNo.text = filterdata?[indexPath.row].user?.name ?? ""
+        cell.lblUserNo.text = filterdata?[indexPath.row].user?.name?.capitalized ?? ""
         
         return cell
     }

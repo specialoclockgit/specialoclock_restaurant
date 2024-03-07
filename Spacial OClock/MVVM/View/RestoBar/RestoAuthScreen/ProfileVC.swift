@@ -40,7 +40,7 @@ class ProfileVC: UIViewController {
      func setupAPi(){
         viewmodel.ProfileAPI { data in
             self.getdataget = data
-            self.lblName.text = data?.name ?? ""
+            self.lblName.text = data?.name.capitalized ?? ""
             self.lblEmail.text = data?.email ?? ""
             self.lblPhoneNumber.text =  data?.phone.description ?? ""
             self.profileImg.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge

@@ -334,6 +334,17 @@ extension UICollectionView {
         {_ in completion() }
     }
     
+    func setNoDataMessageLbl(_ message: String,txtColor:UIColor) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = txtColor
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont(name: "Poppins-Medium", size: 16)
+        messageLabel.sizeToFit()
+        self.backgroundView = messageLabel
+    }
+    
     func setNoDataMessage(_ message: String,txtColor:UIColor = .black,yPosition : CGFloat = -50) {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height))
         

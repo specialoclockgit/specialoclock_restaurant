@@ -43,7 +43,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     @IBOutlet weak var mapView : MKMapView!
     @IBOutlet weak var btnDine : UIButton!
     @IBOutlet weak var btnDrinks : UIButton!
-    
+    @IBOutlet weak var lblUserName : UILabel!
     //MARK: - VARIABELS
     var lat : Double?
     var long : Double?
@@ -64,6 +64,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.lblUserName.text = "Hi \(Store.userDetails?.name?.capitalized ?? ""), you’re in"
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.timeZone = TimeZone.current.identifier
         print(timeZone)

@@ -57,7 +57,7 @@ class EditProfileVC: UIViewController {
 
 extension EditProfileVC{
     func initialLoad(){
-        tfName.text = getdataApi?.name ?? ""
+        tfName.text = getdataApi?.name.capitalized ?? ""
         tfEmail.text = getdataApi?.email ?? ""
         tfEmail.isUserInteractionEnabled = false
         tfPhoneNumber.text = getdataApi?.phone.description ?? ""

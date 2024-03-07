@@ -25,6 +25,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     @IBOutlet weak var imgViewHead: UIImageView!
     
     //MARK: Variables
+    var context = CIContext(options: nil)
     var country = String()
     var city = String()
     var iconImage = String()
@@ -46,7 +47,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     var setValue = ""
     var all_bars_restos = [AllBarsResto]()
     var type = 1
-    
+    var disableDatesArr : [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -118,6 +119,25 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
         }
     }
     
+    //MARK: - Blur ImageView
+    
+
+    func blurEffect(image: UIImageView) {
+
+        let currentFilter = CIFilter(name: "CIGaussianBlur")
+        let beginImage = CIImage(image: image.image!)
+        currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
+        currentFilter!.setValue(10, forKey: kCIInputRadiusKey)
+
+        let cropFilter = CIFilter(name: "CICrop")
+        cropFilter!.setValue(currentFilter!.outputImage, forKey: kCIInputImageKey)
+        cropFilter!.setValue(CIVector(cgRect: beginImage!.extent), forKey: "inputRectangle")
+
+        let output = cropFilter!.outputImage
+        let cgimg = context.createCGImage(output!, from: output!.extent)
+        let processedImage = UIImage(cgImage: cgimg!)
+        image.image = processedImage
+    }
     
     //MARK: - LOCATION BY RESTO
     func location_By_RestoAPI() {
@@ -198,8 +218,32 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         if setValue == "Location" {
             let imageIndex = (imageURL) + (filterlocations?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblName.text = filterlocations?[indexPath.row].name ?? ""
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
+            if let disable_dates = filterlocations?[indexPath.row].disable_dates,disable_dates != "" {
+                let disableDatesArr = disable_dates.components(separatedBy: ",")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let todayDateString = dateFormatter.string(from: Date())
+                if disableDatesArr.contains(todayDateString){
+                    self.blurEffect(image: cell.imgView)
+                    cell.whiteBlurVw.isHidden = false
+                    cell.closeDateVw.isHidden = false
+                    if checkDatesAreInSequence(array: disableDatesArr){
+                        cell.lblcloseDate.text = "Closed until \(formatDate(inputDate: disableDatesArr.last ?? "") ?? "")"
+                    }else {
+                        cell.lblcloseDate.text = "Closed today"
+                    }
+                } else {
+                    cell.whiteBlurVw.isHidden = true
+                    cell.closeDateVw.isHidden = true
+                }
+                
+            }else {
+                cell.whiteBlurVw.isHidden = true
+                cell.closeDateVw.isHidden = true
+            }
+            
+            cell.lblName.text = filterlocations?[indexPath.row].name?.capitalized ?? ""
             cell.lblLocation.text = filterlocations?[indexPath.row].location ?? ""
             cell.lblfirstLocaton.text = filterlocations?[indexPath.row].city ?? ""
             cell.lblDiscription.text = filterlocations?[indexPath.row].shortDescription ?? ""
@@ -211,10 +255,10 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         } else if setValue == "Category" {
             let imageIndex = (imageURL) + (filterCategory?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             cell.lblfirstLocaton.text = filterCategory?[indexPath.row].city ?? ""
             cell.lblLocation.text = filterCategory?[indexPath.row].location ?? ""
-            cell.lblName.text = filterCategory?[indexPath.row].name ?? ""
+            cell.lblName.text = filterCategory?[indexPath.row].name?.capitalized ?? ""
             cell.lblDiscription.text = "\(filterCategory?[indexPath.row].openTime ?? "") - " + "\(filterCategory?[indexPath.row].closeTime ?? "")"
            // let fetchresto = Store.screenType == 1 ? filterCategory?[indexPath.row].offers ?? [] : filterCategory?[indexPath.row].offers?.unique(map: {$0.offer?.id ?? 0}) ?? []
             let fetchresto = filterCategory?[indexPath.row].offers ?? []
@@ -226,10 +270,10 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         } else if setValue == "Cuisines" {
             let imageIndex = (imageURL) + (filtercusin?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             cell.lblfirstLocaton.text = filtercusin?[indexPath.row].city ?? ""
             cell.lblLocation.text = filtercusin?[indexPath.row].location ?? ""
-            cell.lblName.text = filtercusin?[indexPath.row].name ?? ""
+            cell.lblName.text = filtercusin?[indexPath.row].name?.capitalized ?? ""
             cell.lblDiscription.text = "\(filtercusin?[indexPath.row].openTime ?? "") - " + "\(filtercusin?[indexPath.row].closeTime ?? "")"
             cell.lblRaiting.text = "\(filtercusin?[indexPath.row].avgRating ?? 0)"
             cell.cosmosView.rating = Double(filtercusin?[indexPath.row].avgRating ?? 0)
@@ -239,10 +283,10 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         } else {
             let imageIndex = (imageURL) + (filtertheme?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             cell.lblfirstLocaton.text = filtertheme?[indexPath.row].city ?? ""
             cell.lblLocation.text = filtertheme?[indexPath.row].location ?? ""
-            cell.lblName.text = filtertheme?[indexPath.row].name ?? ""
+            cell.lblName.text = filtertheme?[indexPath.row].name?.capitalized ?? ""
             cell.lblDiscription.text = "\(filtertheme?[indexPath.row].openTime ?? "") - " + "\(filtertheme?[indexPath.row].closeTime ?? "")"
             cell.lblRaiting.text = "\(filtertheme?[indexPath.row].avgRating ?? 0)"
             cell.cosmosView.rating = Double(filtertheme?[indexPath.row].avgRating ?? 0)

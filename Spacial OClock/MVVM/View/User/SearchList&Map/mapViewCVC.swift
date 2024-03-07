@@ -19,8 +19,8 @@ class mapViewCVC: UICollectionViewCell {
     var listing : NearbyRestaurant?{
         didSet {
            // lblRating.text = listing?.distance?.description ?? ""
-            lblName.text = listing?.name ?? ""
-            lbldesc.text = listing?.offerDescription ?? ""
+            lblName.text = listing?.name?.capitalized ?? ""
+            lbldesc.text = listing?.offerDescription?.capitalized ?? ""
             lblReservations.text  = "\(listing?.openTime ?? "") - \(listing?.closeTime ?? "")"
             let imageIndex = (imageURL) + (listing?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             imgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray

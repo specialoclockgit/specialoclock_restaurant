@@ -21,7 +21,7 @@ struct productDetailModalBody: Codable {
     var name, location, country, state, totalBookings: String?
     let city, latitude, longitude: String?
     let userID: Int?
-    let shortDescription: String?
+    let shortDescription, disableDates: String?
     let status: Int?
     let openTime, closeTime: String?
     let type, categoryID, cuisineID, themesRestrorantID: Int?
@@ -42,6 +42,7 @@ struct productDetailModalBody: Codable {
         case openTime = "open_time"
         case closeTime = "close_time"
         case type
+        case disableDates = "disable_dates"
         case categoryID = "category_id"
         case cuisineID = "cuisine_id"
         case themesRestrorantID = "themes_restrorant_id"
@@ -67,6 +68,7 @@ struct productDetailModalBody: Codable {
         self.shortDescription = try container.decodeIfPresent(String.self, forKey: .shortDescription)
         self.status = try container.decodeIfPresent(Int.self, forKey: .status)
         self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
+        self.disableDates = try container.decodeIfPresent(String.self, forKey: .disableDates)
         self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
         self.type = try container.decodeIfPresent(Int.self, forKey: .type)
         self.categoryID = try container.decodeIfPresent(Int.self, forKey: .categoryID)
@@ -99,9 +101,9 @@ struct productDetailModalBody: Codable {
 // MARK: - OfferTimingDetail
 struct OfferTimingDetail: Codable {
     var offer: String?
-    let percentage, id, offerAvailable, slotsleft: Int?
+    let id, offerAvailable, slotsleft: Int?
     let restrorantBarID: Int?
-    let description: String?
+    let percentage,description: String?
     let menuName: String?
     let menuID, offerID, is_fifty: Int?
     var openTime: String?
@@ -118,6 +120,33 @@ struct OfferTimingDetail: Codable {
         case offerID = "offer_id"
         case openTime = "open_time"
         case closeTime = "close_time"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.offer = try container.decodeIfPresent(String.self, forKey: .offer)
+        
+        if let stringPercentage = try? container.decodeIfPresent(String.self, forKey: .percentage){
+            self.percentage = stringPercentage
+        }else if let intPercentage = try? container.decodeIfPresent(Int.self, forKey: .percentage){
+            self.percentage = String(intPercentage)
+        }else if let doublePercentage = try? container.decodeIfPresent(Double.self, forKey: .percentage){
+            self.percentage = String(doublePercentage)
+        }else {
+            self.percentage = nil
+        }
+        
+        
+        self.id = try container.decodeIfPresent(Int.self, forKey: .id)
+        self.offerAvailable = try container.decodeIfPresent(Int.self, forKey: .offerAvailable)
+        self.slotsleft = try container.decodeIfPresent(Int.self, forKey: .slotsleft)
+        self.restrorantBarID = try container.decodeIfPresent(Int.self, forKey: .restrorantBarID)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
+        self.is_fifty = try container.decodeIfPresent(Int.self, forKey: .is_fifty)
+        self.menuName = try container.decodeIfPresent(String.self, forKey: .menuName)
+        self.menuID = try container.decodeIfPresent(Int.self, forKey: .menuID)
+        self.offerID = try container.decodeIfPresent(Int.self, forKey: .offerID)
+        self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
+        self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
     }
 }
 

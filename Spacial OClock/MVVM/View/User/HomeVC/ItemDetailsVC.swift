@@ -94,12 +94,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var productModal : menuProductModalBody?
     var arrCollMenu : [ModelMenuCollView] = []
     var offerID = Int()
-    var arrTBMenu : [ModelMenuTBCell] = [ModelMenuTBCell(heading: "Sandwich", image: ["goose" , "belveder",                                            "Ciroc" ],
-                                                         itemName: ["Plain Sandwich" , "Grilled Sandwich" ,                                   "Club Sandwich"], prevPrice: ["R50.00" , "R50.00" , "R50.00"], newPrice: ["R40.00",  "R20.00" ,"R30.00"]) ,
-                                         
-                                         ModelMenuTBCell(heading: "Burgers", image: ["" ], itemName: [""], prevPrice: [""], newPrice: [""]),
-                                         ModelMenuTBCell(heading: "Pizzas", image: ["" ], itemName: [""], prevPrice: [""], newPrice: [""]),
-                                         ModelMenuTBCell(heading: "Soups", image: ["" ], itemName: [""], prevPrice: [""], newPrice: [""])]
     var imgName = UIImage()
     var arrCheck : [Bool] = []
     var btnBookStatus = Int()
@@ -114,7 +108,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var isselectedoffer = -1
     var restrorant_bar_id = Int()
     var offer : [OfferTimingDetail]?
-    
     var currentDate = Date()
     var datecuurent = String()
     var slottime = String()
@@ -122,10 +115,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var screenCheck = Int()
     var timeZone = String()
     var selectOffer = String()
-    //full menu
     var modalfullmenu : [allMenuModalBody]?
     var restoid = Int()
     var offerpresents = Int()
+    lazy var disableDatedArr : [String] = []
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
@@ -173,9 +166,21 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        product_detail()
+//        if Store.userDetails?.role == 1{
+//            self.viewButton.isHidden = false
+//        }else{
+//            self.viewButton.isHidden = true
+//        }
+        valueSelect = false
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     func string(format: String) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
         formatter.dateFormat = format
         return formatter.string(from: self.currentDate)
     }
@@ -184,7 +189,11 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     func product_detail(){
         viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.txtFldDate.text ?? "",timezone: self.timeZone ) { data in
             self.modal = data
-           
+            self.disableDatedArr.removeAll()
+            self.disableDatedArr = data?.disableDates?.components(separatedBy: ",") ?? []
+            if self.disableDatedArr.count != 0 {
+                self.showAlertForTodayOff(date: self.txtFldDate.text ?? "", dateArr: self.disableDatedArr)
+            }
             self.images = data?.images ?? []
             self.reviews = data?.reviews ?? []
             self.ourMenu = data?.ourMenu ?? []
@@ -199,7 +208,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             let imageIndex = (imageURL) + (self.modal?.images?.first?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
-            self.lblNameREsto.text = self.modal?.name ?? ""
+            self.lblNameREsto.text = self.modal?.name?.capitalized ?? ""
             self.lblLocation.text = self.modal?.location ?? ""
             self.lblUserLOcation.text = self.modal?.city ?? ""
             self.lblOpenClose.text = "\((self.modal?.openTime ?? "").components(separatedBy: " ").first ?? "") - " + "\((self.modal?.closeTime ?? "").components(separatedBy: " ").first ?? "")"
@@ -227,14 +236,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.tbMenu.reloadData()
             self.view.layoutIfNeeded()
             if self.offer?.count ?? 0 > 0 {
-                self.discount = self.offer?[0].percentage ?? 0
-                //if Store.screenType == 1 {
-                    self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
-               // }else {
-                //   self.menuProductForBarAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
-             // }
-             
-                
+                if let is_fifty = self.offer?[0].is_fifty{
+                    self.discount = is_fifty == 0 ? Int(self.offer?[0].percentage ?? "") ?? 0 : 50
+                }else {
+                    self.discount = Int(self.offer?[0].percentage ?? "") ?? 0
+                }
+            self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
+              
             }
         }
     }
@@ -243,6 +251,22 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     
     //MARK: - FUNCTION
+    private func showAlertForTodayOff(date:String,dateArr:[String]){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let todayDateString = dateFormatter.string(from: Date())
+        if date == todayDateString {
+            if date.contains(todayDateString){
+                if checkDatesAreInSequence(array: dateArr) {
+                    CommonUtilities.shared.showAlert(message: "Closed until \(dateArr.last ?? ""). Please select further date")
+                } else {
+                    CommonUtilities.shared.showAlert(message: "Closed today. Please select another date")
+                }
+            }
+        }
+        
+    }
+    
     func fetchdata(){
         viewmodal.allMenu_API(resto_bar_id: ProductID) { [weak self] data in
             self?.modalfullmenu =  data
@@ -271,8 +295,20 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @objc func donedatePicker(){
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        txtFldDate.text = formatter.string(from: datePicker.date)
-        product_detail()
+        if self.disableDatedArr.contains(formatter.string(from: datePicker.date)){
+            if checkDatesAreInSequence(array: self.disableDatedArr) {
+                CommonUtilities.shared.showAlert(message: "Closed until \(self.disableDatedArr.last ?? ""). Please select further date")
+            } else {
+                if isToday(dateString: formatter.string(from: datePicker.date)){
+                    CommonUtilities.shared.showAlert(message: "Closed today. Please select another date")
+                } else {
+                    CommonUtilities.shared.showAlert(message: "Closed on \(formatter.string(from: datePicker.date)). Please select another date")
+                }
+            }
+        } else {
+            txtFldDate.text = formatter.string(from: datePicker.date)
+            product_detail()
+        }
         self.view.endEditing(true)
     }
     
@@ -281,11 +317,11 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - MENU PRODUCT API
-    func menuProductForBarAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
-        viewmodal.menuProductForBarAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { resp in
-            
-        }
-    }
+//    func menuProductForBarAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
+//        viewmodal.menuProductForBarAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { resp in
+//            
+//        }
+//    }
     
     
     func menuProductAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
@@ -320,17 +356,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        product_detail()
-//        if Store.userDetails?.role == 1{
-//            self.viewButton.isHidden = false
-//        }else{
-//            self.viewButton.isHidden = true
-//        }
-        valueSelect = false
-        tabBarController?.tabBar.isHidden = true
-    }
+    
     //MARK: Button Action
     @IBAction func btnAudioCall(_ sender: UIButton) {
         if let phoneURL = URL(string: "\(Store.userDetails?.phone ?? 0)") {
@@ -431,18 +457,23 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBAction func btnBookAct(_ sender : UIButton){
         if btnBookStatus == 0{
             if self.pendingSlots != 0 {
-                let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
-                screen.offerSelectePretns = self.offerpresents
-                screen.slotId = self.slotid
-                screen.selectslot = self.slottime
-                screen.oldDateSelect = txtFldDate.text ?? ""
-                screen.pickmenuid = self.menuid
-                screen.numberofperson = self.numberofperson
-                screen.resto_id = ProductID
-                screen.offer_id = "\(self.offerID)"
-                screen.restrorant_bar_id = self.restrorant_bar_id
-                screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
-                self.navigationController?.pushViewController(screen, animated: true)
+                
+                if disableDatedArr.contains(txtFldDate.text ?? "") {
+                    CommonUtilities.shared.showAlert(message: "Closed on your selected date. Please select another date")
+                } else {
+                    let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
+                    screen.offerSelectePretns = self.offerpresents
+                    screen.slotId = self.slotid
+                    screen.selectslot = self.slottime
+                    screen.oldDateSelect = txtFldDate.text ?? ""
+                    screen.pickmenuid = self.menuid
+                    screen.numberofperson = self.numberofperson
+                    screen.resto_id = ProductID
+                    screen.offer_id = "\(self.offerID)"
+                    screen.restrorant_bar_id = self.restrorant_bar_id
+                    screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
+                    self.navigationController?.pushViewController(screen, animated: true)
+                }
             } else {
                 CommonUtilities.shared.showAlert(message: "No more bookings available for this slot", isSuccess: .error)
             }
@@ -484,7 +515,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collView{
             if images?.count == 0 {
-                collView.setNoDataMessage("No Data found", txtColor: .white)
+                collView.setNoDataMessageLbl("No Data found", txtColor: .black)
             }else{
                 collView.backgroundView = nil
                 return images?.count ?? 0
@@ -496,16 +527,16 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
             if status == 1{
                 if offer?.count == 0 {
-                    collView.setNoDataMessage("No Data found", txtColor: .black)
+                    collViewMenu.setNoDataMessageLbl("No slots found for today", txtColor: .black)
                 }else{
-                    collView.backgroundView = nil
+                    collViewMenu.backgroundView = nil
                     return offer?.count ?? 0
                 }
             }else{
                 if offer?.count == 0 {
-                    collView.setNoDataMessage("No Data found", txtColor: .black)
+                    collViewMenu.setNoDataMessageLbl("No slots found for today", txtColor: .black)
                 }else{
-                    collView.backgroundView = nil
+                    collViewMenu.backgroundView = nil
                     return offer?.count ?? 0
                 }
             }
@@ -513,7 +544,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
         }else if collectionView == viewFullMenu{
             if modalfullmenu?.count == 0{
-                viewFullMenu.setNoDataMessage("No full menu found", txtColor: .black)
+                viewFullMenu.setNoDataMessageLbl("No full menu found", txtColor: .black)
             }else{
                 viewFullMenu.backgroundView = nil
                 return modalfullmenu?.count ?? 0
@@ -538,7 +569,6 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 cell.lblSpecial.isHidden = false
                 if indexPath.row == isselectedoffer{
                     self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
-                    
                     cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
@@ -555,7 +585,11 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
                 cell.lblTime.text = data?.offer ?? ""
-                cell.lblOffer.text = data?.is_fifty == 0 ? "-\(data?.percentage ?? 0)%" : "%\(50)"
+                if let isFifty = data?.is_fifty {
+                    cell.lblOffer.text = isFifty == 0 ? "-\(Int(data?.percentage ?? "0") ?? 0)%" : "-\(50)%"
+                }else {
+                    cell.lblOffer.text = "-\(Int(data?.percentage ?? "0") ?? 0)%"
+                }
                // cell.lblOffer.backgroundColor = data?.is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red
                 
             } else {
@@ -640,12 +674,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             }
             //valueSelect = true
             if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
-                self.discount = offer?[indexPath.row].percentage ?? 0
-             // if Store.screenType == 1 {
-                   menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
-              // }else {
-              //     menuProductForBarAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
-            // }
+            
+                if let is_fifty = self.offer?[indexPath.row].is_fifty{
+                    self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
+                }else {
+                    self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
+                }
+                
+            menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
                 
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
@@ -662,12 +698,15 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             //valueSelect = true
             
             if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
-                self.discount = offer?[indexPath.row].percentage ?? 0
-              // if Store.screenType == 1 {
-                   menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
-              // }else {
-                //   menuProductForBarAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
-              // }
+              
+                if let is_fifty = self.offer?[indexPath.row].is_fifty{
+                    self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
+                }else {
+                    self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
+                }
+                
+                menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+              
             }
             self.slottime = offer?[indexPath.row].offer ?? ""
             self.slotid = offer?[indexPath.row].id ?? 0
@@ -779,27 +818,25 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
            
-            
-            
             if status == 1 {
                 cell.desLbl.text = ""
                 cell.itemNameTop.constant = 5
-                cell.lblItemName.text = products?[indexPath.row].productName ?? ""
-                cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(products?[indexPath.row].offerPercentage ?? 0)).description)"
-                cell.lblDiscount.text = "\(products?[indexPath.row].offerPercentage ?? 0)% Discount"
+                cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
+                cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(self.discount ?? 0)).description)"
+                cell.lblDiscount.text = "\(self.discount ?? 0)% Discount"
                 cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
             } else {
                 if products?[indexPath.row].discounted_price == 0 || products?[indexPath.row].actual_price == 0 {
                     cell.lblNewPrice.text = ""
                     cell.lblPrePrice.text = ""
                     cell.itemNameTop.constant = 14
-                    cell.lblItemName.text = (products?[indexPath.row].productName ?? "")
+                    cell.lblItemName.text = (products?[indexPath.row].productName?.capitalized ?? "")
                     cell.desLbl.text =  "" /*(self.offerDescription)*/
                     
                 } else {
                     cell.desLbl.text = ""
                     cell.itemNameTop.constant = 5
-                    cell.lblItemName.text = products?[indexPath.row].productName ?? ""
+                    cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
                     cell.lblPrePrice.text = "R\(products?[indexPath.row].actual_price ?? 0)"
                     cell.lblNewPrice.text = "R\(products?[indexPath.row].discounted_price ?? 0)"
                 }
@@ -813,18 +850,18 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             let imageIndex = (imageURL) + (self.reviews?[indexPath.row].user?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
-            cell.lblName.text = self.reviews?[indexPath.row].user?.name ?? ""
-            cell.lblReview.text = self.reviews?[indexPath.row].review ?? ""
+            cell.lblName.text = self.reviews?[indexPath.row].user?.name?.capitalized ?? ""
+            cell.lblReview.text = self.reviews?[indexPath.row].review?.capitalized ?? ""
             cell.cosmosView.rating = Double(self.reviews?[indexPath.row].rating ?? "") ?? 0.0
             cell.lblDate.text = string_date_ToDate(reviews?[indexPath.row].createdAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
             cell.replyVw.isHidden = self.reviews?[indexPath.row].reply == "" ? true : false
-            cell.replyName.text = self.modal?.name ?? ""
+            cell.replyName.text = self.modal?.name?.capitalized ?? ""
             let restImage = (imageURL) + (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.replyImgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.replyImgVw.sd_setImage(with: URL(string: restImage), placeholderImage: UIImage(named: "placeholder (1)"))
             cell.replyDateLbl.text = string_date_ToDate(reviews?[indexPath.row].updatedAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
             cell.replyTypeLbl.text = self.modal?.type == 1 ? "Restaurant Reply" : "Bar Reply"
-            cell.replyComment.text = self.reviews?[indexPath.row].reply ?? ""
+            cell.replyComment.text = self.reviews?[indexPath.row].reply?.capitalized ?? ""
             return cell
         }
         
