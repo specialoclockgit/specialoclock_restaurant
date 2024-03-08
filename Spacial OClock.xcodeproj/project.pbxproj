@@ -178,6 +178,7 @@
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2170C2B85DB4E007947C6 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EBA2170B2B85DB4E007947C6 /* nodataFound.gif */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
+		EBE6CAA92B9B1E7C006D726B /* AvailabilityDatePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */; };
 		EBEE940C2B88C44700A32DDA /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE940B2B88C44700A32DDA /* NavigationVC.swift */; };
 		EC0484E72B174B9000BFDF4B /* MyInvoiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484E62B174B9000BFDF4B /* MyInvoiceVC.swift */; };
 		EC0484E92B174BE300BFDF4B /* getInvoiceListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484E82B174BE300BFDF4B /* getInvoiceListModal.swift */; };
@@ -472,6 +473,7 @@
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2170B2B85DB4E007947C6 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
+		EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityDatePopupVC.swift; sourceTree = "<group>"; };
 		EBEE940B2B88C44700A32DDA /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
 		EC0484E62B174B9000BFDF4B /* MyInvoiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvoiceVC.swift; sourceTree = "<group>"; };
 		EC0484E82B174BE300BFDF4B /* getInvoiceListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInvoiceListModal.swift; sourceTree = "<group>"; };
@@ -1086,6 +1088,7 @@
 				ECA6A0622AFCAFA30094DCC1 /* OfferCVC.swift */,
 				ECA6A0642AFCF3360094DCC1 /* offerSeeMoreCVC.swift */,
 				ECAE86A02B3B00FE0049E586 /* SelectVC.swift */,
+				EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1814,6 +1817,7 @@
 				C2661A8E2A4B156C00EEE266 /* CellDetailViewTB.swift in Sources */,
 				C29CDB0B2A42BBDB0035E03D /* TermsConditionVC.swift in Sources */,
 				8B0BDF2E2A80F68B00A28BD2 /* HomeVM.swift in Sources */,
+				EBE6CAA92B9B1E7C006D726B /* AvailabilityDatePopupVC.swift in Sources */,
 				C2661A912A4B163200EEE266 /* Constant.swift in Sources */,
 				ECB6996B2B19A5BE00344356 /* RestaurentDetailsModel.swift in Sources */,
 				ECAF1D0B2AC1887B006E20FB /* homeSeeMoreCVC.swift in Sources */,

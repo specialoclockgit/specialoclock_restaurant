@@ -315,21 +315,60 @@ func isToday(dateString: String) -> Bool {
 
 func checkDatesAreInSequence(array: [String]) -> Bool {
     let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dates = array.compactMap { dateFormatter.date(from: $0) }
-        
-        for i in 0..<(dates.count - 1) {
-            let calendar = Calendar.current
-            if let nextDate = calendar.date(byAdding: .day, value: 1, to: dates[i]) {
-                if nextDate != dates[i + 1] {
-                    return false
-                }
-            } else {
-                return false
-            }
-        }
-        return true
+      dateFormatter.dateFormat = "yyyy-MM-dd"
+      let dates = array.compactMap { dateFormatter.date(from: $0) }
+      
+      guard dates.count > 1 else {
+          return false
+      }
+      
+      for i in 0..<(dates.count - 1) {
+          let calendar = Calendar.current
+          if let nextDate = calendar.date(byAdding: .day, value: 1, to: dates[i]) {
+              if nextDate != dates[i + 1] {
+                  return false
+              }
+          } else {
+              return false
+          }
+      }
+      return true
 }
+
+func getNextDateInSequence(array: [String]) -> String? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    let dates = array.compactMap { dateFormatter.date(from: $0) }
+    
+    // If there's only one date or no dates, return nil
+    guard dates.count > 0 else {
+        return nil
+    }
+    
+    for i in 0..<(dates.count - 1) {
+        let calendar = Calendar.current
+        if let nextDate = calendar.date(byAdding: .day, value: 1, to: dates[i]) {
+            if nextDate != dates[i + 1] {
+                return dateFormatter.string(from: nextDate)
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    // Check for gaps in the end of the sequence
+    let lastDate = dates.last!
+    let calendar = Calendar.current
+    let today = calendar.startOfDay(for: Date())
+    if let nextDate = calendar.date(byAdding: .day, value: 1, to: lastDate) {
+        if nextDate <= today {
+            return dateFormatter.string(from: nextDate)
+        }
+    }
+    
+    return nil
+}
+
 func formatDate(inputDate: String) -> String? {
     let dateFormatter = DateFormatter()
       dateFormatter.dateFormat = "yyyy-MM-dd"
