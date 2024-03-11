@@ -113,10 +113,10 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnContinueAct(sender : UIButton){
-        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
-        screen.callBack = {
-            let noOfPerson = self.bookingType == .restaurant ? self.tfSelectPeople.text ?? "" : "1"
-            self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: noOfPerson , restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns) { data in
+        let noOfPerson = self.bookingType == .restaurant ? self.tfSelectPeople.text ?? "" : "1"
+        self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: noOfPerson , restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns) { data in
+            let screen = self.storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
+            screen.callBack = {
                 for controller in self.navigationController!.viewControllers as Array {
                     if controller.isKind(of: HomeVC.self) {
                         UserDefaults.standard.setValue("1", forKey: "Dine")
@@ -125,8 +125,9 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
                     }
                 }
             }
+            self.navigationController?.present(screen, animated: true)
         }
-        self.navigationController?.present(screen, animated: true)
+        
     }
     
     @IBAction func btnBackAct(sender : UIButton){
@@ -146,10 +147,9 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     }
     
     private func moveCurrentPage(moveUp: Bool) {
-        let calendar = Calendar.current
         var dateComponents = DateComponents()
         dateComponents.month = moveUp ? 1 : -1
-        self.currentPage = calendar.date(byAdding: dateComponents, to: self.currentPage ?? self.today)
+        self.currentPage = Calendar.current.date(byAdding: dateComponents, to: self.currentPage ?? self.today)
         self.viewFSCalendar.setCurrentPage(self.currentPage!, animated: true)
     }
 

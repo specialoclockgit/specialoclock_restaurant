@@ -58,7 +58,6 @@ class bookingDetailVC: UIViewController {
     var statusColor = String()
     var image = String()
     var statusVerify = Int()
-    var arrData  : [ModelItemDetail] = [ ModelItemDetail(img: "planeSanwich", itmeName: "Sandwich", newPrice: "40.00") , ModelItemDetail(img: "grilledSandwich", itmeName: "Grilled Sandwich", newPrice: "20.00")]
     var viewmodal = HomeViewModel()
     var modal : bookingDetailModalBody?
     var products: [Product]?
@@ -113,12 +112,12 @@ class bookingDetailVC: UIViewController {
             self.lblCity.text = fetchdata?.restrorant?.city ?? ""
             self.lblLocation.text = fetchdata?.restrorant?.location ?? ""
             self.lblRestoName.text = fetchdata?.restrorant?.name?.capitalized ?? ""
-            if self.modal?.status == 0{
+            if self.modal?.status == 0 {
                 self.reviewUserVw.isHidden = true
                 self.replyVw.isHidden = true
                 self.lblstatus.text = "Ongoing"
                 self.btnMain.setTitle("Cancel Booking", for: .normal)
-            }else if self.modal?.status == 1{
+            } else if self.modal?.status == 1 {
                 if let review = self.modal?.review, review.review != ""{
                     self.btnMain.isHidden = true
                     self.reviewUserVw.isHidden = false
@@ -134,14 +133,14 @@ class bookingDetailVC: UIViewController {
                     self.replyRestroNameLbl.text = self.modal?.restrorant?.name?.capitalized ?? ""
                     self.replyRestroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.modal?.restrorant?.profileImage ?? "")
                     self.replyRestroType.text = self.modal?.restrorant?.type == 1 ? "Restaurant Reply" : "Bar Reply"
-                }else {
+                } else {
                     self.replyVw.isHidden = true
                     self.btnMain.isHidden = false
                     self.reviewUserVw.isHidden = true
                 }
                 self.lblstatus.text = "Complete"
                 self.btnMain.setTitle("Add Rating & Review", for: .normal)
-            }else{
+            } else {
                 self.reviewUserVw.isHidden = true
                 self.replyVw.isHidden = true
                 self.btnMain.isHidden = true
@@ -153,7 +152,7 @@ class bookingDetailVC: UIViewController {
                 self.lblSpeOffer.text = fetchdata?.restrorant?.offers?.first?.menuName ?? ""
                 self.lblBookingtime.text = "\(fetchdata?.restrorant?.offers?.first?.openTime ?? "")-\(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
             }else {
-                self.lblSpeOffer.text = fetchdata?.offerName ?? "" + (fetchdata?.offerPercentage ?? "")
+                self.lblSpeOffer.text = "\(fetchdata?.offerName ?? "")  (-\(fetchdata?.offerPercentage ?? "")%)"
                 self.bookingSlotStartEndTime.text = fetchdata?.bookingSlot ?? ""
                 self.lblBookingtime.text = fetchdata?.bookingSlot ?? ""
             }

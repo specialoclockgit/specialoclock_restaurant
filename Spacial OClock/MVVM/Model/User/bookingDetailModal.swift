@@ -18,7 +18,7 @@ struct bookingDetailModal: Codable {
 // MARK: - bookingDetailModalBody
 struct bookingDetailModalBody: Codable {
     let id, userID, restrorantBarID: Int?
-    let bookingDate, bookingSlot: String?
+    let bookingDate, bookingSlot,booking_amount: String?
     let slotID: Int?
     let bookingID, cancelationReason: String?
     let numberOfPeople, status, offerID: Int?
@@ -29,7 +29,7 @@ struct bookingDetailModalBody: Codable {
     var productsUnderOffer: [Product]?
     
     enum CodingKeys: String, CodingKey {
-        case id,review
+        case id,review,booking_amount
         case userID = "user_id"
         case restrorantBarID = "restrorant_bar_id"
         case bookingDate = "booking_date"

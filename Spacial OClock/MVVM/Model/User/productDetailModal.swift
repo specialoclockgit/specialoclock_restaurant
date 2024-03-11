@@ -32,6 +32,7 @@ struct productDetailModalBody: Codable {
     let images: [Imaged]?
     let reviews: [Reviewsd]?
     let ourMenu: [OurMenud]?
+    var offers: [Offersd]?
     let offer_timings : [OfferTimingDetail]? 
 
     enum CodingKeys: String, CodingKey {
@@ -51,7 +52,7 @@ struct productDetailModalBody: Codable {
         case commission
         case isLiked = "is_liked"
         case avgRating = "avg_rating"
-        case images, reviews, totalBookings
+        case images, reviews, totalBookings,offers
         case ourMenu = "our_menu"
     }
     init(from decoder: Decoder) throws {
@@ -94,6 +95,7 @@ struct productDetailModalBody: Codable {
         self.images = try container.decodeIfPresent([Imaged].self, forKey: .images)
         self.reviews = try container.decodeIfPresent([Reviewsd].self, forKey: .reviews)
         self.ourMenu = try container.decodeIfPresent([OurMenud].self, forKey: .ourMenu)
+        self.offers = try container.decodeIfPresent([Offersd].self, forKey: .offers)
         self.offer_timings = try container.decodeIfPresent([OfferTimingDetail].self, forKey: .offer_timings)
     }
 }
@@ -210,10 +212,11 @@ struct Offersd: Codable {
     let menuName: String?
     let offerPrice: Int?
     let openTime, closeTime, date: String?
-    var type, numberOfUserBook: Int?
+    var type, numberOfUserBook,numberOfUserPerBooking: Int?
 
     enum CodingKeys: String, CodingKey {
         case id
+        case numberOfUserPerBooking = "number_of_user_per_booking"
         case restrorantBarID = "restrorant_bar_id"
         case offerName = "offer_name"
         case description
@@ -238,6 +241,7 @@ struct Offersd: Codable {
         self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
         self.date = try container.decodeIfPresent(String.self, forKey: .date)
         self.type = try container.decodeIfPresent(Int.self, forKey: .type)
+        self.numberOfUserPerBooking = try container.decodeIfPresent(Int.self, forKey: .numberOfUserPerBooking)
       //  self.numberOfUserBook = try container.decodeIfPresent(Int.self, forKey: .numberOfUserBook)
         
         if let val = try? container.decodeIfPresent(Int.self, forKey: .numberOfUserBook){

@@ -11,7 +11,7 @@ import SwiftGifOrigin
 import SkeletonView
 
 class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate, UIGestureRecognizerDelegate {
-
+    
     //MARK: - Outlets
     @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var favouriteCV: UICollectionView!
@@ -48,23 +48,23 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "FavouritesCell"
     }
-
+    
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 30
     }
     
 }
- 
+
 //MARK: - UICollectionViewDelegateUICollectionViewDataSource
 extension FavouritesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if modal?.count == 0{
             collectionView.setNoDataMessage("No favorites found")
-           // imgViewGif.image = UIImage.gif(name: "nodataFound")
-           // imgViewGif.isHidden = false
+            // imgViewGif.image = UIImage.gif(name: "nodataFound")
+            // imgViewGif.isHidden = false
         }else{
             collectionView.backgroundView = nil
-          //  imgViewGif.isHidden = true
+            //  imgViewGif.isHidden = true
             return modal?.count ?? 0
         }
         return 0
@@ -77,13 +77,22 @@ extension FavouritesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         cell.itemImg.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Userssss"))
         cell.lblOpenTime.text = "\(modal?[indexPath.row].openTime ?? "") - " + "\(modal?[indexPath.row].closeTime ?? "")"
         cell.lblNAme.text = modal?[indexPath.row].name?.capitalized ?? ""
-//        cell.lblOffer.text = modal?[indexPath.row].
+        //        cell.lblOffer.text = modal?[indexPath.row].
         
         cell.btnImg.addTarget(self, action: #selector(btnfavourite(_:)), for: .touchUpInside)
         cell.btnImg.tag = indexPath.row
-//        cell.itemImg.image = UIImage(named: arrimg[indexPath.row])
+        //        cell.itemImg.image = UIImage(named: arrimg[indexPath.row])
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let stry = UIStoryboard(name: "Main", bundle: nil)
+        let vc = stry.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
+        vc.ProductID = modal?[indexPath.row].id ?? 0
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {

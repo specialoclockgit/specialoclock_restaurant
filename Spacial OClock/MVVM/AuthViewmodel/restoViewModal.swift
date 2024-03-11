@@ -16,7 +16,6 @@ class restoViewModal : NSObject{
         if date != ""{
             param["date"] = date
         }
-        
         WebService.service(API.restro_home, param: param, service: .post) {
             (modaldata: homeModal, Data , json) in
             onsuccess(modaldata.body)
@@ -39,6 +38,7 @@ class restoViewModal : NSObject{
             onsuccess(modaldata.body)
         }
     }
+    
     
     //MARK: - PRIVACY POLICY
     func privacypolicyApi(onSuccess : @escaping ((TermsconditionModelBody?)->())){

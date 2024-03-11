@@ -181,28 +181,29 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if setvalue == "Location"{
+        if setvalue == "Location" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.country = self.filterlocation[indexPath.row].country ?? ""
             vc.city = self.filterlocation[indexPath.row].city ?? ""
+            vc.lblName = self.filterlocation[indexPath.row].locality_area ?? ""
             vc.setValue = "Location"
-            vc.setimage = "PIN"
+            vc.setimage = "pinPerson"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if setvalue == "Cuisines"{
+        } else if setvalue == "Cuisines" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.cusinessID = self.filterCusine[indexPath.row].id ?? 0
             vc.lblName = self.filterCusine[indexPath.row].name?.capitalized ?? ""
             vc.setimage = "soup"
             vc.setValue = "Cuisines"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if setvalue == "Category"{
+        } else if setvalue == "Category" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.cusinessID = self.filtercategory[indexPath.row].id ?? 0
             vc.lblName = self.filtercategory[indexPath.row].title ?? ""
             vc.setimage = "category_icon"
             vc.setValue = "Category"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else{
+        } else {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
             vc.themeID = filterthemeAry[indexPath.row].id ?? 0
             vc.lblName = self.filterthemeAry[indexPath.row].productName ?? ""
@@ -226,35 +227,34 @@ extension newSeeMoreVC : UITextFieldDelegate {
             }else{
                 filterlocation = location
             }
-        }else if setvalue == "Cuisines"{
+        } else if setvalue == "Cuisines" {
             let resultString = txtFldSearch.text ?? ""
             if (resultString.count) > 1{
                 if let searchText = txtFldSearch.text {
                     filterCusine = cuisine.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
                 }
-            }else{
+            } else {
                 filterCusine = cuisine
             }
-        }else if setvalue == "Category" {
+        } else if setvalue == "Category" {
             let resultString = txtFldSearch.text ?? ""
             if (resultString.count) > 1{
                 if let searchText = txtFldSearch.text {
                     filtercategory = category.filter {$0.title?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
                 }
-            }else{
+            } else {
                 filtercategory = category
             }
-        }else{
+        } else {
             let resultString = txtFldSearch.text ?? ""
             if (resultString.count) > 1{
                 if let searchText = txtFldSearch.text {
                     filterthemeAry = themeArr.filter {$0.productName?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
                 }
-            }else{
+            } else {
                 filtercategory = category
             }
         }
-        
         colleVeiw.reloadData()
         return true
     }

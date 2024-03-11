@@ -13,13 +13,18 @@ class AvailabilityDatePopupVC: UIViewController {
     @IBOutlet weak var lblPersonCount: UILabel!
     @IBOutlet weak var lblTime: UILabel!
     var selectedDate : [String] = []
+    var date : String?
     var userCount: String?
     var time: String?
     var titleString : String?
     var offer: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        lblDate.text = getNextDateInSequence(array: self.selectedDate)
+        setupUI()
+    }
+    
+    fileprivate func setupUI(){
+        lblDate.text = nextAvailableDate(selectedDate: self.date ?? "", closedDates: self.selectedDate) ?? "N/A"
         lblTitle.text = titleString
         lblTime.text = "\(self.time ?? "") / \(self.offer ?? "0")%"
         lblPersonCount.text = self.userCount ?? "0"

@@ -299,7 +299,7 @@ struct CuisineRestrorant: Codable {
     var id: Int?
     var name, location, country, state: String?
     var city, latitude, longitude: String?
-    var userID: Int?
+    var userID,offer_available: Int?
     var shortDescription: String?
     var status: Int?
     var openTime, closeTime: String?
@@ -311,7 +311,7 @@ struct CuisineRestrorant: Codable {
         case id, name, location, country, state, city, latitude, longitude
         case userID = "user_id"
         case shortDescription = "short_description"
-        case status
+        case status, offer_available
         case openTime = "open_time"
         case closeTime = "close_time"
         case type
@@ -343,7 +343,7 @@ struct LocationRestrorant: Codable {
     var id: Int?
     var name, location, country, shortDescription: String?
     var openTime, closeTime: String?
-    var type, categoryID, themesRestrorantID, isBlocked: Int?
+    var type, categoryID, themesRestrorantID, isBlocked,offer_available: Int?
     var profileImage: String?
 
     enum CodingKeys: String, CodingKey {
@@ -351,7 +351,7 @@ struct LocationRestrorant: Codable {
         case shortDescription = "short_description"
         case openTime = "open_time"
         case closeTime = "close_time"
-        case type
+        case type,offer_available
         case categoryID = "category_id"
         case themesRestrorantID = "themes_restrorant_id"
         case isBlocked = "is_blocked"

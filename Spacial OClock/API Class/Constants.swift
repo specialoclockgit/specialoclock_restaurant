@@ -335,39 +335,45 @@ func checkDatesAreInSequence(array: [String]) -> Bool {
       return true
 }
 
-func getNextDateInSequence(array: [String]) -> String? {
+func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
-    let dates = array.compactMap { dateFormatter.date(from: $0) }
     
-    // If there's only one date or no dates, return nil
-    guard dates.count > 0 else {
+    guard let selected = dateFormatter.date(from: selectedDate) else {
         return nil
     }
     
-    for i in 0..<(dates.count - 1) {
-        let calendar = Calendar.current
-        if let nextDate = calendar.date(byAdding: .day, value: 1, to: dates[i]) {
-            if nextDate != dates[i + 1] {
-                return dateFormatter.string(from: nextDate)
+    // Sort the closed dates array
+    let sortedClosedDates = closedDates.sorted { dateFormatter.date(from: $0)! < dateFormatter.date(from: $1)! }
+    
+    for (index, closedDate) in sortedClosedDates.enumerated() {
+        if let date = dateFormatter.date(from: closedDate) {
+            // Check if selected date is among closed dates
+            if selected <= date {
+                if index < sortedClosedDates.count - 1 {
+                    // If there are more closed dates, return the next one
+                    let nextDate = dateFormatter.date(from: sortedClosedDates[index + 1])!
+                    let daysToAdd = Calendar.current.dateComponents([.day], from: date, to: nextDate).day!
+                    if daysToAdd > 1 {
+                        // If there are days between the current closed date and the next one, return the date in between
+                        let nextAvailableDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+                        return dateFormatter.string(from: nextAvailableDate)
+                    }
+                } else {
+                    // If there are no more closed dates, return the next day after the last closed date
+                    let nextAvailableDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+                    return dateFormatter.string(from: nextAvailableDate)
+                }
             }
-        } else {
-            return nil
         }
     }
     
-    // Check for gaps in the end of the sequence
-    let lastDate = dates.last!
-    let calendar = Calendar.current
-    let today = calendar.startOfDay(for: Date())
-    if let nextDate = calendar.date(byAdding: .day, value: 1, to: lastDate) {
-        if nextDate <= today {
-            return dateFormatter.string(from: nextDate)
-        }
-    }
-    
+    // If no available date found, return nil
     return nil
 }
+
+
+
 
 func formatDate(inputDate: String) -> String? {
     let dateFormatter = DateFormatter()

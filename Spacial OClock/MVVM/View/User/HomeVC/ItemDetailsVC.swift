@@ -216,6 +216,11 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.viewButton.isHidden = true
             }
             
+            if self.disableDatedArr.count != 0 {
+                self.showAlertForTodayOff(date: self.txtFldDate.text ?? "", dateArr: self.disableDatedArr)
+            }
+            
+            
             self.favIconVw.isHidden = self.modal?.userID == Store.userDetails?.id ? true : false
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
             self.lblRating.text = self.modal?.avgRating ?? ""
@@ -231,7 +236,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             if self.offer?.count ?? 0 > 0 {
                 if let is_fifty = self.offer?[0].is_fifty{
                     self.discount = is_fifty == 0 ? Int(self.offer?[0].percentage ?? "") ?? 0 : 50
-                }else {
+                } else {
                     self.discount = Int(self.offer?[0].percentage ?? "") ?? 0
                 }
             self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
@@ -250,10 +255,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         if date == todayDateString {
             if dateArr.contains(todayDateString){
                 if checkDatesAreInSequence(array: dateArr) {
-                    showPopupForDisableDate(msg: "Sorry we are not available till \(dateArr.last ?? "")")
+                    showPopupForDisableDate(date: date,msg: "Sorry we are not available till \(dateArr.last ?? "")")
                    // CommonUtilities.shared.showAlert(message: "Closed until \(dateArr.last ?? ""). Please select further date")
                 } else {
-                    showPopupForDisableDate(msg: "Sorry we are not available today")
+                    showPopupForDisableDate(date:date,msg: "Sorry we are not available today")
                    // CommonUtilities.shared.showAlert(message: "Closed today. Please select another date")
                 }
             }
@@ -261,16 +266,21 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    private func showPopupForDisableDate(msg:String){
-        let stry = UIStoryboard(name: "Main", bundle:nil)
-        let vc = stry.instantiateViewController(withIdentifier: "AvailabilityDatePopupVC") as! AvailabilityDatePopupVC
-        vc.titleString = msg
-        vc.userCount = self.productModal?.offerdetails?.numberOfUserPerBooking?.description
-        vc.selectedDate = self.disableDatedArr
-        vc.offer = self.offer?[0].is_fifty == 1 ? 50.description : self.discount?.description
-        vc.time = status == 1 ? self.offer?[0].offer : "\(self.offer?[0].openTime ?? "") - \(self.offer?[0].closeTime ?? "")"
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
+    private func showPopupForDisableDate(date:String,msg:String){
+        viewmodal.restoDetialForOffDate_API(resto_id: ProductID, currentdate: date, timezone: self.timeZone) { resp in
+            let stry = UIStoryboard(name: "Main", bundle:nil)
+            let vc = stry.instantiateViewController(withIdentifier: "AvailabilityDatePopupVC") as! AvailabilityDatePopupVC
+            vc.titleString = msg
+            vc.date = date
+            vc.userCount = resp?.offers?.first?.numberOfUserPerBooking?.description ?? "0"
+            vc.selectedDate = self.disableDatedArr
+            vc.offer = resp?.offer_timings?.first?.is_fifty == 1 ? 50.description : resp?.offer_timings?.first?.percentage
+            vc.time = self.status == 1 ? resp?.offer_timings?.first?.offer ?? "" : "\(resp?.offer_timings?.first?.openTime ?? "")"
+            //self.status == 1 ? self.resp.o?[0].offer : "\(self.offer?[0].openTime ?? "") - \(self.offer?[0].closeTime ?? "")"
+            vc.modalPresentationStyle = .overCurrentContext
+            self.present(vc, animated: true)
+        }
+        
     }
     
     
@@ -304,12 +314,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         formatter.dateFormat = "yyyy-MM-dd"
         if self.disableDatedArr.contains(formatter.string(from: datePicker.date)){
             if checkDatesAreInSequence(array: self.disableDatedArr) {
-                showPopupForDisableDate(msg: "Sorry we are not available till \(self.disableDatedArr.last ?? "")")
+                showPopupForDisableDate(date: (formatter.string(from: datePicker.date)),msg: "Sorry we are not available till \(self.disableDatedArr.last ?? "")")
             } else {
                 if isToday(dateString: formatter.string(from: datePicker.date)){
-                    showPopupForDisableDate(msg: "Sorry we are not available today")
+                    showPopupForDisableDate(date: (formatter.string(from: datePicker.date)), msg: "Sorry we are not available today")
                 } else {
-                    showPopupForDisableDate(msg: "Sorry we are not available on the selected date")
+                    showPopupForDisableDate(date: (formatter.string(from: datePicker.date)), msg: "Sorry we are not available on the selected date")
                 }
             }
         } else {
@@ -347,9 +357,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.collViewMenu.reloadData()
             self.arrCheck.removeAll()
             
-            if self.disableDatedArr.count != 0 {
-                self.showAlertForTodayOff(date: self.txtFldDate.text ?? "", dateArr: self.disableDatedArr)
-            }
+            
             
             
             for i in 0...(self.products?.count ?? 0){
@@ -467,11 +475,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //Book Button
     @IBAction func btnBookAct(_ sender : UIButton){
-        if btnBookStatus == 0{
+        if btnBookStatus == 0 {
             if self.pendingSlots != 0 {
-                
                 if disableDatedArr.contains(txtFldDate.text ?? "") {
-                    showPopupForDisableDate(msg: "Sorry we are not available on the selected date")
+                    showPopupForDisableDate(date:txtFldDate.text ?? "" ,msg: "Sorry we are not available on the selected date")
                    // CommonUtilities.shared.showAlert(message: "Closed on your selected date. Please select another date")
                 } else {
                     let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC

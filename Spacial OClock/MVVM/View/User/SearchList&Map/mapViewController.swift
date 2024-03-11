@@ -171,7 +171,6 @@ extension mapViewController : UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collVw.dequeueReusableCell(withReuseIdentifier: "mapViewCVC", for: indexPath) as! mapViewCVC
         cell.listing = tempNearBy[indexPath.row]
-        
         return cell
     }
     

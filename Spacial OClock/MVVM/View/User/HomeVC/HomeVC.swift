@@ -363,15 +363,9 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
             let placemark = placemarks as? [CLPlacemark]
             if placemark?.count ?? 0 > 0{
                 let placemark = placemarks![0]
-                print(placemark.locality!)
-                print(placemark.administrativeArea!)
                 self.getcountry = placemark.country ?? ""
-                // self.getcity = placemark.administrativeArea ?? ""
                 self.getstate = placemark.locality ?? ""
-                print(placemark.country!)
-                
                 self.lblLocation.text = "\(placemark.locality!)"
-                //    self.lblLocation.text = placemarks.coun
             }
         }
         locationManager.stopUpdatingLocation()

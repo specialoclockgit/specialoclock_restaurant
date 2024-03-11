@@ -59,6 +59,14 @@ class HomeViewModel : NSObject {
         }
     }
     
+    func restoDetialForOffDate_API(resto_id:Int,currentdate:String,timezone:String,onsuccess: @escaping ((productDetailModalBody?)->())){
+        let param:parameters = ["resto_id":resto_id, "date": currentdate]
+        WebService.service(API.product_details, param: param, service: .post) {
+            (modaldata: productDetailModal, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
     //MARK: - FAV LIST
     func favListAPI(onsuccess: @escaping (([favListModalBody]?)->())){
         WebService.service(API.liked_listing, service: .post) {
