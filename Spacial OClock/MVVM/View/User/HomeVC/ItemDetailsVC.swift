@@ -267,19 +267,23 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     private func showPopupForDisableDate(date:String,msg:String){
-        viewmodal.restoDetialForOffDate_API(resto_id: ProductID, currentdate: date, timezone: self.timeZone) { resp in
-            let stry = UIStoryboard(name: "Main", bundle:nil)
-            let vc = stry.instantiateViewController(withIdentifier: "AvailabilityDatePopupVC") as! AvailabilityDatePopupVC
-            vc.titleString = msg
-            vc.date = date
-            vc.userCount = resp?.offers?.first?.numberOfUserPerBooking?.description ?? "0"
-            vc.selectedDate = self.disableDatedArr
-            vc.offer = resp?.offer_timings?.first?.is_fifty == 1 ? 50.description : resp?.offer_timings?.first?.percentage
-            vc.time = self.status == 1 ? resp?.offer_timings?.first?.offer ?? "" : "\(resp?.offer_timings?.first?.openTime ?? "")"
-            //self.status == 1 ? self.resp.o?[0].offer : "\(self.offer?[0].openTime ?? "") - \(self.offer?[0].closeTime ?? "")"
-            vc.modalPresentationStyle = .overCurrentContext
-            self.present(vc, animated: true)
+        
+        let stry = UIStoryboard(name: "Main", bundle:nil)
+        let vc = stry.instantiateViewController(withIdentifier: "AvailabilityDatePopupVC") as! AvailabilityDatePopupVC
+        vc.titleString = msg
+        vc.date = date
+        vc.selectedDate = self.disableDatedArr
+        vc.callBack = { [weak self] in
+            self?.txtFldDate.becomeFirstResponder()
         }
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+        // viewmodal.restoDetialForOffDate_API(resto_id: ProductID, currentdate: date, timezone: self.timeZone) { resp in
+        // vc.userCount = resp?.offers?.first?.numberOfUserPerBooking?.description ?? "0"
+        // vc.offer = resp?.offer_timings?.first?.is_fifty == 1 ? 50.description : resp?.offer_timings?.first?.percentage
+        //vc.time = self.status == 1 ? resp?.offer_timings?.first?.offer ?? "" : "\(resp?.offer_timings?.first?.openTime ?? "")"
+        //self.status == 1 ? self.resp.o?[0].offer : "\(self.offer?[0].openTime ?? "") - \(self.offer?[0].closeTime ?? "")"
+        //}
         
     }
     

@@ -267,6 +267,31 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblRaiting.text = "\(filterCategory?[indexPath.row].avgrating ?? 0)"
             cell.cosmosView.rating = Double(filterCategory?[indexPath.row].avgrating ?? 0)
             
+            if let disable_dates = filterCategory?[indexPath.row].disable_dates,disable_dates != "" {
+                let disableDatesArr = disable_dates.components(separatedBy: ",")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let todayDateString = dateFormatter.string(from: Date())
+                if disableDatesArr.contains(todayDateString){
+                    self.blurEffect(image: cell.imgView)
+                    cell.whiteBlurVw.isHidden = false
+                    cell.closeDateVw.isHidden = false
+                    if checkDatesAreInSequence(array: disableDatesArr){
+                        cell.lblcloseDate.text = "Closed until \(formatDate(inputDate: disableDatesArr.last ?? "") ?? "")"
+                    }else {
+                        cell.lblcloseDate.text = "Closed today"
+                    }
+                } else {
+                    cell.whiteBlurVw.isHidden = true
+                    cell.closeDateVw.isHidden = true
+                }
+                
+            }else {
+                cell.whiteBlurVw.isHidden = true
+                cell.closeDateVw.isHidden = true
+            }
+            
+            
         } else if setValue == "Cuisines" {
             let imageIndex = (imageURL) + (filtercusin?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -280,6 +305,33 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let fetchresto = filtercusin?[indexPath.row].timeSlots ?? []
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
+            
+            if let disable_dates = filtercusin?[indexPath.row].disable_dates,disable_dates != "" {
+                let disableDatesArr = disable_dates.components(separatedBy: ",")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let todayDateString = dateFormatter.string(from: Date())
+                if disableDatesArr.contains(todayDateString){
+                    self.blurEffect(image: cell.imgView)
+                    cell.whiteBlurVw.isHidden = false
+                    cell.closeDateVw.isHidden = false
+                    if checkDatesAreInSequence(array: disableDatesArr){
+                        cell.lblcloseDate.text = "Closed until \(formatDate(inputDate: disableDatesArr.last ?? "") ?? "")"
+                    }else {
+                        cell.lblcloseDate.text = "Closed today"
+                    }
+                } else {
+                    cell.whiteBlurVw.isHidden = true
+                    cell.closeDateVw.isHidden = true
+                }
+                
+            }else {
+                cell.whiteBlurVw.isHidden = true
+                cell.closeDateVw.isHidden = true
+            }
+
+            
+            
         } else {
             let imageIndex = (imageURL) + (filtertheme?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -293,6 +345,32 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let fetchresto = filtertheme?[indexPath.row].timeSlots
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
+            
+            
+            if let disable_dates = filtertheme?[indexPath.row].disable_dates,disable_dates != "" {
+                let disableDatesArr = disable_dates.components(separatedBy: ",")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let todayDateString = dateFormatter.string(from: Date())
+                if disableDatesArr.contains(todayDateString){
+                    self.blurEffect(image: cell.imgView)
+                    cell.whiteBlurVw.isHidden = false
+                    cell.closeDateVw.isHidden = false
+                    if checkDatesAreInSequence(array: disableDatesArr){
+                        cell.lblcloseDate.text = "Closed until \(formatDate(inputDate: disableDatesArr.last ?? "") ?? "")"
+                    }else {
+                        cell.lblcloseDate.text = "Closed today"
+                    }
+                } else {
+                    cell.whiteBlurVw.isHidden = true
+                    cell.closeDateVw.isHidden = true
+                }
+                
+            }else {
+                cell.whiteBlurVw.isHidden = true
+                cell.closeDateVw.isHidden = true
+            }
+            
         }
         return cell
     }

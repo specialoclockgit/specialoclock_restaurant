@@ -119,8 +119,7 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
             cell.offerNameLbl.text = filterdata?[indexPath.row].offerName ?? ""
             cell.lblBookingNO.text = "-\(filterdata?[indexPath.row].bookingAmount ?? "")%"
             cell.lblTime.text = filterdata?[indexPath.row].bookingSlot ?? ""
-        }
-        else {
+        } else {
             let offer = filterdata?[indexPath.row].restrorant?.offers?.first(where: {$0.id == filterdata?[indexPath.row].offerID})
             cell.lblTime.text = "\(offer?.openTime ?? "") - \(offer?.closeTime ?? "")"
             cell.lblBookingNO.text = ""

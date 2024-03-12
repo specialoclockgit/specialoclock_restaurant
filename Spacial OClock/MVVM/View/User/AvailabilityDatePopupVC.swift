@@ -13,6 +13,7 @@ class AvailabilityDatePopupVC: UIViewController {
     @IBOutlet weak var lblPersonCount: UILabel!
     @IBOutlet weak var lblTime: UILabel!
     var selectedDate : [String] = []
+    var callBack: (()->())?
     var date : String?
     var userCount: String?
     var time: String?
@@ -24,7 +25,9 @@ class AvailabilityDatePopupVC: UIViewController {
     }
     
     fileprivate func setupUI(){
-        lblDate.text = nextAvailableDate(selectedDate: self.date ?? "", closedDates: self.selectedDate) ?? "N/A"
+        
+        let date = nextAvailableDate(selectedDate: self.date ?? "", closedDates: self.selectedDate) ?? "N/A"
+        lblDate.text = formatDate(inputDate: date)
         lblTitle.text = titleString
         lblTime.text = "\(self.time ?? "") / \(self.offer ?? "0")%"
         lblPersonCount.text = self.userCount ?? "0"
@@ -36,6 +39,12 @@ class AvailabilityDatePopupVC: UIViewController {
         }
     }
     @IBAction func btnGotIt (_ sender: UIButton){
+        self.dismiss(animated: true){
+            self.callBack?()
+        }
+    }
+    
+    @IBAction func btnCross(_ sender: UIButton){
         self.dismiss(animated: true)
     }
     
