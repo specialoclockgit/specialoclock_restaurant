@@ -258,7 +258,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     showPopupForDisableDate(date: date,msg: "Sorry we are not available till \(dateArr.last ?? "")")
                    // CommonUtilities.shared.showAlert(message: "Closed until \(dateArr.last ?? ""). Please select further date")
                 } else {
-                    showPopupForDisableDate(date:date,msg: "Sorry we are not available today")
+                    showPopupForDisableDate(date:date,msg: "Sorry we are closed today")
                    // CommonUtilities.shared.showAlert(message: "Closed today. Please select another date")
                 }
             }
@@ -321,7 +321,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 showPopupForDisableDate(date: (formatter.string(from: datePicker.date)),msg: "Sorry we are not available till \(self.disableDatedArr.last ?? "")")
             } else {
                 if isToday(dateString: formatter.string(from: datePicker.date)){
-                    showPopupForDisableDate(date: (formatter.string(from: datePicker.date)), msg: "Sorry we are not available today")
+                    showPopupForDisableDate(date: (formatter.string(from: datePicker.date)), msg: "Sorry we are closed today")
                 } else {
                     showPopupForDisableDate(date: (formatter.string(from: datePicker.date)), msg: "Sorry we are not available on the selected date")
                 }

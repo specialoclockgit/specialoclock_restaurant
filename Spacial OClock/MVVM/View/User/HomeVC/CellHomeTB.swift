@@ -134,7 +134,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 cell.lblTime3.isHidden = true
               //  cell.lblOffer1.text = Store.screenType == 1 ? "-\(celldata?[0].percentage ?? 0)%" : ""
               //  cell.stackHeight.constant = Store.screenType == 1 ? 46 : 30
-                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[0].offer ?? "")
+                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
             } else if heishtresto[indexPath.row].offerTimings?.count == 2 {
                 cell.viewOffer1.isHidden = false
                 cell.viewOffer2.isHidden = false
@@ -152,8 +152,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 
                // cell.lblOffer1.text = Store.screenType == 1 ? "-\(celldata?[0].percentage ?? 0)%" : ""
                 //cell.lblOffer2.text = Store.screenType == 1 ? "-\(celldata?[1].percentage ?? 0)%" : ""
-                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[0].offer ?? "")
-                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[1].percentage ?? 0)%")" : (celldata?[1].offer ?? "")
+                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
+                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[1].percentage ?? "0")%")" : (celldata?[1].offer ?? "")
               // cell.stackHeight.constant = Store.screenType == 1 ? 46 : 30
             } else if heishtresto[indexPath.row].offerTimings?.count ?? 0 >= 3{
                 cell.viewOffer1.isHidden = false
@@ -172,9 +172,9 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
               //  cell.lblOffer1.text = Store.screenType == 1 ? "-\(celldata?[0].percentage ?? 0)%" : ""
                // cell.lblOffer2.text = Store.screenType == 1 ? "-\(celldata?[1].percentage ?? 0)%" : ""
                // cell.lblOffer3.text = Store.screenType == 1 ? "-\(celldata?[2].percentage ?? 0)%" : ""
-                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[0].offer ?? "")
-                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[1].offer ?? "")
-                cell.lblTime3.text = Store.screenType == 1 ? "\(celldata?[2].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[2].offer ?? "")
+                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
+                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[1].offer ?? "")
+                cell.lblTime3.text = Store.screenType == 1 ? "\(celldata?[2].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[2].offer ?? "")
                 //cell.stackHeight.constant = Store.screenType == 1 ? 46 : 30
             } else {
                 cell.stackHeight.constant = 0
@@ -207,7 +207,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 cell.lblTime2.isHidden = true
                 cell.lblTime3.isHidden = true
                // cell.lblOffer1.text = "-\(celldata?[0].percentage ?? 0)%"
-                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[0].offer ?? "")
+                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
             } else if allresto[indexPath.row].offerTimings?.count == 2 {
                 cell.viewOffer1.isHidden = false
                 cell.viewOffer2.isHidden = false
@@ -223,8 +223,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 
                // cell.lblOffer1.text = "-\(celldata?[0].percentage ?? 0)%"
                // cell.lblOffer2.text = "-\(celldata?[1].percentage ?? 0)%"
-                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[0].offer ?? "")
-                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[1].offer ?? "")
+                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
+                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[1].offer ?? "")
             } else if allresto[indexPath.row].offerTimings?.count ?? 0 >= 3{
                 
                 cell.viewOffer1.isHidden = false
@@ -245,9 +245,9 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                // cell.lblOffer1.text = "-\(celldata?[0].percentage ?? 0)%"
                 //cell.lblOffer2.text = "-\(celldata?[1].percentage ?? 0)%"
                // cell.lblOffer3.text = "-\(celldata?[2].percentage ?? 0)%"
-                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[0].offer ?? "")
-                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[1].offer ?? "")
-                cell.lblTime3.text = Store.screenType == 1 ? "\(celldata?[2].offer ?? "") \n\("-\(celldata?[0].percentage ?? 0)%")" : (celldata?[2].offer ?? "")
+                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
+                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[1].offer ?? "")
+                cell.lblTime3.text = Store.screenType == 1 ? "\(celldata?[2].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[2].offer ?? "")
                
             } else {
                 cell.stackHeight.constant = 0

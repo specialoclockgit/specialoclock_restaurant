@@ -25,9 +25,7 @@ class AvailabilityDatePopupVC: UIViewController {
     }
     
     fileprivate func setupUI(){
-        
-        let date = nextAvailableDate(selectedDate: self.date ?? "", closedDates: self.selectedDate) ?? "N/A"
-        lblDate.text = formatDate(inputDate: date)
+        lblDate.text = nextAvailableDate(selectedDate: self.date ?? "", closedDates: self.selectedDate) ?? "N/A"
         lblTitle.text = titleString
         lblTime.text = "\(self.time ?? "") / \(self.offer ?? "0")%"
         lblPersonCount.text = self.userCount ?? "0"

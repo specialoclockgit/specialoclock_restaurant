@@ -190,9 +190,23 @@ struct AllBarsResto: Codable {
 
 // MARK: - OfferTiminghome
 struct OfferTiminghome: Codable {
-    let offer: String?
-    let percentage, is_fifty: Int?
+    let percentage,offer: String?
+    let  is_fifty: Int?
     let id: Int?
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let string = try? container.decodeIfPresent(String.self, forKey: .percentage){
+            self.percentage = string
+        }else if let Int = try? container.decodeIfPresent(Int.self, forKey: .percentage){
+            self.percentage = Int.description
+        }else {
+            self.percentage = nil
+        }
+        
+        self.offer = try container.decodeIfPresent(String.self, forKey: .offer)
+        self.is_fifty = try container.decodeIfPresent(Int.self, forKey: .is_fifty)
+        self.id = try container.decodeIfPresent(Int.self, forKey: .id)
+    }
 }
 
 // MARK: - Theme

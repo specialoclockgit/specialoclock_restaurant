@@ -357,11 +357,13 @@ func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
                     if daysToAdd > 1 {
                         // If there are days between the current closed date and the next one, return the date in between
                         let nextAvailableDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+                        dateFormatter.dateFormat = "dd/MM/yyyy"
                         return dateFormatter.string(from: nextAvailableDate)
                     }
                 } else {
                     // If there are no more closed dates, return the next day after the last closed date
                     let nextAvailableDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+                    dateFormatter.dateFormat = "dd/MM/yyyy" 
                     return dateFormatter.string(from: nextAvailableDate)
                 }
             }

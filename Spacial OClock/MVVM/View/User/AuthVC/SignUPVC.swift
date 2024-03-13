@@ -25,7 +25,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var tfConfirmPass : UITextField!
     @IBOutlet weak var stackViewRestaurant : UIStackView!
     @IBOutlet weak var viewButton: CustomView!
-    @IBOutlet weak var btnMainRB : UIButton!
+    @IBOutlet weak var signUpBtn : UIButton!
     @IBOutlet weak var btnBar : UIButton!
     @IBOutlet weak var btnRestaurant : UIButton!
     
@@ -113,7 +113,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         selectStatus = 2
         restaurantBtn.setTitleColor(UIColor.white, for: .normal)
         userBtn.setTitleColor(UIColor.black, for: .normal)
-        restaurantBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
+        restaurantBtn.backgroundColor = UIColor(named: "themeOrange")
         userBtn.backgroundColor = UIColor.systemGray6
         if sender.isSelected == false{
             stackViewRestaurant.isHidden = false
@@ -125,7 +125,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         selectStatus = 1
         userBtn.setTitleColor(UIColor.white, for: .normal)
         restaurantBtn.setTitleColor(UIColor.black, for: .normal)
-        userBtn.backgroundColor = UIColor(red: 254/255, green: 114/255, blue: 19/255, alpha: 1)
+        userBtn.backgroundColor = UIColor(named: "themeOrange")
         restaurantBtn.backgroundColor = UIColor.systemGray6
         viewButton.isHidden = true
     }
@@ -273,6 +273,10 @@ extension SignUPVC: UITextFieldDelegate {
             currentString.replacingCharacters(in: range, with: string) as String
             return newString.length() <= 30
         }
+        
+               
+        
+        
         return true
     }
 }

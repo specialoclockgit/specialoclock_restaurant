@@ -38,7 +38,7 @@ extension homeSeeMoreCVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "offerSeeMoreCVC", for: indexPath) as! offerSeeMoreCVC
         if screen == 1 {
-            cell.lblName.text = "\(offerTimings?[indexPath.row].offer ?? "") \n -\((offerTimings?[indexPath.row].percentage ?? 0))%"
+            cell.lblName.text = "\(offerTimings?[indexPath.row].offer ?? "") \n -\((offerTimings?[indexPath.row].percentage ?? "0"))%"
             //cell.lblDescription.text = "-\(offerTimings?[indexPath.row].percentage ?? 0)%"
         }else {
             cell.lblName.text = (offerTimings?[indexPath.row].offer ?? "")
