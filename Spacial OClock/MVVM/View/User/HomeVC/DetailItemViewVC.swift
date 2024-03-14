@@ -246,7 +246,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblName.text = filterlocations?[indexPath.row].name?.capitalized ?? ""
             cell.lblLocation.text = filterlocations?[indexPath.row].location ?? ""
             cell.lblfirstLocaton.text = filterlocations?[indexPath.row].city ?? ""
-            cell.lblDiscription.text = filterlocations?[indexPath.row].shortDescription ?? ""
+            cell.lblDiscription.text = "\(filterlocations?[indexPath.row].openTime ?? "") - \(filterlocations?[indexPath.row].closeTime ?? "")"
+            //filterlocations?[indexPath.row].shortDescription ?? ""
             let fetchresto = filterlocations?[indexPath.row].timeSlots ?? []
             cell.lblRaiting.text = "\(filterlocations?[indexPath.row].avgRating ?? 0)"
             cell.cosmosView.rating = Double(filterlocations?[indexPath.row].avgRating ?? 0)

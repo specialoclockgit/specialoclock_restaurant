@@ -11,6 +11,7 @@ import IQKeyboardManagerSwift
 import Cosmos
 import CoreLocation
 import QuartzCore
+import MapKit
 
 struct ModelMenuCollView {
     var name : [String]
@@ -511,10 +512,26 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         }
     }
     @IBAction func btnMap(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "directionVC") as! directionVC
-        vc.lat = Double(self.modal?.latitude ?? "") ?? 0.0
-        vc.lng = Double(self.modal?.longitude ?? "") ?? 0.0
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "directionVC") as! directionVC
+//        vc.lat = Double(self.modal?.latitude ?? "") ?? 0.0
+//        vc.lng = Double(self.modal?.longitude ?? "") ?? 0.0
+//        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let alert = UIAlertController(title: NSLocalizedString("Select map for direction", comment: ""), message: nil, preferredStyle: .actionSheet)
+        
+        let openAppleMap = UIAlertAction(title: "Apple Map", style: UIAlertAction.Style.default) { (data) in
+            self.openAppleMapDirection()
+        }
+       
+        let openGoogleMap = UIAlertAction(title: "Google Map", style: .default) { (data) in
+            self.openGoogleMapDirection()
+        }
+        let cancelBtn = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(openAppleMap)
+        alert.addAction(openGoogleMap)
+        alert.addAction(cancelBtn)
+        alert.popoverPresentationController?.sourceView = self.view
+        self.navigationController?.present(alert, animated: true)
     }
     @IBAction func btnAllMenu(_ sender: UIButton)
     {
@@ -1113,6 +1130,48 @@ extension Array {
             }
         }
         return arrayOrdered
+    }
+}
+
+extension ItemDetailsVC {
+    private func openAppleMapDirection(){
+        let destinationLatitude = Double(self.modal?.latitude ?? "") ?? 0.0
+        let destinationLongitude = Double(self.modal?.longitude ?? "") ?? 0.0
+        let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLatitude, longitude: destinationLongitude)
+        let destinationName = self.modal?.location ?? ""
+        // Create a MKPlacemark object with the destination coordinate and set its name to the destination name
+        let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
+        // destinationPlacemark.name = destinationName
+        
+        // Create a MKMapItem object with the destination placemark
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+        destinationMapItem.name = destinationName
+        
+        // Create a MKDirectionsRequest object with the source and destination map items
+        let sourceMapItem = MKMapItem.forCurrentLocation()
+        let directionsRequest = MKDirections.Request()
+        directionsRequest.source = sourceMapItem
+        directionsRequest.destination = destinationMapItem
+        
+        //         Get the directions from the source to the destination using MKDirections and set the transportType to .automobile or .walking
+        let directions = MKDirections(request: directionsRequest)
+        directions.calculate { response, error in
+            guard let response = response else { return }
+            let route = response.routes[0]
+            let mapLaunchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+            destinationMapItem.openInMaps(launchOptions: mapLaunchOptions)
+        }
+    }
+    
+    private func openGoogleMapDirection(){
+        let destinationLatitude = Double(self.modal?.latitude ?? "") ?? 0.0
+        let destinationLongitude = Double(self.modal?.longitude ?? "") ?? 0.0
+        if let url = URL(string: "https://www.google.com/maps/dir/?api=1&destination=\(destinationLatitude),\(destinationLongitude)") {
+            if UIApplication.shared.canOpenURL(url){
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+        }
     }
 }
 

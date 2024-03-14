@@ -51,6 +51,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         Store.status = "\(restoselctStatus)"
         tfName.delegate = self
         tfPhone.delegate = self
+        tfEmail.delegate = self
         tfPassword.delegate = self
         tfConfirmPass.delegate = self
         uiSet()
@@ -200,6 +201,27 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
 }
 
 extension SignUPVC {
+    
+    func checkFilledDeatils(isImage:Bool,name:String,email:String,phone:String,pass:String,conPass:String) -> Bool{
+        
+        if isImage == false {
+            return false
+        } else if name.trimmingCharacters(in: .whitespaces).isEmpty{
+            return false
+        } else if email.trimmingCharacters(in: .whitespaces).isEmpty{
+            return false
+        } else if phone.trimmingCharacters(in: .whitespaces).isEmpty{
+            return false
+        }else if pass.trimmingCharacters(in: .whitespaces).isEmpty{
+            return false
+        }else if conPass.trimmingCharacters(in: .whitespaces).isEmpty{
+            return false
+        }
+        return true
+    }
+    
+    
+    
     func tapGesture(){
         let mytapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.view.addGestureRecognizer(mytapGestureRecognizer)
@@ -257,6 +279,19 @@ extension SignUPVC: UITextFieldDelegate {
         //            }
         //            return newString.count <= maxLength
         //        }else
+        
+        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? ""){
+            print("True")
+            signUpBtn.isUserInteractionEnabled = true
+            signUpBtn.backgroundColor = UIColor(named: "themeOrange")
+        }else {
+            print("false")
+            signUpBtn.isUserInteractionEnabled = false
+            signUpBtn.backgroundColor = .lightGray
+        }
+        
+        
+        
         if textField == self.tfName{
             let currentString: NSString = (textField.text ?? "") as NSString
             let newString: String =
@@ -273,12 +308,13 @@ extension SignUPVC: UITextFieldDelegate {
             currentString.replacingCharacters(in: range, with: string) as String
             return newString.length() <= 30
         }
-        
-               
-        
+   
         
         return true
     }
+    
+   
+    
 }
 //MARK: - CAMERA ACCSESS
 extension SignUPVC {

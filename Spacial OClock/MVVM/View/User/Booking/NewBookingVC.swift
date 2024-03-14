@@ -142,7 +142,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         
         dateFormatter.dateFormat = "yyyy"
         let yearString = dateFormatter.string(from: date)
-        let heading = monthString + yearString
+        let heading = "\(monthString) \(yearString)"
         lblMonth.text = heading
     }
     
@@ -235,7 +235,7 @@ extension NewBookingVC{
         
         dateFormatter.dateFormat = "yyyy"
         let yearString = dateFormatter.string(from: Date())
-        let heading = monthString + yearString
+        let heading = "\(monthString) \(yearString)"  
         lblMonth.text = heading
     }
 }
