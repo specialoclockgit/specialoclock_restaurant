@@ -462,7 +462,7 @@ extension HomeVC {
             
         case "Cuisines" :
             let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
-            screen.setvalue = sectionArray[sender.tag].name ?? ""
+            screen.setvalue = "Cuisines"
             screen.cuisine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
             screen.filterCusine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
             self.navigationController?.pushViewController(screen, animated: true)

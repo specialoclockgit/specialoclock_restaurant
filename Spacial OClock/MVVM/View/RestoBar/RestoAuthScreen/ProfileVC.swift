@@ -30,7 +30,7 @@ class ProfileVC: UIViewController {
         if Store.userDetails?.bussinesstype == 1{
             btnViewProfile.setTitle("Restaurant Profile", for: .normal)
         } else {
-            btnViewProfile.setTitle("Bar Profile", for: .normal)
+            btnViewProfile.setTitle("Bar/Club Profile", for: .normal)
         }
         
         initialLoad()
@@ -72,7 +72,7 @@ extension ProfileVC{
         if Store.userDetails?.bussinesstype == 1 {
             btnViewProfile.setTitle("Restaurant Profile", for: .normal)
         }else if Store.userDetails?.bussinesstype == 2 {
-            btnViewProfile.setTitle("Bar Profile", for: .normal)
+            btnViewProfile.setTitle("Bar/Club Profile", for: .normal)
         }
     }
 }

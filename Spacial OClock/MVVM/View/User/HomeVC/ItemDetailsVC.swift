@@ -902,7 +902,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.replyImgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.replyImgVw.sd_setImage(with: URL(string: restImage), placeholderImage: UIImage(named: "placeholder (1)"))
             cell.replyDateLbl.text = string_date_ToDate(reviews?[indexPath.row].updatedAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
-            cell.replyTypeLbl.text = self.modal?.type == 1 ? "Restaurant Reply" : "Bar Reply"
+            cell.replyTypeLbl.text = self.modal?.type == 1 ? "Restaurant Reply" : "Bar/Club Reply"
             cell.replyComment.text = self.reviews?[indexPath.row].reply?.capitalized ?? ""
             return cell
         }
@@ -910,16 +910,20 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            if self.reviews?.count == 0{
-                self.heightTBReview.constant = 220
-               // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
-               // self.imgViewGifReview.isHidden = false
-            } else {
-                //self.imgViewGifReview.isHidden = true
-                self.heightTBReview.constant = self.tbReview.contentSize.height
+            if tableView == self.tbReview{
+                if self.reviews?.count == 0{
+                    self.heightTBReview.constant = 300
+                   // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
+                   // self.imgViewGifReview.isHidden = false
+                } else {
+                    //self.imgViewGifReview.isHidden = true
+                    self.heightTBReview.constant = self.tbReview.contentSize.height
+                }
+                self.view.layoutIfNeeded()
+                self.tbReview.layoutIfNeeded()
             }
             
-            self.heightTBMenu.constant = self.tbMenu.contentSize.height
+            //self.heightTBMenu.constant = self.tbMenu.contentSize.height
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

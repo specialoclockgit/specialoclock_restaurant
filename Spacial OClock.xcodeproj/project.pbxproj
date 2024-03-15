@@ -2030,7 +2030,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spacial OClock/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock User";
+				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock";
 				INFOPLIST_KEY_NSCameraUsageDescription = "need camera access.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = allow;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = allow;
@@ -2042,6 +2042,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2075,7 +2076,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = TSH4MBVHWY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spacial OClock/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock User";
+				INFOPLIST_KEY_CFBundleDisplayName = "Special O'Clock";
 				INFOPLIST_KEY_NSCameraUsageDescription = "need camera access.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = allow;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = allow;
@@ -2087,6 +2088,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

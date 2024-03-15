@@ -65,7 +65,7 @@ class VerificationVC: UIViewController {
                     UserDefaults.standard.set("Restaurant", forKey: "name")
                 }else{
                     vc.heading = "Pub & Bar Profile"
-                    vc.name = "Bar Name"
+                    vc.name = "Bar/Club Name"
                     UserDefaults.standard.set("Bar", forKey: "name")
                 }
                 UserDefaults.standard.set(self.restoselctStatus, forKey: "status")

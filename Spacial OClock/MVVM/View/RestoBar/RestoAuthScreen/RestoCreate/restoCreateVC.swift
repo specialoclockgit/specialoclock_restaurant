@@ -260,7 +260,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     
     @objc func doneteTime1(){
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm a"
+        formatter.dateFormat = "HH:mm"
         tfOpenTime.text = formatter.string(from: timePicker.date)
         openTime =  formatter.string(from: timePicker.date)
         print(tfOpenTime ?? "")
@@ -293,7 +293,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     @objc func doneteTime2() {
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm a"
+        formatter.dateFormat = "HH:mm"
         //        formatter.dateFormat = "HH:mm a"
         tfCloseTime.text = formatter.string(from: timePicker2.date)
         CloseTime =  formatter.string(from: timePicker2.date)
@@ -338,7 +338,7 @@ extension restoCreateVC{
             lblName.text = "Restaurant Name"
             viewCategory.isHidden = true
         }else if btnCheckStatus == 2 {
-            lblName.text = "Bar Name"
+            lblName.text = "Bar/Club Name"
             lblHeading.text = "Pub & Bar Profiler"
             viewCuisines.isHidden = true
             viewOffer.isHidden = true

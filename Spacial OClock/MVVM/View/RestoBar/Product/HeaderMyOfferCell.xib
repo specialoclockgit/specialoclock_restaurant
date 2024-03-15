@@ -28,15 +28,27 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BE8-nf-ZHO">
                         <rect key="frame" x="0.0" y="0.0" width="329" height="59"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tonight special" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55v-U1-DzH">
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aWe-Mu-0hs">
                                 <rect key="frame" x="10" y="15" width="250" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="woS-iW-t14"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kuo-Za-jD6">
+                                        <rect key="frame" x="-30" y="0.0" width="30" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="K8G-hc-3Nw"/>
+                                            <constraint firstAttribute="width" constant="30" id="Qiz-Gg-ClK"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tonight special" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55v-U1-DzH">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="woS-iW-t14"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcV-2U-YN4">
                                 <rect key="frame" x="10" y="35" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
@@ -66,13 +78,13 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="oAa-Sk-EDe" secondAttribute="trailing" constant="10" id="0Vw-cm-P7l"/>
                             <constraint firstItem="S5k-Hf-Fys" firstAttribute="top" secondItem="BE8-nf-ZHO" secondAttribute="top" id="4Lc-mR-g9o"/>
+                            <constraint firstItem="aWe-Mu-0hs" firstAttribute="top" secondItem="BE8-nf-ZHO" secondAttribute="top" constant="15" id="AJT-Eh-ueD"/>
                             <constraint firstItem="xcV-2U-YN4" firstAttribute="leading" secondItem="BE8-nf-ZHO" secondAttribute="leading" constant="10" id="BUn-Qg-nib"/>
-                            <constraint firstItem="oAa-Sk-EDe" firstAttribute="centerY" secondItem="55v-U1-DzH" secondAttribute="centerY" id="Bai-AW-C37"/>
-                            <constraint firstItem="55v-U1-DzH" firstAttribute="leading" secondItem="BE8-nf-ZHO" secondAttribute="leading" constant="10" id="QL4-HB-DSS"/>
-                            <constraint firstItem="55v-U1-DzH" firstAttribute="top" secondItem="BE8-nf-ZHO" secondAttribute="top" constant="15" id="TbO-ro-tSx"/>
-                            <constraint firstItem="xcV-2U-YN4" firstAttribute="top" secondItem="55v-U1-DzH" secondAttribute="bottom" id="Tvl-gz-VML"/>
+                            <constraint firstItem="oAa-Sk-EDe" firstAttribute="centerY" secondItem="aWe-Mu-0hs" secondAttribute="centerY" id="J1K-Vd-s0b"/>
                             <constraint firstItem="S5k-Hf-Fys" firstAttribute="leading" secondItem="BE8-nf-ZHO" secondAttribute="leading" id="hB1-dm-7b1"/>
+                            <constraint firstItem="aWe-Mu-0hs" firstAttribute="leading" secondItem="BE8-nf-ZHO" secondAttribute="leading" constant="10" id="jRW-u3-dXb"/>
                             <constraint firstAttribute="trailing" secondItem="S5k-Hf-Fys" secondAttribute="trailing" id="jcR-9H-LGp"/>
+                            <constraint firstItem="xcV-2U-YN4" firstAttribute="top" secondItem="aWe-Mu-0hs" secondAttribute="bottom" id="lec-to-LNP"/>
                             <constraint firstAttribute="bottom" secondItem="S5k-Hf-Fys" secondAttribute="bottom" id="wM9-6x-aqh"/>
                             <constraint firstAttribute="height" constant="59" id="zbi-GS-st0"/>
                         </constraints>
@@ -88,6 +100,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="btnHeader" destination="S5k-Hf-Fys" id="Fu5-oF-TeC"/>
+                <outlet property="flagImgVw" destination="kuo-Za-jD6" id="4Fg-4g-K7r"/>
                 <outlet property="lblHeading" destination="55v-U1-DzH" id="9P1-Kv-jJ0"/>
                 <outlet property="lblSubHeading" destination="xcV-2U-YN4" id="GtP-yi-hgi"/>
                 <outlet property="viewHeader" destination="BE8-nf-ZHO" id="ylY-BN-O6I"/>

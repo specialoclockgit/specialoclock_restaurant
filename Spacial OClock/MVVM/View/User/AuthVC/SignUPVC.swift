@@ -107,6 +107,17 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
             self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
                 self?.image = imageData ?? [FileuploadModelBody]()
                 self?.isImageSelected = true
+                
+                if self?.checkFilledDeatils(isImage: self?.isImageSelected ?? false, name: self?.tfName.text ?? "", email: self?.tfEmail.text ?? "", phone: self?.tfPhone.text ?? "", pass: self?.tfPassword.text ?? "", conPass: self?.tfConfirmPass.text ?? "",isSelected: self?.isselected ?? false) == true{
+                    print("True")
+                    self?.signUpBtn.isUserInteractionEnabled = true
+                    self?.signUpBtn.backgroundColor = UIColor(named: "themeOrange")
+                }else {
+                    print("false")
+                    self?.signUpBtn.isUserInteractionEnabled = false
+                    self?.signUpBtn.backgroundColor = .lightGray
+                }
+                
             }
         }
     }
@@ -148,7 +159,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         restoselctStatus = 2
         
         viewButton.isHidden = true
-        restaurantBtn.setTitle("Bar ▼", for: .normal)
+        restaurantBtn.setTitle("Bar/Club ▼", for: .normal)
     }
     
     @IBAction func btnSelectResto(_ sender: UIButton) {
@@ -193,16 +204,27 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         switch sender.isSelected {
         case true:
             isselected = true
-            
         default:
             isselected = false
         }
+        
+        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? "",isSelected: isselected){
+            print("True")
+            signUpBtn.isUserInteractionEnabled = true
+            signUpBtn.backgroundColor = UIColor(named: "themeOrange")
+        }else {
+            print("false")
+            signUpBtn.isUserInteractionEnabled = false
+            signUpBtn.backgroundColor = .lightGray
+        }
+        
+        
     }
 }
 
 extension SignUPVC {
     
-    func checkFilledDeatils(isImage:Bool,name:String,email:String,phone:String,pass:String,conPass:String) -> Bool{
+    func checkFilledDeatils(isImage:Bool,name:String,email:String,phone:String,pass:String,conPass:String,isSelected:Bool) -> Bool{
         
         if isImage == false {
             return false
@@ -215,6 +237,8 @@ extension SignUPVC {
         }else if pass.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
         }else if conPass.trimmingCharacters(in: .whitespaces).isEmpty{
+            return false
+        }else if isSelected == false {
             return false
         }
         return true
@@ -280,7 +304,7 @@ extension SignUPVC: UITextFieldDelegate {
         //            return newString.count <= maxLength
         //        }else
         
-        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? ""){
+        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? "",isSelected: isselected){
             print("True")
             signUpBtn.isUserInteractionEnabled = true
             signUpBtn.backgroundColor = UIColor(named: "themeOrange")

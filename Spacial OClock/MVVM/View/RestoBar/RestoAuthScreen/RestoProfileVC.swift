@@ -105,7 +105,7 @@ extension RestoProfileVC{
         if Store.userDetails?.bussinesstype == 1{
             self.lblHeading.text = "Restaurant Profile"
         }else{
-            self.lblHeading.text = "Bar Profile"
+            self.lblHeading.text = "Bar/Club Profile"
         }
         debugPrint(heading)
         lblname.text = UserDefaults.standard.name.capitalized

@@ -160,6 +160,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cellHeader = tbMyOffer.dequeueReusableCell(withIdentifier: Cell.HeaderMyOfferCell) as! HeaderMyOfferCell
         if valueChange == "My Offer"{
+            cellHeader.flagImgVw.isHidden = true
             cellHeader.lblHeading.text = "\(self.modal?[section].menuName ?? "") " +
             "\(String(describing: self.modal?[section].offerPrice ?? 0))%"
            // cellHeader.lblTimming.text =  "(\(String(describing: self.modal?[section].openTime ?? ""))-\(self.modal?[section].closeTime ?? ""))"
@@ -176,6 +177,8 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
                 cellHeader.lblSubHeading.isHidden = true
             }
         }else{
+            cellHeader.flagImgVw.isHidden = false
+            cellHeader.flagImgVw.showIndicator(baseUrl: imageBaseURL, imageUrl: self.datagetApi?[section].flag_image ?? "")
             cellHeader.lblHeading.text =  self.datagetApi?[section].country ?? ""
             cellHeader.viewHeader.layer.cornerRadius = 10.0
             cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)

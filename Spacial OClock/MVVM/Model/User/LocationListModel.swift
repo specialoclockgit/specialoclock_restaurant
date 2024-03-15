@@ -54,14 +54,15 @@ struct LocationList: Codable {
 
 // MARK: - LocationListBody
 struct LocationListBody: Codable {
-    var country: String?
+    var country,flag_image: String?
     var restaurants: [Restaurant]?
     
     enum CodingKeys: String, CodingKey {
-        case country, restaurants
+        case country, restaurants,flag_image
     }
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.flag_image = try container.decodeIfPresent(String.self, forKey: .flag_image)
         self.country = try container.decodeIfPresent(String.self, forKey: .country)
         self.restaurants = try container.decodeIfPresent([Restaurant].self, forKey: .restaurants)
     }

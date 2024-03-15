@@ -332,8 +332,8 @@ extension EditRestoProfileVC{
             tfName.placeholder = "Enter Name"
             viewCategory.isHidden = true
         }else if status == 2{
-            lblName.text = "Bar Name"
-            tfName.placeholder = "Bar Name"
+            lblName.text = "Bar/Club Name"
+            tfName.placeholder = "Bar/Club Name"
             viewCuisines.isHidden = true
             viewOffer.isHidden = true
         }

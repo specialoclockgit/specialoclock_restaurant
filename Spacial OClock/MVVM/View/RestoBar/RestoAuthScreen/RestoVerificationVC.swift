@@ -44,7 +44,7 @@ class RestoVerificationVC: UIViewController {
 
                             if self.btnCheckStatus == 1{
                                 vc.heading = "Pub & Bar Profile"
-                                vc.name = "Bar Name"
+                                vc.name = "Bar/Club Name"
                                 UserDefaults.standard.set("Bar", forKey: "name")
                             }
                             //Resto

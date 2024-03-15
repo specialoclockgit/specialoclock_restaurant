@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 import Cosmos
+import MapKit
 
 struct ModelItemDetail {
     var img : String
@@ -132,7 +133,7 @@ class bookingDetailVC: UIViewController {
                     self.replyCommentLbl.text = review.reply?.capitalized ?? ""
                     self.replyRestroNameLbl.text = self.modal?.restrorant?.name?.capitalized ?? ""
                     self.replyRestroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.modal?.restrorant?.profileImage ?? "")
-                    self.replyRestroType.text = self.modal?.restrorant?.type == 1 ? "Restaurant Reply" : "Bar Reply"
+                    self.replyRestroType.text = self.modal?.restrorant?.type == 1 ? "Restaurant Reply" : "Bar/Club Reply"
                 } else {
                     self.replyVw.isHidden = true
                     self.btnMain.isHidden = false
@@ -148,12 +149,12 @@ class bookingDetailVC: UIViewController {
             }
             if fetchdata?.restrorant?.type == 2 {
               
-                self.bookingSlotStartEndTime.text = "Offer from \(fetchdata?.restrorant?.offers?.first?.openTime ?? "") to \(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
+               // self.bookingSlotStartEndTime.text = "Offer from \(fetchdata?.restrorant?.offers?.first?.openTime ?? "") to \(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
                 self.lblSpeOffer.text = fetchdata?.restrorant?.offers?.first?.menuName ?? ""
                 self.lblBookingtime.text = "\(fetchdata?.restrorant?.offers?.first?.openTime ?? "")-\(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
             }else {
                 self.lblSpeOffer.text = "\(fetchdata?.offerName ?? "")  (-\(fetchdata?.offerPercentage ?? "")%)"
-                self.bookingSlotStartEndTime.text = fetchdata?.bookingSlot ?? ""
+                //self.bookingSlotStartEndTime.text = fetchdata?.bookingSlot ?? ""
                 self.lblBookingtime.text = fetchdata?.bookingSlot ?? ""
             }
             self.lblOpenClosetime.text = "\(fetchdata?.restrorant?.openTime ?? "") to " + "\(fetchdata?.restrorant?.closeTime ?? "")"
@@ -217,6 +218,24 @@ class bookingDetailVC: UIViewController {
             
         }
     }
+    @IBAction func btnOpenLocation(_ sender : UIButton){
+        let alert = UIAlertController(title: NSLocalizedString("Select map for direction", comment: ""), message: nil, preferredStyle: .actionSheet)
+        
+        let openAppleMap = UIAlertAction(title: "Apple Map", style: UIAlertAction.Style.default) { (data) in
+            self.openAppleMapDirection()
+        }
+       
+        let openGoogleMap = UIAlertAction(title: "Google Map", style: .default) { (data) in
+            self.openGoogleMapDirection()
+        }
+        let cancelBtn = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(openAppleMap)
+        alert.addAction(openGoogleMap)
+        alert.addAction(cancelBtn)
+        alert.popoverPresentationController?.sourceView = self.view
+        self.navigationController?.present(alert, animated: true)
+    }
+    
     
 }
 //MARK: - EXTENSION
@@ -253,4 +272,45 @@ extension bookingDetailVC : UITableViewDelegate, UITableViewDataSource{
 //            self.tblViewHeight.constant = self.tblView.contentSize.height
 //        }
 //    }
+}
+extension bookingDetailVC {
+    private func openAppleMapDirection(){
+        let destinationLatitude = Double(self.modal?.restrorant?.latitude ?? "") ?? 0.0
+        let destinationLongitude = Double(self.modal?.restrorant?.longitude ?? "") ?? 0.0
+        let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLatitude, longitude: destinationLongitude)
+        let destinationName = self.modal?.restrorant?.location ?? ""
+        // Create a MKPlacemark object with the destination coordinate and set its name to the destination name
+        let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
+        // destinationPlacemark.name = destinationName
+        
+        // Create a MKMapItem object with the destination placemark
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+        destinationMapItem.name = destinationName
+        
+        // Create a MKDirectionsRequest object with the source and destination map items
+        let sourceMapItem = MKMapItem.forCurrentLocation()
+        let directionsRequest = MKDirections.Request()
+        directionsRequest.source = sourceMapItem
+        directionsRequest.destination = destinationMapItem
+        
+        //         Get the directions from the source to the destination using MKDirections and set the transportType to .automobile or .walking
+        let directions = MKDirections(request: directionsRequest)
+        directions.calculate { response, error in
+            guard let response = response else { return }
+            let route = response.routes[0]
+            let mapLaunchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+            destinationMapItem.openInMaps(launchOptions: mapLaunchOptions)
+        }
+    }
+    
+    private func openGoogleMapDirection(){
+        let destinationLatitude = Double(self.modal?.restrorant?.latitude ?? "") ?? 0.0
+        let destinationLongitude = Double(self.modal?.restrorant?.longitude ?? "") ?? 0.0
+        if let url = URL(string: "https://www.google.com/maps/dir/?api=1&destination=\(destinationLatitude),\(destinationLongitude)") {
+            if UIApplication.shared.canOpenURL(url){
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+        }
+    }
 }
