@@ -15,6 +15,7 @@ class HeaderMyOfferCell: UITableViewCell {
     @IBOutlet weak var lblSubHeading : UILabel!
     @IBOutlet weak var lblTimming : UILabel!
     @IBOutlet weak var btnHeader : UIButton!
+    @IBOutlet weak var btnArrow: UIButton!
     @IBOutlet weak var flagImgVw: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()

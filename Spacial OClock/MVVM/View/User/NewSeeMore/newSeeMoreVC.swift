@@ -42,7 +42,7 @@ class newSeeMoreVC: UIViewController {
         if setvalue == "Location"{
             lblHeading.text = "Location"
         }else if setvalue == "Cuisines"{
-            lblHeading.text = "Cuisine"
+            lblHeading.text = "Cuisines"
         }else if setvalue == "Category"{
             lblHeading.text = "Category"
         }else if setvalue == "Theme"{
@@ -142,7 +142,12 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             let count  = Store.screenType == 2 ? (self.filterCusine[indexPath.row].restroCount ?? 0) : (self.filterCusine[indexPath.row].restroCount ?? 0)
     
             let newCount = count == 0 ? count.description : count < 9 ? "0\(count.description)" : (count).description
-            cell.lblTotalREs.text = Store.screenType == 2 ? "\(newCount) Bars/Clubs" : "\(newCount) Restaurants"
+            if newCount == "1" {
+                cell.lblTotalREs.text = Store.screenType == 2 ? "\(newCount) Bars/Clubs" : "\(newCount) Restaurant"
+            } else {
+                cell.lblTotalREs.text = Store.screenType == 2 ? "\(newCount) Bars/Clubs" : "\(newCount) Restaurants"
+            }
+
             //"\(self.filterCusine[indexPath.row].restroCount ?? 0) Bars" : "\(self.filterCusine[indexPath.row].restroCount ?? 0) Restaurants"
             cell.lblName.text = self.filterCusine[indexPath.row].name?.capitalized ?? ""
         } else if setvalue == "Category"{

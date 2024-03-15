@@ -18,6 +18,7 @@ struct ModelItemDetail {
 
 class bookingDetailVC: UIViewController {
 
+    @IBOutlet weak var labelDiscuount: UILabel!
     //MARK: - OUTLETS
     @IBOutlet weak var lblStatus: UILabel!
     @IBOutlet weak var lblSpeOffer: UILabel!
@@ -152,7 +153,8 @@ class bookingDetailVC: UIViewController {
                // self.bookingSlotStartEndTime.text = "Offer from \(fetchdata?.restrorant?.offers?.first?.openTime ?? "") to \(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
                 self.lblSpeOffer.text = fetchdata?.restrorant?.offers?.first?.menuName ?? ""
                 self.lblBookingtime.text = "\(fetchdata?.restrorant?.offers?.first?.openTime ?? "")-\(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
-            }else {
+            } else {
+                self.labelDiscuount.text = "\(fetchdata?.offerPercentage ?? "")%"
                 self.lblSpeOffer.text = "\(fetchdata?.offerName ?? "")  (-\(fetchdata?.offerPercentage ?? "")%)"
                 //self.bookingSlotStartEndTime.text = fetchdata?.bookingSlot ?? ""
                 self.lblBookingtime.text = fetchdata?.bookingSlot ?? ""
@@ -164,8 +166,11 @@ class bookingDetailVC: UIViewController {
             self.lblBookingNumber.text = fetchdata?.bookingID ?? ""
             
             self.lblOfferDis.text = fetchdata?.restrorant?.shortDescription ?? ""
-           
-            self.lblDate.text = fetchdata?.bookingDate ?? ""
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let date =  dateFormatter.date(from: fetchdata?.bookingDate ?? "") ?? Date()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            self.lblDate.text = dateFormatter.string(from: date)
             self.lblNOP.text = "\(fetchdata?.numberOfPeople ?? 0)"
             self.actualprice = fetchdata?.restrorant?.offers?.first?.offerPrice ?? 0
             self.presntsPrice = fetchdata?.offerPercentage ?? ""

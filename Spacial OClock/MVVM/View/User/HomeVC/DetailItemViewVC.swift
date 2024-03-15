@@ -86,8 +86,15 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     //MARK: - CUSINS BY RESTO
     func get_resto_list(){
         viewmodal.cusinsRestoAPI(cuisineid: cusinessID) { [weak self] fetchdata in
-            self?.modal = fetchdata
-            self?.filtercusin = fetchdata
+            var objModel = fetchdata ?? []
+            for i in 0 ..< (objModel.count ?? 0) {
+                var obj = objModel[i]
+                obj.timeSlots?.reverse()
+                objModel[i] = obj
+            }
+
+            self?.modal = objModel
+            self?.filtercusin = objModel
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
             }

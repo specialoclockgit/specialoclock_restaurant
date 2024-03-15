@@ -61,6 +61,7 @@
                                     <constraint firstAttribute="width" constant="20" id="616-Z6-5t2"/>
                                     <constraint firstAttribute="height" constant="20" id="j4L-Xu-ON5"/>
                                 </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="arrowDefault"/>
                                 <state key="selected" image="arrowIcon"/>
@@ -99,6 +100,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="btnArrow" destination="oAa-Sk-EDe" id="ZD0-b0-TdH"/>
                 <outlet property="btnHeader" destination="S5k-Hf-Fys" id="Fu5-oF-TeC"/>
                 <outlet property="flagImgVw" destination="kuo-Za-jD6" id="4Fg-4g-K7r"/>
                 <outlet property="lblHeading" destination="55v-U1-DzH" id="9P1-Kv-jJ0"/>

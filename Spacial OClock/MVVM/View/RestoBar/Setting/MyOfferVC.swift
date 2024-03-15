@@ -163,15 +163,17 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
             cellHeader.flagImgVw.isHidden = true
             cellHeader.lblHeading.text = "\(self.modal?[section].menuName ?? "") " +
             "\(String(describing: self.modal?[section].offerPrice ?? 0))%"
-           // cellHeader.lblTimming.text =  "(\(String(describing: self.modal?[section].openTime ?? ""))-\(self.modal?[section].closeTime ?? ""))"
+            // cellHeader.lblTimming.text =  "(\(String(describing: self.modal?[section].openTime ?? ""))-\(self.modal?[section].closeTime ?? ""))"
             cellHeader.viewHeader.layer.cornerRadius = 10.0
             cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
             cellHeader.btnHeader.tag = section
-            if arrCheck[section] == true{
+            if arrCheck[section] == true {
                 cellHeader.btnHeader.isSelected = true
                 cellHeader.viewHeader.backgroundColor = .white
                 cellHeader.lblSubHeading.isHidden = true
-            }else{
+
+            } else {
+
                 cellHeader.btnHeader.isSelected = false
                 cellHeader.viewHeader.backgroundColor = .systemGray6
                 cellHeader.lblSubHeading.isHidden = true
@@ -184,10 +186,12 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
             cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
             cellHeader.btnHeader.tag = section
             if arrCheck[section] == true{
+                cellHeader.btnArrow.setImage(UIImage.init(named: "arrowIcon1"), for: .normal)
                 cellHeader.btnHeader.isSelected = true
                 cellHeader.viewHeader.backgroundColor = .white
                 cellHeader.lblSubHeading.isHidden = false
             }else{
+                cellHeader.btnArrow.setImage(UIImage.init(named: "arrowDefault"), for: .normal)
                 cellHeader.btnHeader.isSelected = false
                 cellHeader.viewHeader.backgroundColor = .systemGray6
                 cellHeader.lblSubHeading.isHidden = true
@@ -213,14 +217,14 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
             cell.imgViwe.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
             cell.imgViwe.sd_setImage(with: URL(string: productImgURL + (self.modal?[indexPath.section].products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "pl"))
 
-//            if Store.userDetails?.bussinesstype == 2 {
-//                cell.lblActualPrice.text = "R\(self.modal?[indexPath.section].products?[indexPath.row]. ?? 0)"
-//            }else {
-                
-                let totalamount = self.modal?[indexPath.section].products?[indexPath.row].price ?? 0
-                let discount = self.modal?[indexPath.section].offerPrice ?? 0
-                cell.lblOfferPrice.text = "R\(calculate(total: totalamount, discount: discount).description)"
-          // }
+            //            if Store.userDetails?.bussinesstype == 2 {
+            //                cell.lblActualPrice.text = "R\(self.modal?[indexPath.section].products?[indexPath.row]. ?? 0)"
+            //            }else {
+
+            let totalamount = self.modal?[indexPath.section].products?[indexPath.row].price ?? 0
+            let discount = self.modal?[indexPath.section].offerPrice ?? 0
+            cell.lblOfferPrice.text = "R\(calculate(total: totalamount, discount: discount).description)"
+            // }
             
             
             
@@ -280,15 +284,20 @@ extension MyOfferVC{
     //MARK: Table Header Button Action
     @objc func btnHeaderTarget(_ sender : UIButton){
         seletedIndex = sender.tag
+        if valueChange != "My Offer" {
+            arrCheck = arrCheck.map{_ in false}
+        }
+
         if sender.isSelected == false {
             if arrCheck[sender.tag] == false{
                 sender.isSelected = true
                 arrCheck[sender.tag] = true
             }
-        }else{
+        } else {
             sender.isSelected = false
             arrCheck[sender.tag] = false
         }
+
         tbMyOffer.reloadData()
     }
 }

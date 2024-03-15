@@ -10,6 +10,7 @@ import UIKit
 class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK: - OUTLETS
+    @IBOutlet weak var btnRemember: UIButton!
     @IBOutlet weak var viewMain: UIView!
     @IBOutlet weak var txtEmail: CustomTextField!
     @IBOutlet weak var txtPassword: CustomTextField!
@@ -31,6 +32,9 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         viewMain.clipsToBounds = true
         viewMain.layer.cornerRadius = 40
         viewMain.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+
+        txtEmail.text = UserDefaults.standard.value(forKey: "loginEmail") as? String ?? ""
+        txtPassword.text = UserDefaults.standard.value(forKey: "loginPassword") as? String ?? ""
       //  txtEmail.keyboardType = .alphabet
         
     }
@@ -43,6 +47,14 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
 
     @IBAction func btnSignIn(_ sender: UIButton){
         self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: Store.userDetails?.role ?? 0) {
+            if self.btnRemember.isSelected == true {
+                UserDefaults.standard.set(self.txtEmail.text!, forKey: "loginEmail")
+                UserDefaults.standard.set(self.txtPassword.text!, forKey: "loginPassword")
+            } else {
+                UserDefaults.standard.set("", forKey: "loginEmail")
+                UserDefaults.standard.set("", forKey: "loginPassword")
+            }
+
             if Store.userDetails?.role == 1{
                 if Store.userDetails?.isOtpVerified == 1 {
                    Store.autoLogin = true
@@ -93,6 +105,11 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         sender.isSelected = !sender.isSelected
         
     }
+
+    @IBAction func onClickRememberMe(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+    }
+
     
 //
 //    @objc btnName(sender: UIButton){

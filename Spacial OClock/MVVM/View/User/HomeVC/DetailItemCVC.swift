@@ -51,7 +51,7 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
             }else{
                 percentage = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? 0)%"
             }
-            cell.lblTime.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")) \n \(percentage)"
+            cell.lblTime.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         }else {
             cell.lblTime.text = "\(offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")"
             
@@ -63,12 +63,12 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/6.1, height: 64)
+        return CGSize(width: collectionView.frame.width/5, height: 64)
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        5
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        1
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        5
+//    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        1
+//    }
 }

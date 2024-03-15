@@ -226,9 +226,10 @@ extension SignUPVC {
     
     func checkFilledDeatils(isImage:Bool,name:String,email:String,phone:String,pass:String,conPass:String,isSelected:Bool) -> Bool{
         
-        if isImage == false {
-            return false
-        } else if name.trimmingCharacters(in: .whitespaces).isEmpty{
+//        if isImage == false {
+//            return false
+//        } else
+        if name.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
         } else if email.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
