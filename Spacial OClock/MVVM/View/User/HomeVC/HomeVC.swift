@@ -427,7 +427,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sectionArray[indexPath.section].name == "Banner" {
-            return CGFloat(100)
+            return CGFloat(120)
         } else if sectionArray[indexPath.section].name == "Popular" {
             if sectionArray[indexPath.section].objArray?.count  ==  0{
                 return CGFloat(0)

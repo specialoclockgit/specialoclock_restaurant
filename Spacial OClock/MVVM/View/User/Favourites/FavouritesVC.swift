@@ -40,8 +40,9 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
             self?.modal = dataa?.reversed()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.favouriteCV.hideSkeleton()
+                self?.favouriteCV.reloadData()
             }
-            self?.favouriteCV.reloadData()
+            
         }
     }
     
@@ -50,7 +51,7 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
     }
     
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return 8
     }
     
 }

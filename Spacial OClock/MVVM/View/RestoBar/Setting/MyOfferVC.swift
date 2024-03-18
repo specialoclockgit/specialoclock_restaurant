@@ -202,7 +202,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if valueChange == "My Offer"{
+        if valueChange == "My Offer" {
             return 68.0
         }else{
             return 50
@@ -212,7 +212,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tbMyOffer.dequeueReusableCell(withIdentifier: Cell.CellMyOfferTB) as! CellMyOfferTB
-        if valueChange == "My Offer"{
+        if valueChange == "My Offer" {
             cell.lblTittleName.text = self.modal?[indexPath.section].products?[indexPath.row].productName ?? ""
             cell.imgViwe.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
             cell.imgViwe.sd_setImage(with: URL(string: productImgURL + (self.modal?[indexPath.section].products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")),placeholderImage: UIImage(named: "pl"))
@@ -228,7 +228,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
             
             
             
-        }else{
+        } else {
             let sections = datagetApi?[indexPath.section].restaurants
             cell.lblTittleName.text = sections?[indexPath.row].localityArea ?? ""
             cell.lblActualPrice.isHidden = true

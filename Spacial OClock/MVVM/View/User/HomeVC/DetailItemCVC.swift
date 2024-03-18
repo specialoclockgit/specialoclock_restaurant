@@ -23,7 +23,7 @@ class DetailItemCVC: UICollectionViewCell {
     @IBOutlet weak var whiteBlurVw: UIView!
     @IBOutlet weak var closeDateVw: UIView!
     @IBOutlet weak var lblcloseDate: UILabel!
-    
+    var callBack: ((Int)->())?
     var screen = Store.screenType
     var offerTimings: [TimeSlotoffer]?
     
@@ -48,7 +48,9 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
             var percentage = String()
             if offerTimings?[indexPath.row].isFifty == 1 {
                 percentage = "-\(50)%"
-            }else{
+            } else if offerTimings?[indexPath.row].custom_discount != 0{
+                percentage = "-\(offerTimings?[indexPath.row].custom_discount ?? 0)%"
+            } else{
                 percentage = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? 0)%"
             }
             cell.lblTime.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
@@ -62,6 +64,12 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
         
         return cell
     }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.callBack?(self.offerTimings?[indexPath.row].offerID ?? 0)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/5, height: 64)
     }

@@ -120,7 +120,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var restoid = Int()
     var offerpresents = Int()
     lazy var disableDatedArr : [String] = []
-    
+    var selectedOfferId : Int?
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -235,7 +235,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.tbMenu.reloadData()
             self.view.layoutIfNeeded()
             if self.offer?.count ?? 0 > 0 {
-                if let is_fifty = self.offer?[0].is_fifty{
+                if let offerId = self.selectedOfferId , offerId != 0 {
+                    let Index = self.offer?.firstIndex(where: {$0.offerID == offerId})
+                    print("self.selectedOfferIdIndex---",Index)
+                } else {
+                    
+                }
+                if let is_fifty = self.offer?[0].is_fifty {
                     self.discount = is_fifty == 0 ? Int(self.offer?[0].percentage ?? "") ?? 0 : 50
                 } else {
                     self.discount = Int(self.offer?[0].percentage ?? "") ?? 0
@@ -568,14 +574,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
             if status == 1{
                 if offer?.count == 0 {
-                    collViewMenu.setNoDataMessageLbl("No slots found for today", txtColor: .black)
+                    collViewMenu.setNoDataMessageLbl("No slots found", txtColor: .black)
                 }else{
                     collViewMenu.backgroundView = nil
                     return offer?.count ?? 0
                 }
             }else{
                 if offer?.count == 0 {
-                    collViewMenu.setNoDataMessageLbl("No slots found for today", txtColor: .black)
+                    collViewMenu.setNoDataMessageLbl("No slots found", txtColor: .black)
                 }else{
                     collViewMenu.backgroundView = nil
                     return offer?.count ?? 0
@@ -910,8 +916,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            if tableView == self.tbReview{
-                if self.reviews?.count == 0{
+            if tableView == self.tbReview {
+                if self.reviews?.count == 0 {
                     self.heightTBReview.constant = 300
                    // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
                    // self.imgViewGifReview.isHidden = false

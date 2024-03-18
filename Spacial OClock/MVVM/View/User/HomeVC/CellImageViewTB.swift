@@ -42,7 +42,7 @@ extension CellImageViewTB : UICollectionViewDelegate , UICollectionViewDataSourc
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width:collView.frame.width , height: 80.0)
+        return CGSize(width:collView.frame.width/1 , height: 120)
     }
     
     

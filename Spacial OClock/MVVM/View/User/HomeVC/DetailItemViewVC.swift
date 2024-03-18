@@ -87,7 +87,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     func get_resto_list(){
         viewmodal.cusinsRestoAPI(cuisineid: cusinessID) { [weak self] fetchdata in
             var objModel = fetchdata ?? []
-            for i in 0 ..< (objModel.count ?? 0) {
+            for i in 0 ..< (objModel.count ) {
                 var obj = objModel[i]
                 obj.timeSlots?.reverse()
                 objModel[i] = obj
@@ -313,13 +313,22 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let fetchresto = filtercusin?[indexPath.row].timeSlots ?? []
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
+            //MARK: For showing pre-selected offer.
+            cell.callBack = { [weak self] ID in
+                
+                print(ID)
+                let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                vc.ProductID = self?.filtercusin?[indexPath.row].id ?? 0
+                vc.selectedOfferId = ID
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
             
             if let disable_dates = filtercusin?[indexPath.row].disable_dates,disable_dates != "" {
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 let todayDateString = dateFormatter.string(from: Date())
-                if disableDatesArr.contains(todayDateString){
+                if disableDatesArr.contains(todayDateString) {
                     self.blurEffect(image: cell.imgView)
                     cell.whiteBlurVw.isHidden = false
                     cell.closeDateVw.isHidden = false

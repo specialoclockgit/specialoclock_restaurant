@@ -110,10 +110,11 @@ struct TimeSlotoffer: Codable {
     let id, restrorantBarID, menuID, offerID: Int?
     let startTime, endTime: String?
     let isFifty: Int?
+    let custom_discount : Int?
     let offer: OfferFetch?
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case id,custom_discount
         case restrorantBarID = "restrorant_bar_id"
         case menuID = "menu_id"
         case offerID = "offer_id"
