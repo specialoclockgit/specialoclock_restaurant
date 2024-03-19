@@ -32,7 +32,7 @@ struct CategoryByRModalBody: Codable {
     let availableOffer, offerDescription, offerPercentage, offerOpenTime: String?
     let offerCloseTime, disable_dates: String?
     let avgrating : Int?
-    let offers: [TimeSlotoffer]?
+    var offers: [TimeSlotoffer]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude

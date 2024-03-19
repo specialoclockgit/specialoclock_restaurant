@@ -118,7 +118,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var selectOffer = String()
     var modalfullmenu : [allMenuModalBody]?
     var restoid = Int()
-    var offerpresents = Int()
+    var offerDis = Int()
+    var offerpresents = Double()
     lazy var disableDatedArr : [String] = []
     var selectedOfferId : Int?
     //MARK: View Life Cycle
@@ -355,15 +356,16 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     func menuProductAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
         viewmodal.menuProductAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { dataa in
             self.productModal = dataa
-            self.offerpresents = dataa?.products?.first?.offerPercentage ?? 0
+            self.offerpresents = Double(dataa?.products?.first?.offerPercentage ?? "0") ?? 0
             self.products = dataa?.products ?? []
             self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
             self.numberofperson = dataa?.offerdetails?.numberOfUserPerBooking ?? 0
-            self.actualprice = "\(self.products?.first?.price ?? 0)"
-            self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? 0)"
+            self.actualprice = "\(self.products?.first?.price ?? "0")"
+            self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? "0")"
             self.offerDescription = dataa?.offerdetails?.description ?? ""
             self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
             self.pendingSlots = dataa?.offerdetails?.numberOfUserBook ?? 0
+            
             self.tbMenu.reloadData()
             self.collViewMenu.reloadData()
             self.arrCheck.removeAll()
@@ -503,6 +505,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     screen.offer_id = "\(self.offerID)"
                     screen.restrorant_bar_id = self.restrorant_bar_id
                     screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
+                    screen.offerDiscount = self.offerDis
                     self.navigationController?.pushViewController(screen, animated: true)
                 }
             } else {
@@ -737,7 +740,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 self.menuid = offer?[indexPath.row].menuID ?? 0
                 self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
                 self.offerID = offer?[indexPath.row].offerID ?? 0
-                
+                self.offerDis = (offer?[indexPath.row].is_fifty == 1 ? 50 : Int(offer?[indexPath.row].percentage ?? "0")) ?? 0
             } else if status == 2 {
                 if collectionView == collViewMenu{
                     isselectedoffer = indexPath.row
@@ -870,11 +873,11 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 cell.desLbl.text = ""
                 cell.itemNameTop.constant = 5
                 cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
-                cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? 0), discount: Double(self.discount ?? 0)).description)"
+                cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? "0") ?? 0, discount: Double(self.discount ?? 0)))"
                 cell.lblDiscount.text = "\(self.discount ?? 0)% Discount"
-                cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? 0)"
+                cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? "0")"
             } else {
-                if products?[indexPath.row].discounted_price == 0 || products?[indexPath.row].actual_price == 0 {
+                if products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" || products?[indexPath.row].actual_price == ""{
                     cell.lblNewPrice.text = ""
                     cell.lblPrePrice.text = ""
                     cell.itemNameTop.constant = 14
@@ -885,8 +888,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                     cell.desLbl.text = ""
                     cell.itemNameTop.constant = 5
                     cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
-                    cell.lblPrePrice.text = "R\(products?[indexPath.row].actual_price ?? 0)"
-                    cell.lblNewPrice.text = "R\(products?[indexPath.row].discounted_price ?? 0)"
+                    cell.lblPrePrice.text = "R\(products?[indexPath.row].actual_price ?? "0")"
+                    cell.lblNewPrice.text = "R\(products?[indexPath.row].discounted_price ?? "0")"
                 }
                 cell.lblDiscount.text = ""
                 cell.lblDiscount.isHidden = true
@@ -1103,12 +1106,12 @@ extension ItemDetailsVC : CLLocationManagerDelegate{
     
 }
 
-func calCulateDiscount (actualPrice: Double,discount: Double) -> Int {
+func calCulateDiscount (actualPrice: Double,discount: Double) -> Double {
     let result = (actualPrice * discount) / 100
     //(actualPrice / 100) * discount
     let finalAmount = actualPrice - result
     print("oferr data----------",actualPrice,discount,finalAmount)
-    return Int(finalAmount)
+    return (finalAmount)
 }
 
 func degreesToRadians(_ degrees: Double) -> Double {

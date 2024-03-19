@@ -64,7 +64,7 @@ class bookingDetailVC: UIViewController {
     var modal : bookingDetailModalBody?
     var products: [Product]?
     var booking_id = Int()
-    var actualprice = Int()
+    var actualprice = Double()
     var presntsPrice = String()
     var canceltext = String()
     var cancelid = String()
@@ -154,8 +154,8 @@ class bookingDetailVC: UIViewController {
                 self.lblSpeOffer.text = fetchdata?.restrorant?.offers?.first?.menuName ?? ""
                 self.lblBookingtime.text = "\(fetchdata?.restrorant?.offers?.first?.openTime ?? "")-\(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
             } else {
-                self.labelDiscuount.text = "\(fetchdata?.offerPercentage ?? "")%"
-                self.lblSpeOffer.text = "\(fetchdata?.offerName ?? "")  (-\(fetchdata?.offerPercentage ?? "")%)"
+                self.labelDiscuount.text = "\(fetchdata?.offer_discount ?? "")%"
+                self.lblSpeOffer.text = "\(fetchdata?.offerName ?? "")  (-\(fetchdata?.offer_discount ?? "")%)"
                 //self.bookingSlotStartEndTime.text = fetchdata?.bookingSlot ?? ""
                 self.lblBookingtime.text = fetchdata?.bookingSlot ?? ""
             }
@@ -172,14 +172,14 @@ class bookingDetailVC: UIViewController {
             dateFormatter.dateFormat = "dd/MM/yyyy"
             self.lblDate.text = dateFormatter.string(from: date)
             self.lblNOP.text = "\(fetchdata?.numberOfPeople ?? 0)"
-            self.actualprice = fetchdata?.restrorant?.offers?.first?.offerPrice ?? 0
-            self.presntsPrice = fetchdata?.offerPercentage ?? ""
+            self.actualprice = Double(fetchdata?.restrorant?.offers?.first?.offerPrice ?? "0") ?? 0
+            self.presntsPrice = fetchdata?.offer_discount ?? ""
            // self.tblView.reloadData()
         }
     }
     
     //MARK: - FUNCTION
-    func calculation(actualPrice : Int, offerPrice: Int) -> Int {
+    func calculation(actualPrice : Double, offerPrice: Double) -> Double {
         let valueget = actualPrice * offerPrice / 100
         return valueget
     }
@@ -253,7 +253,7 @@ extension bookingDetailVC : UITableViewDelegate, UITableViewDataSource{
         let dataIs = products?[indexPath.row]
         if self.modal?.restrorant?.type == 2 {
             
-            if products?[indexPath.row].discounted_price == 0 || products?[indexPath.row].actual_price == 0 {
+            if products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" {
                 cell.lblPreviousPrice.text = ""
                 cell.lblNewPrice.text = ""
             } else {
@@ -262,9 +262,9 @@ extension bookingDetailVC : UITableViewDelegate, UITableViewDataSource{
             }
             
         } else {
-            cell.lblPreviousPrice.text = "R\(products?[indexPath.row].price ?? 0)"
-            let offer = calculation(actualPrice: dataIs?.price ?? 0, offerPrice: Int(self.presntsPrice) ?? 0)
-            cell.lblNewPrice.text = "R"+String((products?[indexPath.row].price ?? 0) - offer)+".00"
+            cell.lblPreviousPrice.text = "R\(products?[indexPath.row].price ?? "0")"
+            let offer = calculation(actualPrice: Double(dataIs?.price ?? "0") ?? 0 , offerPrice: Double(self.presntsPrice) ?? 0)
+            cell.lblNewPrice.text = "R\((Double((products?[indexPath.row].price ?? "0")) ?? 0) - offer)"
             
         }
         

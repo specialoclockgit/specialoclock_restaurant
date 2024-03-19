@@ -162,7 +162,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
         if valueChange == "My Offer"{
             cellHeader.flagImgVw.isHidden = true
             cellHeader.lblHeading.text = "\(self.modal?[section].menuName ?? "") " +
-            "\(String(describing: self.modal?[section].offerPrice ?? 0))%"
+            "\(String(describing: self.modal?[section].offerPrice ?? "0"))%"
             // cellHeader.lblTimming.text =  "(\(String(describing: self.modal?[section].openTime ?? ""))-\(self.modal?[section].closeTime ?? ""))"
             cellHeader.viewHeader.layer.cornerRadius = 10.0
             cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
@@ -222,8 +222,8 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
             //            }else {
 
             let totalamount = self.modal?[indexPath.section].products?[indexPath.row].price ?? 0
-            let discount = self.modal?[indexPath.section].offerPrice ?? 0
-            cell.lblOfferPrice.text = "R\(calculate(total: totalamount, discount: discount).description)"
+            let discount = self.modal?[indexPath.section].offerPrice ?? "0"
+            cell.lblOfferPrice.text = "R\(calculate(total: Double(totalamount), discount: Double(discount) ?? 0).description)"
             // }
             
             
@@ -245,7 +245,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
         return cell
     }
 
-    func calculate(total:Int,discount:Int) -> Int {
+    func calculate(total:Double,discount:Double) -> Double {
         let Amount = total * discount / 100
         let finalAmount = total - Amount
         return finalAmount

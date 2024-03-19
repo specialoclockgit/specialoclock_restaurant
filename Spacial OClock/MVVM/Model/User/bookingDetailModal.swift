@@ -22,14 +22,14 @@ struct bookingDetailModalBody: Codable {
     let slotID: Int?
     let bookingID, cancelationReason: String?
     let numberOfPeople, status, offerID: Int?
-    let createdAt, updatedAt, offerName, offerPercentage: String?
+    let createdAt, updatedAt, offerName, offerPercentage,offer_discount: String?
     let user: Userrr?
     var review: ReviewData?
     let restrorant: Restrorantd?
     var productsUnderOffer: [Product]?
     
     enum CodingKeys: String, CodingKey {
-        case id,review,booking_amount
+        case id,review,booking_amount,offer_discount
         case userID = "user_id"
         case restrorantBarID = "restrorant_bar_id"
         case bookingDate = "booking_date"
@@ -86,7 +86,7 @@ struct Offerc: Codable {
     let offerName, description: String?
     let menuID: Int?
     let menuName: String?
-    let offerPrice: Int?
+    let offerPrice: String?
     let openTime, closeTime, date: String?
     var type, numberOfUserBook, totalBookings: Int?
 
@@ -114,7 +114,7 @@ struct Offerc: Codable {
         self.description = try container.decodeIfPresent(String.self, forKey: .description)
         self.menuID = try container.decodeIfPresent(Int.self, forKey: .menuID)
         self.menuName = try container.decodeIfPresent(String.self, forKey: .menuName)
-        self.offerPrice = try container.decodeIfPresent(Int.self, forKey: .offerPrice)
+        self.offerPrice = try container.decodeIfPresent(String.self, forKey: .offerPrice)
         self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
         self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
         self.date = try container.decodeIfPresent(String.self, forKey: .date)
@@ -138,7 +138,7 @@ struct Productx: Codable {
     let id, restrorantBarID, menuID, cuisineID: Int?
     let categoryID: Int?
     let productName: String?
-    let price: Int?
+    let price: String?
     let image, menuTypeName: String?
 
     enum CodingKeys: String, CodingKey {

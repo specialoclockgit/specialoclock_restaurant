@@ -101,8 +101,8 @@ struct Offerdetails: Codable {
     var id, restrorantBarID: Int?
     var offerName, description: String?
     var menuID: Int?
-    var menuName: String?
-    var productID, offerPrice, actualPrice, discountedPrice: Int?
+    var menuName, actualPrice, discountedPrice, offerPrice: String?
+    var productID: Int?
     var openTime, closeTime, date: String?
     var type, numberOfUserBook, numberOfUserPerBooking, totalBookings: Int?
     var offerTimings: String?
@@ -137,9 +137,9 @@ struct Offerdetails: Codable {
         self.menuID = try container.decodeIfPresent(Int.self, forKey: .menuID)
         self.menuName = try container.decodeIfPresent(String.self, forKey: .menuName)
         self.productID = try container.decodeIfPresent(Int.self, forKey: .productID)
-        self.offerPrice = try container.decodeIfPresent(Int.self, forKey: .offerPrice)
-        self.actualPrice = try container.decodeIfPresent(Int.self, forKey: .actualPrice)
-        self.discountedPrice = try container.decodeIfPresent(Int.self, forKey: .discountedPrice)
+        self.offerPrice = try container.decodeIfPresent(String.self, forKey: .offerPrice)
+        self.actualPrice = try container.decodeIfPresent(String.self, forKey: .actualPrice)
+        self.discountedPrice = try container.decodeIfPresent(String.self, forKey: .discountedPrice)
         self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
         self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
         self.date = try container.decodeIfPresent(String.self, forKey: .date)
@@ -174,10 +174,10 @@ struct Offerdetails: Codable {
 struct Product: Codable {
     let id, restrorantBarID, menuID, cuisineID: Int?
     let categoryID: Int?
-    let productName: String?
-    let price,discounted_price: Int?
-    let image, menuTypeName: String?
-    let offerPercentage,actual_price: Int?
+    let productName,discounted_price: String?
+    let price: String?
+    let image, menuTypeName,actual_price: String?
+    let offerPercentage: String?
     
     enum CodingKeys: String, CodingKey {
         case id,discounted_price,actual_price

@@ -186,7 +186,7 @@ struct Anurag: Codable {
     let productName: String?
     let price: Int?
     let image, menuTypeName, categoryName: String?
-    let offerPercentage: Int?
+    let offerPercentage: String?
     let offeredPrice: String?
 
     enum CodingKeys: String, CodingKey {
@@ -210,7 +210,7 @@ struct Offersd: Codable {
     let offerName, description: String?
     let menuID: Int?
     let menuName: String?
-    let offerPrice: Int?
+    let offerPrice: String?
     let openTime, closeTime, date: String?
     var type, numberOfUserBook,numberOfUserPerBooking: Int?
 
@@ -236,7 +236,7 @@ struct Offersd: Codable {
         self.description = try container.decodeIfPresent(String.self, forKey: .description)
         self.menuID = try container.decodeIfPresent(Int.self, forKey: .menuID)
         self.menuName = try container.decodeIfPresent(String.self, forKey: .menuName)
-        self.offerPrice = try container.decodeIfPresent(Int.self, forKey: .offerPrice)
+        self.offerPrice = try container.decodeIfPresent(String.self, forKey: .offerPrice)
         self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
         self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
         self.date = try container.decodeIfPresent(String.self, forKey: .date)

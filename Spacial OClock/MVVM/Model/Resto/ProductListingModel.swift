@@ -14,7 +14,7 @@ struct ProductListingModel: Codable {
 struct ProductListingModelBody: Codable {
     var id, menuID, cuisineID, categoryID: Int?
     var productName: String?
-    var price, offerpercentage: Int?
+    var price, offerpercentage: String?
     var image: String?
     var isSelected: Bool = false
 

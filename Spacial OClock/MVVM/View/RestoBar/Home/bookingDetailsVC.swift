@@ -247,8 +247,8 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Default_Image"))
         
         if self.modalDetail?.restrorant?.type == 2 {
-            cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].actual_price ?? 0)"
-            cell.lblNewPrice.text = "R\(self.productsUnderOffer?[indexPath.row].discounted_price ?? 0)"
+            cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].actual_price ?? "0")"
+            cell.lblNewPrice.text = "R\(self.productsUnderOffer?[indexPath.row].discounted_price ?? "0")"
         }else {
             cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].price ?? 0)"
             cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(productsUnderOffer?[indexPath.row].price ?? 0), discount: Double(self.prsents)).description)"

@@ -32,7 +32,7 @@ struct locationByRestoModalBody: Codable {
     let availableOffer, offerDescription, offerPercentage, offerOpenTime: String?
     let offerCloseTime, disable_dates: String?
     let avgRating: Int?
-    let timeSlots: [TimeSlotoffer]?
+    var timeSlots: [TimeSlotoffer]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude

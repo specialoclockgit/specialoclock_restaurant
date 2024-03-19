@@ -24,9 +24,9 @@ class BreakfastVC: UIViewController {
     var imageView: UIImageView?
     var menuid = Int()
     var heading = String()
-    var price = Int()
-    var offerpice = Int()
-    var offerlessprice = Int()
+    var price = Double()
+    var offerpice = Double()
+    var offerlessprice = Double()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +49,8 @@ class BreakfastVC: UIViewController {
         }
     }
     func calculation(){
-        offerpice = datagetAPI?.first?.offerpercentage ?? 0
-        price = datagetAPI?.first?.price ?? 0
+        offerpice = Double(datagetAPI?.first?.offerpercentage ?? "0") ?? 0
+        price = Double(datagetAPI?.first?.price ?? "0") ?? 0
         let newprice = price * 100/offerpice
         self.offerlessprice = price - newprice
         

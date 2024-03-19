@@ -268,15 +268,20 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     //MARK: - ACTIONS
     @IBAction func btnLocationAct(_ sender : UIButton){
+//        let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+//        let vc = serviceStoryboard.instantiateViewController(withIdentifier: "MyOfferVC") as! MyOfferVC
+//        vc.valueChange = "Select Country"
+//        vc.callback = { dataa, time in
+//            self.getcity = dataa
+//            self.gettimezone = time
+//            self.lblLocation.text = self.getcity
+//        }
+//        self.navigationController?.pushViewController(vc, animated: true)
+        
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-        let vc = serviceStoryboard.instantiateViewController(withIdentifier: "MyOfferVC") as! MyOfferVC
-        vc.valueChange = "Select Country"
-        vc.callback = { dataa, time in
-            self.getcity = dataa
-            self.gettimezone = time
-            self.lblLocation.text = self.getcity
-        }
+        let vc = serviceStoryboard.instantiateViewController(withIdentifier: "LocationsVC") as! LocationsVC
         self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     

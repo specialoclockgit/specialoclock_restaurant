@@ -179,6 +179,7 @@
 		EBA2170C2B85DB4E007947C6 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EBA2170B2B85DB4E007947C6 /* nodataFound.gif */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
 		EBE6CAA92B9B1E7C006D726B /* AvailabilityDatePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */; };
+		EBE82B332BA95F9200D4EC92 /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */; };
 		EBEE940C2B88C44700A32DDA /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE940B2B88C44700A32DDA /* NavigationVC.swift */; };
 		EC0484E72B174B9000BFDF4B /* MyInvoiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484E62B174B9000BFDF4B /* MyInvoiceVC.swift */; };
 		EC0484E92B174BE300BFDF4B /* getInvoiceListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0484E82B174BE300BFDF4B /* getInvoiceListModal.swift */; };
@@ -474,6 +475,7 @@
 		EBA2170B2B85DB4E007947C6 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
 		EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityDatePopupVC.swift; sourceTree = "<group>"; };
+		EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
 		EBEE940B2B88C44700A32DDA /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
 		EC0484E62B174B9000BFDF4B /* MyInvoiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvoiceVC.swift; sourceTree = "<group>"; };
 		EC0484E82B174BE300BFDF4B /* getInvoiceListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInvoiceListModal.swift; sourceTree = "<group>"; };
@@ -1068,6 +1070,7 @@
 		C29CDAF22A42B9170035E03D /* User */ = {
 			isa = PBXGroup;
 			children = (
+				EBE82B312BA95F7D00D4EC92 /* Location */,
 				ECA77A7E2B0B217200FC2285 /* Direction */,
 				EC43798D2B0604520017FBA8 /* NewSeeMore */,
 				ECCEDB3D2AF1129200DA8D8D /* Menu */,
@@ -1193,6 +1196,14 @@
 				ECB020672ADEBC0A002D2C07 /* selectDateVC.swift */,
 			);
 			path = Booking;
+			sourceTree = "<group>";
+		};
+		EBE82B312BA95F7D00D4EC92 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */,
+			);
+			path = Location;
 			sourceTree = "<group>";
 		};
 		EC43798D2B0604520017FBA8 /* NewSeeMore */ = {
@@ -1668,6 +1679,7 @@
 				A529D2DD2A5FC07B00E416CD /* CellBarDetailItemTV.swift in Sources */,
 				8B9CF0802A8212FE006C90E9 /* Fileupload.swift in Sources */,
 				8B0BDF272A80F10E00A28BD2 /* Reachability.swift in Sources */,
+				EBE82B332BA95F9200D4EC92 /* LocationsVC.swift in Sources */,
 				ECA6A0632AFCAFA40094DCC1 /* OfferCVC.swift in Sources */,
 				8BF5ED802A84E82700F2EA8C /* helpandFaqModel.swift in Sources */,
 				C29CDAFB2A42BB1D0035E03D /* WalkThroughVC.swift in Sources */,

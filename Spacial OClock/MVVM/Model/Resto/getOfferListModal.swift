@@ -15,8 +15,8 @@ struct getOfferListModalBody: Codable {
     var id, restrorantBarID: Int?
     var offerName, description: String?
     var menuID: Int?
-    var menuName: String?
-    var productID, offerPrice, actualPrice, discountedPrice: Int?
+    var offerPrice,menuName: String?
+    var productID,  actualPrice, discountedPrice: Int?
     var openTime, closeTime, date: String?
     var type, numberOfUserBook, numberOfUserPerBooking, totalBookings: Int?
     var offerTimings: String?
@@ -47,7 +47,7 @@ struct getOfferListModalBody: Codable {
         self.description = try container.decodeIfPresent(String.self, forKey: .description)
         self.menuID = try container.decodeIfPresent(Int.self, forKey: .menuID)
         self.menuName = try container.decodeIfPresent(String.self, forKey: .menuName)
-        self.offerPrice = try container.decodeIfPresent(Int.self, forKey: .offerPrice)
+        self.offerPrice = try container.decodeIfPresent(String.self, forKey: .offerPrice)
         self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)
         self.closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime)
         self.date = try container.decodeIfPresent(String.self, forKey: .date)

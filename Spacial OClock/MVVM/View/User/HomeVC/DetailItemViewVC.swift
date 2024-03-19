@@ -86,15 +86,15 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     //MARK: - CUSINS BY RESTO
     func get_resto_list(){
         viewmodal.cusinsRestoAPI(cuisineid: cusinessID) { [weak self] fetchdata in
-            var objModel = fetchdata ?? []
-            for i in 0 ..< (objModel.count ) {
-                var obj = objModel[i]
-                obj.timeSlots?.reverse()
-                objModel[i] = obj
-            }
+//            var objModel = fetchdata ?? []
+//            for i in 0 ..< (objModel.count ) {
+//                var obj = objModel[i]
+//                obj.timeSlots?.reverse()
+//                objModel[i] = obj
+//            }
 
-            self?.modal = objModel
-            self?.filtercusin = objModel
+            self?.modal = fetchdata
+            self?.filtercusin = fetchdata
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
             }
@@ -105,6 +105,14 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     //MARK: - THEME BY RESTO
     func theme_Resto_API() {
         viewmodal.restoThemelistAPI(restoid: themeID, type: type) { [weak self] dataa in
+//            var objModel = dataa ?? []
+//            for i in 0 ..< (objModel.count ) {
+//                var obj = objModel[i]
+//                obj.timeSlots?.reverse()
+//                objModel[i] = obj
+//            }
+            
+            
             self?.thememodla = dataa
             self?.filtertheme = dataa
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -117,6 +125,15 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     //MARK: - CATEGORY BY GET RESTO LIST API
     func fetch_Category_REsto(){
         viewmodal.categoryBYResto(categoryID: cusinessID) { [weak self] dataaa in
+            
+//            var objModel = dataaa ?? []
+//            for i in 0 ..< (objModel.count ) {
+//                var obj = objModel[i]
+//                obj.timeSlots?.reverse()
+//                objModel[i] = obj
+//            }
+            
+            
             self?.categoryModal = dataaa
             self?.filterCategory = dataaa
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -150,13 +167,21 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     func location_By_RestoAPI() {
         viewmodal.locationByRestoAPI(country: country, city: city,type: String(Store.screenType ?? 1)) { [weak self] dataa in
             
+//            var objModel = dataa ?? []
+//            for i in 0 ..< (objModel.count ) {
+//                var obj = objModel[i]
+//                obj.timeSlots?.reverse()
+//                objModel[i] = obj
+//            }
+            
+            
             self?.location = dataa
             self?.filterlocations = dataa
-           // self?.restrorants = dataa?.location?.first?.restrorants ?? []
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
+                self?.CollectionView.reloadData()
             }
-            self?.CollectionView.reloadData()
+            
         }
     }
     

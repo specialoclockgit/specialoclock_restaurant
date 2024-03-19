@@ -25,10 +25,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4rF-cC-cKo">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="145"/>
+                        <rect key="frame" x="6" y="2" width="308" height="141"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="BeO-yV-8iZ">
-                                <rect key="frame" x="0.0" y="35" width="320" height="110"/>
+                                <rect key="frame" x="0.0" y="35" width="308" height="104"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="I1W-Cn-slL">
                                     <size key="itemSize" width="128" height="128"/>
@@ -50,8 +50,8 @@
                                 <color key="textColor" name="ThemeLabel"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhn-Fu-vNu">
-                                <rect key="frame" x="252" y="5" width="58" height="20"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhn-Fu-vNu" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
+                                <rect key="frame" x="240" y="5" width="58" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="AoY-2a-8sF"/>
                                 </constraints>
@@ -60,12 +60,26 @@
                                 <state key="normal" title="See more">
                                     <color key="titleColor" name="ThemeOrange"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" systemColor="systemGray4Color"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="1" height="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="G8C-JF-JJe" firstAttribute="leading" secondItem="xfX-6R-Pdg" secondAttribute="trailing" constant="5" id="73I-4Q-xIY"/>
-                            <constraint firstAttribute="bottom" secondItem="BeO-yV-8iZ" secondAttribute="bottom" id="7iU-2i-vav"/>
+                            <constraint firstAttribute="bottom" secondItem="BeO-yV-8iZ" secondAttribute="bottom" constant="2" id="7iU-2i-vav"/>
                             <constraint firstItem="xfX-6R-Pdg" firstAttribute="leading" secondItem="4rF-cC-cKo" secondAttribute="leading" constant="6" id="84p-Qi-kzU"/>
                             <constraint firstItem="xfX-6R-Pdg" firstAttribute="top" secondItem="4rF-cC-cKo" secondAttribute="top" constant="5" id="Nqf-f9-8A4"/>
                             <constraint firstItem="G8C-JF-JJe" firstAttribute="centerY" secondItem="xfX-6R-Pdg" secondAttribute="centerY" id="bB5-7T-gtJ"/>
@@ -78,10 +92,10 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="4rF-cC-cKo" secondAttribute="bottom" id="BPu-PK-o4n"/>
-                    <constraint firstItem="4rF-cC-cKo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Q2u-tY-0VD"/>
-                    <constraint firstAttribute="trailing" secondItem="4rF-cC-cKo" secondAttribute="trailing" id="qQi-9y-yJG"/>
-                    <constraint firstItem="4rF-cC-cKo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="r7H-fQ-Jg2"/>
+                    <constraint firstAttribute="bottom" secondItem="4rF-cC-cKo" secondAttribute="bottom" constant="2" id="BPu-PK-o4n"/>
+                    <constraint firstItem="4rF-cC-cKo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="Q2u-tY-0VD"/>
+                    <constraint firstAttribute="trailing" secondItem="4rF-cC-cKo" secondAttribute="trailing" constant="6" id="qQi-9y-yJG"/>
+                    <constraint firstItem="4rF-cC-cKo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="r7H-fQ-Jg2"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -104,6 +118,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

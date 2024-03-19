@@ -132,8 +132,8 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             cell.lblName.text = self.filterlocation[indexPath.row].locality_area ?? ""
             let count  = Store.screenType == 2 ? (self.filterlocation[indexPath.row].restroCount ?? 0) : (self.filterlocation[indexPath.row].restroCount ?? 0)
             
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
-            let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
+            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
     
         } else if setvalue == "Cuisines" {
@@ -142,8 +142,8 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             let count  = Store.screenType == 2 ? (self.filterCusine[indexPath.row].restroCount ?? 0) : (self.filterCusine[indexPath.row].restroCount ?? 0)
     
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
-            let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
+            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             
             cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
     
@@ -156,8 +156,8 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             let count  = Store.screenType == 2 ? (self.filtercategory[indexPath.row].clubCount ?? 0) : (self.filtercategory[indexPath.row].clubCount ?? 0)
     
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
-            let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
+            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
             //"\(self.filtercategory[indexPath.row].clubCount ?? 0) Bars" : "\(self.filtercategory[indexPath.row].clubCount ?? 0) Restaurants"
             cell.lblName.text = self.filtercategory[indexPath.row].title ?? ""
@@ -167,8 +167,8 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             let count  = Store.screenType == 2 ? (self.filterthemeAry[indexPath.row].barCount ?? 0) : (self.filterthemeAry[indexPath.row].barCount ?? 0)
     
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
-            let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
+            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
             //"\(self.filterthemeAry[indexPath.row].barCount ?? 0) Bars" : "\(self.filterthemeAry[indexPath.row].barCount ?? 0) Restaurants"
             cell.lblName.text = self.filterthemeAry[indexPath.row].productName ?? ""

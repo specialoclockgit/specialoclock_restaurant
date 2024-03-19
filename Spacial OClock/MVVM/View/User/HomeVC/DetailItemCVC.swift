@@ -51,7 +51,7 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
             } else if offerTimings?[indexPath.row].custom_discount != 0{
                 percentage = "-\(offerTimings?[indexPath.row].custom_discount ?? 0)%"
             } else{
-                percentage = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? 0)%"
+                percentage = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? "0")%"
             }
             cell.lblTime.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         }else {
