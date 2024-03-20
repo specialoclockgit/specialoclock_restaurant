@@ -78,7 +78,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         viewFSCalendar.dataSource = self
         let date = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "dd/MM/yyyy"
         let result = formatter.string(from: date)
         let calenderDate = formatter.date(from: oldDateSelect)
         viewFSCalendar.select(calenderDate)
@@ -179,7 +179,7 @@ extension NewBookingVC : FSCalendarDelegate , FSCalendarDataSource {
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        df.dateFormat = "yyyy-MM-dd"
+        df.dateFormat = "dd/MM/yyyy"
         df.locale = Locale.current
         currentDate = df.string(from: date)
     }

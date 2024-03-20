@@ -67,7 +67,7 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.callBack?(self.offerTimings?[indexPath.row].offerID ?? 0)
+        self.callBack?(self.offerTimings?[indexPath.row].slot_id ?? 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

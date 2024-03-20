@@ -208,11 +208,12 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
             
         }else if objArray[collView.tag].name == "A-Z"{
-            cell.stackHeight.constant = 46
+            
             let celldata = allresto[indexPath.row].offerTimings
             cell.lblRating.text = "\(allresto[indexPath.row].avgRating ?? 0)"
             
             if allresto[indexPath.row].offerTimings?.count == 1 {
+                cell.stackHeight.constant = 46
                 cell.viewOffer1.isHidden = false
                 cell.offerImg1.isHidden = false
                 cell.offerImg2.isHidden = true
@@ -226,6 +227,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                // cell.lblOffer1.text = "-\(celldata?[0].percentage ?? 0)%"
                 cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
             } else if allresto[indexPath.row].offerTimings?.count == 2 {
+                cell.stackHeight.constant = 46
                 cell.viewOffer1.isHidden = false
                 cell.viewOffer2.isHidden = false
                 cell.offerImg1.isHidden = false
@@ -243,7 +245,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
                 cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[1].offer ?? "")
             } else if allresto[indexPath.row].offerTimings?.count ?? 0 >= 3{
-                
+                cell.stackHeight.constant = 46
                 cell.viewOffer1.isHidden = false
                 cell.viewOffer2.isHidden = false
                 cell.viewOffer3.isHidden = false
@@ -282,9 +284,9 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if objArray[collView.tag].name == "A-Z"{
-            return CGSize(width: 195.0, height: 270)
+            return CGSize(width: 195.0, height: 260)
         }else if objArray[collView.tag].name == "Popular"{
-            return CGSize(width: 195.0, height: 270)
+            return CGSize(width: 195.0, height: 260)
         }else{
             return CGSize(width: 195.0, height: 208.0)
         }

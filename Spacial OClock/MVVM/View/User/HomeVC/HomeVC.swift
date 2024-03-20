@@ -280,6 +280,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
         let vc = serviceStoryboard.instantiateViewController(withIdentifier: "LocationsVC") as! LocationsVC
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

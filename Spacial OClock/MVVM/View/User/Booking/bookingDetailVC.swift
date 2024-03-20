@@ -119,6 +119,7 @@ class bookingDetailVC: UIViewController {
                 self.replyVw.isHidden = true
                 self.lblstatus.text = "Ongoing"
                 self.btnMain.setTitle("Cancel Booking", for: .normal)
+                
             } else if self.modal?.status == 1 {
                 if let review = self.modal?.review, review.review != ""{
                     self.btnMain.isHidden = true
@@ -128,13 +129,13 @@ class bookingDetailVC: UIViewController {
                     self.reviewUserImgVw.showIndicator(baseUrl: imageURL, imageUrl: review.userImage ?? "")
                     self.reviewUserRatingVw.rating = Double(review.rating ?? "") ?? 0
                     self.reviewUserCommentLbl.text = review.review?.capitalized ?? ""
-                    
                     self.replyVw.isHidden = review.reply == "" ? true : false
                     self.replyTimeLbl.text = self.string_date_ToDate(review.updatedAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
                     self.replyCommentLbl.text = review.reply?.capitalized ?? ""
                     self.replyRestroNameLbl.text = self.modal?.restrorant?.name?.capitalized ?? ""
                     self.replyRestroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.modal?.restrorant?.profileImage ?? "")
                     self.replyRestroType.text = self.modal?.restrorant?.type == 1 ? "Restaurant Reply" : "Bar/Club Reply"
+                    
                 } else {
                     self.replyVw.isHidden = true
                     self.btnMain.isHidden = false
@@ -166,11 +167,8 @@ class bookingDetailVC: UIViewController {
             self.lblBookingNumber.text = fetchdata?.bookingID ?? ""
             
             self.lblOfferDis.text = fetchdata?.restrorant?.shortDescription ?? ""
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let date =  dateFormatter.date(from: fetchdata?.bookingDate ?? "") ?? Date()
-            dateFormatter.dateFormat = "dd/MM/yyyy"
-            self.lblDate.text = dateFormatter.string(from: date)
+    
+            self.lblDate.text = fetchdata?.bookingDate ?? ""
             self.lblNOP.text = "\(fetchdata?.numberOfPeople ?? 0)"
             self.actualprice = Double(fetchdata?.restrorant?.offers?.first?.offerPrice ?? "0") ?? 0
             self.presntsPrice = fetchdata?.offer_discount ?? ""

@@ -307,7 +307,7 @@ struct restoDetailModalsBody: Codable {
     let id, userID, restrorantBarID: Int?
     let bookingDate, bookingSlot: String?
     let slotID: Int?
-    let bookingID, cancelationReason, invoiceNumber, bookingAmount: String?
+    let bookingID, cancelationReason, invoiceNumber, bookingAmount,offer_discount: String?
     let numberOfPeople, status, slotesFull: Int?
     let availableSlotes: String?
     let offerID: Int?
@@ -318,7 +318,7 @@ struct restoDetailModalsBody: Codable {
     let productsUnderOffer: [ProductDetail]?
 
     enum CodingKeys: String, CodingKey {
-        case id,review
+        case id,review,offer_discount
         case userID = "user_id"
         case restrorantBarID = "restrorant_bar_id"
         case bookingDate = "booking_date"
@@ -359,7 +359,7 @@ struct ProductDetail: Codable {
     let id, restrorantBarID, menuID, cuisineID: Int?
     let categoryID: Int?
     let productName,actual_price,discounted_price,offer_discount: String?
-    let price: Int?
+    let price: String?
     let image, menuTypeName: String?
 
     enum CodingKeys: String, CodingKey {

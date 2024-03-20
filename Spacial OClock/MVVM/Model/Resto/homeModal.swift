@@ -28,14 +28,14 @@ struct Rows: Codable {
         var slotID: Int?
         var bookingID, cancelationReason, invoiceNumber, bookingAmount: String?
         var numberOfPeople, status, slotesFull: Int?
-        var availableSlotes: String?
+        var availableSlotes ,offer_discount: String?
         var offerID: Int?
         var createdAt, updatedAt, offerName: String?
         var user: User?
         var restrorant: Restrorant?
 
         enum CodingKeys: String, CodingKey {
-            case id
+            case id,offer_discount
             case userID = "user_id"
             case restrorantBarID = "restrorant_bar_id"
             case bookingDate = "booking_date"

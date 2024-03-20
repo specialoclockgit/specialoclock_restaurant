@@ -49,10 +49,10 @@ class bookingDetailsVC: UIViewController {
     var APIcall = AuthViewModel()
     var productsUnderOffer: [ProductDetail]?
     var booking_id = String()
-    var totalamount = Int()
-    var prsents = Int()
-    var prsentsamount = Int()
-    var specailofferless = Int()
+    var totalamount = Double()
+    var prsents = Double()
+    var prsentsamount = Double()
+    var specailofferless = Double()
     
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
@@ -104,9 +104,9 @@ class bookingDetailsVC: UIViewController {
             self.lblBookingDate.text = self.modalDetail?.bookingDate ?? ""
             self.lblNumberOfPeople.text = "\(self.modalDetail?.numberOfPeople ?? 0)"
             self.lblBookingNumebr.text = self.modalDetail?.bookingID ?? ""
-            self.totalamount = self.productsUnderOffer?.first?.price ?? 0
-            self.prsents = Int(self.modalDetail?.bookingAmount ?? "") ?? 0
-            self.prsentsamount = self.totalamount * self.prsents/100
+            self.totalamount = Double(self.productsUnderOffer?.first?.price ?? "0") ?? 0
+            self.prsents = Double(self.modalDetail?.bookingAmount ?? "") ?? 0
+            self.prsentsamount = self.totalamount * self.prsents / 100
             self.specailofferless = self.totalamount - self.prsentsamount
             
             
@@ -126,7 +126,7 @@ class bookingDetailsVC: UIViewController {
             
             
             if self.modalDetail?.restrorant?.type == 1 {
-                self.lblSOffer.text = "\(self.modalDetail?.offerName ?? "") -\(self.modalDetail?.bookingAmount ?? "")%"
+                self.lblSOffer.text = "\(self.modalDetail?.offerName ?? "") -\(self.modalDetail?.offer_discount ?? "")%"
                 self.lblOfferTime.text = "Offer from " + (self.modalDetail?.bookingSlot ?? "")
                 let timeString = self.modalDetail?.bookingSlot ?? ""
                 let components = timeString.components(separatedBy: "-")
@@ -250,8 +250,8 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
             cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].actual_price ?? "0")"
             cell.lblNewPrice.text = "R\(self.productsUnderOffer?[indexPath.row].discounted_price ?? "0")"
         }else {
-            cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].price ?? 0)"
-            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(productsUnderOffer?[indexPath.row].price ?? 0), discount: Double(self.prsents)).description)"
+            cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].price ?? "0")"
+            cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(productsUnderOffer?[indexPath.row].price ?? "0" ) ?? 0, discount: (self.prsents)).description)"
         }
         
         cell.lblItemName.text = productsUnderOffer?[indexPath.row].productName ?? ""

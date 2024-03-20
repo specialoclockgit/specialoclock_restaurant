@@ -30,6 +30,7 @@ class LocationsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     @IBOutlet weak var tblVw: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tblVw.register(UINib(nibName: Cell.HeaderMyOfferCell, bundle: nil), forCellReuseIdentifier:Cell.HeaderMyOfferCell)
         tblVw.delegate = self
         tblVw.dataSource = self

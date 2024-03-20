@@ -16,14 +16,7 @@ var DEVICE_TOKEN = "ios"
 
 var noInternetConnection = "No Internet Connection Available"
 
-typealias successResponse = (()->())
-
-var isBusiness = false
-
-var fromTabBar = false
-
 let iOSplatForm = "1"
-// local url
 
 //let imageBaseUrl = "http://192.168.1.80:2020"
 //let baseURL  = "http://202.164.42.227:9999"
@@ -31,8 +24,8 @@ let iOSplatForm = "1"
 //let clientURL = "https://app.specialoclock.com/api/"
 
 
-let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
-//let baseURL = "https://app.specialoclock.com/api/"
+//let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
+let baseURL = "https://app.specialoclock.com/api/"
 
 let imageURL = "https://app.specialoclock.com/"
 
@@ -47,28 +40,7 @@ let securitykey = "sk_Dac1t2GMfvvgO1+ZtLvOjwEhQluidxzVy9Av5fiV5kCZzCr+PjdB0ap0Qx
 
 let publishedkey = "pk_ndhUQm9z9VVAEDQAKUjM5nQ6F690crObNnPPobC36LUWJcUKQQC/aSzj9kqTQ22rurF2B6DvyiI="
 
-let deepLinkUrl = ""
-
-var DayArray = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-
-var genderArray = ["Male","Female"]
-
 var datePicker = UIDatePicker()
-
-var age = Int()
-
-let PrimaryColor = #colorLiteral(red: 0.9918574691, green: 0.2109946012, blue: 0.4742730856, alpha: 1)
-
-let CustomYellowColor = #colorLiteral(red: 0.7950755358, green: 0.6792131662, blue: 0.2435890436, alpha: 1)
-
-let customGrayColor =  #colorLiteral(red:0.921, green: 0.922, blue: 0.921, alpha: 1)
-
-var isFromPush = false
-
-//MARK:- agora video call app id
-let agoraAppId = ""
-var agoraChannelName = ""
-var agoraToken = ""
 
 //MARK: - root vc
 var rootVC: UIViewController?{
@@ -239,7 +211,7 @@ enum dateFormat:String{
 
 //MARK:-  constant messages or Alert Messages
 
-enum constantMessages:String{
+enum constantMessages:String {
     
     case internetError    = "Please check your internet connectivity"
     case accepted         = "Requested accepted sucessfully"
@@ -306,7 +278,7 @@ func goToLogin() {
 
 func isToday(dateString: String) -> Bool {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
+    dateFormatter.dateFormat = "dd/MM/yyyy"
     
     if let date = dateFormatter.date(from: dateString) {
         return Calendar.current.isDateInToday(date)
@@ -317,7 +289,7 @@ func isToday(dateString: String) -> Bool {
 
 func checkDatesAreInSequence(array: [String]) -> Bool {
     let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "yyyy-MM-dd"
+      dateFormatter.dateFormat = "dd/MM/yyyy"
       let dates = array.compactMap { dateFormatter.date(from: $0) }
       
       guard dates.count > 1 else {
@@ -339,7 +311,7 @@ func checkDatesAreInSequence(array: [String]) -> Bool {
 
 func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
+    dateFormatter.dateFormat = "dd/MM/yyyy"
     
     guard let selected = dateFormatter.date(from: selectedDate) else {
         return nil
@@ -381,7 +353,7 @@ func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
 
 func formatDate(inputDate: String) -> String? {
     let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "yyyy-MM-dd"
+      dateFormatter.dateFormat = "dd/MM/yyyy"
       
       guard let date = dateFormatter.date(from: inputDate) else {
           return nil

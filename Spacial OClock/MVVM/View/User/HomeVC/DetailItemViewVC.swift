@@ -13,7 +13,8 @@ import SkeletonView
 //MARK: Variable image3
 var arrModel : [ItemsModel] = []
 
-class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, SkeletonCollectionViewDelegate {
+class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, SkeletonCollectionViewDelegate {
+
     
     //MARK: Outlets
     @IBOutlet weak var txtFldSearch: CustomTextField!
@@ -86,18 +87,18 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     //MARK: - CUSINS BY RESTO
     func get_resto_list(){
         viewmodal.cusinsRestoAPI(cuisineid: cusinessID) { [weak self] fetchdata in
-//            var objModel = fetchdata ?? []
-//            for i in 0 ..< (objModel.count ) {
-//                var obj = objModel[i]
-//                obj.timeSlots?.reverse()
-//                objModel[i] = obj
-//            }
-
-            self?.modal = fetchdata
-            self?.filtercusin = fetchdata
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self?.CollectionView.hideSkeleton()
+            var objModel = fetchdata ?? []
+            for i in 0 ..< (objModel.count ) {
+                var obj = objModel[i]
+                obj.timeSlots?.reverse()
+                objModel[i] = obj
             }
+
+            self?.modal = objModel
+            self?.filtercusin = objModel
+           // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.CollectionView.hideSkeleton()
+          //  }
             self?.CollectionView.reloadData()
         }
     }
@@ -115,9 +116,9 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
             
             self?.thememodla = dataa
             self?.filtertheme = dataa
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+           // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
-            }
+            //}
             self?.CollectionView.reloadData()
         }
     }
@@ -136,9 +137,9 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
             
             self?.categoryModal = dataaa
             self?.filterCategory = dataaa
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+           // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
-            }
+            //}
             self?.CollectionView.reloadData()
         }
     }
@@ -167,20 +168,20 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     func location_By_RestoAPI() {
         viewmodal.locationByRestoAPI(country: country, city: city,type: String(Store.screenType ?? 1)) { [weak self] dataa in
             
-//            var objModel = dataa ?? []
-//            for i in 0 ..< (objModel.count ) {
-//                var obj = objModel[i]
-//                obj.timeSlots?.reverse()
-//                objModel[i] = obj
-//            }
+            var objModel = dataa ?? []
+            for i in 0 ..< (objModel.count ) {
+                var obj = objModel[i]
+                obj.timeSlots?.reverse()
+                objModel[i] = obj
+            }
             
             
-            self?.location = dataa
-            self?.filterlocations = dataa
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self?.location = objModel
+            self?.filterlocations = objModel
+           // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
                 self?.CollectionView.reloadData()
-            }
+            //}
             
         }
     }
@@ -192,7 +193,7 @@ class DetailItemViewVC: UIViewController, SkeletonCollectionViewDataSource, Skel
     }
 
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return 3
     }
     
 }
@@ -251,10 +252,20 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let imageIndex = (imageURL) + (filterlocations?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
+            
+            cell.callBack = { [weak self] ID in
+                
+                print(ID)
+                let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                vc.ProductID = self?.filterlocations?[indexPath.row].id ?? 0
+                vc.selectedOfferId = ID
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+            
             if let disable_dates = filterlocations?[indexPath.row].disable_dates,disable_dates != "" {
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
+                dateFormatter.dateFormat = "dd/MM/yyyy"
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
                     self.blurEffect(image: cell.imgView)
@@ -283,6 +294,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let fetchresto = filterlocations?[indexPath.row].timeSlots ?? []
             cell.lblRaiting.text = "\(filterlocations?[indexPath.row].avgRating ?? 0)"
             cell.cosmosView.rating = Double(filterlocations?[indexPath.row].avgRating ?? 0)
+            cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
+            cell.layoutIfNeeded()
             cell.offerTimings = fetchresto
             cell.offerCollection.reloadData()
         } else if setValue == "Category" {
@@ -296,14 +309,26 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
            // let fetchresto = Store.screenType == 1 ? filterCategory?[indexPath.row].offers ?? [] : filterCategory?[indexPath.row].offers?.unique(map: {$0.offer?.id ?? 0}) ?? []
             let fetchresto = filterCategory?[indexPath.row].offers ?? []
             cell.offerTimings = fetchresto
+            cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
+            cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
             cell.lblRaiting.text = "\(filterCategory?[indexPath.row].avgrating ?? 0)"
             cell.cosmosView.rating = Double(filterCategory?[indexPath.row].avgrating ?? 0)
             
+            cell.callBack = { [weak self] ID in
+                
+                print(ID)
+                let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                vc.ProductID = self?.filterCategory?[indexPath.row].id ?? 0
+                vc.selectedOfferId = ID
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+            
+            
             if let disable_dates = filterCategory?[indexPath.row].disable_dates,disable_dates != "" {
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
+                dateFormatter.dateFormat = "dd/MM/yyyy"
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
                     self.blurEffect(image: cell.imgView)
@@ -337,6 +362,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.cosmosView.rating = Double(filtercusin?[indexPath.row].avgRating ?? 0)
             let fetchresto = filtercusin?[indexPath.row].timeSlots ?? []
             cell.offerTimings = fetchresto
+            cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
+            cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
             //MARK: For showing pre-selected offer.
             cell.callBack = { [weak self] ID in
@@ -351,7 +378,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             if let disable_dates = filtercusin?[indexPath.row].disable_dates,disable_dates != "" {
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
+                dateFormatter.dateFormat = "dd/MM/yyyy"
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString) {
                     self.blurEffect(image: cell.imgView)
@@ -384,15 +411,24 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblDiscription.text = "\(filtertheme?[indexPath.row].openTime ?? "") - " + "\(filtertheme?[indexPath.row].closeTime ?? "")"
             cell.lblRaiting.text = "\(filtertheme?[indexPath.row].avgRating ?? 0)"
             cell.cosmosView.rating = Double(filtertheme?[indexPath.row].avgRating ?? 0)
-            let fetchresto = filtertheme?[indexPath.row].timeSlots
+            let fetchresto = filtertheme?[indexPath.row].timeSlots ?? []
             cell.offerTimings = fetchresto
+            cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
+            cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
-            
+            cell.callBack = { [weak self] ID in
+                
+                print(ID)
+                let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                vc.ProductID = self?.filtertheme?[indexPath.row].id ?? 0
+                vc.selectedOfferId = ID
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
             
             if let disable_dates = filtertheme?[indexPath.row].disable_dates,disable_dates != "" {
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
+                dateFormatter.dateFormat = "dd/MM/yyyy"
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
                     self.blurEffect(image: cell.imgView)
@@ -418,7 +454,16 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 320)
+    
+        if setValue == "Location" {
+            return filterlocations?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 270) : CGSize(width: collectionView.frame.width, height: 320)
+        } else if setValue == "Category" {
+            return filterCategory?[indexPath.row].offers?.count == 0 ? CGSize(width: collectionView.frame.width, height: 270) : CGSize(width: collectionView.frame.width, height: 320)
+        } else if setValue == "Cuisines" {
+            return filtercusin?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 270) :CGSize(width: collectionView.frame.width, height: 320)
+        } else {
+            return filtertheme?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 270) : CGSize(width: collectionView.frame.width, height: 320)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

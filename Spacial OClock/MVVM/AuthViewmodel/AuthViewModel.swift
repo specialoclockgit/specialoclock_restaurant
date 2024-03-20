@@ -23,7 +23,7 @@ class AuthViewModel : NSObject {
                 let jsonData = try jsonEncoder.encode(image)
                 let jsonString = String(data: jsonData, encoding: .utf8)
                 guard let json = jsonString else{return}
-                let param : parameters = [ "image":json,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":role, "device_type":1] as [String : Any]
+                let param : parameters = [ "image":json,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":role, "device_type":1,"timezone":TimeZone.current.identifier] as [String : Any]
                 
                 WebService.service(API.signup,  param: param, service: .post){
                     (modeldata: SignupModel, data, json) in
@@ -75,7 +75,7 @@ class AuthViewModel : NSObject {
         }else if password.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
         }else {
-            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type]
+            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type,"timezone":TimeZone.current.identifier]
             //,"role":role
             WebService.service(API.login, param: param, service: .post){
                 (modaldata: SignupModel , Data, Json) in

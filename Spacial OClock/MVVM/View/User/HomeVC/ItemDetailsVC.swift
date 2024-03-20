@@ -131,7 +131,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         viewFullMenu.delegate = self
         viewFullMenu.dataSource = self
         fetchdata()
-        self.datecuurent = string(format: "yyyy-MM-dd")
+        self.datecuurent = string(format: "dd/MM/yyyy")
         txtFldDate.text = datecuurent
         viewRestoRating.layer.cornerRadius = 12
         viewRestoRating.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
@@ -237,17 +237,28 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.view.layoutIfNeeded()
             if self.offer?.count ?? 0 > 0 {
                 if let offerId = self.selectedOfferId , offerId != 0 {
-                    let Index = self.offer?.firstIndex(where: {$0.offerID == offerId})
+                    let Index = self.offer?.firstIndex(where: {$0.id == offerId})
+                    self.isselectedoffer  = Index ?? 0
                     print("self.selectedOfferIdIndex---",Index)
+                    if let is_fifty = self.offer?[self.isselectedoffer].is_fifty {
+                        self.discount = is_fifty == 0 ? Int(self.offer?[self.isselectedoffer].percentage ?? "") ?? 0 : 50
+                    } else {
+                        self.discount = Int(self.offer?[self.isselectedoffer].percentage ?? "") ?? 0
+                    }
+                    let index = IndexPath(row: self.isselectedoffer, section: 0)
+                    self.collViewMenu.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
+                    self.selectedOfferId = 0
+                self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
                 } else {
-                    
+                    self.selectedOfferId = 0
+                    if let is_fifty = self.offer?[0].is_fifty {
+                        self.discount = is_fifty == 0 ? Int(self.offer?[0].percentage ?? "") ?? 0 : 50
+                    } else {
+                        self.discount = Int(self.offer?[0].percentage ?? "") ?? 0
+                    }
+                self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
                 }
-                if let is_fifty = self.offer?[0].is_fifty {
-                    self.discount = is_fifty == 0 ? Int(self.offer?[0].percentage ?? "") ?? 0 : 50
-                } else {
-                    self.discount = Int(self.offer?[0].percentage ?? "") ?? 0
-                }
-            self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
+                
             }
         }
     }
@@ -258,7 +269,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //MARK: - FUNCTION
     private func showAlertForTodayOff(date:String,dateArr:[String]){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "dd/MM/yyyy"
         let todayDateString = dateFormatter.string(from: Date())
         if date == todayDateString {
             if dateArr.contains(todayDateString){
@@ -323,7 +334,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     @objc func donedatePicker(){
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "dd/MM/yyyy"
         if self.disableDatedArr.contains(formatter.string(from: datePicker.date)){
             if checkDatesAreInSequence(array: self.disableDatedArr) {
                 showPopupForDisableDate(date: (formatter.string(from: datePicker.date)),msg: "Sorry we are not available till \(self.disableDatedArr.last ?? "")")

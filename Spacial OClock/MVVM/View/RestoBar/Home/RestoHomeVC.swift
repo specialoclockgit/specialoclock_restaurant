@@ -34,7 +34,7 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK: - FUNCTIONS API'S
     func setupAPI(date:String) {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "dd/MM/yyyy"
         selectedDate = date == "" ? formatter.string(from: Date()) : date
         viewmodel.homeRestoAPI(restobarID: Store.userDetails?.restoid ?? 0,date: date) { dataa in
             self.modal = dataa?.rows ?? []
@@ -117,7 +117,7 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource{
         
         if filterdata?[indexPath.row].restrorant?.type == 1 {
             cell.offerNameLbl.text = filterdata?[indexPath.row].offerName ?? ""
-            cell.lblBookingNO.text = "-\(filterdata?[indexPath.row].bookingAmount ?? "")%"
+            cell.lblBookingNO.text = "-\(filterdata?[indexPath.row].offer_discount ?? "")%"
             cell.lblTime.text = filterdata?[indexPath.row].bookingSlot ?? ""
         } else {
             let offer = filterdata?[indexPath.row].restrorant?.offers?.first(where: {$0.id == filterdata?[indexPath.row].offerID})

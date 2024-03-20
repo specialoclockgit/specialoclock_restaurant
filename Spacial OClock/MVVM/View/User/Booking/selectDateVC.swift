@@ -64,7 +64,7 @@ extension selectDateVC :FSCalendarDelegate, FSCalendarDataSource, FSCalendarDele
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         
         let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd"
+        df.dateFormat = "dd/MM/yyyy"
         let now = df.string(from: date)
         self.dismiss(animated: true){
             self.callBack?(now)
