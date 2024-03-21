@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         sleep(3)
         IQKeyboardManager.shared.enable = true
-        GMSServices.provideAPIKey("AIzaSyA-Ga7BvTYtT6KGYYoMWfolfoPj7CswuL0")
-        GMSPlacesClient.provideAPIKey("AIzaSyDG3ftTHL_IMGAd8c8vU-q0Oi-oURgTeKE")
+        GMSServices.provideAPIKey("AIzaSyDyzo-hNdOi-cEvrU8khbBEcpr9Vh-sWFY")
+        GMSPlacesClient.provideAPIKey("AIzaSyDyzo-hNdOi-cEvrU8khbBEcpr9Vh-sWFY")
         SocketIOManager.sharedInstance.connectMySocket()
         SocketIOManager.sharedInstance.connect_user()
         SocketIOManager.sharedInstance.connect_user_listen()

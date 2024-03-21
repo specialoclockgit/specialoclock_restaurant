@@ -67,7 +67,7 @@ class AuthViewModel : NSObject {
     }
     
     //MARK: - LOGIN API
-    func loginApicall(email:String, password:String,device_type:Int,role:Int ,onSuccess: @escaping (()->())) {
+    func loginApicall(email:String, password:String,device_type:Int,role:Int,timeZone:String ,onSuccess: @escaping (()->())) {
         if email.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your email", isSuccess: .error)
         }else if !email.isValidemail {
@@ -75,7 +75,7 @@ class AuthViewModel : NSObject {
         }else if password.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
         }else {
-            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type,"timezone":TimeZone.current.identifier]
+            let param: parameters = ["email":email,"password":password,"device_token":DEVICE_TOKEN,"device_type":device_type,"timezone":timeZone]
             //,"role":role
             WebService.service(API.login, param: param, service: .post){
                 (modaldata: SignupModel , Data, Json) in

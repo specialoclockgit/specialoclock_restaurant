@@ -25,7 +25,7 @@ class WalkThroughVC: UIViewController {
         
         if UserDefaults.standard.value(forKey: "AppInstalled") as? Bool == true {
             let storyb = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            let vc = storyb.instantiateViewController(withIdentifier: "SelectVC") as! SelectVC
             self.navigationController?.pushViewController(vc, animated: false)
         }
         
@@ -44,9 +44,8 @@ class WalkThroughVC: UIViewController {
     @IBAction func btnNext(_ sender: UIButton) {
         
         if sender.titleLabel?.text == "Next"{
-            let vc = self.storyboard?.instantiateViewController(identifier: "LoginVC") as! LoginVC
+            let vc = self.storyboard?.instantiateViewController(identifier: "SelectVC") as! SelectVC
             UserDefaults.standard.setValue(true, forKey: "AppInstalled")
-            
             self.navigationController?.pushViewController(vc, animated: true)
             
         }else{
@@ -98,7 +97,7 @@ extension WalkThroughVC : UICollectionViewDelegate, UICollectionViewDataSource, 
         }
     }
     func navigateToNewScreen() {
-        let screen =  storyboard?.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+        let screen =  storyboard?.instantiateViewController(withIdentifier: "SelectVC") as! SelectVC
         self.navigationController?.pushViewController(screen, animated: true)
     }
     

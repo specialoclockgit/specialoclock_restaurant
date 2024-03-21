@@ -34,7 +34,7 @@ class RestoLoginVC: UIViewController {
     }
 
     @IBAction func btnSignIn(_ sender: UIButton){
-        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 1, role: self.role) {
+        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 1, role: self.role, timeZone: TimeZone.current.identifier) {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC)as! RestoTabBarVC
             self.navigationController?.pushViewController(vc, animated: true)
         }

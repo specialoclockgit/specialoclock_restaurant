@@ -88,62 +88,50 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     //MARK: - MARK SHOW IN GOOGLE MAP
     func getalllocations() {
+        // Clear existing markers
         gmsMapView.clear()
-        for index in 0..<(nearBy.count) {
-            if let returnedPlace = nearBy[index] as? NearbyRestaurant {
-                
-                var percentage = ""
-                var latitude = "0.0"
-                var longitude = "0.0"
-                var image = ""
-                if let name = returnedPlace.offerPercentage {
-                    percentage = name
-                }
-                
-                if let latis = returnedPlace.latitude {
-                    latitude = latis
-                }
-                
-                if let longis = returnedPlace.longitude {
-                    longitude = longis
-                }
-                
-                if let img = returnedPlace.profileImage {
-                    image = img
-                
-                }
-                
-                let marker = GMSMarker()
-                
-                
-                print("=====map loc",latitude,longitude)
-                
-                marker.position = checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
-                
-                let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-                if Store.screenType == 1 {
-                    view.lblPersot.text = "\(percentage)%"
-                    view.providerImageView.isHidden = true
-                }else {
-                    view.providerImageView.isHidden = false
-                    view.lblPersot.text = ""
-                    view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
-                }
-                
-                marker.iconView = view
-                marker.map = self.gmsMapView
-                marker.userData = returnedPlace
+        
+        // Filter nearby places with offerPercentage
+        let nearbyWithOffers = nearBy.filter { $0.offerPercentage != nil && !$0.offerPercentage!.isEmpty }
+        
+        // Add markers for each nearby place with offerPercentage
+        for place in nearbyWithOffers {
+            guard let latitude = Float(place.latitude ?? "0.0"), let longitude = Float(place.longitude ?? "0.0") else {
+                continue
             }
-            if self.nearBy.count == 0 {
-                let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
-                let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
-                gmsMapView.animate(to: camera1)
+            
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+            
+            let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
+            if Store.screenType == 1 {
+                view.lblPersot.text = "\(place.offerPercentage ?? "")%"
+                view.providerImageView.isHidden = true
             } else {
-                let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 16)
-                gmsMapView.animate(to: camera2)
+                view.providerImageView.isHidden = false
+                view.lblPersot.text = ""
+                if let img = place.profileImage {
+                    view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: img.replacingOccurrences(of: " ", with: "%20"))
+                }
             }
+            
+            marker.iconView = view
+            marker.map = self.gmsMapView
+            marker.userData = place
         }
         
+        // Adjust camera position based on nearby places or user's location
+        if nearbyWithOffers.isEmpty {
+            let userLocation = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "0.0") ?? 0.0, longitude: Double(Store.userDetails?.longitude ?? "0.0") ?? 0.0)
+            let camera = GMSCameraPosition.camera(withTarget: userLocation, zoom: 16)
+            gmsMapView.animate(to: camera)
+        } else {
+            let firstPlace = nearbyWithOffers[0]
+            let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(firstPlace.latitude ?? "0.0") ?? 0.0,
+                                                  longitude: CLLocationDegrees(firstPlace.longitude ?? "0.0") ?? 0.0,
+                                                  zoom: 16)
+            gmsMapView.animate(to: camera)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -331,7 +319,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     @IBAction func btnMapView(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
         vc.iscomeFrom = 1
-        vc.nearBy = self.nearBy
+        vc.nearBy = self.nearBy.filter({$0.offerPercentage != "" && $0.offerPercentage != nil})
         vc.latitude = self.lat ?? 0.0
         vc.longitude = self.long ?? 0.0
         self.navigationController?.pushViewController(vc, animated: true)
@@ -433,7 +421,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sectionArray[indexPath.section].name == "Banner" {
-            return CGFloat(120)
+            return CGFloat(140)
         } else if sectionArray[indexPath.section].name == "Popular" {
             if sectionArray[indexPath.section].objArray?.count  ==  0{
                 return CGFloat(0)

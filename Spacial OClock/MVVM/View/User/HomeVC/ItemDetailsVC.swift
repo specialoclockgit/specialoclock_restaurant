@@ -247,6 +247,9 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     }
                     let index = IndexPath(row: self.isselectedoffer, section: 0)
                     self.collViewMenu.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
+                    let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+                    self.scrollView.setContentOffset(bottomOffset, animated: true)
+                    
                     self.selectedOfferId = 0
                 self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
                 } else {
@@ -753,7 +756,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 self.offerID = offer?[indexPath.row].offerID ?? 0
                 self.offerDis = (offer?[indexPath.row].is_fifty == 1 ? 50 : Int(offer?[indexPath.row].percentage ?? "0")) ?? 0
             } else if status == 2 {
-                if collectionView == collViewMenu{
+                if collectionView == collViewMenu {
                     isselectedoffer = indexPath.row
                     collViewMenu.reloadData()
                 }
@@ -761,9 +764,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 
                 if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
                   
-                    if let is_fifty = self.offer?[indexPath.row].is_fifty{
+                    if let is_fifty = self.offer?[indexPath.row].is_fifty {
                         self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
-                    }else {
+                    } else {
                         self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
                     }
                     menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)

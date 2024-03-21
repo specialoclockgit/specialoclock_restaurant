@@ -86,7 +86,7 @@ extension SceneDelegate {
     
     func setLoginRoot(){
         let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
-        let loginViewController = mainStoryBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+        let loginViewController = mainStoryBoard.instantiateViewController(withIdentifier: "SelectVC") as! SelectVC
         let nav = UINavigationController.init(rootViewController: loginViewController)
         nav.isNavigationBarHidden = true
         UIApplication.shared.windows.first?.rootViewController = nav
@@ -111,7 +111,7 @@ extension SceneDelegate {
 
     func LoginRoot(){
         let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
-        let redViewController = mainStoryBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+        let redViewController = mainStoryBoard.instantiateViewController(withIdentifier: "SelectVC") as! SelectVC
         let nav = UINavigationController.init(rootViewController: redViewController)
         Store.autoLogin = false
         nav.isNavigationBarHidden = true

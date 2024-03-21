@@ -25,7 +25,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialLoad()
-        
+        txtEmail.keyboardType = .emailAddress
         UserDefaults.standard.setValue(true, forKey: "AppInstalled")
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         view.hideKeyboardWhenTappedAround()
@@ -35,6 +35,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
 
         txtEmail.text = UserDefaults.standard.value(forKey: "loginEmail") as? String ?? ""
         txtPassword.text = UserDefaults.standard.value(forKey: "loginPassword") as? String ?? ""
+        btnRemember.isSelected = UserDefaults.standard.value(forKey: "rememberMe") as? Bool ?? false
       //  txtEmail.keyboardType = .alphabet
         
     }
@@ -46,13 +47,15 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
 
     @IBAction func btnSignIn(_ sender: UIButton){
-        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: Store.userDetails?.role ?? 0) {
+        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: Store.userDetails?.role ?? 0, timeZone: TimeZone.current.identifier) {
             if self.btnRemember.isSelected == true {
                 UserDefaults.standard.set(self.txtEmail.text!, forKey: "loginEmail")
                 UserDefaults.standard.set(self.txtPassword.text!, forKey: "loginPassword")
+                UserDefaults.standard.set(true, forKey: "rememberMe")
             } else {
                 UserDefaults.standard.set("", forKey: "loginEmail")
                 UserDefaults.standard.set("", forKey: "loginPassword")
+                UserDefaults.standard.set(false, forKey: "rememberMe")
             }
 
             if Store.userDetails?.role == 1{

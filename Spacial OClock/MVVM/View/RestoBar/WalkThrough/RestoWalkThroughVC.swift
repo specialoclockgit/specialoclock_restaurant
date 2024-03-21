@@ -23,7 +23,7 @@ class RestoWalkThroughVC: UIViewController {
         
         if UserDefaults.standard.value(forKey: "AppInstalled") as? Bool == true {
             let storyb = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            let vc = storyb.instantiateViewController(withIdentifier: "SelectVC") as! SelectVC
             self.navigationController?.pushViewController(vc, animated: false)
         }
         
@@ -39,7 +39,7 @@ class RestoWalkThroughVC: UIViewController {
     @IBAction func btnNext(_ sender: UIButton) {
         if sender.titleLabel?.text == "Next"{
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let secondViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC {
+            if let secondViewController = storyboard.instantiateViewController(withIdentifier: "SelectVC") as? SelectVC {
                 UserDefaults.standard.setValue(true, forKey: "AppInstalled")
                 self.navigationController?.pushViewController(secondViewController, animated: true)
             }
