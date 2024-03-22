@@ -40,14 +40,14 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     var Location = String()
     var countryCode = String()
     var image = [FileuploadModelBody]()
-    var selectStatus = 1
-    var restoselctStatus = 1
+    var selectStatus = Int()
+    var restoselctStatus = Int()
     
     
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectStatus = 1
+       // selectStatus = 1
         Store.status = "\(restoselctStatus)"
         tfName.delegate = self
         tfPhone.delegate = self

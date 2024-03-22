@@ -57,7 +57,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     var dataCuisine: [CuisineListingModelBody]?
     var imgString:String?
     var imgmultiple = String()
-    var themeId = [Int]()
+    var themeId = String()
     var Cuisinid = Int()
     var categoryID = Int()
     var image:[FileuploadModelBody]?
@@ -67,8 +67,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     var state = String()
     var city = String()
     var country = String()
-    var selectedCategory: [Int] = []
-    var selectedCusinis: [Int] = []
+    var selectedCategory = String()
+    var selectedCusinis = String()
     var restoVM = restoViewModal()
     var datagetApi : [LocationListBody]?
     //MARK: - VIEW LIFECYCLE
@@ -150,7 +150,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
 //        } else if self.imgArr.count  <= 2{
 //            CommonUtilities.shared.showAlert(message: "Please select 3 image", isSuccess: .error)
 //        }else {
-        viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: (latitude) ,longitude: (longitude) , Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfCity.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.selectedCusinis.description, shortdescription: self.tvDescription.text ?? "", category: self.selectedCategory.description) {
+        let selectedCategory = selectedCategory == "" ? "0" :  selectedCategory
+        viewmodel.addbusinessApi(singleimage: self.singleimage, isImageSelected: self.isImageSelected,country: self.country,state: self.state,city: self.city,latitude: (latitude) ,longitude: (longitude) , Profileimage: self.image ?? [FileuploadModelBody](), type: self.btnCheckStatus, name: self.tfName.text ?? "", image: self.images ?? [FileuploadModelBody](), location: self.tfCity.text ?? "", opentime: self.tfOpenTime.text ?? "", closetime: self.tfCloseTime.text ?? "", themesrestrorantid:self.themeId.description, cusine: self.selectedCusinis.description, shortdescription: self.tvDescription.text ?? "", category: selectedCategory) {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "RestoVerificationAlertVC")as! RestoVerificationAlertVC
                 vc.callBack = {
                     for controller in self.navigationController!.viewControllers as Array {
@@ -181,7 +182,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         dropDown.show()
         dropDown.multiSelectionAction = { [weak self] (indices: [Int], items: [String]) in
             guard let self = self else { return }
-            self.themeId = indices.map { self.dataTheme?[$0].id ?? 0 }
+            self.themeId = indices.map { (self.dataTheme?[$0].id ?? 0).description }.joined(separator: ",")
             self.tfTheme.text = items.joined(separator: ", ")
         }
 //        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
@@ -201,7 +202,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         dropDown.show()
         dropDown.multiSelectionAction = { [weak self] (indices: [Int], items: [String]) in
             guard let self = self else { return }
-            self.selectedCategory = indices.map { self.dataCategory?[$0].id ?? 0 }
+            self.selectedCategory = indices.map { (self.dataCategory?[$0].id ?? 0).description }.joined(separator: ",")
             self.tfCategory.text = items.joined(separator: ", ")
         }
     }
@@ -215,7 +216,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         dropDown.show()
         dropDown.multiSelectionAction = { [weak self] (indices: [Int], items: [String]) in
             guard let self = self else { return }
-            self.selectedCusinis = indices.map { self.dataCuisine?[$0].id ?? 0 }
+            self.selectedCusinis = indices.map { (self.dataCuisine?[$0].id ?? 0).description }.joined(separator: ",")
             self.tfCusinies.text = items.joined(separator: ", ")
         }
     }

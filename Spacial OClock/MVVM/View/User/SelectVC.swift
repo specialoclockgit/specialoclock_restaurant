@@ -14,7 +14,7 @@ class SelectVC: UIViewController {
     @IBOutlet weak var userBgImage : UIImageView!
     @IBOutlet weak var restroBgImage : UIImageView!
     @IBOutlet weak var clubBgImage : UIImageView!
-  
+    @IBOutlet weak var continueBtn : UIButton!
     //MARK: - VARIABLES
     var selectStatus = 0
     var restoselctStatus = 0
@@ -31,6 +31,7 @@ class SelectVC: UIViewController {
     //MARK: - ACTIONS
     @IBAction func btnUser(_ sender: UIButton) {
         selectStatus = 1
+        continueBtn.backgroundColor = UIColor.init(named: "themeOrange")
         userBgImage.image = UIImage(named: "userSelected")
         restroBgImage.image = UIImage(named: "restroUnselected")
         clubBgImage.image = UIImage(named: "barUnselected")
@@ -40,6 +41,7 @@ class SelectVC: UIViewController {
     @IBAction func btnRestro(_ sender: UIButton) {
         selectStatus = 2
         restoselctStatus = 1
+        continueBtn.backgroundColor = UIColor.init(named: "themeOrange")
         userBgImage.image = UIImage(named: "userUnselected")
         restroBgImage.image = UIImage(named: "restroSelected")
         clubBgImage.image = UIImage(named: "barUnselected")
@@ -48,6 +50,7 @@ class SelectVC: UIViewController {
     @IBAction func btnClub(_ sender: UIButton) {
         selectStatus = 2
         restoselctStatus = 2
+        continueBtn.backgroundColor = UIColor.init(named: "themeOrange")
         userBgImage.image = UIImage(named: "userUnselected")
         restroBgImage.image = UIImage(named: "restroUnselected")
         clubBgImage.image = UIImage(named: "clubSelected")

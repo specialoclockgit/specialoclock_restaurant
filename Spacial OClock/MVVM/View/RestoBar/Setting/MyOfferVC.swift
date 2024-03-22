@@ -248,7 +248,7 @@ extension MyOfferVC : UITableViewDelegate , UITableViewDataSource {
     func calculate(total:Double,discount:Double) -> Double {
         let Amount = total * discount / 100
         let finalAmount = total - Amount
-        return finalAmount
+        return (finalAmount * 100).rounded() / 100
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

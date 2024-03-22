@@ -29,7 +29,8 @@ class homeSeeMoreVC: UIViewController {
     var highily_rated_bars_restos = [AllBarsResto]()
     var setvalue = ""
     var objArray: [SectionModel] = []
-    
+    var getcity = String()
+    var getcountry = String()
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()

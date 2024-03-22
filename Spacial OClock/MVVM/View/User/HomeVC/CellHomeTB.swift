@@ -38,6 +38,8 @@ class CellHomeTB: UITableViewCell {
     var objArray: [SectionModel] = []
     //var filterary = [SectionModel]()
     var status = 1
+    var country = String()
+    var city = String()
         //value(forKey: "dineDrinkStatus") as? Int
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -308,6 +310,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.lblName = category[indexPath.row].title ?? ""
             vc.setValue = "Category"
             vc.setimage = "category_icon"
+            vc.country = self.country
+            vc.city = self.city
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
         else if objArray[collView.tag].name == "Cuisines" {
@@ -316,6 +320,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.lblName = cuisine[indexPath.row].name ?? ""
             vc.setValue = "Cuisines"
             vc.setimage = "soup"
+            vc.country = self.country
+            vc.city = self.city
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
         else if objArray[collView.tag].name == "Popular" {
@@ -329,10 +335,13 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.lblName = themeArr[indexPath.row].productName ?? ""
             vc.setValue = "Theme"
             vc.setimage = "mask"
+            vc.country = self.country
+            vc.city = self.city
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         } else{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
             vc.ProductID = allresto[indexPath.row].id ?? 0
+            
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
     }

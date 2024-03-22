@@ -86,7 +86,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     
     //MARK: - CUSINS BY RESTO
     func get_resto_list(){
-        viewmodal.cusinsRestoAPI(cuisineid: cusinessID) { [weak self] fetchdata in
+        viewmodal.cusinsRestoAPI(cuisineid: cusinessID,country: country, city: city,type: String(Store.screenType ?? 1)) { [weak self] fetchdata in
             var objModel = fetchdata ?? []
             for i in 0 ..< (objModel.count ) {
                 var obj = objModel[i]
@@ -105,7 +105,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     
     //MARK: - THEME BY RESTO
     func theme_Resto_API() {
-        viewmodal.restoThemelistAPI(restoid: themeID, type: type) { [weak self] dataa in
+        viewmodal.restoThemelistAPI(restoid: themeID, type: (Store.screenType ?? 1),country: country,city: city) { [weak self] dataa in
 //            var objModel = dataa ?? []
 //            for i in 0 ..< (objModel.count ) {
 //                var obj = objModel[i]
@@ -125,7 +125,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     
     //MARK: - CATEGORY BY GET RESTO LIST API
     func fetch_Category_REsto(){
-        viewmodal.categoryBYResto(categoryID: cusinessID) { [weak self] dataaa in
+        viewmodal.categoryBYResto(categoryID: cusinessID,country: country,city: city,type: String(Store.screenType ?? 1)) { [weak self] dataaa in
             
 //            var objModel = dataaa ?? []
 //            for i in 0 ..< (objModel.count ) {

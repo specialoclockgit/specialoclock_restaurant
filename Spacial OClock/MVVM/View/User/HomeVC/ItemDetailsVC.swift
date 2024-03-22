@@ -1125,7 +1125,7 @@ func calCulateDiscount (actualPrice: Double,discount: Double) -> Double {
     //(actualPrice / 100) * discount
     let finalAmount = actualPrice - result
     print("oferr data----------",actualPrice,discount,finalAmount)
-    return (finalAmount)
+    return (finalAmount * 100).rounded() / 100
 }
 
 func degreesToRadians(_ degrees: Double) -> Double {

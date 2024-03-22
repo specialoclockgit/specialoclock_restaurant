@@ -47,7 +47,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
 
     @IBAction func btnSignIn(_ sender: UIButton){
-        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: Store.userDetails?.role ?? 0, timeZone: TimeZone.current.identifier) {
+        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: 0, timeZone: TimeZone.current.identifier) {
             if self.btnRemember.isSelected == true {
                 UserDefaults.standard.set(self.txtEmail.text!, forKey: "loginEmail")
                 UserDefaults.standard.set(self.txtPassword.text!, forKey: "loginPassword")

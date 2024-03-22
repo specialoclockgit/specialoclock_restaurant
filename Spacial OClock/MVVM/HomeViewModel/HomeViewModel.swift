@@ -14,7 +14,7 @@ class HomeViewModel : NSObject {
     
     //MARK: - CUISINE GET LIST
     func homeApi(type:Int, country: String, city:String, state:String, lat:Double, long:Double,timezone:String, onsuccess: @escaping ((HomeListBody?)->())){
-        let param:parameters = ["type":type, "country":country, "state": "", "latitude":lat,"city":city, "longitude":long, "timezone":timezone]
+        let param:parameters = ["type":type, "country":country, "state": state, "latitude":lat,"city":city, "longitude":long, "timezone":timezone]
         print(param)
         WebService.service(API.home, param: param, service: .post) {
             (modaldata: HomeListModel, Data , json) in
@@ -24,8 +24,9 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - CUISINE RESTO LIST
-    func cusinsRestoAPI(cuisineid:Int,onsuccess: @escaping (([CussinesRestoModalBody]?)->())){
-        let param:parameters = ["cuisine_id":cuisineid]
+    func cusinsRestoAPI(cuisineid:Int,country:String,city:String,type:String,onsuccess: @escaping (([CussinesRestoModalBody]?)->())){
+        let param:parameters = ["cuisine_id":cuisineid,"country":country, "city":city, "type":type]
+       
         WebService.service(API.fetch_restos_by_cusine, param: param, service: .post) {
             (modaldata: CussinesRestoModal, Data , json) in
             onsuccess(modaldata.body)
@@ -85,8 +86,8 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - HOME THEME RESTO LIST API
-    func restoThemelistAPI(restoid:Int,type:Int,onsuccess: @escaping (([themeRestolistModalBody]?)->())){
-        let param = ["theme_id":restoid, "type":type]
+    func restoThemelistAPI(restoid:Int,type:Int,country:String,city:String,onsuccess: @escaping (([themeRestolistModalBody]?)->())){
+        let param : parameters = ["theme_id":restoid, "type":type,"country":country, "city":city]
         WebService.service(API.fetch_restos_by_theme, param: param, service: .post) {
             (modaldata: themeRestolistModal, Data , json) in
             onsuccess(modaldata.body)
@@ -189,8 +190,8 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - FETCH CATEGORY BY RESTO LIST API
-    func categoryBYResto(categoryID:Int,onsuccess: @escaping (([CategoryByRModalBody]?)->())){
-        let param = ["category_id":categoryID] as [String:Any]
+    func categoryBYResto(categoryID:Int,country:String,city:String,type:String,onsuccess: @escaping (([CategoryByRModalBody]?)->())){
+        let param = ["category_id":categoryID,"country":country, "city":city, "type":type] as [String:Any]
         print("============",param)
         WebService.service(API.fetch_restos_by_category, param: param, service: .post) {
             (modaldata: CategoryByRModal, Data , json) in

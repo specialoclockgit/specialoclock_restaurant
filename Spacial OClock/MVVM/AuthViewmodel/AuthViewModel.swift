@@ -268,6 +268,7 @@ class AuthViewModel : NSObject {
 //            CommonUtilities.shared.showAlert(message: "Please select image ", isSuccess: .error)
 //            return false
 //        } else
+        
         if name.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Enter your restaurant name", isSuccess: .error)
             return false
@@ -419,6 +420,15 @@ class AuthViewModel : NSObject {
             onsuccess(modaldata.body)
         }
     }
+    
+    //MARK: - LOCATION GET LIST
+    func locationListing(onsuccess: @escaping (([LocationList_Body]?)->())){
+        WebService.service(API.location_listing, service: .get) {
+            (modaldata: LocationListModel, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
     
     // MARK: - Image Upload
     func fileUploadeMultipledAPI(type: String, image:[UIImage],onSuccess:@escaping(([FileuploadModelBody]?)->())) {

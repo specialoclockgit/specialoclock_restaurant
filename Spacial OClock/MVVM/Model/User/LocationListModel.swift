@@ -89,3 +89,38 @@ struct Restaurant: Codable {
         self.timezone = try container.decodeIfPresent(String.self, forKey: .timezone)
     }
 }
+
+
+// MARK: - LocationListModel
+struct LocationListModel: Codable {
+    var success: Bool?
+    var code: Int?
+    var message: String?
+    var body: [LocationList_Body]?
+}
+
+// MARK: - LocationList_Body
+struct LocationList_Body: Codable {
+    var country: String?
+    var flag_image : String?
+    var states: [State]?
+    var isSelected : Bool? = false
+}
+
+// MARK: - State
+struct State: Codable {
+    var state: String?
+    var cities: [City]?
+    var isSelected : Bool? = false
+}
+
+// MARK: - City
+struct City: Codable {
+    var city: String?
+    var localityAreas: [String]?
+
+    enum CodingKeys: String, CodingKey {
+        case city
+        case localityAreas = "locality_areas"
+    }
+}

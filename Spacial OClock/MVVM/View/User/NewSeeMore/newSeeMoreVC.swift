@@ -33,7 +33,8 @@ class newSeeMoreVC: UIViewController {
     var filtercategory = [Category]()
     var setvalue = ""
     var objArray: [SectionModel] = []
-    
+    var getcity = String()
+    var getcountry = String()
     //MARK: - VIEW LIEFCYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -218,6 +219,8 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             vc.lblName = self.filterCusine[indexPath.row].name?.capitalized ?? ""
             vc.setimage = "soup"
             vc.setValue = "Cuisines"
+            vc.city = self.getcity
+            vc.country = self.getcountry
             self.navigationController?.pushViewController(vc, animated: true)
         } else if setvalue == "Category" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
@@ -225,6 +228,8 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             vc.lblName = self.filtercategory[indexPath.row].title ?? ""
             vc.setimage = "category_icon"
             vc.setValue = "Category"
+            vc.city = self.getcity
+            vc.country = self.getcountry
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
@@ -232,6 +237,8 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             vc.lblName = self.filterthemeAry[indexPath.row].productName ?? ""
             vc.setValue = "Theme"
             vc.setimage = "mask"
+            vc.city = self.getcity
+            vc.country = self.getcountry
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

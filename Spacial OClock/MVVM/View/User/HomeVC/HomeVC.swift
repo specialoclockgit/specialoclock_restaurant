@@ -53,9 +53,9 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     var viewModel = HomeViewModel()
     var nearBy = [NearbyRestaurant]()
     var locationUpdated = Bool()
-    var getstate = String()
-    var getcity = String()
-    var getcountry = String()
+    var getstate = "Western Cape"
+    var getcity = "Cape Town"
+    var getcountry = "South Africa"
     var gettimezone = String()
     var timeZone = String()
     
@@ -83,56 +83,74 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         //UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
         self.getUpdatedLocation()
         self.isSelected = true
+        self.lblLocation.text = self.getcity
     }
     
     
     //MARK: - MARK SHOW IN GOOGLE MAP
     func getalllocations() {
-        // Clear existing markers
-        gmsMapView.clear()
-        
-        // Filter nearby places with offerPercentage
+           gmsMapView.clear()
         let nearbyWithOffers = nearBy.filter { $0.offerPercentage != nil && !$0.offerPercentage!.isEmpty }
-        
-        // Add markers for each nearby place with offerPercentage
-        for place in nearbyWithOffers {
-            guard let latitude = Float(place.latitude ?? "0.0"), let longitude = Float(place.longitude ?? "0.0") else {
-                continue
-            }
-            
-            let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-            
-            let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-            if Store.screenType == 1 {
-                view.lblPersot.text = "\(place.offerPercentage ?? "")%"
-                view.providerImageView.isHidden = true
-            } else {
-                view.providerImageView.isHidden = false
-                view.lblPersot.text = ""
-                if let img = place.profileImage {
-                    view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: img.replacingOccurrences(of: " ", with: "%20"))
-                }
-            }
-            
-            marker.iconView = view
-            marker.map = self.gmsMapView
-            marker.userData = place
-        }
-        
-        // Adjust camera position based on nearby places or user's location
-        if nearbyWithOffers.isEmpty {
-            let userLocation = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "0.0") ?? 0.0, longitude: Double(Store.userDetails?.longitude ?? "0.0") ?? 0.0)
-            let camera = GMSCameraPosition.camera(withTarget: userLocation, zoom: 16)
-            gmsMapView.animate(to: camera)
-        } else {
-            let firstPlace = nearbyWithOffers[0]
-            let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(firstPlace.latitude ?? "0.0") ?? 0.0,
-                                                  longitude: CLLocationDegrees(firstPlace.longitude ?? "0.0") ?? 0.0,
-                                                  zoom: 16)
-            gmsMapView.animate(to: camera)
-        }
-    }
+           for index in 0..<(nearbyWithOffers.count) {
+               if let returnedPlace = nearbyWithOffers[index] as? NearbyRestaurant {
+                   
+                   var percentage = ""
+                   var latitude = "0.0"
+                   var longitude = "0.0"
+                   var image = ""
+                   if let name = returnedPlace.offerPercentage {
+                       percentage = name
+                   }
+                   
+                   if let latis = returnedPlace.latitude {
+                       latitude = latis
+                   }
+                   
+                   if let longis = returnedPlace.longitude {
+                       longitude = longis
+                   }
+                   
+                   if let img = returnedPlace.profileImage {
+                       image = img
+                   
+                   }
+                   
+                   let marker = GMSMarker()
+                   
+                   
+                   print("=====map loc",latitude,longitude)
+                   let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 16)
+                   marker.position = checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
+                   
+                   let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
+                   if Store.screenType == 1 {
+                       view.lblPersot.text = "\(percentage)%"
+                       view.providerImageView.isHidden = true
+                   }else {
+                       view.providerImageView.isHidden = false
+                       view.lblPersot.text = ""
+                       view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
+                   }
+                   
+                   marker.iconView = view
+                   marker.map = self.gmsMapView
+                   marker.userData = returnedPlace
+                   self.gmsMapView.animate(to: camera)
+               }
+//               if self.nearBy.count == 0 {
+//                   let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
+//                   let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
+//                   gmsMapView.animate(to: camera1)
+//               } else {
+//                   let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 16)
+//                   gmsMapView.animate(to: camera2)
+//               }
+           }
+           
+       }
+
+
+
     
     override func viewWillAppear(_ animated: Bool) {
 //        if isSelected == false {
@@ -195,7 +213,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
             case .authorizedAlways, .authorizedWhenInUse:
                 hasPermission = true
             @unknown default:
-                fatalError()
+                print("")
             }
         } else {
             hasPermission = false
@@ -205,10 +223,12 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     
     
-    func setData(type: Int, country: String, state: String, city:String) {
+    func setData(type: Int) {
         self.sectionArray.removeAll()
-        self.viewModel.homeApi(type: type, country: country, city: city, state: state,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.timeZone) { (objData) in
-            
+        self.viewModel.homeApi(type: type, country: self.getcountry, city: self.getcity, state: self.getstate,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.timeZone) { (objData) in
+            self.sectionArray.removeAll()
+            self.nearBy = objData?.nearby_restaurants ?? []
+            self.getalllocations()
             if objData?.location?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Location",objArray: objData?.location ?? [],image: "PIN")
                 self.sectionArray.append(obj)
@@ -245,8 +265,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 self.sectionArray.append(obj)
             }
             self.viewModel.homeData = objData
-            self.nearBy = objData?.nearby_restaurants ?? []
-            self.getalllocations()
+     
             self.tabBarController?.tabBar.isHidden  = false
             self.tbHomeData.layoutSubviews()
             self.tbHomeData.reloadData()
@@ -269,6 +288,14 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
         let vc = serviceStoryboard.instantiateViewController(withIdentifier: "LocationsVC") as! LocationsVC
         vc.hidesBottomBarWhenPushed = true
+        vc.callBack = {  [weak self] countryy, statee, cityy in
+            print(countryy,statee,cityy)
+            self?.lblLocation.text = cityy.capitalized
+            self?.getcity = cityy
+            self?.getcountry = countryy
+            self?.getstate = statee
+            self?.setData(type: Store.screenType ?? 1)
+        }
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -299,7 +326,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
         UserDefaults.standard.synchronize()
         Store.screenType = 1
-        setData(type: 1, country:self.getcountry, state: "", city: self.getcity)
+        setData(type: 1)
         self.tbHomeData.layoutSubviews()
     }
     
@@ -313,13 +340,13 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         UserDefaults.standard.set(2, forKey: "dineDrinkStatus")
         UserDefaults.standard.synchronize()
         Store.screenType = 2
-        setData(type: 2, country: self.getcountry, state: "ff", city: self.getcity)
+        setData(type: 2)
         self.tbHomeData.layoutSubviews()
     }
     @IBAction func btnMapView(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
         vc.iscomeFrom = 1
-        vc.nearBy = self.nearBy.filter({$0.offerPercentage != "" && $0.offerPercentage != nil})
+        vc.nearBy = self.nearBy.filter { $0.offerPercentage != nil && !$0.offerPercentage!.isEmpty }
         vc.latitude = self.lat ?? 0.0
         vc.longitude = self.long ?? 0.0
         self.navigationController?.pushViewController(vc, animated: true)
@@ -348,20 +375,20 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         print("locations = \(locValue.latitude) \(locValue.longitude)")
         self.lat = locValue.latitude
         self.long = locValue.longitude
-        let location = locations.last! as CLLocation
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if (error != nil){
-                print("error in reverseGeocode")
-            }
-            let placemark = placemarks as? [CLPlacemark]
-            if placemark?.count ?? 0 > 0{
-                let placemark = placemarks![0]
-                self.getcountry = placemark.country ?? ""
-                self.getstate = placemark.locality ?? ""
-                self.lblLocation.text = "\(placemark.locality!)"
-            }
-        }
+        //let location = locations.last! as CLLocation
+        //let geocoder = CLGeocoder()
+//        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+//            if (error != nil){
+//                print("error in reverseGeocode")
+//            }
+//            let placemark = placemarks as? [CLPlacemark]
+//            if placemark?.count ?? 0 > 0{
+//                let placemark = placemarks![0]
+//                self.getcountry = placemark.country ?? ""
+//                self.getstate = placemark.locality ?? ""
+//                self.lblLocation.text = "\(placemark.locality!)"
+//            }
+//        }
         locationManager.stopUpdatingLocation()
     }
 }
@@ -385,6 +412,8 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             return cell
         } else {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellHomeTB, for: indexPath) as! CellHomeTB
+            cell.city = self.getcity
+            cell.country = self.getcountry
             cell.lblHeading.text = sectionArray[indexPath.section].name
             cell.img.image =  UIImage(named: sectionArray[indexPath.section].image ?? "")
             cell.btnSeeMore.addTarget(self, action: #selector(btnSeeMoreAct), for: .touchUpInside)
@@ -452,6 +481,8 @@ extension HomeVC {
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.location = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
             screen.filterlocation = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
+            screen.getcity = self.getcity
+            screen.getcountry = self.getcountry
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Cuisines" :
@@ -459,6 +490,8 @@ extension HomeVC {
             screen.setvalue = "Cuisines"
             screen.cuisine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
             screen.filterCusine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
+            screen.getcity = self.getcity
+            screen.getcountry = self.getcountry
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Category" :
@@ -466,12 +499,16 @@ extension HomeVC {
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
             screen.filtercategory = sectionArray[sender.tag].objArray as? [Category] ?? []
+            screen.getcity = self.getcity
+            screen.getcountry = self.getcountry
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Popular" :
             let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.all_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            screen.getcity = self.getcity
+            screen.getcountry = self.getcountry
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Theme" :
@@ -479,12 +516,16 @@ extension HomeVC {
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.themeArr = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
             screen.filterthemeAry = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
+            screen.getcity = self.getcity
+            screen.getcountry = self.getcountry
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "A-Z" :
             let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.highily_rated_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            screen.getcity = self.getcity
+            screen.getcountry = self.getcountry
             self.navigationController?.pushViewController(screen, animated: true)
         default:
             debugPrint("default btnSeeMoreAct")

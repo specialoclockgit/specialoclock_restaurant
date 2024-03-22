@@ -86,6 +86,7 @@ enum API: String{
     case get_profile
     case get_content
     case fetch_app_availability
+    case location_listing
     
 
 //    MARK: - USER
