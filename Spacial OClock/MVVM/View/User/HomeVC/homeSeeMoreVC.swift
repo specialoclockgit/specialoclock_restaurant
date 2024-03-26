@@ -34,7 +34,7 @@ class homeSeeMoreVC: UIViewController {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        collection.showSkeleton()
+
          if setvalue == "Popular"{
             lblHeader.text = "Popular"
             lblHeaderTExt.text = "Popular"
@@ -59,25 +59,17 @@ class homeSeeMoreVC: UIViewController {
 extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setvalue == "Popular"{
-            self.collection.hideSkeleton()
-            if all_bars_restos.count == 0{
+            if all_bars_restos.count == 0 {
                 collectionView.setNoDataMessage("No result found")
-               // imgViewGif.image = UIImage.gif(name: "nodataFound")
-                //imgViewGif.isHidden = false
-            }else{
+            } else {
                 collectionView.backgroundView = nil
-              //imgViewGif.isHidden = true
                 return all_bars_restos.count
             }
-        }else{
-            self.collection.hideSkeleton()
+        } else {
             if highily_rated_bars_restos.count == 0{
                 collectionView.setNoDataMessage("No result found")
-               //imgViewGif.image = UIImage.gif(name: "nodataFound")
-               //imgViewGif.isHidden = false
             }else{
                 collectionView.backgroundView = nil
-               // imgViewGif.isHidden = true
                 return highily_rated_bars_restos.count
             }
         }
@@ -87,35 +79,9 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeSeeMoreCVC", for: indexPath) as! homeSeeMoreCVC
         if setvalue == "Popular"{
-            let imageIndex = (imageURL) + (all_bars_restos[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
-            cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblDis.text = ((self.all_bars_restos[indexPath.row].openTime)?.components(separatedBy: " ").first ?? "") + " - " +  ((self.all_bars_restos[indexPath.row].closeTime)?.components(separatedBy: " ").first ?? "")
-            cell.lblName.text = self.all_bars_restos[indexPath.row].name?.capitalized ?? ""
-            cell.offerTimings = self.all_bars_restos[indexPath.row].offerTimings ?? []
-            cell.lblCity.text = self.all_bars_restos[indexPath.row].city ?? ""
-            cell.lblLocation.text = self.all_bars_restos[indexPath.row].location ?? ""
-            cell.lblRating.text = "\(self.all_bars_restos[indexPath.row].avgRating ?? 0)"
-            cell.cosmosView.rating = Double(self.all_bars_restos[indexPath.row].avgRating ?? 0)
-            if cell.offerTimings?.count == 0{
-                cell.seeMoreColleHeight.constant = 0
-            }else{
-                cell.seeMoreColleHeight.constant = 46
-            }
+            cell.allRestroListing = all_bars_restos[indexPath.row]
         }else{
-            let imageIndex = (imageURL) + (highily_rated_bars_restos[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
-            cell.imgVirw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.imgVirw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
-            cell.lblName.text = self.highily_rated_bars_restos[indexPath.row].name?.capitalized ?? ""
-            cell.lblDis.text = (self.highily_rated_bars_restos[indexPath.row].openTime ?? "") +  "-" + (self.highily_rated_bars_restos[indexPath.row].closeTime ?? "")
-            cell.lblCity.text = self.highily_rated_bars_restos[indexPath.row].city ?? ""
-            cell.lblLocation.text = self.highily_rated_bars_restos[indexPath.row].location ?? ""
-            cell.offerTimings = self.highily_rated_bars_restos[indexPath.row].offerTimings ?? []
-            if cell.offerTimings?.count == 0{
-                cell.seeMoreColleHeight.constant = 0
-            }else{
-                cell.seeMoreColleHeight.constant = 46
-            }
+            cell.highilyRatedListing = highily_rated_bars_restos[indexPath.row]
         }
         return cell
     }

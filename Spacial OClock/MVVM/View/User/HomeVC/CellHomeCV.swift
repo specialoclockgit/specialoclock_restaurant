@@ -32,7 +32,7 @@ class CellHomeCV: UICollectionViewCell {
     @IBOutlet weak var lblLocationName : UILabel!
     @IBOutlet weak var lblTotalRestaurant : UILabel!
     @IBOutlet weak var btnNext : UIButton!
-    
+    @IBOutlet weak var bgView : UIView!
     //MARK: Variables
      var cellDelegate  : CellHomeCVDelegate?
     

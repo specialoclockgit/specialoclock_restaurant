@@ -8,10 +8,11 @@
 import UIKit
 import SDWebImage
 
-class CellImageViewTB: UITableViewCell {
+class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
     
     //MARK: Outlet
     @IBOutlet weak var collView : UICollectionView!
+    @IBOutlet weak var pgController : UIPageControl!
     var banners : [Banner]?
 
     override func awakeFromNib() {
@@ -25,7 +26,14 @@ class CellImageViewTB: UITableViewCell {
         self.collView.register(nib, forCellWithReuseIdentifier: Cell.CellImageViewCB)
         collView.delegate = self
         collView.dataSource = self
+        pgController.numberOfPages = banners?.count ?? 0
         // Configure the view for the selected state
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let width = scrollView.frame.width - (scrollView.contentInset.left*2)
+        let index = scrollView.contentOffset.x / width
+        pgController.currentPage = Int(index)
     }
     
 }
@@ -42,7 +50,7 @@ extension CellImageViewTB : UICollectionViewDelegate , UICollectionViewDataSourc
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width:collView.frame.width/1 , height: 140)
+        return CGSize(width:collView.frame.width/1 , height: 160)
     }
     
     

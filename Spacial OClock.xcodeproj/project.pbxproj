@@ -175,8 +175,8 @@
 		C2B891232A4AEC820066E753 /* MyMenuTvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B891222A4AEC810066E753 /* MyMenuTvc.swift */; };
 		C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */; };
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
+		EB4F37C92BB2ECD8004D5BA7 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */; };
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
-		EBA2170C2B85DB4E007947C6 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EBA2170B2B85DB4E007947C6 /* nodataFound.gif */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
 		EBE6CAA92B9B1E7C006D726B /* AvailabilityDatePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */; };
 		EBE82B332BA95F9200D4EC92 /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */; };
@@ -471,8 +471,8 @@
 		C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailVC.swift; sourceTree = "<group>"; };
 		C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailTVC.swift; sourceTree = "<group>"; };
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
-		EBA2170B2B85DB4E007947C6 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
 		EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityDatePopupVC.swift; sourceTree = "<group>"; };
 		EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
@@ -917,7 +917,7 @@
 		C284FB2C2A402A0D006949B4 = {
 			isa = PBXGroup;
 			children = (
-				EBA2170B2B85DB4E007947C6 /* nodataFound.gif */,
+				EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
 				C284FB372A402A0D006949B4 /* Spacial OClock */,
 				C284FB4E2A402A0E006949B4 /* Spacial OClockTests */,
@@ -1456,7 +1456,6 @@
 			files = (
 				C2661A8C2A4B156C00EEE266 /* CellImageViewTB.xib in Resources */,
 				A5046FF42A4DC18D00C23627 /* CellHelpQAVC.xib in Resources */,
-				EBA2170C2B85DB4E007947C6 /* nodataFound.gif in Resources */,
 				A5B1873A2A66971F00C3E0A7 /* ASTRAL SISTERS.TTF in Resources */,
 				A5046FF02A4DACB800C23627 /* CellNotificationVC.xib in Resources */,
 				A58CCC9B2A5EAB8900DFA478 /* Poppins-Regular.ttf in Resources */,
@@ -1485,6 +1484,7 @@
 				A58CCC982A5EAB5D00DFA478 /* Poppins-Medium.ttf in Resources */,
 				C2661A892A4B156C00EEE266 /* CellImageViewCB.xib in Resources */,
 				A5AC1FB42A4C57CA007EF488 /* CellItemDetailReviewTB.xib in Resources */,
+				EB4F37C92BB2ECD8004D5BA7 /* nodataFound.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

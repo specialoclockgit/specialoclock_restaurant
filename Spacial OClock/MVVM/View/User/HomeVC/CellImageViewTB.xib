@@ -19,9 +19,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qF-2P-CCa">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ikd-MT-abq">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ikd-MT-abq">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -34,12 +34,23 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                             </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="1n0-7R-P7G">
+                                <rect key="frame" x="0.0" y="142" width="320" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="yhv-DA-bVK"/>
+                                </constraints>
+                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="currentPageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="ikd-MT-abq" secondAttribute="bottom" id="5bg-Oe-g5A"/>
+                            <constraint firstItem="1n0-7R-P7G" firstAttribute="top" secondItem="ikd-MT-abq" secondAttribute="bottom" constant="2" id="3bp-iV-f67"/>
+                            <constraint firstAttribute="bottom" secondItem="1n0-7R-P7G" secondAttribute="bottom" id="FiV-5C-Jmg"/>
                             <constraint firstAttribute="trailing" secondItem="ikd-MT-abq" secondAttribute="trailing" id="HPS-7k-lB1"/>
+                            <constraint firstItem="1n0-7R-P7G" firstAttribute="leading" secondItem="ikd-MT-abq" secondAttribute="leading" id="RPy-ht-XBk"/>
                             <constraint firstItem="ikd-MT-abq" firstAttribute="top" secondItem="6qF-2P-CCa" secondAttribute="top" id="bxT-76-rj1"/>
+                            <constraint firstItem="1n0-7R-P7G" firstAttribute="trailing" secondItem="ikd-MT-abq" secondAttribute="trailing" id="den-bB-aVn"/>
                             <constraint firstItem="ikd-MT-abq" firstAttribute="leading" secondItem="6qF-2P-CCa" secondAttribute="leading" id="lDx-I0-3dO"/>
                         </constraints>
                     </view>
@@ -54,6 +65,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="collView" destination="ikd-MT-abq" id="EVT-0E-bYs"/>
+                <outlet property="pgController" destination="1n0-7R-P7G" id="wac-JX-u7q"/>
             </connections>
             <point key="canvasLocation" x="127.53623188405798" y="157.36607142857142"/>
         </tableViewCell>

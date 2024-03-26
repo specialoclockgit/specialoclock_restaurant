@@ -36,7 +36,7 @@ extension UIImageView {
             }
         }
     
-    
+    //,options: .forceTransition
 //    func Setvideo(_ url: videourl!) {
 //        if url != nil {
 //            self.sd_imageIndicator?.startAnimatingIndicator()

@@ -163,19 +163,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         for i in 0...(self.products?.count ?? 0){
             self.arrCheck.append(false)
         }
-   
         
-    }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         product_detail()
-
         valueSelect = false
         tabBarController?.tabBar.isHidden = true
+        
     }
+
     
     func string(format: String) -> String {
         let formatter = DateFormatter()
@@ -252,6 +246,24 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     
                     self.selectedOfferId = 0
                 self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
+                    
+                    if self.status == 1 {
+                        self.slottime = self.offer?[self.isselectedoffer].offer ?? ""
+                        self.slotid = self.offer?[self.isselectedoffer].id ?? 0
+                        self.menuid = self.offer?[self.isselectedoffer].menuID ?? 0
+                        self.restrorant_bar_id = self.offer?[self.isselectedoffer].restrorantBarID ?? 0
+                        self.offerID = self.offer?[self.isselectedoffer].offerID ?? 0
+                        self.offerDis = (self.offer?[self.isselectedoffer].is_fifty == 1 ? 50 : Int(self.offer?[self.isselectedoffer].percentage ?? "0")) ?? 0
+                    }else {
+                        self.slottime = self.offer?[self.isselectedoffer].offer ?? ""
+                        self.slotid = self.offer?[self.isselectedoffer].id ?? 0
+                        self.menuid = self.offer?[self.isselectedoffer].menuID ?? 0
+                        self.restrorant_bar_id = self.offer?[self.isselectedoffer].restrorantBarID ?? 0
+                        self.offerID = self.offer?[self.isselectedoffer].offerID ?? 0
+                    }
+                    
+                    
+                    
                 } else {
                     self.selectedOfferId = 0
                     if let is_fifty = self.offer?[0].is_fifty {
@@ -1125,6 +1137,7 @@ func calCulateDiscount (actualPrice: Double,discount: Double) -> Double {
     //(actualPrice / 100) * discount
     let finalAmount = actualPrice - result
     print("oferr data----------",actualPrice,discount,finalAmount)
+    
     return (finalAmount * 100).rounded() / 100
 }
 

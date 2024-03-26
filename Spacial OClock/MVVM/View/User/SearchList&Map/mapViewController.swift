@@ -60,8 +60,8 @@ class mapViewController: UIViewController,GMSMapViewDelegate {
             if let returnedPlace = nearBy[index] as? NearbyRestaurant {
                 
                 var percentage = ""
-                var latitude = "0.0"
-                var longitude = "0.0"
+                var latitude = ""
+                var longitude = ""
                 var image = ""
                 if let name = returnedPlace.offerPercentage {
                     percentage = name

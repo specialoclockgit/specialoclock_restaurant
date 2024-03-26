@@ -346,7 +346,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     @IBAction func btnMapView(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
         vc.iscomeFrom = 1
-        vc.nearBy = self.nearBy.filter { $0.offerPercentage != nil && !$0.offerPercentage!.isEmpty }
+        vc.nearBy = self.nearBy.filter({ $0.offerPercentage != ""})
         vc.latitude = self.lat ?? 0.0
         vc.longitude = self.long ?? 0.0
         self.navigationController?.pushViewController(vc, animated: true)
@@ -450,7 +450,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sectionArray[indexPath.section].name == "Banner" {
-            return CGFloat(140)
+            return CGFloat(160)
         } else if sectionArray[indexPath.section].name == "Popular" {
             if sectionArray[indexPath.section].objArray?.count  ==  0{
                 return CGFloat(0)

@@ -105,15 +105,18 @@ class ChatVC: UIViewController, UITextViewDelegate {
     
     @IBAction func btnAttachment(_ sender: Any) {
     }
+    
     @IBAction func btnMic(_ sender: Any) {
     }
+    
     @IBAction func btnSend(_ sender: UIButton) {
         let string = self.msgTextView.text?.trimmingCharacters(in: .whitespaces)
         if string != "" {
             SocketIOManager.sharedInstance.send_message_emitter(user2Id: 1, msg_type: 1, message: string ?? "")
             self.msgTextView.text = ""
+            self.heightConst.constant = 50
             scroolTOLast()
-            chatTbleView.reloadData()
+            self.view.layoutIfNeeded()
         }
         else {
             CommonUtilities.shared.showAlert(message: "Please write a message to send", isSuccess: .error)
@@ -248,7 +251,7 @@ extension ChatVC {
         }
     }
     
-    func scroolTOLast(){
+    func scroolTOLast() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if (self.chatmodel?.count ?? 0 ) > 0 {
                 let indexPath = IndexPath(row:( self.chatmodel?.count ?? 0 ) - 1, section: 0)

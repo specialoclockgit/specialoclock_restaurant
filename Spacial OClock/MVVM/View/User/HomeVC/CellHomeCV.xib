@@ -37,7 +37,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="6"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="NO"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBound" value="YES"/>
@@ -74,7 +74,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="95g-gz-ywC" firstAttribute="top" secondItem="pDk-KH-c4F" secondAttribute="top" constant="6" id="EnH-Uq-pTP"/>
                                             <constraint firstItem="61T-84-s35" firstAttribute="centerY" secondItem="95g-gz-ywC" secondAttribute="centerY" id="He5-tM-hQc"/>
@@ -123,7 +123,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="eFr-uc-oFD" firstAttribute="leading" secondItem="8E6-v8-LMp" secondAttribute="leading" constant="10" id="LTI-ig-e7l"/>
                                             <constraint firstAttribute="trailing" secondItem="ewS-M5-Rc6" secondAttribute="trailing" id="LuD-G9-Qv7"/>
@@ -172,7 +172,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="mgI-Ku-gtd" firstAttribute="centerY" secondItem="FfY-EW-b91" secondAttribute="centerY" id="9mG-78-hzI"/>
                                             <constraint firstAttribute="trailing" secondItem="Z1e-FB-aV3" secondAttribute="trailing" id="CCd-um-XAl"/>
@@ -280,21 +280,20 @@
                             <constraint firstItem="e3b-aE-DjQ" firstAttribute="bottom" secondItem="qDh-Ah-lJc" secondAttribute="bottom" id="uSz-aC-0uN"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="isShadow" value="YES"/>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                <real key="value" value="4"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                <size key="value" width="1" height="1"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                <real key="value" value="5"/>
+                                <real key="value" value="8"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                <color key="value" systemColor="systemGray3Color"/>
+                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                <size key="value" width="0.0" height="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                <real key="value" value="0.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                <real key="value" value="3"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
@@ -310,6 +309,7 @@
             </constraints>
             <size key="customSize" width="179" height="262"/>
             <connections>
+                <outlet property="bgView" destination="GTE-yI-AUF" id="Mzj-ea-hhg"/>
                 <outlet property="btnNext" destination="e3b-aE-DjQ" id="yCA-y4-r2C"/>
                 <outlet property="imgLocaiton" destination="JP4-ny-PbB" id="0CP-lp-dmb"/>
                 <outlet property="lblLocationName" destination="Ata-4m-wVA" id="p3z-Yo-Kdg"/>
@@ -354,9 +354,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -20,6 +20,7 @@ class SettingsVC: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        settingTV.tableFooterView = UIView()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
