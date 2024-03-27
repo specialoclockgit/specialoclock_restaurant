@@ -87,6 +87,7 @@
                                             <constraint firstAttribute="trailing" secondItem="95g-gz-ywC" secondAttribute="trailing" constant="10" id="dh2-Nw-gmS"/>
                                             <constraint firstItem="61T-84-s35" firstAttribute="centerX" secondItem="95g-gz-ywC" secondAttribute="centerX" id="o0V-5K-J5V"/>
                                             <constraint firstAttribute="bottom" secondItem="Fff-Hx-zwb" secondAttribute="bottom" id="r0d-uP-kXU"/>
+                                            <constraint firstAttribute="width" constant="55" id="wRd-7a-inW"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -262,12 +263,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Qwp-yy-SCz" firstAttribute="leading" secondItem="GTE-yI-AUF" secondAttribute="leading" id="1Bv-2d-gAu"/>
-                            <constraint firstItem="ig6-Jz-9gl" firstAttribute="leading" secondItem="JP4-ny-PbB" secondAttribute="leading" id="3h2-He-BwC"/>
                             <constraint firstItem="JP4-ny-PbB" firstAttribute="top" secondItem="GTE-yI-AUF" secondAttribute="top" constant="5" id="3in-RG-i6v"/>
                             <constraint firstItem="ig6-Jz-9gl" firstAttribute="top" secondItem="JP4-ny-PbB" secondAttribute="bottom" constant="6" id="4VG-Us-1dc"/>
                             <constraint firstItem="Ata-4m-wVA" firstAttribute="leading" secondItem="GTE-yI-AUF" secondAttribute="leading" constant="10" id="EBt-pZ-9KF"/>
                             <constraint firstItem="JP4-ny-PbB" firstAttribute="centerX" secondItem="GTE-yI-AUF" secondAttribute="centerX" id="Hqb-P4-9kq"/>
-                            <constraint firstItem="ig6-Jz-9gl" firstAttribute="trailing" secondItem="JP4-ny-PbB" secondAttribute="trailing" id="M08-it-aLA"/>
                             <constraint firstItem="JP4-ny-PbB" firstAttribute="leading" secondItem="GTE-yI-AUF" secondAttribute="leading" constant="5" id="MWC-Ht-PkE"/>
                             <constraint firstItem="qDh-Ah-lJc" firstAttribute="leading" secondItem="GTE-yI-AUF" secondAttribute="leading" constant="10" id="NVg-Go-bQN"/>
                             <constraint firstAttribute="trailing" secondItem="e3b-aE-DjQ" secondAttribute="trailing" constant="10" id="QBU-82-4X7"/>
@@ -275,6 +274,7 @@
                             <constraint firstItem="qDh-Ah-lJc" firstAttribute="top" secondItem="Ata-4m-wVA" secondAttribute="bottom" constant="6" id="WoX-Qf-nYM"/>
                             <constraint firstItem="e3b-aE-DjQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qDh-Ah-lJc" secondAttribute="trailing" constant="6" id="eSB-9q-HNQ"/>
                             <constraint firstItem="Qwp-yy-SCz" firstAttribute="top" secondItem="JP4-ny-PbB" secondAttribute="top" constant="16" id="k2S-yk-Hj4"/>
+                            <constraint firstItem="ig6-Jz-9gl" firstAttribute="leading" secondItem="JP4-ny-PbB" secondAttribute="leading" id="pk9-3O-Aip"/>
                             <constraint firstAttribute="trailing" secondItem="JP4-ny-PbB" secondAttribute="trailing" constant="5" id="pyV-4g-b7Q"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qDh-Ah-lJc" secondAttribute="bottom" constant="6" id="q0J-Oc-8lc"/>
                             <constraint firstItem="Ata-4m-wVA" firstAttribute="top" secondItem="ig6-Jz-9gl" secondAttribute="bottom" constant="8" id="szH-Rs-qQR"/>
