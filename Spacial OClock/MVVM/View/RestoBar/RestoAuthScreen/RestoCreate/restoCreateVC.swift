@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Photos
 import PhotosUI
 import MobileCoreServices
 import DropDown
@@ -34,6 +33,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var viewOffer : UIView!
     @IBOutlet weak var tfCategory: CustomTextField!
     @IBOutlet weak var tfCity : UITextField!
+    @IBOutlet weak var locationVw : UIView!
+    @IBOutlet weak var tfAddress : UITextField!
     
     //MARK: - VARIABELS
     var heading = String()
@@ -78,6 +79,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         tfTheme.tintColor = UIColor.clear
         ShowtimePicker1()
         ShowtimePicker2()
+        tfAddress.delegate = self
         tfCusinies.delegate = self
         tfCategory.delegate = self
         tfLocation.delegate = self
@@ -86,20 +88,20 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         self.setupCuisineApi()
         self.setupCategoryApi()
         self.setupLocations()
-        DispatchQueue.global().async {
-            if (CLLocationManager.locationServicesEnabled()){
-                self.locationManager.delegate = self
-                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                self.locationManager.requestWhenInUseAuthorization()
-                self.locationManager.startUpdatingLocation()
-            }
-            else
-            {
-#if debug
-                println("Location services are not enabled");
-#endif
-            }
-        }
+//        DispatchQueue.global().async {
+//            if (CLLocationManager.locationServicesEnabled()){
+//                self.locationManager.delegate = self
+//                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//                self.locationManager.requestWhenInUseAuthorization()
+//                self.locationManager.startUpdatingLocation()
+//            }
+//            else
+//            {
+//#if debug
+//                println("Location services are not enabled");
+//#endif
+//            }
+//        }
     }
     
     func setupLocations(){
@@ -126,6 +128,19 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
             self.dataCuisine = data ?? []
         }
     }
+    
+    //MARK: - Open Place-Picker
+    func autocompleteClicked() {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt64(UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.coordinate.rawValue)))
+        autocompleteController.placeFields = fields
+        let filter = GMSAutocompleteFilter()
+//        filter.type = .address
+        autocompleteController.autocompleteFilter = filter
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
     //MARK: - BUTTON BACK
     @IBAction func btnGallay(_ sender: UIButton) {
         ImagePicker().pickImage(self) { (image) in
@@ -471,78 +486,26 @@ extension restoCreateVC: PHPickerViewControllerDelegate {
     }
 }
 // MARK: - EXTENSION OF LOCTAIONS
-//extension restoCreateVC:GMSAutocompleteViewControllerDelegate {
-//    //MARK:- GMSAutocompleteViewController delegates
-//
-//    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-//        print(place)
-//        self.latitude = String(place.coordinate.latitude)
-//        self.longitude = String(place.coordinate.longitude)
-//        getAddressFromLatLon(pdblLatitude: self.latitude, withLongitude: self.longitude)
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-//        print("Error: ", error.localizedDescription)
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
-//        dismiss(animated: true, completion: nil)
-//    }
-//    func getAddressFromLatLon(pdblLatitude: String, withLongitude pdblLongitude: String){
-//        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
-//        let lat: Double = Double("\(pdblLatitude)") ?? 00
-//        //21.228124
-//        let lon: Double = Double("\(pdblLongitude)") ?? 00
-//        //72.833770
-//        let ceo: CLGeocoder = CLGeocoder()
-//        center.latitude = lat
-//        center.longitude = lon
-//
-//        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
-//
-//
-//        ceo.reverseGeocodeLocation(loc, completionHandler:
-//                                    {(placemarks, error) in
-//            if (error != nil)
-//            {
-//                print("reverse geodcode fail: \(error!.localizedDescription)")
-//            }
-//            if placemarks != nil
-//            {
-//                let pm = placemarks! as [CLPlacemark]
-//
-//                if pm.count > 0 {
-//                    let pm = placemarks![0]
-//
-//                    var addressString : String = ""
-//                    if pm.subLocality != nil {
-//                        addressString = addressString + pm.subLocality! + ", "
-//                    }
-//                    if pm.thoroughfare != nil {
-//                        addressString = addressString + pm.thoroughfare! + ", "
-//                    }
-//                    if pm.locality != nil {
-//                        addressString = addressString + pm.locality! + ", "
-//                    }
-//                    if pm.country != nil {
-//                        addressString = addressString + pm.country! + ", "
-//                    }
-//                    if pm.postalCode != nil {
-//                        addressString = addressString + pm.postalCode! + " "
-//                    }
-////                    self.locationLbl.text = addressString
-//                    self.tfLocation.text = addressString
-//                    self.city = pm.locality ?? ""
-//                    self.state = pm.administrativeArea  ?? ""
-//                    self.country = pm.country ?? ""
-//                }
-//            }
-//        })
-//
-//    }
-//}
+extension restoCreateVC:GMSAutocompleteViewControllerDelegate {
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print(place)
+        self.latitude = (place.coordinate.latitude)
+        self.longitude = (place.coordinate.longitude)
+        self.tfAddress.text = place.name
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error: ", error.localizedDescription)
+        dismiss(animated: true, completion: nil)
+    }
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+
 // MARK: - EXTENSION OF TEXTFIELD
 extension restoCreateVC{
     
@@ -582,27 +545,36 @@ extension restoCreateVC{
                     self?.tfCity.text = item
                     self?.city = citys?[index] ?? ""
                     self?.state = states?[index] ?? ""
+                    self?.locationVw.isHidden = false
                 }
             }
+            return false
+        }else if textField == tfAddress {
+            if self.tfCity.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+                CommonUtilities.shared.showAlert(message: "Please select city", isSuccess: .error)
+            }else {
+                autocompleteClicked()
+            }
+            
             return false
         }
         return true
     }
 }
 
-extension restoCreateVC : CLLocationManagerDelegate{
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        self.latitude = locValue.latitude
-        self.longitude = locValue.longitude
-        locationManager.stopUpdatingLocation()
-    }
-}
+//extension restoCreateVC : CLLocationManagerDelegate{
+//
+//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        if status == .authorizedWhenInUse || status == .authorizedAlways {
+//            locationManager.startUpdatingLocation()
+//        }
+//    }
+//
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+//        print("locations = \(locValue.latitude) \(locValue.longitude)")
+//        self.latitude = locValue.latitude
+//        self.longitude = locValue.longitude
+//        locationManager.stopUpdatingLocation()
+//    }
+//}

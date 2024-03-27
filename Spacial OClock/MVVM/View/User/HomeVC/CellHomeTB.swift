@@ -286,11 +286,11 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if objArray[collView.tag].name == "A-Z"{
-            return CGSize(width: 195.0, height: 260)
+            return CGSize(width: (collectionView.frame.size.width / 1.4), height: 260)
         }else if objArray[collView.tag].name == "Popular"{
-            return CGSize(width: 195.0, height: 260)
+            return CGSize(width: (collectionView.frame.size.width / 1.4), height: 260)
         }else{
-            return CGSize(width: 195.0, height: 208.0)
+            return CGSize(width: (collectionView.frame.size.width / 1.4), height: 208.0)
         }
         
     }

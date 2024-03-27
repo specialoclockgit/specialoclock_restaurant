@@ -865,7 +865,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             if arrCheck[section] == true {
                 sectionV.backgroundColor = .systemGray5
                 viewAllBtn.setImage(UIImage(named: "arrowIcon"), for: .normal)
-            }else{
+            } else {
                 sectionV.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.3)
                 viewAllBtn.setImage(UIImage(named: "arrowDefault"), for: .normal)
             }
@@ -882,7 +882,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         return UIView()
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if tableView == tbMenu{
+        if tableView == tbMenu {
             return 50
         }
         return 0

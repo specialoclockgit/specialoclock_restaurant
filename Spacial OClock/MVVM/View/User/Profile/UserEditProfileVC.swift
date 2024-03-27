@@ -35,10 +35,11 @@ class UserEditProfileVC: UIViewController {
         imgProfile.layer.cornerRadius = imgProfile.frame.height / 2
         tfPhoneNumber.delegate = self
         tfName.delegate = self
+        setData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setData()
+        
     }
     
     private func setData() {

@@ -278,8 +278,10 @@ extension bookingDetailVC : UITableViewDelegate, UITableViewDataSource{
 }
 extension bookingDetailVC {
     private func openAppleMapDirection(){
+        
         let destinationLatitude = Double(self.modal?.restrorant?.latitude ?? "") ?? 0.0
         let destinationLongitude = Double(self.modal?.restrorant?.longitude ?? "") ?? 0.0
+        
         let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLatitude, longitude: destinationLongitude)
         let destinationName = self.modal?.restrorant?.location ?? ""
         // Create a MKPlacemark object with the destination coordinate and set its name to the destination name
@@ -288,7 +290,7 @@ extension bookingDetailVC {
         
         // Create a MKMapItem object with the destination placemark
         let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-        destinationMapItem.name = destinationName
+       // destinationMapItem.name = destinationName
         
         // Create a MKDirectionsRequest object with the source and destination map items
         let sourceMapItem = MKMapItem.forCurrentLocation()
@@ -299,8 +301,12 @@ extension bookingDetailVC {
         //         Get the directions from the source to the destination using MKDirections and set the transportType to .automobile or .walking
         let directions = MKDirections(request: directionsRequest)
         directions.calculate { response, error in
+            if let error = error{
+                print("Apple map error",error)
+            }
+            
             guard let response = response else { return }
-            let route = response.routes[0]
+            _ = response.routes[0]
             let mapLaunchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
             destinationMapItem.openInMaps(launchOptions: mapLaunchOptions)
         }

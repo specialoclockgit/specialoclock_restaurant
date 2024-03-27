@@ -54,24 +54,25 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         tfEmail.delegate = self
         tfPassword.delegate = self
         tfConfirmPass.delegate = self
+        self.getUpdatedLocation()
         uiSet()
-        DispatchQueue.global().async {
-            if (CLLocationManager.locationServicesEnabled()){
-                self.locationManager.delegate = self
-                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                self.locationManager.requestWhenInUseAuthorization()
-                self.locationManager.startUpdatingLocation()
-            }
-            else
-            {
-#if debug
-                println("Location services are not enabled");
-#endif
-            }
-        }
         
-        uiSet()
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
     }
+    
+    
+    //MARK: FUNCTIONS FOR LOCATION
+    @objc func appMovedToBackground() {
+        print("appMovedToBackground")
+    }
+
+    @objc func appMovedToForeground() {
+        getUpdatedLocation()
+        print("appMovedToForeground")
+    }
+    
     
     //MARK: - Function
     func uiSet(){
@@ -284,11 +285,10 @@ extension SignUPVC : CLLocationManagerDelegate{
                 print(placemark.locality!)
                 print(placemark.administrativeArea!)
                 print(placemark.country!)
-                
                 self.Location = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+                self.locationManager.stopUpdatingLocation()
             }
         }
-        locationManager.stopUpdatingLocation()
     }
 }
 
@@ -385,5 +385,63 @@ extension SignUPVC {
 class AnywhereSwipeGestureRecognizer: UIScreenEdgePanGestureRecognizer {
     override func shouldReceive(_ event: UIEvent) -> Bool {
         return true
+    }
+}
+extension SignUPVC {
+    func getUpdatedLocation() {
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager.delegate = self
+            //   locationManager.distanceFilter = 100.0
+            if #available(iOS 14.0, *) {
+                locationManager.desiredAccuracy = kCLLocationAccuracyReduced
+            } else {
+                // Fallback on earlier versions0000
+            }
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+        //MARK:- Enable Location Services
+        if !hasLocationPermission() {
+            let alertController = UIAlertController(title: "Enable Location Services", message: "Special o'clock wants to access your location only to provide better experience to you.", preferredStyle: UIAlertController.Style.alert)
+            
+            let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
+                //Redirect to Settings app
+                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
+            alertController.addAction(cancelAction)
+            
+            alertController.addAction(okAction)
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.delegate = self
+                locationManager.startUpdatingLocation()
+            }else{
+            }
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func hasLocationPermission() -> Bool {
+        var hasPermission = false
+        
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case  .restricted, .denied:
+                hasPermission = false
+            case .authorizedAlways, .authorizedWhenInUse:
+                hasPermission = true
+            case  .notDetermined :
+                getUpdatedLocation()
+            @unknown default:
+                print("")
+            }
+        } else {
+            hasPermission = false
+        }
+        return hasPermission
     }
 }

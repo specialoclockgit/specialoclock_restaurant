@@ -30,6 +30,7 @@ target 'Spacial OClock' do
   pod 'SwiftyJSON'
   pod 'StripePaymentSheet'
   pod 'WaterfallLayout'
+  pod 'QCropper'
 #  pod 'SKPhotoBrowser'
 
   

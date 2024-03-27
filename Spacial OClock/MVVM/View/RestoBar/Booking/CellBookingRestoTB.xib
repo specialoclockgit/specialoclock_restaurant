@@ -228,7 +228,7 @@
                                     <constraint firstAttribute="bottom" secondItem="ESB-G0-Q3d" secondAttribute="bottom" constant="5" id="rK0-Fp-nFx"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notification-1" translatesAutoresizingMaskIntoConstraints="NO" id="j4u-Ca-px5">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j4u-Ca-px5">
                                 <rect key="frame" x="10" y="30" width="66" height="66"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="66" id="HLj-7G-4Dw"/>
@@ -276,7 +276,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="notification-1" width="64" height="64"/>
         <namedColor name="themeAlert">
             <color red="0.85900002717971802" green="0.027000000700354576" blue="0.027000000700354576" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

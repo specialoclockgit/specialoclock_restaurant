@@ -7,20 +7,38 @@
 
 import Foundation
 import UIKit
-class ImagePicker: NSObject, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-    
-    var picker = UIImagePickerController()
-    var alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle:  .actionSheet )
-    var viewController: UIViewController?
-    var pickImageCallback : ((UIImage) -> ())?
-    
-    
-    
-    override init(){
-        super.init()
+import QCropper
+
+
+class ImagePicker: NSObject, UIImagePickerControllerDelegate,UINavigationControllerDelegate, CropperViewControllerDelegate {
+    func cropperDidConfirm(_ cropper: CropperViewController, state: CropperState?) {
+        cropper.dismiss(animated: true, completion: nil)
+        
+        if let state = state,
+           let image = cropper.originalImage.cropped(withCropperState: state) {
+            cropperState = state
+            self.pickImageCallback?(image)
+            print(cropper.isCurrentlyInInitialState)
+            print(image)
+        }
+        rootVC?.dismiss(animated: true, completion: nil)
     }
     
     
+    
+    
+    var picker = UIImagePickerController()
+    var alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+    var viewController: UIViewController?
+    var pickImageCallback : ((UIImage) -> ())?
+    var pathUrl : ((URL?)->())?
+    var image = UIImage()
+    var videoURL: URL?
+    
+    var cropperState: CropperState?
+    override init(){
+        super.init()
+    }
     func pickImage(_ viewController: UIViewController, _ callback: @escaping ((UIImage) -> ()))
     {
         pickImageCallback = callback;
@@ -47,48 +65,69 @@ class ImagePicker: NSObject, UIImagePickerControllerDelegate,UINavigationControl
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    func openCamera()
-    {
+    func openCamera() {
         alert.dismiss(animated: true, completion: nil)
         if(UIImagePickerController .isSourceTypeAvailable(.camera)){
             picker.sourceType = .camera
+            picker.mediaTypes = ["public.image"]
             self.viewController!.present(picker, animated: true, completion: nil)
         } else {
-//            viewController?.showAlert(title: "Warning", message: "You don't have camera", actionTitles: ["OK"], actions: [{ (action) in
-//            },nil])
+            CommonUtilities.shared.showAlert(message: "You don't have camera")
         }
     }
-    
-    func openGallery()
-    {
+    func openGallery() {
         alert.dismiss(animated: true, completion: nil)
         picker.sourceType = .photoLibrary
+        picker.mediaTypes = ["public.image"]
         self.viewController!.present(picker, animated: true, completion: nil)
     }
-    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: false, completion: nil)
+        var image = UIImage()
         
-//        DispatchQueue.main.async {
-//            UIApplication.shared.windows.first?.rootViewController?.showHUD()
-//        }
-        picker.dismiss(animated: true, completion: nil)
-
-       
-        
-        DispatchQueue.main.async {
+        if let imageOriginal = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
+        {
+            image = imageOriginal
             
-            guard let image = info[.originalImage] as? UIImage else{
-                return
+            let cropper = CropperViewController(originalImage: imageOriginal)
+            cropper.delegate = self
+            picker.dismiss(animated: false) {
+                rootVC?.present(cropper, animated: false, completion: nil)
             }
-            self.pickImageCallback?(image)
-            picker.delegate = nil
+        }
+        else
+        {
+            if let media =  info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+                do
+                {
+                    guard let image = info[.originalImage] as? UIImage else{ return}
+                    self.pickImageCallback?(image)
+                    self.pathUrl?(media)
+                    picker.delegate = nil
+                }
+                catch
+                {
+                    print("Unable to load data: \(error)")
+                }
+            }
+            else
+            {
+                image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+                
+                let cropper = CropperViewController(originalImage: image)
+                cropper.delegate = self
+                picker.dismiss(animated: true) {
+                    rootVC?.present(cropper, animated: false, completion: nil)
+                }
+            }
         }
     }
+    
     
     @objc func imagePickerController(_ picker: UIImagePickerController, pickedImage: UIImage?) {
     }
