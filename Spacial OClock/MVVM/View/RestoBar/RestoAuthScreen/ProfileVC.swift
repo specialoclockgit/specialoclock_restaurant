@@ -71,7 +71,7 @@ extension ProfileVC{
         debugPrint(btnCheckStatus)
         if Store.userDetails?.bussinesstype == 1 {
             btnViewProfile.setTitle("Restaurant Profile", for: .normal)
-        }else if Store.userDetails?.bussinesstype == 2 {
+        } else if Store.userDetails?.bussinesstype == 2 {
             btnViewProfile.setTitle("Bar/Club Profile", for: .normal)
         }
     }

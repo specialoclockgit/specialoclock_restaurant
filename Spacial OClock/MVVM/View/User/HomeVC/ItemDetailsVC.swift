@@ -195,7 +195,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             }
             
             
-            let imageIndex = (imageURL) + (self.modal?.images?.first?.image?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            let imageIndex = (imageURL) + (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             self.lblNameREsto.text = self.modal?.name?.capitalized ?? ""

@@ -76,8 +76,17 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if Store.userDetails?.isCompleted != 1{
                     let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
-                    vc.heading = "Restaurant Profile"
-                    vc.btnCheckStatus = Store.userDetails?.role ?? 0
+                    vc.btnCheckStatus = self.restoselctStatus
+                    if self.restoselctStatus == 1{
+                        vc.heading = "Restaurant Profile"
+                        vc.name = "Restaurant Name"
+                        UserDefaults.standard.set("Restaurant", forKey: "name")
+                    }else{
+                        vc.heading = "Pub & Bar Profile"
+                        vc.name = "Bar/Club Name"
+                        UserDefaults.standard.set("Bar", forKey: "name")
+                    }
+                    UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if Store.userDetails?.is_approved == 0{
                     CommonUtilities.shared.showAlert(message: "Your Business approval is pending from admin.", isSuccess: .error)
