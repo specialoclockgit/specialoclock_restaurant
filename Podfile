@@ -31,6 +31,7 @@ target 'Spacial OClock' do
   pod 'StripePaymentSheet'
   pod 'WaterfallLayout'
   pod 'QCropper'
+  pod 'Instructions', '~> 2.2.0'
 #  pod 'SKPhotoBrowser'
 
   

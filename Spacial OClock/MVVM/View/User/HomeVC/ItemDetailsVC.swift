@@ -12,23 +12,14 @@ import Cosmos
 import CoreLocation
 import QuartzCore
 import MapKit
+import Instructions
 
-struct ModelMenuCollView {
-    var name : [String]
-    var time :[String]
-}
-
-struct ModelMenuTBCell {
-    var heading : String
-    var image : [String]
-    var itemName : [String]
-    var prevPrice : [String]
-    var newPrice : [String]
-}
 
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
+    @IBOutlet weak var lblPricingWarning :  UILabel!
+    @IBOutlet weak var offerDesHeaderVw : UIView!
     @IBOutlet weak var imgViewGifReview: UIImageView!
     @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var img : UIImageView!
@@ -77,7 +68,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblOpenClose: UILabel!
     @IBOutlet weak var favIconVw: UIView!
     //MARK: Variable
-    let promotionTxt = "Promotion cannot be applied with any other in-house promotions.Please refer to the special condition below for more details."
+    lazy var coachMarksController = CoachMarksController()
+    weak var snapshotDelegate: CoachMarksControllerDelegate?
+    let nextButtonText = "Ok!"
+    let avatarText = "That's add to fav button. You can add this restaurant to favourites!"
+    let avtarLoc = "You can select date of booking by clicking here!"
+    let avtarSideMenu = "Tap here to select special!"
     var offerDescription = String()
     var lat : Double?
     var long : Double?
@@ -93,7 +89,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var ourMenu: [OurMenud]?
     var products: [Product]?
     var productModal : menuProductModalBody?
-    var arrCollMenu : [ModelMenuCollView] = []
     var offerID = Int()
     var imgName = UIImage()
     var arrCheck : [Bool] = []
@@ -221,15 +216,22 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
             self.lblRating.text = self.modal?.avgRating ?? ""
             self.lblAboutDetail.text = self.modal?.shortDescription ?? ""
-            self.lblTotalRes.text = "\(self.modal?.totalBookings ?? "") Reservations"
+            self.lblTotalRes.text = self.modal?.totalBookings == "1" ? "\(self.modal?.totalBookings ?? "") booking made" : "\(self.modal?.totalBookings ?? "") bookings made"
             self.cosmosView.rating = Double(self.modal?.avgRating ?? "") ?? 0.0
             self.getUpdatedLocation()
             self.collViewMenu.reloadData()
             self.collView.reloadData()
             self.tbReview.reloadData()
-            self.tbMenu.reloadData()
+           self.tbMenu.reloadData()
             self.view.layoutIfNeeded()
-            if self.offer?.count ?? 0 > 0 {
+           // if self.offer?.count ?? 0 > 0 {
+            
+            
+            if UserDefaults.standard.value(forKey: "isShow") as? Bool != true {
+                 self.initializeInstruction {
+                     self.startInstructions()
+                 }
+            }else {
                 if let offerId = self.selectedOfferId , offerId != 0 {
                     let Index = self.offer?.firstIndex(where: {$0.id == offerId})
                     self.isselectedoffer  = Index ?? 0
@@ -241,12 +243,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     }
                     let index = IndexPath(row: self.isselectedoffer, section: 0)
                     self.collViewMenu.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
-                    let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
-                    self.scrollView.setContentOffset(bottomOffset, animated: true)
+                    
                     
                     self.selectedOfferId = 0
-                self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
-                    
+                   self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
+                    let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+                    self.scrollView.setContentOffset(bottomOffset, animated: true)
                     if self.status == 1 {
                         self.slottime = self.offer?[self.isselectedoffer].offer ?? ""
                         self.slotid = self.offer?[self.isselectedoffer].id ?? 0
@@ -264,17 +266,23 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     
                     
                     
-                } else {
-                    self.selectedOfferId = 0
-                    if let is_fifty = self.offer?[0].is_fifty {
-                        self.discount = is_fifty == 0 ? Int(self.offer?[0].percentage ?? "") ?? 0 : 50
-                    } else {
-                        self.discount = Int(self.offer?[0].percentage ?? "") ?? 0
-                    }
-                self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
-                }
+//                } else {
+//                    self.selectedOfferId = 0
+//                    if let is_fifty = self.offer?[0].is_fifty {
+//                        self.discount = is_fifty == 0 ? Int(self.offer?[0].percentage ?? "") ?? 0 : 50
+//                    } else {
+//                        self.discount = Int(self.offer?[0].percentage ?? "") ?? 0
+//                    }
+//              //  self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
+//                }
                 
             }
+            }
+            
+            
+                
+           
+            
         }
     }
     
@@ -391,11 +399,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.offerDescription = dataa?.offerdetails?.description ?? ""
             self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
             self.pendingSlots = dataa?.offerdetails?.numberOfUserBook ?? 0
-            
+            self.offerDesHeaderVw.isHidden = false
+            self.viewSV.isHidden = false
+            self.lblPricingWarning.isHidden = false
             self.tbMenu.reloadData()
             self.collViewMenu.reloadData()
             self.arrCheck.removeAll()
-            
+            self.btnBook.isUserInteractionEnabled = true
+            self.btnBook.backgroundColor = .white
             
             
             
@@ -515,10 +526,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //Book Button
     @IBAction func btnBookAct(_ sender : UIButton){
         if btnBookStatus == 0 {
-            if self.pendingSlots != 0 {
+            
+            if isselectedoffer == -1 {
+                CommonUtilities.shared.showAlert(message: "Please select offer first", isSuccess: .error)
+            } else if self.pendingSlots != 0 {
                 if disableDatedArr.contains(txtFldDate.text ?? "") {
                     showPopupForDisableDate(date:txtFldDate.text ?? "" ,msg: "Sorry we are not available on the selected date")
-                   // CommonUtilities.shared.showAlert(message: "Closed on your selected date. Please select another date")
+                    // CommonUtilities.shared.showAlert(message: "Closed on your selected date. Please select another date")
                 } else {
                     let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
                     screen.offerSelectePretns = self.offerpresents
@@ -532,8 +546,23 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     screen.restrorant_bar_id = self.restrorant_bar_id
                     screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
                     screen.offerDiscount = self.offerDis
+                    
+                    screen.dateCallBack = { [weak self] datee in
+                        self?.txtFldDate.text = datee
+                        self?.products?.removeAll()
+                        //self?.btnBook.isUserInteractionEnabled = false
+                        self?.btnBook.backgroundColor = .lightGray
+                        self?.offerDesHeaderVw.isHidden = true
+                        self?.viewSV.isHidden = true
+                        self?.lblPricingWarning.isHidden = true
+                        self?.scrollView.setContentOffset(.zero, animated: true)
+                        self?.isselectedoffer = -1
+                        self?.product_detail()
+                    }
+                    
                     self.navigationController?.pushViewController(screen, animated: true)
                 }
+                
             } else {
                 CommonUtilities.shared.showAlert(message: "No more bookings available for this slot", isSuccess: .error)
             }
@@ -728,10 +757,16 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
        // print(status)
         //debugPrint(indexPath.row)
         if collectionView == collView{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-            vc.settype = 0
-            vc.setImage = self.images?[indexPath.row].image ?? ""
+//            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+//            vc.settype = 0
+//            vc.setImage = self.images?[indexPath.row].image ?? ""
+//            self.navigationController?.pushViewController(vc, animated: true)
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "MultiImageVC") as! MultiImageVC
+            vc.imgArr = self.images?.map({$0.image ?? ""}) ?? []
+            vc.index = indexPath.row
             self.navigationController?.pushViewController(vc, animated: true)
+            
         }else if collectionView == viewFullMenu{
             let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
             vc.settype = 1
@@ -790,6 +825,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
               //  self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
                 self.offerID = offer?[indexPath.row].offerID ?? 0
             }
+            
+            let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+            self.scrollView.setContentOffset(bottomOffset, animated: true)
+            
         }
         
         
@@ -853,7 +892,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             let titleLbl = UILabel.init(frame: CGRect(x: 12, y: 10, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
             if status == 1{
-                titleLbl.text = "Recommended \(products?[section].menuTypeName ?? "") Special"
+                titleLbl.text = "Popular \(products?[section].menuTypeName ?? "") Special"
             }else{
                 titleLbl.text = products?[section].menuTypeName ?? ""
             }
@@ -883,7 +922,12 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tableView == tbMenu {
-            return 50
+            if self.products?.count == 0 || self.products == nil {
+                return 0
+            }else {
+                return 50
+            }
+
         }
         return 0
     }
@@ -1004,20 +1048,9 @@ extension ItemDetailsVC{
         viewM.isHidden = false
         viewR.isHidden = true
         viewFM.isHidden = true
-        viewButton.isHidden = true
+        viewButton.isHidden = false
         ChangebgColor(viewSelected: viewMenu, viewUnselected: viewAbout, viewUnselected2: viewReview,ViewUnselected3: viewFullMenu, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
-        
-        //MARK: Menu Offer Arr
-        if status == 0 {
-            let collDineData : [ModelMenuCollView] = [ModelMenuCollView(name: ["Breakfast" , "Lunch" , "Dinner" , "Special"], time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
-            arrCollMenu.removeAll()
-            arrCollMenu.append(contentsOf: collDineData)
-        }else{
-            let collDrinkData : [ModelMenuCollView] = [ModelMenuCollView(name: ["Tonight" , "Happy Hour" ,                                           "Today" , "Tommorow"],
-                                                                         time: ["08:00 to 10:00" , "13:00 to 13:30" , "19:00 to 20:00" , "13:00 to 13:30"])]
-            arrCollMenu.removeAll()
-            arrCollMenu.append(contentsOf: collDrinkData)
-        }
+    
     }
     func ChangebgColor(viewSelected : UIView , viewUnselected : UIView, viewUnselected2: UIView ,ViewUnselected3:UIView, labelSelected : UILabel , labelUnselected : UILabel , labelUnselecte2 : UILabel, lblUnselected3:UILabel){
         viewSelected.backgroundColor = UIColor.systemGray5
@@ -1215,4 +1248,168 @@ extension ItemDetailsVC {
     }
 }
 
-
+// MARK: Setup Instruction
+extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataSource , CoachMarksControllerAnimationDelegate {
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        coachMarksController.stop(immediately: true)
+    }
+    
+    
+    private  func startInstructions() {
+        coachMarksController.start(in: .window(over: self))
+        UserDefaults.standard.set(true, forKey: "isShow")
+    }
+    
+    
+    
+    private func initializeInstruction(onSuccess: @escaping (()->())){
+        coachMarksController.delegate = self
+        coachMarksController.dataSource = self
+        coachMarksController.animationDelegate = self
+        let skipView = CoachMarkSkipDefaultView()
+        skipView.setTitle("Skip", for: .normal)
+        coachMarksController.skipView = skipView
+        coachMarksController.overlay.isUserInteractionEnabled = true
+        onSuccess()
+    }
+    
+    
+    
+    func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: Instructions.CoachMark) -> (bodyView: (UIView & Instructions.CoachMarkBodyView), arrowView: (UIView & Instructions.CoachMarkArrowView)?) {
+        
+        let coachViews = coachMarksController.helper.makeDefaultCoachViews(
+            withArrow: true,
+            arrowOrientation: coachMark.arrowOrientation
+        )
+    
+        
+        switch index {
+        case 0:
+            coachViews.bodyView.hintLabel.text = avatarText
+            coachViews.bodyView.nextLabel.text = nextButtonText
+        case 1 :
+            coachViews.bodyView.hintLabel.text = avtarLoc
+            coachViews.bodyView.nextLabel.text = nextButtonText
+        case 2 :
+            coachViews.bodyView.hintLabel.text = avtarSideMenu
+            coachViews.bodyView.nextLabel.text = nextButtonText
+        default: break
+        }
+        
+        return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
+    }
+    
+    func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, coachMarkAt index: Int) -> Instructions.CoachMark {
+       
+        switch index {
+                case 0 :  return coachMarksController.helper.makeCoachMark(for: imgFav)
+                case 1 :  return coachMarksController.helper.makeCoachMark(for: txtFldDate)
+                case 2 : return coachMarksController.helper.makeCoachMark(for: collViewMenu)
+                default : return coachMarksController.helper.makeCoachMark()
+                }
+//        if index ==  0 {
+//            return coachMarksController.helper.makeCoachMark(for: imgFav)
+//        }else if index ==  1 {
+//            return coachMarksController.helper.makeCoachMark(for: txtFldDate)
+//        }else if index == 2 {
+//            if let firstIndexPath = collViewMenu.indexPathsForVisibleItems.first {
+//                let firstItem = collViewMenu.cellForItem(at: firstIndexPath)
+//                return coachMarksController.helper.makeCoachMark(for: firstItem)
+//            }
+//        }
+//
+//        return coachMarksController.helper.makeCoachMark()
+        
+       
+    }
+    
+    func numberOfCoachMarks(for coachMarksController: Instructions.CoachMarksController) -> Int {
+        return 3
+    }
+    
+    
+    
+    func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, configureOrnamentsOfOverlay overlay: UIView) {
+        snapshotDelegate?.coachMarksController(coachMarksController,
+                                               configureOrnamentsOfOverlay: overlay)
+    }
+    
+    
+    
+    func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, willShow coachMark: inout Instructions.CoachMark, beforeChanging change: Instructions.ConfigurationChange, at index: Int) {
+        
+        
+       
+        
+        if index == 0 && change == .nothing {
+            // We'll need to play an animation before showing up the coach mark.
+            // To be able to play the animation and then show the coach mark and not stall
+            // the UI (i. e. keep the asynchronicity), we'll pause the controller.
+            coachMarksController.flow.pause()
+            
+            // Then we run the animation.
+            view.needsUpdateConstraints()
+            
+            UIView.animate(withDuration: 1, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            }, completion: { _ -> Void in
+                let maker = { (frame: CGRect) -> UIBezierPath in
+                    return UIBezierPath(ovalIn: frame.insetBy(dx: -4, dy: -4))
+                }
+                // Once the animation is completed, we update the coach mark,
+                // and start the display again.
+                coachMarksController.helper.updateCurrentCoachMark(
+                    usingView: self.imgFav,
+                    pointOfInterest: nil,
+                    cutoutPathMaker: maker
+                )
+                
+                coachMarksController.flow.resume()
+            })
+        }
+    }
+    
+    func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, didEndShowingBySkipping skipped: Bool) {
+        //        let newColor: UIColor = skipped ? .systemPurple : .systemOrange
+        //
+        //        UIView.animate(withDuration: 1, animations: { () -> Void in
+        //            self.view.backgroundColor = newColor
+        //        })
+    }
+    
+    
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              didShow coachMark: CoachMark,
+                              afterChanging change: ConfigurationChange,
+                              at index: Int) {
+        
+        
+        snapshotDelegate?.coachMarksController(coachMarksController, didShow: coachMark,
+                                               afterChanging: change,
+                                               at: index)
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              willHide coachMark: CoachMark,
+                              at index: Int) {
+        snapshotDelegate?.coachMarksController(coachMarksController, willHide: coachMark,
+                                               at: index)
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              didHide coachMark: CoachMark,
+                              at index: Int) {
+        snapshotDelegate?.coachMarksController(coachMarksController, didHide: coachMark,
+                                               at: index)
+    }
+    
+    
+    
+    func shouldHandleOverlayTap(in coachMarksController: CoachMarksController,
+                                at index: Int) -> Bool {
+        return true
+    }
+}

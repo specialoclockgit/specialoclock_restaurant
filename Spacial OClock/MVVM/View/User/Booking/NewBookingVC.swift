@@ -25,6 +25,9 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         case restaurant
         case bar
     }
+    
+    var dateCallBack : ((String)->())?
+    
     var pickerSelectPeople = UIPickerView()
     var pickerSelectTime = UIPickerView()
     var arrNumberOfPeople : [Int] = []
@@ -49,6 +52,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpVw()
+        viewFSCalendar.isUserInteractionEnabled = true
         if bookingType == .bar {
             viewPeopleTitleVw.isHidden = true
             viewSelectPeople.isHidden = true
@@ -182,7 +186,13 @@ extension NewBookingVC : FSCalendarDelegate , FSCalendarDataSource {
         df.dateFormat = "dd/MM/yyyy"
         df.locale = Locale.current
         currentDate = df.string(from: date)
+        self.navigationController?.popViewController(animated: true)
+        self.dateCallBack?(currentDate ?? "")
     }
+    
+    
+    
+    
 }
 extension NewBookingVC : UIPickerViewDelegate , UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
