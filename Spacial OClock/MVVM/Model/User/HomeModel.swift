@@ -215,7 +215,7 @@ struct ThemeData: Codable {
     var productName, image: String?
     var restroCount: Int?
     var barCount: Int?
-    var restrorants: [CuisineRestrorant]?
+    var restrorant: [CuisineRestrorant]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -223,7 +223,7 @@ struct ThemeData: Codable {
         case image
         case restroCount = "restro_count"
         case barCount = "bar_count"
-        case restrorants
+        case restrorant
     }
 }
 
