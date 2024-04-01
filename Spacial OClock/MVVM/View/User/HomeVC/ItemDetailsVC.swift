@@ -944,7 +944,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 cell.itemNameTop.constant = 5
                 cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
                 cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? "0") ?? 0, discount: Double(self.discount ?? 0)))"
-                cell.lblDiscount.text = "\(self.discount ?? 0)% Discount"
+                cell.lblDiscount.text = "SAVE \(self.discount ?? 0)%"
                 cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? "0")"
             } else {
                 if products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" || products?[indexPath.row].actual_price == ""{
