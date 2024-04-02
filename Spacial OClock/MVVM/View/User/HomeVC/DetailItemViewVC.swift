@@ -285,7 +285,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 cell.whiteBlurVw.isHidden = true
                 cell.closeDateVw.isHidden = true
             }
-            
+            cell.lblRaitingCount.text = "(\(filterlocations?[indexPath.row].ratingCount?.description ?? "0"))"
             cell.lblName.text = filterlocations?[indexPath.row].name?.capitalized ?? ""
             cell.lblLocation.text = filterlocations?[indexPath.row].location ?? ""
             cell.lblfirstLocaton.text = filterlocations?[indexPath.row].city ?? ""
@@ -306,6 +306,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblLocation.text = filterCategory?[indexPath.row].location ?? ""
             cell.lblName.text = filterCategory?[indexPath.row].name?.capitalized ?? ""
             cell.lblDiscription.text = "\(filterCategory?[indexPath.row].openTime ?? "") - " + "\(filterCategory?[indexPath.row].closeTime ?? "")"
+            cell.lblRaitingCount.text = "(\(filterCategory?[indexPath.row].ratingCount?.description ?? "0"))"
            // let fetchresto = Store.screenType == 1 ? filterCategory?[indexPath.row].offers ?? [] : filterCategory?[indexPath.row].offers?.unique(map: {$0.offer?.id ?? 0}) ?? []
             let fetchresto = filterCategory?[indexPath.row].offers ?? []
             cell.offerTimings = fetchresto
@@ -359,6 +360,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblName.text = filtercusin?[indexPath.row].name?.capitalized ?? ""
             cell.lblDiscription.text = "\(filtercusin?[indexPath.row].openTime ?? "") - " + "\(filtercusin?[indexPath.row].closeTime ?? "")"
             cell.lblRaiting.text = "\(filtercusin?[indexPath.row].avgRating ?? 0)"
+            cell.lblRaitingCount.text = "(\(filtercusin?[indexPath.row].ratingCount?.description ?? "0"))"
             cell.cosmosView.rating = Double(filtercusin?[indexPath.row].avgRating ?? 0)
             let fetchresto = filtercusin?[indexPath.row].timeSlots ?? []
             cell.offerTimings = fetchresto
@@ -412,6 +414,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblRaiting.text = "\(filtertheme?[indexPath.row].avgRating ?? 0)"
             cell.cosmosView.rating = Double(filtertheme?[indexPath.row].avgRating ?? 0)
             let fetchresto = filtertheme?[indexPath.row].timeSlots ?? []
+            cell.lblRaitingCount.text = "(\(filtertheme?[indexPath.row].ratingCount?.description ?? "0"))"
             cell.offerTimings = fetchresto
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()

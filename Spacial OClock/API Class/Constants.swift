@@ -9,7 +9,7 @@
 import UIKit
 
 public typealias parameters = [String:Any]
-let appName = "Special O'clock"
+let appName = "Special O'Clock"
 var DEVICE_TOKEN = "ios"
 
 var noInternetConnection = "No Internet Connection Available"

@@ -21,7 +21,7 @@ struct CategoryByRModalBody: Codable {
     let name, location, country, state: String?
     let city, latitude, longitude, countryCode: String?
     let mobile: String?
-    let userID: Int?
+    let userID, ratingCount: Int?
     let shortDescription: String?
     let status, offerAvailable: Int?
     let openTime, closeTime: String?
@@ -35,7 +35,7 @@ struct CategoryByRModalBody: Codable {
     var offers: [TimeSlotoffer]?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, location, country, state, city, latitude, longitude
+        case id, name, location, country, state, city, latitude, longitude, ratingCount
         case countryCode = "country_code"
         case mobile, disable_dates
         case avgrating = "avg_rating"

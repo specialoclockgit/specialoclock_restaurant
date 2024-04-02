@@ -403,7 +403,7 @@ extension SignUPVC {
         }
         //MARK:- Enable Location Services
         if !hasLocationPermission() {
-            let alertController = UIAlertController(title: "Enable Location Services", message: "Special o'clock wants to access your location only to provide better experience to you.", preferredStyle: UIAlertController.Style.alert)
+            let alertController = UIAlertController(title: "Enable Location Services", message: "Special o'Clock wants to access your location only to provide better experience to you.", preferredStyle: UIAlertController.Style.alert)
             
             let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
                 //Redirect to Settings app

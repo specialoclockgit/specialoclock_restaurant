@@ -18,6 +18,7 @@ import Instructions
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
+    @IBOutlet weak var totalReviewLbl :  UILabel!
     @IBOutlet weak var calenderDateVw: UIView!
     @IBOutlet weak var lblPricingWarning :  UILabel!
     @IBOutlet weak var offerDesHeaderVw : UIView!
@@ -195,6 +196,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             self.lblNameREsto.text = self.modal?.name?.capitalized ?? ""
             self.lblLocation.text = self.modal?.location ?? ""
+            self.totalReviewLbl.text = "(\(self.modal?.ratingCount?.description ?? "0"))"
             self.lblUserLOcation.text = self.modal?.city ?? ""
             self.lblOpenClose.text = "\((self.modal?.openTime ?? "").components(separatedBy: " ").first ?? "") - " + "\((self.modal?.closeTime ?? "").components(separatedBy: " ").first ?? "")"
             if self.modal?.isLiked == 0{
@@ -353,6 +355,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             }
         } else {
             txtFldDate.text = formatter.string(from: datePicker.date)
+            self.products?.removeAll()
+            //self?.btnBook.isUserInteractionEnabled = false
+            self.btnBook.backgroundColor = .lightGray
+            self.offerDesHeaderVw.isHidden = true
+            self.viewSV.isHidden = true
+            self.lblPricingWarning.isHidden = true
+            self.scrollView.setContentOffset(.zero, animated: true)
+            self.isselectedoffer = -1
             product_detail()
         }
         self.view.endEditing(true)
@@ -875,7 +885,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             let titleLbl = UILabel.init(frame: CGRect(x: 12, y: 10, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
             if status == 1{
-                titleLbl.text = "Popular \(products?[section].menuTypeName ?? "") Special"
+                titleLbl.text = "Popular \(products?[section].menuTypeName?.trimWhiteSpace ?? "") Specials"
             }else{
                 titleLbl.text = products?[section].menuTypeName ?? ""
             }
