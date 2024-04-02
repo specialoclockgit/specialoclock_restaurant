@@ -6998,6 +6998,7 @@
                         <outlet property="ImgViewgifReview" destination="7XZ-CL-5GW" id="VG0-mc-J6t"/>
                         <outlet property="btnBook" destination="Y8v-u6-zA0" id="ooF-UG-YgH"/>
                         <outlet property="btnFav" destination="f2R-Ub-phD" id="g4G-hb-qZl"/>
+                        <outlet property="calenderDateVw" destination="8Ud-dc-5nb" id="LNl-GM-oUI"/>
                         <outlet property="collView" destination="vxC-An-Xkw" id="rD7-ye-hHS"/>
                         <outlet property="collViewMenu" destination="huR-Un-aDC" id="mRT-Yt-S4G"/>
                         <outlet property="collViewMenuHeight" destination="mlz-bn-GXr" id="PNg-eW-Ba7"/>
@@ -8743,7 +8744,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oix-Bw-elP">
-                                <rect key="frame" x="16" y="58" width="22" height="24"/>
+                                <rect key="frame" x="16" y="58" width="22" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="22" id="Bx2-Fj-hi7"/>
                                     <constraint firstAttribute="height" constant="32" id="eyN-Qg-dmG"/>
@@ -8756,13 +8757,13 @@
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N8V-9O-5CR">
-                                <rect key="frame" x="0.0" y="102" width="414" height="722"/>
+                                <rect key="frame" x="0.0" y="108" width="414" height="754"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wna-dH-bAl">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="722"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="754"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XGa-YS-Bx5">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="722"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="754"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

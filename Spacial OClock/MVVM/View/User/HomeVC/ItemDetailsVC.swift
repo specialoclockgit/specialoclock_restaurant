@@ -18,6 +18,7 @@ import Instructions
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
+    @IBOutlet weak var calenderDateVw: UIView!
     @IBOutlet weak var lblPricingWarning :  UILabel!
     @IBOutlet weak var offerDesHeaderVw : UIView!
     @IBOutlet weak var imgViewGifReview: UIImageView!
@@ -120,7 +121,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.timeZone = TimeZone.current.identifier
         print(timeZone)
         viewFullMenu.delegate = self
@@ -184,9 +184,9 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             if self.status == 1 {
                 self.offer = data?.offer_timings ?? []
             } else {
-               // self.offer = self.processOfferResponse()
+                // self.offer = self.processOfferResponse()
                 self.offer = data?.offer_timings?.unique(map: {$0.offerID})
-                    //
+                //
             }
             
             
@@ -222,15 +222,15 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.collViewMenu.reloadData()
             self.collView.reloadData()
             self.tbReview.reloadData()
-           self.tbMenu.reloadData()
+            self.tbMenu.reloadData()
             self.view.layoutIfNeeded()
-           // if self.offer?.count ?? 0 > 0 {
+            // if self.offer?.count ?? 0 > 0 {
             
             
             if UserDefaults.standard.value(forKey: "isShow") as? Bool != true {
-                 self.initializeInstruction {
-                     self.startInstructions()
-                 }
+                self.initializeInstruction {
+                    self.startInstructions()
+                }
             }else {
                 if let offerId = self.selectedOfferId , offerId != 0 {
                     let Index = self.offer?.firstIndex(where: {$0.id == offerId})
@@ -246,7 +246,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     
                     
                     self.selectedOfferId = 0
-                   self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
+                    self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
                     let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
                     self.scrollView.setContentOffset(bottomOffset, animated: true)
                     if self.status == 1 {
@@ -264,25 +264,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                         self.offerID = self.offer?[self.isselectedoffer].offerID ?? 0
                     }
                     
-                    
-                    
-//                } else {
-//                    self.selectedOfferId = 0
-//                    if let is_fifty = self.offer?[0].is_fifty {
-//                        self.discount = is_fifty == 0 ? Int(self.offer?[0].percentage ?? "") ?? 0 : 50
-//                    } else {
-//                        self.discount = Int(self.offer?[0].percentage ?? "") ?? 0
-//                    }
-//              //  self.menuProductAPI(id: self.offer?[0].menuID ?? 0,index: 0,isfifty: self.offer?[0].is_fifty ?? 0,offerID: self.offer?[0].offerID ?? 0)
-//                }
-                
+                }
             }
-            }
-            
-            
-                
-           
-            
         }
     }
     
@@ -1268,6 +1251,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         coachMarksController.delegate = self
         coachMarksController.dataSource = self
         coachMarksController.animationDelegate = self
+        coachMarksController.overlay.backgroundColor = .black.withAlphaComponent(0.5)
         let skipView = CoachMarkSkipDefaultView()
         skipView.setTitle("Skip", for: .normal)
         coachMarksController.skipView = skipView
@@ -1305,7 +1289,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
        
         switch index {
                 case 0 :  return coachMarksController.helper.makeCoachMark(for: imgFav)
-                case 1 :  return coachMarksController.helper.makeCoachMark(for: txtFldDate)
+                case 1 :  return coachMarksController.helper.makeCoachMark(for: calenderDateVw)
                 case 2 : return coachMarksController.helper.makeCoachMark(for: collViewMenu)
                 default : return coachMarksController.helper.makeCoachMark()
                 }

@@ -115,8 +115,8 @@ extension SocketIOManager{
     
     //MARK: - Meassge List(emitter)
     func messageListemitter(user2id:Int,limit:Int,offset:Int){
-        let parm:parameters = [socketKeys.senderId.instance:Store.userDetails?.id ?? 0,socketKeys.receiverId.instance:user2id,socketKeys.limit.instance:limit,socketKeys.offset.instance:offset]
-
+        let parm:parameters = [socketKeys.senderId.instance:Store.userDetails?.id ?? 0,socketKeys.receiverId.instance:user2id]
+//,socketKeys.limit.instance:limit,socketKeys.offset.instance:offset
         socket.emit(socketEmitters.getMessage.instance,parm)
     }
     
