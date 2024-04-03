@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 class fullImageView: UIViewController, UIScrollViewDelegate {
-
+    
     //MARK: - OUTLETS
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imgView: UIImageView!
@@ -18,7 +18,7 @@ class fullImageView: UIViewController, UIScrollViewDelegate {
     var setImage = String()
     var url = String()
     var settype = Int()
-
+    
     
     //MARK: - VIEW LIFECYLE
     override func viewDidLoad() {
@@ -39,15 +39,25 @@ class fullImageView: UIViewController, UIScrollViewDelegate {
         }
         
     }
+    
     private func setupScrollView() {
         scrollView.delegate = self
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 6.0
-        }
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swiped(_:)))
+        swipeGesture.direction = [.right, .left, .up, .down]
+        self.imgView.addGestureRecognizer(swipeGesture)
+        self.imgView.isUserInteractionEnabled = true
+    }
+    
+    
+    @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-            return imgView
-        }
+        return imgView
+    }
     //MARK: - ACTIONS
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
