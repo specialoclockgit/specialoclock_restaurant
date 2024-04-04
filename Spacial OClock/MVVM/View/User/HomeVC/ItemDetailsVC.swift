@@ -233,7 +233,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.initializeInstruction {
                     self.startInstructions()
                 }
-            }else {
+            } else {
                 if let offerId = self.selectedOfferId , offerId != 0 {
                     let Index = self.offer?.firstIndex(where: {$0.id == offerId})
                     self.isselectedoffer  = Index ?? 0
@@ -245,7 +245,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     }
                     let index = IndexPath(row: self.isselectedoffer, section: 0)
                     self.collViewMenu.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
-                    
                     
                     self.selectedOfferId = 0
                     self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
@@ -1279,30 +1278,52 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         )
     
         
-        switch index {
-        case 0:
-            coachViews.bodyView.hintLabel.text = avatarText
-            coachViews.bodyView.nextLabel.text = nextButtonText
-        case 1 :
-            coachViews.bodyView.hintLabel.text = avtarLoc
-            coachViews.bodyView.nextLabel.text = nextButtonText
-        case 2 :
-            coachViews.bodyView.hintLabel.text = avtarSideMenu
-            coachViews.bodyView.nextLabel.text = nextButtonText
-        default: break
+        if self.offer?.count == 0 {
+            switch index {
+            case 0:
+                coachViews.bodyView.hintLabel.text = avatarText
+                coachViews.bodyView.nextLabel.text = nextButtonText
+            case 1 :
+                coachViews.bodyView.hintLabel.text = avtarLoc
+                coachViews.bodyView.nextLabel.text = nextButtonText
+            default: break
+            }
+        }else {
+            switch index {
+            case 0:
+                coachViews.bodyView.hintLabel.text = avatarText
+                coachViews.bodyView.nextLabel.text = nextButtonText
+            case 1 :
+                coachViews.bodyView.hintLabel.text = avtarLoc
+                coachViews.bodyView.nextLabel.text = nextButtonText
+            case 2 :
+                coachViews.bodyView.hintLabel.text = avtarSideMenu
+                coachViews.bodyView.nextLabel.text = nextButtonText
+            default: break
+            }
         }
-        
         return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }
     
     func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, coachMarkAt index: Int) -> Instructions.CoachMark {
        
-        switch index {
-                case 0 :  return coachMarksController.helper.makeCoachMark(for: imgFav)
-                case 1 :  return coachMarksController.helper.makeCoachMark(for: calenderDateVw)
-                case 2 : return coachMarksController.helper.makeCoachMark(for: collViewMenu)
-                default : return coachMarksController.helper.makeCoachMark()
-                }
+        
+        if self.offer?.count == 0 {
+            switch index {
+            case 0 :  return coachMarksController.helper.makeCoachMark(for: imgFav)
+            case 1 :  return coachMarksController.helper.makeCoachMark(for: calenderDateVw)
+            default : return coachMarksController.helper.makeCoachMark()
+            }
+        }else {
+            switch index {
+            case 0 :  return coachMarksController.helper.makeCoachMark(for: imgFav)
+            case 1 :  return coachMarksController.helper.makeCoachMark(for: calenderDateVw)
+            case 2 : return coachMarksController.helper.makeCoachMark(for: collViewMenu)
+            default : return coachMarksController.helper.makeCoachMark()
+            }
+        }
+        
+        
 //        if index ==  0 {
 //            return coachMarksController.helper.makeCoachMark(for: imgFav)
 //        }else if index ==  1 {
@@ -1320,23 +1341,15 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
     }
     
     func numberOfCoachMarks(for coachMarksController: Instructions.CoachMarksController) -> Int {
-        return 3
+        return self.offer?.count == 0 ? 2 : 3
     }
-    
-    
     
     func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, configureOrnamentsOfOverlay overlay: UIView) {
         snapshotDelegate?.coachMarksController(coachMarksController,
                                                configureOrnamentsOfOverlay: overlay)
     }
     
-    
-    
     func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, willShow coachMark: inout Instructions.CoachMark, beforeChanging change: Instructions.ConfigurationChange, at index: Int) {
-        
-        
-       
-        
         if index == 0 && change == .nothing {
             // We'll need to play an animation before showing up the coach mark.
             // To be able to play the animation and then show the coach mark and not stall
