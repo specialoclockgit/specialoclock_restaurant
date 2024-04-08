@@ -13,3 +13,8 @@ extension UILabel{
         self.layer.masksToBounds = true
     }
 }
+extension UIView{
+    func viewCornerRadius(cornerRadius : CGFloat){
+        self.layer.cornerRadius = cornerRadius
+    }
+}

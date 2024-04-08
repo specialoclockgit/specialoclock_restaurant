@@ -8,25 +8,20 @@
 import UIKit
 import SDWebImage
 
-class MultiImageVC: UIViewController,UIScrollViewDelegate  {
+class MultiImageVC: UIViewController, UIScrollViewDelegate  {
     @IBOutlet weak var collVw: UICollectionView!
     var imgArr = [String]()
     var index = 0
     @IBOutlet weak var pgController : UIPageControl!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         pgController.numberOfPages = imgArr.count
         collVw.delegate = self
         collVw.dataSource = self
-       // collVw.reloadData()
-        
-       
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let index = IndexPath(row: self.index, section: 0)
             self.collVw.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
         }
-        
     }
     
     @IBAction func btnBack (_ sender :  UIButton){
@@ -37,7 +32,11 @@ class MultiImageVC: UIViewController,UIScrollViewDelegate  {
         let index = scrollView.contentOffset.x / width
         pgController.currentPage = Int(index)
     }
+    
 
+    
+    
+    
 }
 extension MultiImageVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -61,4 +60,5 @@ extension MultiImageVC : UICollectionViewDelegate, UICollectionViewDataSource, U
 }
 class MultiImageCVC : UICollectionViewCell {
     @IBOutlet weak var imgVw : UIImageView!
+   
 }

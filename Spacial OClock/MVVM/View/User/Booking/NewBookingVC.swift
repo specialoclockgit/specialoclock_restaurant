@@ -119,18 +119,24 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func btnContinueAct(sender : UIButton){
         let noOfPerson = self.bookingType == .restaurant ? self.tfSelectPeople.text ?? "" : "1"
-        self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: noOfPerson , restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns.description,offerDiscount: self.offerDiscount) { data in
-            let screen = self.storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
-            screen.callBack = {
-                for controller in self.navigationController!.viewControllers as Array {
-                    if controller.isKind(of: HomeVC.self) {
-                        UserDefaults.standard.setValue("1", forKey: "Dine")
-                        self.navigationController!.popToViewController(controller, animated: true)
-                        break
+        
+        
+        if noOfPerson.trimmingCharacters(in: .whitespaces).isEmpty == true{
+            CommonUtilities.shared.showAlert(message: "Please select number of people")
+        } else {
+            self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: noOfPerson , restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns.description,offerDiscount: self.offerDiscount) { data in
+                let screen = self.storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC
+                screen.callBack = {
+                    for controller in self.navigationController!.viewControllers as Array {
+                        if controller.isKind(of: HomeVC.self) {
+                            UserDefaults.standard.setValue("1", forKey: "Dine")
+                            self.navigationController!.popToViewController(controller, animated: true)
+                            break
+                        }
                     }
                 }
+                self.navigationController?.present(screen, animated: true)
             }
-            self.navigationController?.present(screen, animated: true)
         }
         
     }

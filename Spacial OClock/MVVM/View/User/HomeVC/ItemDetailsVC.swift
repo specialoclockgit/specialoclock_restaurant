@@ -18,52 +18,56 @@ import Instructions
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
-    @IBOutlet weak var totalReviewLbl :  UILabel!
+    @IBOutlet weak var btnSpecialOutlet:  UIButton!
+    @IBOutlet weak var btnFullMenuOutlet:  UIButton!
+    @IBOutlet weak var btnAboutOutlet:  UIButton!
+    @IBOutlet weak var btnReviewOutlet:  UIButton!
+    @IBOutlet weak var totalReviewLbl:  UILabel!
     @IBOutlet weak var calenderDateVw: UIView!
-    @IBOutlet weak var lblPricingWarning :  UILabel!
-    @IBOutlet weak var offerDesHeaderVw : UIView!
+    @IBOutlet weak var lblPricingWarning:  UILabel!
+    @IBOutlet weak var offerDesHeaderVw: UIView!
     @IBOutlet weak var imgViewGifReview: UIImageView!
     @IBOutlet weak var lblHeading: UILabel!
-    @IBOutlet weak var img : UIImageView!
+    @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var cosmosView: CosmosView!
-    @IBOutlet weak var scrollView : UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var lblOfferDiscription: UILabel!
-    @IBOutlet weak var collView : UICollectionView!
-    @IBOutlet weak var tbReview : UITableView!
-    @IBOutlet weak var stackView : UIStackView!
-    @IBOutlet weak var viewAbout : UIView!
-    @IBOutlet weak var viewMenu : UIView!
+    @IBOutlet weak var collView: UICollectionView!
+    @IBOutlet weak var tbReview: UITableView!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var viewAbout: UIView!
+    @IBOutlet weak var viewMenu: UIView!
     @IBOutlet weak var viewRestoRating: UIView!
-    @IBOutlet weak var lblAbout : UILabel!
-    @IBOutlet weak var lblMenu : UILabel!
-    @IBOutlet weak var lblReview : UILabel!
-    @IBOutlet weak var viewA : UIView!
-    @IBOutlet weak var lblAboutDetail : UILabel!
-    @IBOutlet weak var viewM : UIView!
-    @IBOutlet weak var viewR : UIView!
-    @IBOutlet weak var viewSV : UIView!
+    @IBOutlet weak var lblAbout: UILabel!
+    @IBOutlet weak var lblMenu: UILabel!
+    @IBOutlet weak var lblReview: UILabel!
+    @IBOutlet weak var viewA: UIView!
+    @IBOutlet weak var lblAboutDetail: UILabel!
+    @IBOutlet weak var viewM: UIView!
+    @IBOutlet weak var viewR: UIView!
+    @IBOutlet weak var viewSV: UIView!
     @IBOutlet weak var lblNameREsto: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var viewReview: UIView!
-    @IBOutlet weak var imgBottomView : UIImageView!
+    @IBOutlet weak var imgBottomView: UIImageView!
     @IBOutlet weak var viewFCHeight: NSLayoutConstraint!
     @IBOutlet weak var viewFullMenu: UICollectionView!
     @IBOutlet weak var viewFullMeny: UIView!
     //MENU Outlets
     @IBOutlet weak var ImgViewgifReview: UIImageView!
-    @IBOutlet weak var collViewMenu : UICollectionView!
-    @IBOutlet weak var tbMenu : UITableView!
-    @IBOutlet weak var heightTBMenu : NSLayoutConstraint!
+    @IBOutlet weak var collViewMenu: UICollectionView!
+    @IBOutlet weak var tbMenu: UITableView!
+    @IBOutlet weak var heightTBMenu: NSLayoutConstraint!
     @IBOutlet weak var lblRating: UILabel!
-    @IBOutlet weak var heightTBReview : NSLayoutConstraint!
+    @IBOutlet weak var heightTBReview: NSLayoutConstraint!
     @IBOutlet weak var txtFldDate: UITextField!
     @IBOutlet weak var lblTotalRes: UILabel!
-    @IBOutlet weak var imgFav : UIImageView!
-    @IBOutlet weak var btnFav : UIButton!
-    @IBOutlet weak var btnBook : UIButton!
-    @IBOutlet weak var viewButton : UIView!
-    @IBOutlet weak var heightViewButton : NSLayoutConstraint!
-    @IBOutlet weak var collViewMenuHeight : NSLayoutConstraint!
+    @IBOutlet weak var imgFav: UIImageView!
+    @IBOutlet weak var btnFav: UIButton!
+    @IBOutlet weak var btnBook: UIButton!
+    @IBOutlet weak var viewButton: UIView!
+    @IBOutlet weak var heightViewButton: NSLayoutConstraint!
+    @IBOutlet weak var collViewMenuHeight: NSLayoutConstraint!
     @IBOutlet weak var viewFM: UIView!
     @IBOutlet weak var lblFullMenu: UILabel!
     @IBOutlet weak var lblUserLOcation: UILabel!
@@ -227,7 +231,9 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.tbMenu.reloadData()
             self.view.layoutIfNeeded()
             // if self.offer?.count ?? 0 > 0 {
-            
+            let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.mainImageTapped(_:)))
+            self.img.addGestureRecognizer(imageTapGesture)
+            self.img.isUserInteractionEnabled = true
             
             if UserDefaults.standard.value(forKey: "isShow") as? Bool != true {
                 self.initializeInstruction {
@@ -271,7 +277,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     
-    
+    @objc func mainImageTapped (_ sender: UITapGestureRecognizer) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+        vc.settype = 0
+        vc.setImage = (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     //MARK: - FUNCTION
     private func showAlertForTodayOff(date:String,dateArr:[String]){
@@ -443,9 +454,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func isSelected(sender : UIButton){
         
+        
         switch sender.tag {
         case 0 :
-            ChangebgColor(viewSelected: viewAbout, viewUnselected: viewMenu, viewUnselected2: viewReview, ViewUnselected3: viewFullMeny, labelSelected: lblAbout, labelUnselected: lblMenu, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
+            ChangebgColor(viewSelected: btnAboutOutlet, viewUnselected: btnSpecialOutlet, viewUnselected2: btnReviewOutlet, ViewUnselected3: btnFullMenuOutlet, labelSelected: lblAbout, labelUnselected: lblMenu, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
             viewA.layoutSubviews()
             viewA.isHidden = false
             viewM.isHidden = true
@@ -455,7 +467,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             debugPrint("0")
             
         case 1 :
-            ChangebgColor(viewSelected: viewMenu, viewUnselected: viewAbout, viewUnselected2: viewReview,ViewUnselected3: viewFullMeny, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
+            ChangebgColor(viewSelected: btnSpecialOutlet, viewUnselected: btnAboutOutlet, viewUnselected2: btnReviewOutlet,ViewUnselected3: btnFullMenuOutlet, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
             viewA.isHidden = true
             viewM.isHidden = false
             viewR.isHidden = true
@@ -473,7 +485,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             
         case 2 :
             product_detail()
-            ChangebgColor(viewSelected: viewReview, viewUnselected: viewAbout, viewUnselected2: viewMenu,ViewUnselected3: viewFullMeny, labelSelected: lblReview, labelUnselected: lblAbout, labelUnselecte2: lblMenu,lblUnselected3: lblFullMenu)
+            ChangebgColor(viewSelected: btnReviewOutlet, viewUnselected: btnAboutOutlet, viewUnselected2: btnSpecialOutlet,ViewUnselected3: btnFullMenuOutlet, labelSelected: lblReview, labelUnselected: lblAbout, labelUnselecte2: lblMenu,lblUnselected3: lblFullMenu)
             viewA.isHidden = true
             viewM.isHidden = true
             viewR.isHidden = false
@@ -487,7 +499,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             
         case 3 :
             fetchdata()
-            ChangebgColor(viewSelected: viewFullMeny, viewUnselected: viewAbout, viewUnselected2: viewMenu,ViewUnselected3: viewReview, labelSelected: lblFullMenu, labelUnselected: lblAbout, labelUnselecte2: lblMenu,lblUnselected3: lblReview)
+            ChangebgColor(viewSelected: btnFullMenuOutlet, viewUnselected: btnAboutOutlet, viewUnselected2: btnSpecialOutlet,ViewUnselected3: btnReviewOutlet, labelSelected: lblFullMenu, labelUnselected: lblAbout, labelUnselecte2: lblMenu,lblUnselected3: lblReview)
             viewA.isHidden = true
             viewM.isHidden = true
             viewR.isHidden = true
@@ -666,15 +678,17 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 cell.lblSpecial.isHidden = false
                 if indexPath.row == isselectedoffer{
                     self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
-                    cell.img.image = UIImage(named: "greenRectangle")
+                  //  cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = false
+                    cell.viewMenu.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
                 } else {
-                    cell.img.image = UIImage(named: "BgOfferImg")
+                   // cell.img.image = UIImage(named: "BgOfferImg")
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
+                    cell.viewMenu.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblOffer.isHidden = false
                   //  cell.lblOffer.backgroundColor = offer?[indexPath.row].is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red.withAlphaComponent(0.65)
                     cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
@@ -694,16 +708,18 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 if indexPath.row == isselectedoffer{
                     self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                     
-                    cell.img.image = UIImage(named: "greenRectangle")
+                  //  cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = true
+                    cell.viewMenu.backgroundColor = UIColor(named: "themeGreen")
                     // cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
                 } else {
-                    cell.img.image = UIImage(named: "BgOfferImg")
+                   // cell.img.image = UIImage(named: "BgOfferImg")
                     cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = true
+                    cell.viewMenu.backgroundColor = UIColor(named: "themeOrange")
                     //cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
@@ -889,7 +905,6 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 titleLbl.text = products?[section].menuTypeName ?? ""
             }
            
-//            \n\(self.promotionTxt)"
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-30, y: 6, width: 30, height: 30))
             viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -1022,37 +1037,47 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
 //MARK: InitialLoad Fnction
 extension ItemDetailsVC{
     func initialLoad(){
-        viewMenu.layer.cornerRadius = viewAbout.frame.height / 2
-        viewMenu.layer.maskedCorners = [.layerMaxXMinYCorner]
-        viewAbout.cornerRadius(cornerRadius: 30)
-        viewReview.layer.cornerRadius = viewReview.frame.height / 2
-        viewReview.layer.maskedCorners = [.layerMinXMinYCorner]
+//        viewMenu.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+//        viewAbout.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+//        viewReview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+//        viewFullMeny.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        viewMenu.viewCornerRadius(cornerRadius: 8.0)
+        viewAbout.viewCornerRadius(cornerRadius: 8.0)
+        viewReview.viewCornerRadius(cornerRadius: 8.0)
+        viewFullMeny.viewCornerRadius(cornerRadius: 8.0)
+       // viewMenu.layer.cornerRadius = viewAbout.frame.height / 2
+       // viewMenu.layer.maskedCorners = [.layerMaxXMinYCorner]
+       // viewAbout.cornerRadius(cornerRadius: 30)
+       // viewReview.layer.cornerRadius = viewReview.frame.height / 2
+       // viewReview.layer.maskedCorners = [.layerMinXMinYCorner]
         imgBottomView.layer.cornerRadius = 30.0
         imgBottomView.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
-        viewFullMeny.layer.cornerRadius = 30
-        viewFullMeny.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
-        lblFullMenu.lblCornerRadius(cornerRadius: 15.0)
-        lblMenu.lblCornerRadius(cornerRadius: 15.0)
-        lblAbout.lblCornerRadius(cornerRadius: 15.0)
-        lblReview.lblCornerRadius(cornerRadius: 15.0)
+       // viewFullMeny.layer.cornerRadius = 30
+       // viewFullMeny.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
+        
         btnFav.layer.cornerRadius = btnFav.frame.height / 2
         viewA.isHidden = true
         viewM.isHidden = false
         viewR.isHidden = true
         viewFM.isHidden = true
         viewButton.isHidden = false
-        ChangebgColor(viewSelected: viewMenu, viewUnselected: viewAbout, viewUnselected2: viewReview,ViewUnselected3: viewFullMenu, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
+        ChangebgColor(viewSelected: btnSpecialOutlet, viewUnselected: btnAboutOutlet, viewUnselected2: btnReviewOutlet,ViewUnselected3: btnFullMenuOutlet, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
     
     }
-    func ChangebgColor(viewSelected : UIView , viewUnselected : UIView, viewUnselected2: UIView ,ViewUnselected3:UIView, labelSelected : UILabel , labelUnselected : UILabel , labelUnselecte2 : UILabel, lblUnselected3:UILabel){
-        viewSelected.backgroundColor = UIColor.systemGray5
-        viewUnselected.backgroundColor = UIColor.white
-        viewUnselected2.backgroundColor = UIColor.white
-        ViewUnselected3.backgroundColor = UIColor.white
-        labelSelected.backgroundColor = UIColor.white
-        labelUnselected.backgroundColor = UIColor.systemGray5
-        labelUnselecte2.backgroundColor = UIColor.systemGray5
-        lblUnselected3.backgroundColor = UIColor.systemGray5
+    func ChangebgColor(viewSelected : UIButton , viewUnselected : UIButton, viewUnselected2: UIButton ,ViewUnselected3:UIButton, labelSelected : UILabel , labelUnselected : UILabel , labelUnselecte2 : UILabel, lblUnselected3:UILabel){
+        viewSelected.setImage(UIImage(named: "ButtonBackground"), for: .normal)
+        viewUnselected.setImage(nil, for: .normal)
+        viewUnselected2.setImage(nil, for: .normal)
+        ViewUnselected3.setImage(nil, for: .normal)
+        
+//        viewSelected.backgroundColor = UIColor.systemGray5
+//        viewUnselected.backgroundColor = UIColor.white
+//        viewUnselected2.backgroundColor = UIColor.white
+//        ViewUnselected3.backgroundColor = UIColor.white
+        labelSelected.textColor = UIColor.white
+        labelUnselected.textColor = UIColor.darkGray
+        labelUnselecte2.textColor = UIColor.darkGray
+        lblUnselected3.textColor = UIColor.darkGray
     }
 }
 
@@ -1322,8 +1347,6 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
             default : return coachMarksController.helper.makeCoachMark()
             }
         }
-        
-        
 //        if index ==  0 {
 //            return coachMarksController.helper.makeCoachMark(for: imgFav)
 //        }else if index ==  1 {
@@ -1334,10 +1357,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
 //                return coachMarksController.helper.makeCoachMark(for: firstItem)
 //            }
 //        }
-//
 //        return coachMarksController.helper.makeCoachMark()
-        
-       
     }
     
     func numberOfCoachMarks(for coachMarksController: Instructions.CoachMarksController) -> Int {
@@ -1385,15 +1405,11 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         //            self.view.backgroundColor = newColor
         //        })
     }
-    
-    
-    
+  
     func coachMarksController(_ coachMarksController: CoachMarksController,
                               didShow coachMark: CoachMark,
                               afterChanging change: ConfigurationChange,
                               at index: Int) {
-        
-        
         snapshotDelegate?.coachMarksController(coachMarksController, didShow: coachMark,
                                                afterChanging: change,
                                                at: index)
@@ -1412,9 +1428,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         snapshotDelegate?.coachMarksController(coachMarksController, didHide: coachMark,
                                                at: index)
     }
-    
-    
-    
+ 
     func shouldHandleOverlayTap(in coachMarksController: CoachMarksController,
                                 at index: Int) -> Bool {
         return true

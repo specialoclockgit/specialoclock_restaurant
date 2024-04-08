@@ -229,6 +229,7 @@ struct Offersd: Codable {
         case date, type
         case numberOfUserBook = "number_of_user_book"
     }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decodeIfPresent(Int.self, forKey: .id)

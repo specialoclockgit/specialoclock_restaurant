@@ -175,6 +175,8 @@
 		C2B891232A4AEC820066E753 /* MyMenuTvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B891222A4AEC810066E753 /* MyMenuTvc.swift */; };
 		C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */; };
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
+		EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */; };
+		EB053BBF2BC40A4800961E6E /* 01 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = EB053BBE2BC40A4800961E6E /* 01 (1).png */; };
 		EB4F37C92BB2ECD8004D5BA7 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */; };
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
@@ -472,6 +474,8 @@
 		C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailVC.swift; sourceTree = "<group>"; };
 		C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailTVC.swift; sourceTree = "<group>"; };
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		EB053BBE2BC40A4800961E6E /* 01 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "01 (1).png"; path = "Spacial OClock/Assets.xcassets/newSplash.imageset/01 (1).png"; sourceTree = "<group>"; };
 		EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
@@ -920,6 +924,7 @@
 			isa = PBXGroup;
 			children = (
 				EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */,
+				EB053BBE2BC40A4800961E6E /* 01 (1).png */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
 				C284FB372A402A0D006949B4 /* Spacial OClock */,
 				C284FB4E2A402A0E006949B4 /* Spacial OClockTests */,
@@ -1033,6 +1038,7 @@
 				C284FB782A402EE7006949B4 /* ImagePicker.swift */,
 				C284FB792A402EE7006949B4 /* UISwitchCustom.swift */,
 				ECAF62ED2B1DBBB400BF242E /* CHTCollectionViewWaterfallLayout.swift */,
+				EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */,
 			);
 			path = CustomClass;
 			sourceTree = "<group>";
@@ -1457,6 +1463,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB053BBF2BC40A4800961E6E /* 01 (1).png in Resources */,
 				C2661A8C2A4B156C00EEE266 /* CellImageViewTB.xib in Resources */,
 				A5046FF42A4DC18D00C23627 /* CellHelpQAVC.xib in Resources */,
 				A5B1873A2A66971F00C3E0A7 /* ASTRAL SISTERS.TTF in Resources */,
@@ -1785,6 +1792,7 @@
 				A529D2D72A5FBB5800E416CD /* BarMenuVC.swift in Sources */,
 				ECBEF6A02B204D050064D8F7 /* ReportUserPopUpVC.swift in Sources */,
 				A51DBFF52A5292E1007535D7 /* CellBreakfastTB.swift in Sources */,
+				EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */,
 				C284FB7E2A402EE8006949B4 /* ImagePicker.swift in Sources */,
 				C29CDB082A42BB930035E03D /* ContactUsVC.swift in Sources */,
 				2A1C50622A9F167300FBE41A /* HomeModel.swift in Sources */,
@@ -2054,7 +2062,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Special O'Clock need photos gallery permission to upload profile photo";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Special O'Clock need your permission for Gallery access to upload profile photo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -2100,7 +2108,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Special O'Clock need photos gallery permission to upload profile photo";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Special O'Clock need your permission for Gallery access to upload profile photo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

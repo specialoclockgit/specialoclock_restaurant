@@ -24,6 +24,7 @@ class fullImageView: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScrollView()
+        imgView.isUserInteractionEnabled = false
         if settype == 0 {
             let imageIndex = (imageURL) + (self.setImage.replacingOccurrences(of: " ", with: "%20") )
             self.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -43,13 +44,24 @@ class fullImageView: UIViewController, UIScrollViewDelegate {
     private func setupScrollView() {
         scrollView.delegate = self
         scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 6.0
+        scrollView.maximumZoomScale = 5.0
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swiped(_:)))
         swipeGesture.direction = [.right, .left, .up, .down]
-        self.imgView.addGestureRecognizer(swipeGesture)
-        self.imgView.isUserInteractionEnabled = true
+        self.scrollView.addGestureRecognizer(swipeGesture)
+        self.scrollView.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageDoubleTapped(_:)))
+        tapGesture.numberOfTapsRequired = 2
+        self.scrollView.addGestureRecognizer(tapGesture)
+        
+        
     }
-    
+    @objc func imageDoubleTapped(_ gesture: UITapGestureRecognizer) {
+        UIView.animate(withDuration: 0.5) {
+            self.scrollView.zoomScale = 1.0
+        }
+        
+    }
     
     @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
         self.navigationController?.popViewController(animated: true)
