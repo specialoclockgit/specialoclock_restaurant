@@ -165,18 +165,23 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     }
     
     func getUpdatedLocation() {
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager.delegate = self
-            //   locationManager.distanceFilter = 100.0
-            if #available(iOS 14.0, *) {
-                locationManager.desiredAccuracy = kCLLocationAccuracyReduced
-            } else {
-                // Fallback on earlier versions0000
+        
+        DispatchQueue.global().async {
+            if (CLLocationManager.locationServicesEnabled())
+            {
+                self.locationManager.delegate = self
+                //   locationManager.distanceFilter = 100.0
+                if #available(iOS 14.0, *) {
+                    self.locationManager.desiredAccuracy = kCLLocationAccuracyReduced
+                } else {
+                    // Fallback on earlier versions0000
+                }
+                self.locationManager.requestAlwaysAuthorization()
+                self.locationManager.startUpdatingLocation()
             }
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
         }
+        
+        
         //MARK:- Enable Location Services
         if !hasLocationPermission() {
             let alertController = UIAlertController(title: "Enable Location Services", message: "Special O'Clock wants to access your location only to provide better experience to you.", preferredStyle: UIAlertController.Style.alert)
@@ -461,7 +466,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
         }else if sectionArray[indexPath.section].name == "A-Z"{
             return CGFloat(300)
         }else{
-            return CGFloat(250.0)
+            return CGFloat(260.0)
         }
     }
     

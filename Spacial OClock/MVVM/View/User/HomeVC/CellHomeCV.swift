@@ -13,6 +13,9 @@ protocol  CellHomeCVDelegate {
 class CellHomeCV: UICollectionViewCell {
 
     //MARK: Outlets
+    @IBOutlet weak var blurImgVW: UIImageView!
+    @IBOutlet weak var collVw: UICollectionView!
+    @IBOutlet weak var collHeight: NSLayoutConstraint!
     @IBOutlet weak var offerImg3: UIImageView!
     @IBOutlet weak var offerImg2: UIImageView!
     @IBOutlet weak var offerImg1: UIImageView!
@@ -35,12 +38,16 @@ class CellHomeCV: UICollectionViewCell {
     @IBOutlet weak var bgView : UIView!
     //MARK: Variables
      var cellDelegate  : CellHomeCVDelegate?
-    
+    var offerTimings: [OfferTiminghome]?
     override func awakeFromNib() {
         super.awakeFromNib()
+      //  blurEffect(image: self.blurImgVW)
+       // bgView.applyBlurEffect(.dark)
         stackHeight.constant = 0
-        viewReview.layer.cornerRadius = 12
-        viewReview.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
+        viewReview.layer.cornerRadius = 10
+       // viewReview.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
+        let nib = UINib(nibName: "HomeOfferCVC", bundle: nil)
+        collVw.register(nib, forCellWithReuseIdentifier: "HomeOfferCVC")
        // initialLoad()
         // Initialization code
     }
@@ -56,3 +63,33 @@ class CellHomeCV: UICollectionViewCell {
     }
 }
 
+extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.offerTimings?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collVw.dequeueReusableCell(withReuseIdentifier: "HomeOfferCVC", for: indexPath) as? HomeOfferCVC else {
+            return UICollectionViewCell()
+            
+        }
+        
+        let celldata = self.offerTimings?[indexPath.row]
+        cell.titleLbl.text = Store.screenType == 1 ? "\(celldata?.offer ?? "") \n\("-\(celldata?.percentage ?? "0")%")" : (celldata?.offer ?? "")
+        
+        return cell
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.frame.size.width / 3) - 6, height: 60)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 12
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return 6
+//    }
+    
+}

@@ -28,11 +28,15 @@ class DetailItemCVC: UICollectionViewCell {
     var screen = Store.screenType
     var offerTimings: [TimeSlotoffer]?
     
-    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let nib = UINib(nibName: "HomeOfferCVC", bundle: nil)
+        offerCollection.register(nib, forCellWithReuseIdentifier: "HomeOfferCVC")
+    }
 }
 extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "OfferCVC"
+        return "HomeOfferCVC"
     }
 
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -43,7 +47,7 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
         return offerTimings?.count ?? 0
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OfferCVC", for: indexPath) as! OfferCVC
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeOfferCVC", for: indexPath) as! HomeOfferCVC
         
         if screen == 1 {
             var percentage = String()
@@ -54,13 +58,13 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
             } else{
                 percentage = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? "0")%"
             }
-            cell.lblTime.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
+            cell.titleLbl.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         }else {
-            cell.lblTime.text = "\(offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")"
+            cell.titleLbl.text = "\(offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")"
             
         }
         
-        cell.lblOfferPrecntage.text = ""
+//        cell.lblOfferPrecntage.text = ""
         
         
         return cell
@@ -72,11 +76,11 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/5, height: 64)
+        return CGSize(width: (collectionView.frame.width / 6) - 6, height: 64)
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        5
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        6
+    }
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
 //        1
 //    }

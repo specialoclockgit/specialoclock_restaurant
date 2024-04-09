@@ -177,6 +177,8 @@
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
 		EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */; };
 		EB053BBF2BC40A4800961E6E /* 01 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = EB053BBE2BC40A4800961E6E /* 01 (1).png */; };
+		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
+		EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */; };
 		EB4F37C92BB2ECD8004D5BA7 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */; };
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
@@ -476,6 +478,8 @@
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		EB053BBE2BC40A4800961E6E /* 01 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "01 (1).png"; path = "Spacial OClock/Assets.xcassets/newSplash.imageset/01 (1).png"; sourceTree = "<group>"; };
+		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
+		EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeOfferCVC.xib; sourceTree = "<group>"; };
 		EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
@@ -895,6 +899,8 @@
 				EC6221622ABAC8B40036B68E /* DetailItemCVC.swift */,
 				ECAF1D082AC18857006E20FB /* homeSeeMoreVC.swift */,
 				ECAF1D0A2AC1887B006E20FB /* homeSeeMoreCVC.swift */,
+				EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */,
+				EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -1492,6 +1498,7 @@
 				A51DBFF62A5292E1007535D7 /* CellBreakfastTB.xib in Resources */,
 				A529D2E42A5FC63400E416CD /* CellBarOfferTV.xib in Resources */,
 				A58CCC982A5EAB5D00DFA478 /* Poppins-Medium.ttf in Resources */,
+				EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */,
 				C2661A892A4B156C00EEE266 /* CellImageViewCB.xib in Resources */,
 				A5AC1FB42A4C57CA007EF488 /* CellItemDetailReviewTB.xib in Resources */,
 				EB4F37C92BB2ECD8004D5BA7 /* nodataFound.gif in Resources */,
@@ -1748,6 +1755,7 @@
 				ECB6996D2B19AB6A00344356 /* EditRestoProfileVC.swift in Sources */,
 				ECA1A4CF2B170ED6007748F3 /* RestoSettingVC.swift in Sources */,
 				ECBC37C02AC4171A00ADEDC7 /* ChatVC.swift in Sources */,
+				EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */,
 				8B0BDF302A80FFFD00A28BD2 /* SignUpModel.swift in Sources */,
 				ECAF86C92AC69ABC0071BFF3 /* SocketConstants.swift in Sources */,
 				EC4DD6AB2AFA149A00961D82 /* CategoryByRModal.swift in Sources */,

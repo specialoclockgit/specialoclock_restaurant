@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Medium.ttf">
+            <string>Poppins-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeOfferCVC" id="gTV-IL-0wX" customClass="HomeOfferCVC" customModule="Spacial_OClock" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="169" height="185"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="169" height="185"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 17139" translatesAutoresizingMaskIntoConstraints="NO" id="cr0-Fr-bic">
+                        <rect key="frame" x="0.0" y="0.0" width="169" height="185"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="17:30 10%" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fmw-lO-RVT">
+                        <rect key="frame" x="67" y="75" width="35" height="34"/>
+                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="cr0-Fr-bic" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="6H8-Vs-huA"/>
+                <constraint firstItem="Fmw-lO-RVT" firstAttribute="centerX" secondItem="cr0-Fr-bic" secondAttribute="centerX" id="9WR-gv-Czf"/>
+                <constraint firstAttribute="bottom" secondItem="cr0-Fr-bic" secondAttribute="bottom" id="JZ7-Up-XP1"/>
+                <constraint firstItem="cr0-Fr-bic" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="hg0-Bt-PjX"/>
+                <constraint firstAttribute="trailing" secondItem="cr0-Fr-bic" secondAttribute="trailing" id="i0n-Lv-v4n"/>
+                <constraint firstItem="Fmw-lO-RVT" firstAttribute="centerY" secondItem="cr0-Fr-bic" secondAttribute="centerY" id="zOe-fn-Xp7"/>
+            </constraints>
+            <size key="customSize" width="169" height="185"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="titleLbl" destination="Fmw-lO-RVT" id="h3x-6h-ULT"/>
+            </connections>
+            <point key="canvasLocation" x="5.343511450381679" y="36.267605633802816"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Group 17139" width="115.5" height="123"/>
+    </resources>
+</document>

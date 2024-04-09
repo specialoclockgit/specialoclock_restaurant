@@ -137,6 +137,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         viewRestoRating.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
         txtFldDate.delegate = self
         showDatePicker()
+        
+        tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
         tbMenu.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         initialLoad()
         img.image = imgName
@@ -169,7 +171,18 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         tabBarController?.tabBar.isHidden = true
         
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+       
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        coachMarksController.stop(immediately: true)
+       // tbReview.removeObserver(self, forKeyPath: "contentSizeReview")
+    }
+    
+    
     
     func string(format: String) -> String {
         let formatter = DateFormatter()
@@ -493,6 +506,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             viewButton.isHidden = true
             //self.modal?.userID == Store.userDetails?.id ? true : false
             btnBookStatus = 1
+            tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
             btnBook.setTitle("Write a Review", for: .normal)
             debugPrint("2")
     
@@ -749,7 +763,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             }
             
         } else if collectionView == viewFullMenu {
-            return CGSize(width: viewFullMenu.frame.width / 2.1, height: 166)
+            return CGSize(width: (viewFullMenu.frame.width / 2) - 4, height: 166)
         }
         return CGSize(width: 120.0, height: 80.0)
     }
@@ -859,7 +873,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         }
     }
 }
-extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
+extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tbMenu {
             if arrCheck[section] == false {
@@ -892,7 +906,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
     
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if tableView == tbMenu{
+        if tableView == tbMenu {
             let sectionV1 = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
             sectionV1.backgroundColor = UIColor.clear
             let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40) )
@@ -924,14 +938,18 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
             sectionV.bringSubviewToFront(viewAllBtn)
             sectionV1.addSubview(sectionV)
             return sectionV1
+        }else {
+            let view = UIView()
+            view.backgroundColor = .clear
+            return view
         }
-        return UIView()
+       
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tableView == tbMenu {
             if self.products?.count == 0 || self.products == nil {
                 return 0
-            }else {
+            } else {
                 return 50
             }
 
@@ -994,24 +1012,24 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         }
         
     }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            if tableView == self.tbReview {
-                if self.reviews?.count == 0 {
-                    self.heightTBReview.constant = 300
-                   // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
-                   // self.imgViewGifReview.isHidden = false
-                } else {
-                    //self.imgViewGifReview.isHidden = true
-                    self.heightTBReview.constant = self.tbReview.contentSize.height
-                }
-                self.view.layoutIfNeeded()
-                self.tbReview.layoutIfNeeded()
-            }
-            
-            //self.heightTBMenu.constant = self.tbMenu.contentSize.height
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        DispatchQueue.main.async {
+//            if tableView == self.tbReview {
+//                if self.reviews?.count == 0 {
+//                    self.heightTBReview.constant = 300
+//                   // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
+//                   // self.imgViewGifReview.isHidden = false
+//                } else {
+//                    //self.imgViewGifReview.isHidden = true
+//                    self.heightTBReview.constant = self.tbReview.contentSize.height
+//                }
+//                self.view.layoutIfNeeded()
+//                self.tbReview.layoutIfNeeded()
+//            }
+//
+//            //self.heightTBMenu.constant = self.tbMenu.contentSize.height
+//        }
+//    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbMenu{
             let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
@@ -1024,6 +1042,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
         
     }
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        print("keyPath is---",keyPath ?? "")
         if(keyPath == "contentSize"){
             if let newvalue = change?[.newKey]
             {
@@ -1031,7 +1050,28 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource{
                 heightTBMenu.constant = newsize.height
             }
         }
+        if (keyPath == "ReviewTblSize"){
+            
+            if let newvalue = change?[.newKey]
+            {
+                let newsize  = newvalue as! CGSize
+                
+                if self.reviews?.count == 0 {
+                    self.heightTBReview.constant = 300
+                } else {
+                    self.heightTBReview.constant = newsize.height + 40
+                }
+            }
+        }
+        
+     //   self.view.layoutIfNeeded()
     }
+    
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//            return 0
+//        }
+    
+    
 }
 
 //MARK: InitialLoad Fnction
@@ -1060,7 +1100,7 @@ extension ItemDetailsVC{
         viewM.isHidden = false
         viewR.isHidden = true
         viewFM.isHidden = true
-        viewButton.isHidden = false
+        viewButton.isHidden = true
         ChangebgColor(viewSelected: btnSpecialOutlet, viewUnselected: btnAboutOutlet, viewUnselected2: btnReviewOutlet,ViewUnselected3: btnFullMenuOutlet, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
     
     }
@@ -1268,10 +1308,6 @@ extension ItemDetailsVC {
 // MARK: Setup Instruction
 extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataSource , CoachMarksControllerAnimationDelegate {
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        coachMarksController.stop(immediately: true)
-    }
     
     
     private  func startInstructions() {

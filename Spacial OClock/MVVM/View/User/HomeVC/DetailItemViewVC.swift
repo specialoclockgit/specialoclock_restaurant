@@ -26,7 +26,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     @IBOutlet weak var imgViewHead: UIImageView!
     
     //MARK: Variables
-    var context = CIContext(options: nil)
+   
     var country = String()
     var city = String()
     var iconImage = String()
@@ -61,7 +61,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         lblOne.text = "\(setValue)> "
         lblHeader.text = setValue 
         imgViewHead.image = UIImage(named: setimage)
-         
+        
         if setValue == "Location" {
             location_By_RestoAPI()
         } else if setValue == "Cuisines" {
@@ -147,22 +147,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     //MARK: - Blur ImageView
     
 
-    func blurEffect(image: UIImageView) {
-
-        let currentFilter = CIFilter(name: "CIGaussianBlur")
-        let beginImage = CIImage(image: image.image!)
-        currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
-        currentFilter!.setValue(10, forKey: kCIInputRadiusKey)
-
-        let cropFilter = CIFilter(name: "CICrop")
-        cropFilter!.setValue(currentFilter!.outputImage, forKey: kCIInputImageKey)
-        cropFilter!.setValue(CIVector(cgRect: beginImage!.extent), forKey: "inputRectangle")
-
-        let output = cropFilter!.outputImage
-        let cgimg = context.createCGImage(output!, from: output!.extent)
-        let processedImage = UIImage(cgImage: cgimg!)
-        image.image = processedImage
-    }
+    
     
     //MARK: - LOCATION BY RESTO
     func location_By_RestoAPI() {
@@ -268,7 +253,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 dateFormatter.dateFormat = "dd/MM/yyyy"
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
-                    self.blurEffect(image: cell.imgView)
+                    blurEffect(image: cell.imgView)
                     cell.whiteBlurVw.isHidden = false
                     cell.closeDateVw.isHidden = false
                     if checkDatesAreInSequence(array: disableDatesArr){
@@ -332,7 +317,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 dateFormatter.dateFormat = "dd/MM/yyyy"
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
-                    self.blurEffect(image: cell.imgView)
+                   blurEffect(image: cell.imgView)
                     cell.whiteBlurVw.isHidden = false
                     cell.closeDateVw.isHidden = false
                     if checkDatesAreInSequence(array: disableDatesArr){
@@ -383,7 +368,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 dateFormatter.dateFormat = "dd/MM/yyyy"
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString) {
-                    self.blurEffect(image: cell.imgView)
+                   blurEffect(image: cell.imgView)
                     cell.whiteBlurVw.isHidden = false
                     cell.closeDateVw.isHidden = false
                     if checkDatesAreInSequence(array: disableDatesArr){
@@ -434,7 +419,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 dateFormatter.dateFormat = "dd/MM/yyyy"
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
-                    self.blurEffect(image: cell.imgView)
+                    blurEffect(image: cell.imgView)
                     cell.whiteBlurVw.isHidden = false
                     cell.closeDateVw.isHidden = false
                     if checkDatesAreInSequence(array: disableDatesArr){
@@ -512,3 +497,29 @@ extension DetailItemViewVC : UITextFieldDelegate {
     }
 }
 
+func blurEffect(image: UIImageView) {
+    var context = CIContext(options: nil)
+    let currentFilter = CIFilter(name: "CIGaussianBlur")
+    let beginImage = CIImage(image: image.image!)
+    currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
+    currentFilter!.setValue(10, forKey: kCIInputRadiusKey)
+
+    let cropFilter = CIFilter(name: "CICrop")
+    cropFilter!.setValue(currentFilter!.outputImage, forKey: kCIInputImageKey)
+    cropFilter!.setValue(CIVector(cgRect: beginImage!.extent), forKey: "inputRectangle")
+
+    let output = cropFilter!.outputImage
+    let cgimg = context.createCGImage(output!, from: output!.extent)
+    let processedImage = UIImage(cgImage: cgimg!)
+    image.image = processedImage
+}
+
+extension UIView {
+    func applyBlurEffect(_ style: UIBlurEffect.Style = .light) {
+        let blurEffect = UIBlurEffect(style: style)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(blurEffectView)
+    }
+}

@@ -36,12 +36,15 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         selectedDate = date == "" ? formatter.string(from: Date()) : date
-        viewmodel.homeRestoAPI(restobarID: Store.userDetails?.restoid ?? 0,date: date) { dataa in
-            self.modal = dataa?.rows ?? []
-            self.filterdata = dataa?.rows ?? []
-            self.lblNoOfuser.text = "Total number of bookings : \(dataa?.rows?.count ?? 0)"
-            self.tableVW.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.viewmodel.homeRestoAPI(restobarID: Store.userDetails?.restoid ?? 0,date: self.selectedDate ?? "") { dataa in
+                self.modal = dataa?.rows ?? []
+                self.filterdata = dataa?.rows ?? []
+                self.lblNoOfuser.text = "Total number of bookings : \(dataa?.rows?.count ?? 0)"
+                self.tableVW.reloadData()
+            }
         }
+        
     }
     
     //MARK: - ACTIONS
