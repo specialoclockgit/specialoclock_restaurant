@@ -132,7 +132,7 @@ struct AllBarsResto: Codable {
     let userID: Int?
     let shortDescription: String?
     let status: Int?
-    let openTime: String?
+    let openTime,disable_dates: String?
     let closeTime: String?
     let type, categoryID, cuisineID, themesRestrorantID: Int?
     let isBlocked: Int?
@@ -143,7 +143,7 @@ struct AllBarsResto: Codable {
     var offerTimings: [OfferTiminghome]?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, location, country, state, city, latitude, longitude
+        case id, name, location, country, state, city, latitude, longitude,disable_dates
         case userID = "user_id"
         case shortDescription = "short_description"
         case status,offers
@@ -185,6 +185,7 @@ struct AllBarsResto: Codable {
         self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage)
         self.commission = try container.decodeIfPresent(String.self, forKey: .commission)
         self.avgRating = try container.decodeIfPresent(Int.self, forKey: .avgRating)
+        self.disable_dates = try container.decodeIfPresent(String.self, forKey: .disable_dates)
     }
 }
 

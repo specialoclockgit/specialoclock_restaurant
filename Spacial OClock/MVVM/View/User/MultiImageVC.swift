@@ -47,7 +47,7 @@ extension MultiImageVC : UICollectionViewDelegate, UICollectionViewDataSource, U
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MultiImageCVC", for: indexPath) as? MultiImageCVC else {
             return UICollectionViewCell()
         }
-        let imageIndex = (imageURL) + (imgArr[indexPath.row].replacingOccurrences(of: " ", with: "%20") )
+        let imageIndex = (imgArr[indexPath.row].replacingOccurrences(of: " ", with: "%20") )
         cell.imgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.imgVw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
         return cell

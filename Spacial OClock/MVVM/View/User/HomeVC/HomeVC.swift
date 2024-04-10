@@ -137,14 +137,14 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                    marker.userData = returnedPlace
                    self.gmsMapView.animate(to: camera)
                }
-//               if self.nearBy.count == 0 {
-//                   let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
-//                   let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
-//                   gmsMapView.animate(to: camera1)
-//               } else {
-//                   let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 16)
-//                   gmsMapView.animate(to: camera2)
-//               }
+               if self.nearBy.count == 0 {
+                   let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
+                   let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
+                   gmsMapView.animate(to: camera1)
+               } else {
+                   let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 16)
+                   gmsMapView.animate(to: camera2)
+               }
            }
            
        }
@@ -434,18 +434,18 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
                 cell.isCellSelected = true
                 cell.cuisine = sectionArray[indexPath.section].objArray as? [Cuisine] ?? []
                 cell.collView.reloadData()
-            }else if sectionArray[indexPath.section].name == "Category"{
+            } else if sectionArray[indexPath.section].name == "Category"{
                 cell.isCellSelected = true
                 cell.category = sectionArray[indexPath.section].objArray as? [Category] ?? []
                 cell.collView.reloadData()
-            }else if sectionArray[indexPath.section].name == "Popular" {
+            } else if sectionArray[indexPath.section].name == "Popular" {
                 //cell.isCellSelected = true
                 cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
-            }else if sectionArray[indexPath.section].name == "Theme" {
+            } else if sectionArray[indexPath.section].name == "Theme" {
                 cell.themeArr = sectionArray[indexPath.section].objArray as? [ThemeData] ?? []
                 cell.collView.reloadData()
-            }else if sectionArray[indexPath.section].name == "A-Z" {
+            } else if sectionArray[indexPath.section].name == "A-Z" {
                 cell.allresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
             }
@@ -466,7 +466,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
         }else if sectionArray[indexPath.section].name == "A-Z"{
             return CGFloat(300)
         }else{
-            return CGFloat(260.0)
+            return CGFloat(280)//260
         }
     }
     
@@ -509,12 +509,22 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Popular" :
-            let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
-            screen.setvalue = sectionArray[sender.tag].name ?? ""
-            screen.all_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
-            screen.getcity = self.getcity
-            screen.getcountry = self.getcountry
-            self.navigationController?.pushViewController(screen, animated: true)
+//            let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
+//            screen.setvalue = sectionArray[sender.tag].name ?? ""
+//            screen.all_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+//            screen.getcity = self.getcity
+//            screen.getcountry = self.getcountry
+//            self.navigationController?.pushViewController(screen, animated: true)
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            vc.highilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.filterHighilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.lblName =  ""
+            vc.setValue = "Popular"
+            vc.setimage = "Popular"
+            vc.country = self.getcountry
+            vc.city = self.getcity
+            self.navigationController?.pushViewController(vc, animated: true)
             
         case "Theme" :
             let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
@@ -526,12 +536,24 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "A-Z" :
-            let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
-            screen.setvalue = sectionArray[sender.tag].name ?? ""
-            screen.highily_rated_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
-            screen.getcity = self.getcity
-            screen.getcountry = self.getcountry
-            self.navigationController?.pushViewController(screen, animated: true)
+//            let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
+//            screen.setvalue = sectionArray[sender.tag].name ?? ""
+//            screen.highily_rated_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+//            screen.getcity = self.getcity
+//            screen.getcountry = self.getcountry
+//            self.navigationController?.pushViewController(screen, animated: true)
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            vc.allBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.filterAllBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.lblName =  ""
+            vc.setValue = "A-Z"
+            vc.setimage = "9411889"
+            vc.country = self.getcountry
+            vc.city = self.getcity
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+            
         default:
             debugPrint("default btnSeeMoreAct")
         }

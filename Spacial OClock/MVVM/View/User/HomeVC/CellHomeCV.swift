@@ -36,12 +36,17 @@ class CellHomeCV: UICollectionViewCell {
     @IBOutlet weak var lblTotalRestaurant : UILabel!
     @IBOutlet weak var btnNext : UIButton!
     @IBOutlet weak var bgView : UIView!
+    @IBOutlet weak var view1: UIView!
+    @IBOutlet weak var view2: UIView!
+    @IBOutlet weak var lblRestName : UILabel!
+    @IBOutlet weak var lblRestLoc :  UILabel!
+    @IBOutlet weak var lblRestTiming: UILabel!
     //MARK: Variables
      var cellDelegate  : CellHomeCVDelegate?
     var offerTimings: [OfferTiminghome]?
     override func awakeFromNib() {
         super.awakeFromNib()
-      //  blurEffect(image: self.blurImgVW)
+      
        // bgView.applyBlurEffect(.dark)
         stackHeight.constant = 0
         viewReview.layer.cornerRadius = 10
@@ -82,7 +87,7 @@ extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.size.width / 3) - 6, height: 60)
+        return CGSize(width: (collectionView.frame.size.width / 4) - 6, height: 60)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 12

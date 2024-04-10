@@ -28,7 +28,7 @@ let baseURL = "https://app.specialoclock.com/api/"
 let imageURL = "https://app.specialoclock.com/"
 
 let imageBaseURL =  "https://app.specialoclock.com/assets/images/"
-
+let menuImgURL = "https://app.specialoclock.com/uploads/"
 let productImgURL = "https://app.specialoclock.com/assets/img/"
 
 

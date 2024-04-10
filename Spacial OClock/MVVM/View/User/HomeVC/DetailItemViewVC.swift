@@ -43,6 +43,11 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     var filtertheme : [themeRestolistModalBody]?
     var categoryModal : [CategoryByRModalBody]?
     var filterCategory : [CategoryByRModalBody]?
+    var highilyRatedBarsRestos : [AllBarsResto]?
+    var filterHighilyRatedBarsRestos : [AllBarsResto]?
+    var allBarsRestos : [AllBarsResto]?
+    var filterAllBarsRestos : [AllBarsResto]?
+    
     var lblName = ""
     var setimage = ""
     var setValue = ""
@@ -55,7 +60,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         txtFldSearch.delegate = self
         self.type = Store.screenType ?? 1
         //UserDefaults.standard.integer(forKey: "dineDrinkStatus")
-        CollectionView.showAnimatedGradientSkeleton()
+       
         print(cusinessID)
         lblTwo.text = lblName
         lblOne.text = "\(setValue)> "
@@ -63,15 +68,22 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         imgViewHead.image = UIImage(named: setimage)
         
         if setValue == "Location" {
+            CollectionView.showAnimatedGradientSkeleton()
             location_By_RestoAPI()
         } else if setValue == "Cuisines" {
+            CollectionView.showAnimatedGradientSkeleton()
             get_resto_list()
         } else if setValue == "Category" {
+            CollectionView.showAnimatedGradientSkeleton()
             fetch_Category_REsto()
         } else if setValue == "Theme" {
+            CollectionView.showAnimatedGradientSkeleton()
             theme_Resto_API()
         } else if setValue == "Popular"{
             
+        } else if setValue == "A-Z"{
+//            CollectionView.stopSkeletonAnimation()
+//            self.CollectionView.reloadData()
         }
     }
     
@@ -217,6 +229,20 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 return filtercusin?.count ?? 0
             }
             
+        } else if setValue == "Popular"{
+            if filterHighilyRatedBarsRestos?.count == 0 {
+                collectionView.setNoDataMessage("No data found")
+            } else {
+                collectionView.backgroundView = nil
+                return filterHighilyRatedBarsRestos?.count ?? 0
+            }
+        }else if setValue == "A-Z"{
+            if filterAllBarsRestos?.count == 0 {
+                collectionView.setNoDataMessage("No data found")
+            } else {
+                collectionView.backgroundView = nil
+                return filterAllBarsRestos?.count ?? 0
+            }
         } else {
             if filtertheme?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
@@ -388,7 +414,110 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
 
             
             
-        } else {
+        }
+        else if setValue == "Popular" {
+            let data = filterHighilyRatedBarsRestos?[indexPath.row]
+            let imageIndex = (imageURL) + (data?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
+            cell.lblfirstLocaton.text = data?.city ?? ""
+            cell.lblLocation.text = data?.location ?? ""
+            cell.lblName.text = data?.name?.capitalized ?? ""
+            cell.lblDiscription.text = "\(data?.openTime ?? "") - " + "\(data?.closeTime ?? "")"
+            cell.lblRaiting.text = "\(data?.avgRating ?? 0)"
+            cell.cosmosView.rating = Double(data?.avgRating ?? 0)
+            let fetchresto = data?.offerTimings ?? []
+          //  cell.lblRaitingCount.text = "(\(data?.ratingCount?.description ?? "0"))"
+           // cell.offerTimings = fetchresto
+            cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
+            cell.layoutIfNeeded()
+            cell.offerCollection.reloadData()
+            cell.callBack = { [weak self] ID in
+
+                print(ID)
+                let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                vc.ProductID = data?.id ?? 0
+                vc.selectedOfferId = ID
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+
+            if let disable_dates = data?.disable_dates,disable_dates != "" {
+                let disableDatesArr = disable_dates.components(separatedBy: ",")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy"
+                let todayDateString = dateFormatter.string(from: Date())
+                if disableDatesArr.contains(todayDateString){
+                    blurEffect(image: cell.imgView)
+                    cell.whiteBlurVw.isHidden = false
+                    cell.closeDateVw.isHidden = false
+                    if checkDatesAreInSequence(array: disableDatesArr){
+                        cell.lblcloseDate.text = "Closed until \(formatDate(inputDate: disableDatesArr.last ?? "") ?? "")"
+                    }else {
+                        cell.lblcloseDate.text = "Closed today"
+                    }
+                } else {
+                    cell.whiteBlurVw.isHidden = true
+                    cell.closeDateVw.isHidden = true
+                }
+
+            }else {
+                cell.whiteBlurVw.isHidden = true
+                cell.closeDateVw.isHidden = true
+            }
+
+        }
+        else if setValue == "A-Z"{
+            let data = filterAllBarsRestos?[indexPath.row]
+            let imageIndex = (imageURL) + (data?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
+            cell.lblfirstLocaton.text = data?.city ?? ""
+            cell.lblLocation.text = data?.location ?? ""
+            cell.lblName.text = data?.name?.capitalized ?? ""
+            cell.lblDiscription.text = "\(data?.openTime ?? "") - " + "\(data?.closeTime ?? "")"
+            cell.lblRaiting.text = "\(data?.avgRating ?? 0)"
+            cell.cosmosView.rating = Double(data?.avgRating ?? 0)
+            let fetchresto = data?.offerTimings ?? []
+          //  cell.lblRaitingCount.text = "(\(data?.ratingCount?.description ?? "0"))"
+           // cell.offerTimings = fetchresto
+            cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
+            cell.layoutIfNeeded()
+            cell.offerCollection.reloadData()
+            cell.callBack = { [weak self] ID in
+
+                print(ID)
+                let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                vc.ProductID = data?.id ?? 0
+                vc.selectedOfferId = ID
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+
+            if let disable_dates = data?.disable_dates,disable_dates != "" {
+                let disableDatesArr = disable_dates.components(separatedBy: ",")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy"
+                let todayDateString = dateFormatter.string(from: Date())
+                if disableDatesArr.contains(todayDateString){
+                    blurEffect(image: cell.imgView)
+                    cell.whiteBlurVw.isHidden = false
+                    cell.closeDateVw.isHidden = false
+                    if checkDatesAreInSequence(array: disableDatesArr){
+                        cell.lblcloseDate.text = "Closed until \(formatDate(inputDate: disableDatesArr.last ?? "") ?? "")"
+                    }else {
+                        cell.lblcloseDate.text = "Closed today"
+                    }
+                } else {
+                    cell.whiteBlurVw.isHidden = true
+                    cell.closeDateVw.isHidden = true
+                }
+
+            }else {
+                cell.whiteBlurVw.isHidden = true
+                cell.closeDateVw.isHidden = true
+            }
+
+        }
+        else {
             let imageIndex = (imageURL) + (filtertheme?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.imgView.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
@@ -444,13 +573,13 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
         if setValue == "Location" {
-            return filterlocations?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 270) : CGSize(width: collectionView.frame.width, height: 320)
+            return filterlocations?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 250) : CGSize(width: collectionView.frame.width, height: 250)
         } else if setValue == "Category" {
-            return filterCategory?[indexPath.row].offers?.count == 0 ? CGSize(width: collectionView.frame.width, height: 270) : CGSize(width: collectionView.frame.width, height: 320)
+            return filterCategory?[indexPath.row].offers?.count == 0 ? CGSize(width: collectionView.frame.width, height: 250) : CGSize(width: collectionView.frame.width, height: 250)
         } else if setValue == "Cuisines" {
-            return filtercusin?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 270) :CGSize(width: collectionView.frame.width, height: 320)
+            return filtercusin?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 250) :CGSize(width: collectionView.frame.width, height: 250)
         } else {
-            return filtertheme?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 270) : CGSize(width: collectionView.frame.width, height: 320)
+            return filtertheme?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 250) : CGSize(width: collectionView.frame.width, height: 250)
         }
     }
     
@@ -467,7 +596,15 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filtercusin?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
-        } else {
+        } else if setValue == "Popular"{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+            vc.ProductID = filterHighilyRatedBarsRestos?[indexPath.row].id ?? 0
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if setValue == "A-Z"{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+            vc.ProductID = filterAllBarsRestos?[indexPath.row].id ?? 0
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else {
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filtertheme?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
@@ -481,12 +618,16 @@ extension DetailItemViewVC : UITextFieldDelegate {
         let resultString = txtFldSearch.text ?? ""
         if (resultString.count) > 1{
             if let searchText = txtFldSearch.text {
+                filterAllBarsRestos = allBarsRestos?.filter({$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()})
+                filterHighilyRatedBarsRestos = highilyRatedBarsRestos?.filter({$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()})
                 filtercusin = modal?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
                 filterCategory = categoryModal?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
                 filterlocations = location?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
                 filtertheme = thememodla?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
             }
         } else {
+            filterAllBarsRestos = allBarsRestos
+            filterHighilyRatedBarsRestos = highilyRatedBarsRestos
             filtercusin = modal
             filterCategory = categoryModal
             filterlocations = location

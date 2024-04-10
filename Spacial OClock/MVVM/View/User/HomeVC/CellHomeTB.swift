@@ -43,24 +43,18 @@ class CellHomeTB: UITableViewCell {
         //value(forKey: "dineDrinkStatus") as? Int
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-     //   self.status = UserDefaults.standard.value(forKey: "dineDrinkStatus") as? Int ?? 1
-      
-       // print("status in cell \(self.status)","status in default \(UserDefaults.standard.value(forKey: "dineDrinkStatus"))")
-       
-       
         let nib = UINib(nibName: Cell.CellHomeCV, bundle: nil)
         self.collView.register(nib, forCellWithReuseIdentifier: Cell.CellHomeCV)
         collView.delegate = self
         collView.dataSource = self
-//        isCellSelected = true
+        
+        if let layout = collView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 0
+        }
+        
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
-    
 }
 extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
@@ -86,6 +80,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellHomeCV, for: indexPath) as! CellHomeCV
         cell.btnNext.isUserInteractionEnabled = false
         if objArray[collView.tag].name == "Cuisines" {
+            cell.view1.isHidden = false
+            cell.view2.isHidden = true
             let image = "\(self.cuisine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.collHeight.constant = 0
@@ -100,6 +96,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
 //            cell.lblRating.text = self.cuisine[indexPath.row].
             cell.viewReview.isHidden = true
         } else  if objArray[collView.tag].name == "Category" {
+            cell.view1.isHidden = false
+            cell.view2.isHidden = true
             let image = "\(self.category[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.collHeight.constant = 0
@@ -111,6 +109,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
             cell.viewReview.isHidden = true
         } else if objArray[collView.tag].name == "Location" {
+            cell.view1.isHidden = false
+            cell.view2.isHidden = true
             cell.collHeight.constant = 0
             cell.imgLocaiton.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblLocationName.text = self.location[indexPath.row].locality_area
@@ -122,7 +122,11 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.viewReview.isHidden = true
             //cell.lblRating.text = self.location[indexPath.row].
         } else if objArray[collView.tag].name == "Popular" {
-           
+            cell.view1.isHidden = true
+            cell.view2.isHidden = false
+            cell.lblRestName.text = heishtresto[indexPath.row].name ?? ""
+            cell.lblRestLoc.text = heishtresto[indexPath.row].city ?? ""
+            cell.lblRestTiming.text = "\(heishtresto[indexPath.row].openTime ?? "") - \(heishtresto[indexPath.row].closeTime ?? "")"
             let celldata = heishtresto[indexPath.row].offerTimings
             cell.collHeight.constant = heishtresto[indexPath.row].offerTimings?.count == 0 ? 0 : 60
             cell.layoutIfNeeded()
@@ -200,6 +204,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         } else if objArray[collView.tag].name == "Theme" {
             cell.collHeight.constant = 0
             cell.viewReview.isHidden = true
+            cell.view1.isHidden = false
+            cell.view2.isHidden = true
             let image = "\(self.themeArr[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
@@ -212,7 +218,11 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
             
         } else if objArray[collView.tag].name == "A-Z" {
-            
+            cell.view1.isHidden = true
+            cell.view2.isHidden = false
+            cell.lblRestName.text = allresto[indexPath.row].name ?? ""
+            cell.lblRestLoc.text = allresto[indexPath.row].city ?? ""
+            cell.lblRestTiming.text = "\(allresto[indexPath.row].openTime ?? "") - \(allresto[indexPath.row].closeTime ?? "")"
             let celldata = allresto[indexPath.row].offerTimings
             cell.lblRating.text = "\(allresto[indexPath.row].avgRating ?? 0)"
             cell.offerTimings = celldata
@@ -290,12 +300,12 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if objArray[collView.tag].name == "A-Z"{
-            return CGSize(width: (collectionView.frame.size.width / 1.9), height: 260)
-        }else if objArray[collView.tag].name == "Popular"{
-            return CGSize(width: (collectionView.frame.size.width / 1.9), height: 260)
-        }else{
-            return CGSize(width: (collectionView.frame.size.width / 1.9), height: 208.0)
+        if objArray[collView.tag].name == "A-Z" {
+            return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 260)
+        } else if objArray[collView.tag].name == "Popular" {
+            return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 260)
+        } else {
+            return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 228)
         }
         
     }

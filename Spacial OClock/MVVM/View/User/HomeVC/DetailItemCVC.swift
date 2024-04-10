@@ -24,6 +24,7 @@ class DetailItemCVC: UICollectionViewCell {
     @IBOutlet weak var closeDateVw: UIView!
     @IBOutlet weak var lblcloseDate: UILabel!
     @IBOutlet weak var lblRaitingCount: UILabel!
+    @IBOutlet weak var lblLocDistance: UILabel!
     var callBack: ((Int)->())?
     var screen = Store.screenType
     var offerTimings: [TimeSlotoffer]?

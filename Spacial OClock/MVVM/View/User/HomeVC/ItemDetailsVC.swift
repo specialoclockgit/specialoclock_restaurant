@@ -138,7 +138,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         txtFldDate.delegate = self
         showDatePicker()
         
-        tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
+     //   tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
         tbMenu.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         initialLoad()
         img.image = imgName
@@ -264,7 +264,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     }
                     let index = IndexPath(row: self.isselectedoffer, section: 0)
                     self.collViewMenu.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
-                    
+                    self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                     self.selectedOfferId = 0
                     self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
                     let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
@@ -291,9 +291,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     
     @objc func mainImageTapped (_ sender: UITapGestureRecognizer) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-        vc.settype = 0
-        vc.setImage = (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "MultiImageVC") as! MultiImageVC
+        var imgArr = self.images?.map({"\(imageURL)\($0.image ?? "")"}) ?? []
+        let mainImg = "\(imageURL)\(self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")"
+        imgArr.insert(mainImg, at: 0)
+        vc.imgArr = imgArr
+        vc.index = 0
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -485,7 +488,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             viewM.isHidden = false
             viewR.isHidden = true
             viewFM.isHidden = true
-            viewButton.isHidden = false
+            self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
+            //viewButton.isHidden = false
             btnBookStatus = 0
             btnBook.setTitle("Book", for: .normal)
             //MARK: Set Menu tabel Data
@@ -506,7 +510,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             viewButton.isHidden = true
             //self.modal?.userID == Store.userDetails?.id ? true : false
             btnBookStatus = 1
-            tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
+           // tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
             btnBook.setTitle("Write a Review", for: .normal)
             debugPrint("2")
     
@@ -691,7 +695,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             if status == 1{
                 cell.lblSpecial.isHidden = false
                 if indexPath.row == isselectedoffer{
-                    self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
+                    //self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                   //  cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
@@ -720,7 +724,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             } else {
                 cell.lblSpecial.isHidden = true
                 if indexPath.row == isselectedoffer{
-                    self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
+                   // self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                     
                   //  cell.img.image = UIImage(named: "greenRectangle")
                     cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
@@ -757,9 +761,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
             if status == 1{
-                return CGSize (width: 100, height: 200.0)
+                return CGSize (width: (collViewMenu.frame.size.width / 3.2) - 4 , height: 200.0)
             }else{
-                return CGSize (width: 100, height: 162)
+                return CGSize (width: (collViewMenu.frame.size.width / 3.2) - 4, height: 162)
             }
             
         } else if collectionView == viewFullMenu {
@@ -785,20 +789,29 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
 //            self.navigationController?.pushViewController(vc, animated: true)
             
             let vc = storyboard?.instantiateViewController(withIdentifier: "MultiImageVC") as! MultiImageVC
-            vc.imgArr = self.images?.map({$0.image ?? ""}) ?? []
-            vc.index = indexPath.row
+            var imgArr = self.images?.map({"\(imageURL)\($0.image ?? "")"}) ?? []
+            let mainImg = "\(imageURL)\(self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")"
+            imgArr.insert(mainImg, at: 0)
+            vc.imgArr = imgArr
+            vc.index = indexPath.row + 1
             self.navigationController?.pushViewController(vc, animated: true)
             
         }else if collectionView == viewFullMenu{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-            vc.settype = 1
-            vc.url = self.modalfullmenu?[indexPath.row].baseurl ?? ""
-            vc.setImage = self.modalfullmenu?[indexPath.row].image ?? ""
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "MultiImageVC") as! MultiImageVC
+            vc.imgArr = self.modalfullmenu?.map({"\($0.baseurl ?? "")\($0.image ?? "")"}) ?? []
+            vc.index = indexPath.row
             self.navigationController?.pushViewController(vc, animated: true)
+//            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+//            vc.settype = 1
+//            vc.url = self.modalfullmenu?[indexPath.row].baseurl ?? ""
+//            vc.setImage = self.modalfullmenu?[indexPath.row].image ?? ""
+//            self.navigationController?.pushViewController(vc, animated: true)
         }
         
-        if collectionView == collViewMenu{
+        if collectionView == collViewMenu {
             _ = indexPath.row
+            self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
             if status == 1 {
                 
                 if collectionView == collViewMenu{
@@ -1012,24 +1025,24 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
         }
         
     }
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        DispatchQueue.main.async {
-//            if tableView == self.tbReview {
-//                if self.reviews?.count == 0 {
-//                    self.heightTBReview.constant = 300
-//                   // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
-//                   // self.imgViewGifReview.isHidden = false
-//                } else {
-//                    //self.imgViewGifReview.isHidden = true
-//                    self.heightTBReview.constant = self.tbReview.contentSize.height
-//                }
-//                self.view.layoutIfNeeded()
-//                self.tbReview.layoutIfNeeded()
-//            }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            if tableView == self.tbReview {
+                if self.reviews?.count == 0 {
+                    self.heightTBReview.constant = 300
+                   // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
+                   // self.imgViewGifReview.isHidden = false
+                } else {
+                    //self.imgViewGifReview.isHidden = true
+                    self.heightTBReview.constant = self.tbReview.contentSize.height
+                }
+                self.view.layoutIfNeeded()
+                self.tbReview.layoutIfNeeded()
+            }
 //
 //            //self.heightTBMenu.constant = self.tbMenu.contentSize.height
-//        }
-//    }
+       }
+   }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbMenu{
             let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
@@ -1050,19 +1063,18 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                 heightTBMenu.constant = newsize.height
             }
         }
-        if (keyPath == "ReviewTblSize"){
-            
-            if let newvalue = change?[.newKey]
-            {
-                let newsize  = newvalue as! CGSize
-                
-                if self.reviews?.count == 0 {
-                    self.heightTBReview.constant = 300
-                } else {
-                    self.heightTBReview.constant = newsize.height + 40
-                }
-            }
-        }
+//        if (keyPath == "ReviewTblSize"){
+//            if let newvalue = change?[.newKey]
+//            {
+//                let newsize  = newvalue as! CGSize
+//
+//                if self.reviews?.count == 0 {
+//                    self.heightTBReview.constant = 300
+//                } else {
+//                    self.heightTBReview.constant = newsize.height + 40
+//                }
+//            }
+//        }
         
      //   self.view.layoutIfNeeded()
     }

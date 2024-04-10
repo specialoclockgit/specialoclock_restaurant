@@ -28,7 +28,7 @@
                         <rect key="frame" x="6" y="2" width="308" height="141"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="BeO-yV-8iZ">
-                                <rect key="frame" x="0.0" y="35" width="308" height="104"/>
+                                <rect key="frame" x="0.0" y="29" width="308" height="110"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="I1W-Cn-slL">
                                     <size key="itemSize" width="128" height="128"/>
@@ -86,11 +86,12 @@
                             <constraint firstItem="BeO-yV-8iZ" firstAttribute="leading" secondItem="4rF-cC-cKo" secondAttribute="leading" id="oKl-ov-5Mq"/>
                             <constraint firstItem="zhn-Fu-vNu" firstAttribute="centerY" secondItem="G8C-JF-JJe" secondAttribute="centerY" id="qVu-pB-NhD"/>
                             <constraint firstAttribute="trailing" secondItem="zhn-Fu-vNu" secondAttribute="trailing" constant="10" id="vHL-Rf-slt"/>
-                            <constraint firstItem="BeO-yV-8iZ" firstAttribute="top" secondItem="xfX-6R-Pdg" secondAttribute="bottom" constant="10" id="z82-S2-dcd"/>
+                            <constraint firstItem="BeO-yV-8iZ" firstAttribute="top" secondItem="xfX-6R-Pdg" secondAttribute="bottom" constant="4" id="z82-S2-dcd"/>
                             <constraint firstAttribute="trailing" secondItem="BeO-yV-8iZ" secondAttribute="trailing" id="zag-4s-jBo"/>
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="4rF-cC-cKo" secondAttribute="bottom" constant="2" id="BPu-PK-o4n"/>
                     <constraint firstItem="4rF-cC-cKo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="Q2u-tY-0VD"/>
