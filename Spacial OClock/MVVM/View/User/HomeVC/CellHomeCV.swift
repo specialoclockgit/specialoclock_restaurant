@@ -44,6 +44,7 @@ class CellHomeCV: UICollectionViewCell {
     //MARK: Variables
      var cellDelegate  : CellHomeCVDelegate?
     var offerTimings: [OfferTiminghome]?
+    var callBack: ((Int)->())?
     override func awakeFromNib() {
         super.awakeFromNib()
       
@@ -85,6 +86,10 @@ extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         return cell
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.callBack?(self.offerTimings?[indexPath.row].id ?? 0)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (collectionView.frame.size.width / 4) - 6, height: 60)

@@ -761,9 +761,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
             if status == 1{
-                return CGSize (width: (collViewMenu.frame.size.width / 3.2) - 4 , height: 200.0)
+                return CGSize (width: (collViewMenu.frame.size.width / 3.4) - 12 , height: 200.0)
             }else{
-                return CGSize (width: (collViewMenu.frame.size.width / 3.2) - 4, height: 162)
+                return CGSize (width: (collViewMenu.frame.size.width / 3.4) - 12, height: 162)
             }
             
         } else if collectionView == viewFullMenu {
@@ -1236,10 +1236,7 @@ extension ItemDetailsVC : CLLocationManagerDelegate{
 
 func calCulateDiscount (actualPrice: Double,discount: Double) -> Double {
     let result = (actualPrice * discount) / 100
-    //(actualPrice / 100) * discount
     let finalAmount = actualPrice - result
-    print("oferr data----------",actualPrice,discount,finalAmount)
-    
     return (finalAmount * 100).rounded() / 100
 }
 

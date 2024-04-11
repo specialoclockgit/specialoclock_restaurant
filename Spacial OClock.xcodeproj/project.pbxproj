@@ -176,10 +176,10 @@
 		C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */; };
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
 		EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */; };
-		EB2C785C2BC6AAF90011678B /* 01 (3).png in Resources */ = {isa = PBXBuildFile; fileRef = EB2C785B2BC6AAF90011678B /* 01 (3).png */; };
-		EB33BE002BC7C307009A1D7F /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB33BDFF2BC7C307009A1D7F /* nodataFound.gif */; };
+		EB2C785C2BC6AAF90011678B /* 01 (4).png in Resources */ = {isa = PBXBuildFile; fileRef = EB2C785B2BC6AAF90011678B /* 01 (4).png */; };
 		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
 		EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */; };
+		EB6A78B72BC7F2F7001BA517 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB6A78B62BC7F2F7001BA517 /* nodataFound.gif */; };
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
 		EBAB7ADE2BB6CCA80037676D /* MultiImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */; };
@@ -477,10 +477,10 @@
 		C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailTVC.swift; sourceTree = "<group>"; };
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
-		EB2C785B2BC6AAF90011678B /* 01 (3).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01 (3).png"; sourceTree = "<group>"; };
-		EB33BDFF2BC7C307009A1D7F /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
+		EB2C785B2BC6AAF90011678B /* 01 (4).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01 (4).png"; sourceTree = "<group>"; };
 		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
 		EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeOfferCVC.xib; sourceTree = "<group>"; };
+		EB6A78B62BC7F2F7001BA517 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
 		EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiImageVC.swift; sourceTree = "<group>"; };
@@ -929,8 +929,8 @@
 		C284FB2C2A402A0D006949B4 = {
 			isa = PBXGroup;
 			children = (
-				EB33BDFF2BC7C307009A1D7F /* nodataFound.gif */,
-				EB2C785B2BC6AAF90011678B /* 01 (3).png */,
+				EB6A78B62BC7F2F7001BA517 /* nodataFound.gif */,
+				EB2C785B2BC6AAF90011678B /* 01 (4).png */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
 				C284FB372A402A0D006949B4 /* Spacial OClock */,
 				C284FB4E2A402A0E006949B4 /* Spacial OClockTests */,
@@ -1370,7 +1370,7 @@
 				C284FB322A402A0D006949B4 /* Frameworks */,
 				C284FB332A402A0D006949B4 /* Resources */,
 				9BFA4CB4D600BEC57553F8B9 /* [CP] Embed Pods Frameworks */,
-				3E507C6D49ED9B388A9FFDE0 /* [CP] Copy Pods Resources */,
+				3D7087C066C6584C32EDED2F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1409,7 +1409,7 @@
 				C284FB522A402A0E006949B4 /* Frameworks */,
 				C284FB532A402A0E006949B4 /* Resources */,
 				585FAB0F50AA673AE7EDA51E /* [CP] Embed Pods Frameworks */,
-				D084E467ADA7905D1DEE2D8F /* [CP] Copy Pods Resources */,
+				258B6285C65B90718940123B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1474,9 +1474,8 @@
 				A5B1873A2A66971F00C3E0A7 /* ASTRAL SISTERS.TTF in Resources */,
 				A5046FF02A4DACB800C23627 /* CellNotificationVC.xib in Resources */,
 				A58CCC9B2A5EAB8900DFA478 /* Poppins-Regular.ttf in Resources */,
-				EB2C785C2BC6AAF90011678B /* 01 (3).png in Resources */,
+				EB2C785C2BC6AAF90011678B /* 01 (4).png in Resources */,
 				C284FB6C2A402D6F006949B4 /* RestoBar.storyboard in Resources */,
-				EB33BE002BC7C307009A1D7F /* nodataFound.gif in Resources */,
 				A5947AFE2A5543E900519039 /* CellMyInvoicePaidTV.xib in Resources */,
 				A5046FE22A4D6EEB00C23627 /* CellMenuTV.xib in Resources */,
 				A5947AFA2A55416800519039 /* CellMyInvoicePendingTV.xib in Resources */,
@@ -1500,6 +1499,7 @@
 				A529D2E42A5FC63400E416CD /* CellBarOfferTV.xib in Resources */,
 				A58CCC982A5EAB5D00DFA478 /* Poppins-Medium.ttf in Resources */,
 				EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */,
+				EB6A78B72BC7F2F7001BA517 /* nodataFound.gif in Resources */,
 				C2661A892A4B156C00EEE266 /* CellImageViewCB.xib in Resources */,
 				A5AC1FB42A4C57CA007EF488 /* CellItemDetailReviewTB.xib in Resources */,
 			);
@@ -1544,7 +1544,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3E507C6D49ED9B388A9FFDE0 /* [CP] Copy Pods Resources */ = {
+		258B6285C65B90718940123B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3D7087C066C6584C32EDED2F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1615,23 +1632,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spacial OClock/Pods-Spacial OClock-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D084E467ADA7905D1DEE2D8F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E980E36DC42FA8EAC4070218 /* [CP] Check Pods Manifest.lock */ = {
@@ -2086,6 +2086,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ClientUserProfile;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2132,6 +2136,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ClientUserProfile;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

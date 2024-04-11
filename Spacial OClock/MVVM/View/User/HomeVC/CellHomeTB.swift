@@ -229,6 +229,13 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.collHeight.constant = celldata?.count == 0 ? 0 : 60
             cell.collVw.reloadData()
             cell.layoutIfNeeded()
+            cell.callBack = { restId in
+                let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+              //  let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+//                vc.ProductID = self?.allresto?[indexPath.row].id ?? 0
+//                vc.selectedOfferId = restId
+//                self?.navigationController?.pushViewController(vc, animated: true)
+            }
 //            if allresto[indexPath.row].offerTimings?.count == 1 {
 //                cell.stackHeight.constant = 46
 //                cell.viewOffer1.isHidden = false

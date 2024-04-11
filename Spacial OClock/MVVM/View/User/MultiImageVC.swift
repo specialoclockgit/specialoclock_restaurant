@@ -33,7 +33,7 @@ class MultiImageVC: UIViewController, UIScrollViewDelegate  {
         pgController.currentPage = Int(index)
     }
     
-
+    
     
     
     
@@ -58,30 +58,43 @@ extension MultiImageVC : UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
 }
-class MultiImageCVC : UICollectionViewCell {
+class MultiImageCVC : UICollectionViewCell, UIScrollViewDelegate {
     @IBOutlet weak var imgVw : UIImageView!
-    private var scale: CGFloat = 1.0
-    private let minScale: CGFloat = 1.0
-    private let maxScale: CGFloat = 3.0
+    @IBOutlet weak var scrollVw: UIScrollView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
         imgVw.addGestureRecognizer(pinchGesture)
         imgVw.isUserInteractionEnabled = true
+        scrollVw.minimumZoomScale = 1.0
+        scrollVw.maximumZoomScale = 3.0
+        scrollVw.delegate = self
     }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imgVw
+    }
+    
     @objc private func handlePinchGesture(_ gestureRecognizer: UIPinchGestureRecognizer) {
-        guard gestureRecognizer.view != nil else { return }
-        if gestureRecognizer.state == .changed {
-            let newScale = scale * gestureRecognizer.scale
-            if newScale >= minScale && newScale <= maxScale {
-                scale = newScale
-                UIView.animate(withDuration: 0.2) {
-                    self.imgVw.transform = CGAffineTransform(scaleX: self.scale, y: self.scale)
-                }
-            }
-            gestureRecognizer.scale = 1.0
-        }
+//        if gestureRecognizer.state == .changed {
+//            let currentScale = scrollVw.zoomScale
+//            var newScale = currentScale * gestureRecognizer.scale
+//            newScale = min(max(newScale, scrollVw.minimumZoomScale), scrollVw.maximumZoomScale)
+//            let zoomRect = zoomRectForScale(scale: newScale, center: gestureRecognizer.location(in: gestureRecognizer.view))
+//            scrollVw.zoom(to: zoomRect, animated: false)
+//            gestureRecognizer.scale = 1.0
+//        }
     }
+    
+  //  private func zoomRectForScale(scale: CGFloat, center: CGPoint) -> CGRect {
+//        var zoomRect = CGRect.zero
+//        zoomRect.size.height = imgVw.frame.size.height / scale
+//        zoomRect.size.width  = imgVw.frame.size.width  / scale
+//        let newCenter = imgVw.convert(center, from: scrollVw)
+//        zoomRect.origin.x = newCenter.x - (zoomRect.size.width / 2.0)
+//        zoomRect.origin.y = newCenter.y - (zoomRect.size.height / 2.0)
+//        return zoomRect
+  //  }
     
 }

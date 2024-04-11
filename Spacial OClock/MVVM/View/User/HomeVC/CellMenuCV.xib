@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -31,20 +31,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="121" height="197"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8I-dT-1gg" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
-                                <rect key="frame" x="4" y="2" width="113" height="90"/>
+                                <rect key="frame" x="4" y="2" width="113" height="92"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0pc-IU-RBc">
-                                        <rect key="frame" x="4" y="20" width="105" height="50"/>
+                                        <rect key="frame" x="4" y="20" width="105" height="52"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tonight" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-FJ-upr">
-                                                <rect key="frame" x="26" y="0.0" width="53.5" height="20"/>
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
+                                                <rect key="frame" x="24" y="0.0" width="57.5" height="21"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eH3-AV-9hM">
-                                                <rect key="frame" x="28.5" y="30" width="48" height="20"/>
-                                                <fontDescription key="fontDescription" name="Astral-Sisters" family="Astral Sisters" pointSize="20"/>
+                                                <rect key="frame" x="27.5" y="31" width="50.5" height="21"/>
+                                                <fontDescription key="fontDescription" name="Astral-Sisters" family="Astral Sisters" pointSize="21"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -74,12 +74,12 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08:00 to 8:30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zK-gD-B4f" customClass="CustomLabel" customModule="Spacial_OClock" customModuleProvider="target">
-                                <rect key="frame" x="4" y="104" width="113" height="38"/>
+                                <rect key="frame" x="4" y="106" width="113" height="38"/>
                                 <color key="backgroundColor" name="themeOrange"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="tlg-93-EUQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -98,12 +98,12 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-10%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jba-UX-6ji" customClass="CustomLabel" customModule="Spacial_OClock" customModuleProvider="target">
-                                <rect key="frame" x="4" y="154" width="113" height="38"/>
+                                <rect key="frame" x="4" y="156" width="113" height="38"/>
                                 <color key="backgroundColor" name="themeOrange"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="F4j-Yh-bRm"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -161,10 +161,10 @@
     </objects>
     <designables>
         <designable name="8zK-gD-B4f">
-            <size key="intrinsicContentSize" width="91.5" height="20"/>
+            <size key="intrinsicContentSize" width="98.5" height="21"/>
         </designable>
         <designable name="Jba-UX-6ji">
-            <size key="intrinsicContentSize" width="32.5" height="20"/>
+            <size key="intrinsicContentSize" width="34.5" height="21"/>
         </designable>
     </designables>
     <resources>
