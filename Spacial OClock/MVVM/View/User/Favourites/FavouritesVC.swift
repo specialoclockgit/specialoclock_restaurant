@@ -18,7 +18,6 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
     @IBOutlet weak var btnBack : UIButton!
     
     //MARK: - Variables
-    var arrimg = ["image1","image2","image3","image1"]
     var favViewModal = HomeViewModel()
     var modal : [favListModalBody]?
     
@@ -82,7 +81,6 @@ extension FavouritesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         cell.btnImg.addTarget(self, action: #selector(btnfavourite(_:)), for: .touchUpInside)
         cell.btnImg.tag = indexPath.row
-        //        cell.itemImg.image = UIImage(named: arrimg[indexPath.row])
         return cell
     }
     

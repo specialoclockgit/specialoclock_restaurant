@@ -307,7 +307,6 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         } else {
             return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 228)
         }
-        
     }
     
     

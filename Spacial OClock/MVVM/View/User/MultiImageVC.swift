@@ -60,5 +60,28 @@ extension MultiImageVC : UICollectionViewDelegate, UICollectionViewDataSource, U
 }
 class MultiImageCVC : UICollectionViewCell {
     @IBOutlet weak var imgVw : UIImageView!
-   
+    private var scale: CGFloat = 1.0
+    private let minScale: CGFloat = 1.0
+    private let maxScale: CGFloat = 3.0
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+        imgVw.addGestureRecognizer(pinchGesture)
+        imgVw.isUserInteractionEnabled = true
+    }
+    @objc private func handlePinchGesture(_ gestureRecognizer: UIPinchGestureRecognizer) {
+        guard gestureRecognizer.view != nil else { return }
+        if gestureRecognizer.state == .changed {
+            let newScale = scale * gestureRecognizer.scale
+            if newScale >= minScale && newScale <= maxScale {
+                scale = newScale
+                UIView.animate(withDuration: 0.2) {
+                    self.imgVw.transform = CGAffineTransform(scaleX: self.scale, y: self.scale)
+                }
+            }
+            gestureRecognizer.scale = 1.0
+        }
+    }
+    
 }

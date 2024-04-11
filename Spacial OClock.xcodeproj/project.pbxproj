@@ -177,9 +177,9 @@
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
 		EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */; };
 		EB2C785C2BC6AAF90011678B /* 01 (3).png in Resources */ = {isa = PBXBuildFile; fileRef = EB2C785B2BC6AAF90011678B /* 01 (3).png */; };
+		EB33BE002BC7C307009A1D7F /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB33BDFF2BC7C307009A1D7F /* nodataFound.gif */; };
 		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
 		EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */; };
-		EB4F37C92BB2ECD8004D5BA7 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */; };
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
 		EBAB7ADE2BB6CCA80037676D /* MultiImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */; };
@@ -478,9 +478,9 @@
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		EB2C785B2BC6AAF90011678B /* 01 (3).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01 (3).png"; sourceTree = "<group>"; };
+		EB33BDFF2BC7C307009A1D7F /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
 		EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeOfferCVC.xib; sourceTree = "<group>"; };
-		EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
 		EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiImageVC.swift; sourceTree = "<group>"; };
@@ -929,7 +929,7 @@
 		C284FB2C2A402A0D006949B4 = {
 			isa = PBXGroup;
 			children = (
-				EB4F37C82BB2ECD8004D5BA7 /* nodataFound.gif */,
+				EB33BDFF2BC7C307009A1D7F /* nodataFound.gif */,
 				EB2C785B2BC6AAF90011678B /* 01 (3).png */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
 				C284FB372A402A0D006949B4 /* Spacial OClock */,
@@ -1476,6 +1476,7 @@
 				A58CCC9B2A5EAB8900DFA478 /* Poppins-Regular.ttf in Resources */,
 				EB2C785C2BC6AAF90011678B /* 01 (3).png in Resources */,
 				C284FB6C2A402D6F006949B4 /* RestoBar.storyboard in Resources */,
+				EB33BE002BC7C307009A1D7F /* nodataFound.gif in Resources */,
 				A5947AFE2A5543E900519039 /* CellMyInvoicePaidTV.xib in Resources */,
 				A5046FE22A4D6EEB00C23627 /* CellMenuTV.xib in Resources */,
 				A5947AFA2A55416800519039 /* CellMyInvoicePendingTV.xib in Resources */,
@@ -1501,7 +1502,6 @@
 				EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */,
 				C2661A892A4B156C00EEE266 /* CellImageViewCB.xib in Resources */,
 				A5AC1FB42A4C57CA007EF488 /* CellItemDetailReviewTB.xib in Resources */,
-				EB4F37C92BB2ECD8004D5BA7 /* nodataFound.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
