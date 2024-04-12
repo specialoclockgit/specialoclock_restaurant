@@ -44,6 +44,7 @@ class CellHomeCV: UICollectionViewCell {
     //MARK: Variables
      var cellDelegate  : CellHomeCVDelegate?
     var offerTimings: [OfferTiminghome]?
+    
     var callBack: ((Int)->())?
     override func awakeFromNib() {
         super.awakeFromNib()

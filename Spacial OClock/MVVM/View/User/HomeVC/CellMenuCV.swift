@@ -16,7 +16,8 @@ class CellMenuCV: UICollectionViewCell {
     @IBOutlet weak var lblSpecial : UILabel!
     @IBOutlet weak var lblTime : UILabel!
     @IBOutlet weak var lblOffer : UILabel!
-    
+    @IBOutlet weak var percentageVw: UIView!
+    @IBOutlet weak var timingVw: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,8 +29,10 @@ class CellMenuCV: UICollectionViewCell {
 extension CellMenuCV {
     func initialLoad(){
         viewMenu.viewCornerRadius(cornerRadius: 12)
-        lblTime.lblCornerRadius(cornerRadius: 12)
-        lblOffer.lblCornerRadius(cornerRadius: 12)
+       percentageVw.viewCornerRadius(cornerRadius: 12)
+        timingVw.viewCornerRadius(cornerRadius: 12)
+        //lblTime.lblCornerRadius(cornerRadius: 12)
+        //lblOffer.lblCornerRadius(cornerRadius: 12)
     }
 }
 

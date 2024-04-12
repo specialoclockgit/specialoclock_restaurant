@@ -41,10 +41,10 @@ let publishedkey = "pk_ndhUQm9z9VVAEDQAKUjM5nQ6F690crObNnPPobC36LUWJcUKQQC/aSzj9
 var datePicker = UIDatePicker()
 
 //MARK: - root vc
-var rootVC: UIViewController?{
-    get{
+var rootVC: UIViewController? {
+    get {
         return UIApplication.shared.windows.first?.rootViewController
-    }set{
+    } set {
         UIApplication.shared.windows.first?.rootViewController = newValue
     }
 }

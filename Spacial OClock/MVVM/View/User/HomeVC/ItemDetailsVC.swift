@@ -138,7 +138,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         txtFldDate.delegate = self
         showDatePicker()
         
-     //   tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
+        //   tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
         tbMenu.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         initialLoad()
         img.image = imgName
@@ -173,13 +173,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-       
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         coachMarksController.stop(immediately: true)
-       // tbReview.removeObserver(self, forKeyPath: "contentSizeReview")
+        // tbReview.removeObserver(self, forKeyPath: "contentSizeReview")
     }
     
     
@@ -189,7 +189,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         formatter.dateFormat = format
         return formatter.string(from: self.currentDate)
     }
-        
+    
     //MARK: - FUNCTION
     func product_detail(){
         viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.txtFldDate.text ?? "",timezone: self.timeZone ) { data in
@@ -248,11 +248,11 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.img.addGestureRecognizer(imageTapGesture)
             self.img.isUserInteractionEnabled = true
             
-            if UserDefaults.standard.value(forKey: "isShow") as? Bool != true {
+           if UserDefaults.standard.value(forKey: "isShow") as? Bool != true {
                 self.initializeInstruction {
                     self.startInstructions()
                 }
-            } else {
+           } else {
                 if let offerId = self.selectedOfferId , offerId != 0 {
                     let Index = self.offer?.firstIndex(where: {$0.id == offerId})
                     self.isselectedoffer  = Index ?? 0
@@ -285,7 +285,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     }
                     
                 }
-            }
+           }
         }
     }
     
@@ -309,10 +309,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             if dateArr.contains(todayDateString){
                 if checkDatesAreInSequence(array: dateArr) {
                     showPopupForDisableDate(date: date,msg: "Sorry we are not available till \(dateArr.last ?? "")")
-                   // CommonUtilities.shared.showAlert(message: "Closed until \(dateArr.last ?? ""). Please select further date")
+                    // CommonUtilities.shared.showAlert(message: "Closed until \(dateArr.last ?? ""). Please select further date")
                 } else {
                     showPopupForDisableDate(date:date,msg: "Sorry we are closed today")
-                   // CommonUtilities.shared.showAlert(message: "Closed today. Please select another date")
+                    // CommonUtilities.shared.showAlert(message: "Closed today. Please select another date")
                 }
             }
         }
@@ -399,11 +399,11 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - MENU PRODUCT API
-//    func menuProductForBarAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
-//        viewmodal.menuProductForBarAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { resp in
-//            
-//        }
-//    }
+    //    func menuProductForBarAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
+    //        viewmodal.menuProductForBarAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { resp in
+    //
+    //        }
+    //    }
     
     
     func menuProductAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
@@ -411,12 +411,11 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.productModal = dataa
             self.offerpresents = Double(dataa?.products?.first?.offerPercentage ?? "0") ?? 0
             self.products = dataa?.products ?? []
-            self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
+            self.lblOfferDiscription.text = dataa?.offerdetails?.description?.capitalized ?? ""
             self.numberofperson = dataa?.offerdetails?.numberOfUserPerBooking ?? 0
             self.actualprice = "\(self.products?.first?.price ?? "0")"
             self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? "0")"
             self.offerDescription = dataa?.offerdetails?.description ?? ""
-            self.lblOfferDiscription.text = dataa?.offerdetails?.description ?? ""
             self.pendingSlots = dataa?.offerdetails?.numberOfUserBook ?? 0
             self.offerDesHeaderVw.isHidden = false
             self.viewSV.isHidden = false
@@ -455,7 +454,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 
             }
         }
-
+        
     }
     @IBAction func btnBackAct(sender : UIButton){
         self.navigationController?.popViewController(animated: true)
@@ -510,10 +509,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             viewButton.isHidden = true
             //self.modal?.userID == Store.userDetails?.id ? true : false
             btnBookStatus = 1
-           // tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
+            // tbReview.addObserver(self, forKeyPath: "ReviewTblSize", options: .new, context: nil)
             btnBook.setTitle("Write a Review", for: .normal)
             debugPrint("2")
-    
+            
             
         case 3 :
             fetchdata()
@@ -524,7 +523,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             viewFM.isHidden = false
             viewButton.isHidden = true
             btnBookStatus = 1
-           // viewFM.backgroundColor = UIColor.clear
+            // viewFM.backgroundColor = UIColor.clear
             btnBook.setTitle("Write a Review", for: .normal)
             debugPrint("2")
         default:
@@ -588,27 +587,27 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             } else {
                 CommonUtilities.shared.showAlert(message: "No more bookings available for this slot", isSuccess: .error)
             }
-           
+            
         }
         else if btnBookStatus == 1{
-//            let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
-//            screenReview.restoID = ProductID
-//            screenReview.imgUrl = self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? ""
-//            self.navigationController?.pushViewController(screenReview, animated: true)
+            //            let screenReview = storyboard?.instantiateViewController(withIdentifier: "AddRatingVC") as! AddRatingVC
+            //            screenReview.restoID = ProductID
+            //            screenReview.imgUrl = self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? ""
+            //            self.navigationController?.pushViewController(screenReview, animated: true)
         }
     }
     @IBAction func btnMap(_ sender: UIButton) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "directionVC") as! directionVC
-//        vc.lat = Double(self.modal?.latitude ?? "") ?? 0.0
-//        vc.lng = Double(self.modal?.longitude ?? "") ?? 0.0
-//        self.navigationController?.pushViewController(vc, animated: true)
+        //        let vc = storyboard?.instantiateViewController(withIdentifier: "directionVC") as! directionVC
+        //        vc.lat = Double(self.modal?.latitude ?? "") ?? 0.0
+        //        vc.lng = Double(self.modal?.longitude ?? "") ?? 0.0
+        //        self.navigationController?.pushViewController(vc, animated: true)
         
         let alert = UIAlertController(title: NSLocalizedString("Select map for direction", comment: ""), message: nil, preferredStyle: .actionSheet)
         
         let openAppleMap = UIAlertAction(title: "Apple Map", style: UIAlertAction.Style.default) { (data) in
             self.openAppleMapDirection()
         }
-       
+        
         let openGoogleMap = UIAlertAction(title: "Google Map", style: .default) { (data) in
             self.openGoogleMapDirection()
         }
@@ -638,7 +637,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
 }
 
-extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
+extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collView{
             if images?.count == 0 {
@@ -696,20 +695,22 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 cell.lblSpecial.isHidden = false
                 if indexPath.row == isselectedoffer{
                     //self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
-                  //  cell.img.image = UIImage(named: "greenRectangle")
-                    cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
-                    cell.lblTime.text = ""
+                    //  cell.img.image = UIImage(named: "greenRectangle")
+                    cell.timingVw.backgroundColor = UIColor(named: "themeGreen")
+                    // cell.lblTime.text = ""
                     cell.lblOffer.isHidden = false
+                    cell.percentageVw.isHidden = false
                     cell.viewMenu.backgroundColor = UIColor(named: "themeGreen")
-                    cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
+                    cell.percentageVw.backgroundColor = UIColor(named: "themeGreen")
                 } else {
-                   // cell.img.image = UIImage(named: "BgOfferImg")
-                    cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
-                    cell.lblTime.text = ""
+                    // cell.img.image = UIImage(named: "BgOfferImg")
+                    cell.timingVw.backgroundColor = UIColor(named: "themeOrange")
+                    // cell.lblTime.text = ""
                     cell.viewMenu.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblOffer.isHidden = false
-                  //  cell.lblOffer.backgroundColor = offer?[indexPath.row].is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red.withAlphaComponent(0.65)
-                    cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
+                    cell.percentageVw.isHidden = false
+                    //  cell.lblOffer.backgroundColor = offer?[indexPath.row].is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red.withAlphaComponent(0.65)
+                    cell.percentageVw.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.menuName ?? ""
@@ -719,24 +720,27 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }else {
                     cell.lblOffer.text = "-\(Int(data?.percentage ?? "0") ?? 0)%"
                 }
-               // cell.lblOffer.backgroundColor = data?.is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red
+                // cell.lblOffer.backgroundColor = data?.is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red
                 
             } else {
                 cell.lblSpecial.isHidden = true
+                
                 if indexPath.row == isselectedoffer{
-                   // self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
+                    // self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                     
-                  //  cell.img.image = UIImage(named: "greenRectangle")
-                    cell.lblTime.backgroundColor = UIColor(named: "themeGreen")
+                    //  cell.img.image = UIImage(named: "greenRectangle")
+                    cell.timingVw.backgroundColor = UIColor(named: "themeGreen")
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = true
+                    cell.percentageVw.isHidden = true
                     cell.viewMenu.backgroundColor = UIColor(named: "themeGreen")
                     // cell.lblOffer.backgroundColor = UIColor(named: "themeGreen")
                 } else {
-                   // cell.img.image = UIImage(named: "BgOfferImg")
-                    cell.lblTime.backgroundColor = UIColor(named: "themeOrange")
+                    // cell.img.image = UIImage(named: "BgOfferImg")
+                    cell.timingVw.backgroundColor = UIColor(named: "themeOrange")
                     cell.lblTime.text = ""
                     cell.lblOffer.isHidden = true
+                    cell.percentageVw.isHidden = true
                     cell.viewMenu.backgroundColor = UIColor(named: "themeOrange")
                     //cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
@@ -761,9 +765,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
             if status == 1{
-                return CGSize (width: (collViewMenu.frame.size.width / 3.4) - 12 , height: 200.0)
+                return CGSize (width: (144) - 2 , height: 222.0)
             }else{
-                return CGSize (width: (collViewMenu.frame.size.width / 3.4) - 12, height: 162)
+                return CGSize (width: (144) - 2, height: 176)
             }
             
         } else if collectionView == viewFullMenu {
@@ -776,17 +780,17 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         return 4
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-         return 4
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       // print(status)
+        // print(status)
         //debugPrint(indexPath.row)
         if collectionView == collView{
-//            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-//            vc.settype = 0
-//            vc.setImage = self.images?[indexPath.row].image ?? ""
-//            self.navigationController?.pushViewController(vc, animated: true)
+            //            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+            //            vc.settype = 0
+            //            vc.setImage = self.images?[indexPath.row].image ?? ""
+            //            self.navigationController?.pushViewController(vc, animated: true)
             
             let vc = storyboard?.instantiateViewController(withIdentifier: "MultiImageVC") as! MultiImageVC
             var imgArr = self.images?.map({"\(imageURL)\($0.image ?? "")"}) ?? []
@@ -802,11 +806,11 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             vc.imgArr = self.modalfullmenu?.map({"\($0.baseurl ?? "")\($0.image ?? "")"}) ?? []
             vc.index = indexPath.row
             self.navigationController?.pushViewController(vc, animated: true)
-//            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-//            vc.settype = 1
-//            vc.url = self.modalfullmenu?[indexPath.row].baseurl ?? ""
-//            vc.setImage = self.modalfullmenu?[indexPath.row].image ?? ""
-//            self.navigationController?.pushViewController(vc, animated: true)
+            //            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
+            //            vc.settype = 1
+            //            vc.url = self.modalfullmenu?[indexPath.row].baseurl ?? ""
+            //            vc.setImage = self.modalfullmenu?[indexPath.row].image ?? ""
+            //            self.navigationController?.pushViewController(vc, animated: true)
         }
         
         if collectionView == collViewMenu {
@@ -821,14 +825,14 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }
                 //valueSelect = true
                 if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
-                
+                    
                     if let is_fifty = self.offer?[indexPath.row].is_fifty{
                         self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
                     }else {
                         self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
                     }
                     
-                menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+                    menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
                     
                 }
                 self.slottime = offer?[indexPath.row].offer ?? ""
@@ -845,7 +849,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 //valueSelect = true
                 
                 if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
-                  
+                    
                     if let is_fifty = self.offer?[indexPath.row].is_fifty {
                         self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
                     } else {
@@ -857,7 +861,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 self.slotid = offer?[indexPath.row].id ?? 0
                 self.menuid = offer?[indexPath.row].menuID ?? 0
                 self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
-              //  self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
+                //  self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
                 self.offerID = offer?[indexPath.row].offerID ?? 0
             }
             
@@ -876,10 +880,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         DispatchQueue.main.async {
             if self.modalfullmenu?.count == 0 {
                 self.viewFCHeight.constant = 260
-               // self.ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
-               // self.ImgViewgifReview.isHidden = false
+                // self.ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
+                // self.ImgViewgifReview.isHidden = false
             }else{
-               // self.ImgViewgifReview.isHidden = true
+                // self.ImgViewgifReview.isHidden = true
                 self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
             }
             //self.collViewMenuHeight.constant  = self.collViewMenu.contentSize.height
@@ -898,40 +902,40 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             if reviews?.count == 0{
                 tbReview.setNoDataMessage("No review found", txtColor: .black)
                 //ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
-               // ImgViewgifReview.isHidden = false
+                // ImgViewgifReview.isHidden = false
             }else{
                 tbReview.backgroundView = nil
-               // ImgViewgifReview.isHidden = true
+                // ImgViewgifReview.isHidden = true
                 return reviews?.count ?? 0
             }
         }
         return 0
     }
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        if tableView == tbReview{
-//            return reviews?.count ?? 0
-//        }  else{
-//            return  0
-//        }
-//    }
+    //    func numberOfSections(in tableView: UITableView) -> Int {
+    //        if tableView == tbReview{
+    //            return reviews?.count ?? 0
+    //        }  else{
+    //            return  0
+    //        }
+    //    }
     
     
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if tableView == tbMenu {
             let sectionV1 = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50) )
             sectionV1.backgroundColor = UIColor.clear
             let sectionV = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40) )
             sectionV.layer.cornerRadius = 10
-            let titleLbl = UILabel.init(frame: CGRect(x: 12, y: 10, width: tableView.frame.width-50, height: 20) )
+            let titleLbl = UILabel.init(frame: CGRect(x: 2, y: 10, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
             if status == 1{
                 titleLbl.text = "Popular \(products?[section].menuTypeName?.trimWhiteSpace ?? "") Specials"
             }else{
                 titleLbl.text = products?[section].menuTypeName ?? ""
             }
-           
+            
             titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-30, y: 6, width: 30, height: 30))
             viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -956,7 +960,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             view.backgroundColor = .clear
             return view
         }
-       
+        
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tableView == tbMenu {
@@ -965,25 +969,28 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             } else {
                 return 50
             }
-
+            
         }
         return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tbMenu{
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellMenuTV, for: indexPath) as! CellMenuTV
-           // let arrSection = products?[indexPath.section]
+            // let arrSection = products?[indexPath.section]
             let imageIndex = (productImgURL) + (products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
-           
+            
             if status == 1 {
                 cell.desLbl.text = ""
                 cell.itemNameTop.constant = 5
                 cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
-                cell.lblNewPrice.text = "R\(calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? "0") ?? 0, discount: Double(self.discount ?? 0)))"
+                
+                let newPrice = (calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? "0") ?? 0, discount: Double(self.discount ?? 0)))
+                cell.lblNewPrice.text = String(format: "%.2f", newPrice)
                 cell.lblDiscount.text = "SAVE \(self.discount ?? 0)%"
-                cell.lblPrePrice.text = "R\(products?[indexPath.row].price ?? "0")"
+                let price = Double(products?[indexPath.row].price ?? "0") ?? 0
+                cell.lblPrePrice.text = String(format: "%.2f", price)
             } else {
                 if products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" || products?[indexPath.row].actual_price == ""{
                     cell.lblNewPrice.text = ""
@@ -996,8 +1003,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                     cell.desLbl.text = ""
                     cell.itemNameTop.constant = 5
                     cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
-                    cell.lblPrePrice.text = "R\(products?[indexPath.row].actual_price ?? "0")"
-                    cell.lblNewPrice.text = "R\(products?[indexPath.row].discounted_price ?? "0")"
+                    cell.lblPrePrice.text = "\(products?[indexPath.row].actual_price ?? "0")"
+                    cell.lblNewPrice.text = "\(products?[indexPath.row].discounted_price ?? "0")"
                 }
                 cell.lblDiscount.text = ""
                 cell.lblDiscount.isHidden = true
@@ -1030,8 +1037,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             if tableView == self.tbReview {
                 if self.reviews?.count == 0 {
                     self.heightTBReview.constant = 300
-                   // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
-                   // self.imgViewGifReview.isHidden = false
+                    // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
+                    // self.imgViewGifReview.isHidden = false
                 } else {
                     //self.imgViewGifReview.isHidden = true
                     self.heightTBReview.constant = self.tbReview.contentSize.height
@@ -1039,10 +1046,10 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                 self.view.layoutIfNeeded()
                 self.tbReview.layoutIfNeeded()
             }
-//
-//            //self.heightTBMenu.constant = self.tbMenu.contentSize.height
-       }
-   }
+            //
+            //            //self.heightTBMenu.constant = self.tbMenu.contentSize.height
+        }
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbMenu{
             let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
@@ -1063,25 +1070,25 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                 heightTBMenu.constant = newsize.height
             }
         }
-//        if (keyPath == "ReviewTblSize"){
-//            if let newvalue = change?[.newKey]
-//            {
-//                let newsize  = newvalue as! CGSize
-//
-//                if self.reviews?.count == 0 {
-//                    self.heightTBReview.constant = 300
-//                } else {
-//                    self.heightTBReview.constant = newsize.height + 40
-//                }
-//            }
-//        }
+        //        if (keyPath == "ReviewTblSize"){
+        //            if let newvalue = change?[.newKey]
+        //            {
+        //                let newsize  = newvalue as! CGSize
+        //
+        //                if self.reviews?.count == 0 {
+        //                    self.heightTBReview.constant = 300
+        //                } else {
+        //                    self.heightTBReview.constant = newsize.height + 40
+        //                }
+        //            }
+        //        }
         
-     //   self.view.layoutIfNeeded()
+        //   self.view.layoutIfNeeded()
     }
     
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//            return 0
-//        }
+    //    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    //            return 0
+    //        }
     
     
 }
@@ -1089,23 +1096,23 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
 //MARK: InitialLoad Fnction
 extension ItemDetailsVC{
     func initialLoad(){
-//        viewMenu.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//        viewAbout.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//        viewReview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//        viewFullMeny.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        //        viewMenu.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        //        viewAbout.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        //        viewReview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        //        viewFullMeny.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         viewMenu.viewCornerRadius(cornerRadius: 8.0)
         viewAbout.viewCornerRadius(cornerRadius: 8.0)
         viewReview.viewCornerRadius(cornerRadius: 8.0)
         viewFullMeny.viewCornerRadius(cornerRadius: 8.0)
-       // viewMenu.layer.cornerRadius = viewAbout.frame.height / 2
-       // viewMenu.layer.maskedCorners = [.layerMaxXMinYCorner]
-       // viewAbout.cornerRadius(cornerRadius: 30)
-       // viewReview.layer.cornerRadius = viewReview.frame.height / 2
-       // viewReview.layer.maskedCorners = [.layerMinXMinYCorner]
+        // viewMenu.layer.cornerRadius = viewAbout.frame.height / 2
+        // viewMenu.layer.maskedCorners = [.layerMaxXMinYCorner]
+        // viewAbout.cornerRadius(cornerRadius: 30)
+        // viewReview.layer.cornerRadius = viewReview.frame.height / 2
+        // viewReview.layer.maskedCorners = [.layerMinXMinYCorner]
         imgBottomView.layer.cornerRadius = 30.0
         imgBottomView.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
-       // viewFullMeny.layer.cornerRadius = 30
-       // viewFullMeny.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
+        // viewFullMeny.layer.cornerRadius = 30
+        // viewFullMeny.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
         
         btnFav.layer.cornerRadius = btnFav.frame.height / 2
         viewA.isHidden = true
@@ -1114,7 +1121,7 @@ extension ItemDetailsVC{
         viewFM.isHidden = true
         viewButton.isHidden = true
         ChangebgColor(viewSelected: btnSpecialOutlet, viewUnselected: btnAboutOutlet, viewUnselected2: btnReviewOutlet,ViewUnselected3: btnFullMenuOutlet, labelSelected: lblMenu, labelUnselected: lblAbout, labelUnselecte2: lblReview,lblUnselected3: lblFullMenu)
-    
+        
     }
     func ChangebgColor(viewSelected : UIButton , viewUnselected : UIButton, viewUnselected2: UIButton ,ViewUnselected3:UIButton, labelSelected : UILabel , labelUnselected : UILabel , labelUnselecte2 : UILabel, lblUnselected3:UILabel){
         viewSelected.setImage(UIImage(named: "ButtonBackground"), for: .normal)
@@ -1122,10 +1129,10 @@ extension ItemDetailsVC{
         viewUnselected2.setImage(nil, for: .normal)
         ViewUnselected3.setImage(nil, for: .normal)
         
-//        viewSelected.backgroundColor = UIColor.systemGray5
-//        viewUnselected.backgroundColor = UIColor.white
-//        viewUnselected2.backgroundColor = UIColor.white
-//        ViewUnselected3.backgroundColor = UIColor.white
+        //        viewSelected.backgroundColor = UIColor.systemGray5
+        //        viewUnselected.backgroundColor = UIColor.white
+        //        viewUnselected2.backgroundColor = UIColor.white
+        //        ViewUnselected3.backgroundColor = UIColor.white
         labelSelected.textColor = UIColor.white
         labelUnselected.textColor = UIColor.darkGray
         labelUnselecte2.textColor = UIColor.darkGray
@@ -1137,61 +1144,61 @@ extension ItemDetailsVC{
 extension ItemDetailsVC{
     @objc func isHidden(sender : UIButton){
         debugPrint(sender.tag)
-//        switch sender.tag {
-//        case 0 :
-            if sender.isSelected  == false{
-                if arrCheck[sender.tag] == true{
-                    arrCheck[sender.tag] = false
-                    debugPrint(arrCheck)
-                    debugPrint(sender.tag)
-                    sender.isSelected = false
-                    sender.setImage(UIImage(named: "aarrowIcon"), for: .selected)
-                }else{
-                    arrCheck[sender.tag] = true
-                    debugPrint(arrCheck)
-                    debugPrint(sender.tag)
-                    sender.isSelected = true
-                    sender.setImage(UIImage(named: "arrowDefault"), for: .selected)
-                }
+        //        switch sender.tag {
+        //        case 0 :
+        if sender.isSelected  == false{
+            if arrCheck[sender.tag] == true{
+                arrCheck[sender.tag] = false
+                debugPrint(arrCheck)
+                debugPrint(sender.tag)
+                sender.isSelected = false
+                sender.setImage(UIImage(named: "aarrowIcon"), for: .selected)
+            }else{
+                arrCheck[sender.tag] = true
+                debugPrint(arrCheck)
+                debugPrint(sender.tag)
+                sender.isSelected = true
+                sender.setImage(UIImage(named: "arrowDefault"), for: .selected)
             }
-            debugPrint("Case 0")
-//        case 1 :
-//            if sender.isSelected  == false{
-//                if arrCheck[sender.tag] == false{
-//                    arrCheck[sender.tag] = true
-//                    sender.isSelected = true
-//                }else{
-//                    arrCheck[sender.tag] = false
-//                    sender.isSelected = false
-//                }
-//            }
-//            debugPrint("Case 1")
-//        case 2 :
-//            if sender.isSelected  == false{
-//                if arrCheck[sender.tag] == false{
-//                    arrCheck[sender.tag] = true
-//                    sender.isSelected = true
-//                }else{
-//                    arrCheck[sender.tag] = false
-//                    sender.isSelected = false
-//                }
-//            }
-//            debugPrint("Case 2")
-//        case 3 :
-//            if sender.isSelected  == false{
-//                if arrCheck[sender.tag] == false{
-//                    arrCheck[sender.tag] = true
-//                    sender.isSelected = true
-//                }else{
-//                    arrCheck[sender.tag] = false
-//                    sender.isSelected = false
-//                }
-//            }
-//            debugPrint("Case 3")
-            
-//        default:
-//            debugPrint("Is Hideen default run")
-//        }
+        }
+        debugPrint("Case 0")
+        //        case 1 :
+        //            if sender.isSelected  == false{
+        //                if arrCheck[sender.tag] == false{
+        //                    arrCheck[sender.tag] = true
+        //                    sender.isSelected = true
+        //                }else{
+        //                    arrCheck[sender.tag] = false
+        //                    sender.isSelected = false
+        //                }
+        //            }
+        //            debugPrint("Case 1")
+        //        case 2 :
+        //            if sender.isSelected  == false{
+        //                if arrCheck[sender.tag] == false{
+        //                    arrCheck[sender.tag] = true
+        //                    sender.isSelected = true
+        //                }else{
+        //                    arrCheck[sender.tag] = false
+        //                    sender.isSelected = false
+        //                }
+        //            }
+        //            debugPrint("Case 2")
+        //        case 3 :
+        //            if sender.isSelected  == false{
+        //                if arrCheck[sender.tag] == false{
+        //                    arrCheck[sender.tag] = true
+        //                    sender.isSelected = true
+        //                }else{
+        //                    arrCheck[sender.tag] = false
+        //                    sender.isSelected = false
+        //                }
+        //            }
+        //            debugPrint("Case 3")
+        
+        //        default:
+        //            debugPrint("Is Hideen default run")
+        //        }
         tbMenu.reloadData()
     }
     
@@ -1227,7 +1234,7 @@ extension ItemDetailsVC : CLLocationManagerDelegate{
         let distance =  distanceBetween(lat1: locValue.latitude, lon1: locValue.longitude, lat2: Double(self.modal?.latitude ?? "") ?? 0, lon2: Double(self.modal?.longitude ?? "") ?? 0)
         let miles = "\(String(format:"%.1f",distance)) Km"
         self.lblHeading.text = "Location " + "\(miles)"
-       // "\(self.modal?.location ?? "") \n\(miles)"
+        // "\(self.modal?.location ?? "") \n\(miles)"
         locationManager.stopUpdatingLocation()
     }
     
@@ -1246,16 +1253,16 @@ func degreesToRadians(_ degrees: Double) -> Double {
 
 func distanceBetween(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
     let earthRadius = 6371.0 // Radius of the Earth in kilometers
-
+    
     let dLat = degreesToRadians(lat2 - lat1)
     let dLon = degreesToRadians(lon2 - lon1)
-
+    
     let a = sin(dLat/2) * sin(dLat/2) + cos(degreesToRadians(lat1)) * cos(degreesToRadians(lat2)) * sin(dLon/2) * sin(dLon/2)
     let c = 2 * atan2(sqrt(a), sqrt(1-a))
-
+    
     let distanceInKilometers = earthRadius * c
     let distanceInMiles = distanceInKilometers * 0.621371 // Convert to miles
-
+    
     return distanceInMiles
 }
 extension Array {
@@ -1342,12 +1349,11 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
     
     func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: Instructions.CoachMark) -> (bodyView: (UIView & Instructions.CoachMarkBodyView), arrowView: (UIView & Instructions.CoachMarkArrowView)?) {
         
+        
         let coachViews = coachMarksController.helper.makeDefaultCoachViews(
             withArrow: true,
             arrowOrientation: coachMark.arrowOrientation
         )
-    
-        
         if self.offer?.count == 0 {
             switch index {
             case 0:
@@ -1375,8 +1381,10 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }
     
+
+    
+    
     func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, coachMarkAt index: Int) -> Instructions.CoachMark {
-       
         
         if self.offer?.count == 0 {
             switch index {
@@ -1384,7 +1392,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
             case 1 :  return coachMarksController.helper.makeCoachMark(for: calenderDateVw)
             default : return coachMarksController.helper.makeCoachMark()
             }
-        }else {
+        } else {
             switch index {
             case 0 :  return coachMarksController.helper.makeCoachMark(for: imgFav)
             case 1 :  return coachMarksController.helper.makeCoachMark(for: calenderDateVw)
@@ -1392,17 +1400,6 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
             default : return coachMarksController.helper.makeCoachMark()
             }
         }
-//        if index ==  0 {
-//            return coachMarksController.helper.makeCoachMark(for: imgFav)
-//        }else if index ==  1 {
-//            return coachMarksController.helper.makeCoachMark(for: txtFldDate)
-//        }else if index == 2 {
-//            if let firstIndexPath = collViewMenu.indexPathsForVisibleItems.first {
-//                let firstItem = collViewMenu.cellForItem(at: firstIndexPath)
-//                return coachMarksController.helper.makeCoachMark(for: firstItem)
-//            }
-//        }
-//        return coachMarksController.helper.makeCoachMark()
     }
     
     func numberOfCoachMarks(for coachMarksController: Instructions.CoachMarksController) -> Int {
@@ -1450,7 +1447,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         //            self.view.backgroundColor = newColor
         //        })
     }
-  
+    
     func coachMarksController(_ coachMarksController: CoachMarksController,
                               didShow coachMark: CoachMark,
                               afterChanging change: ConfigurationChange,
@@ -1473,9 +1470,13 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         snapshotDelegate?.coachMarksController(coachMarksController, didHide: coachMark,
                                                at: index)
     }
- 
+    
     func shouldHandleOverlayTap(in coachMarksController: CoachMarksController,
                                 at index: Int) -> Bool {
         return true
     }
 }
+
+
+
+

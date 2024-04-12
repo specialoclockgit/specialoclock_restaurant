@@ -9,7 +9,7 @@ import UIKit
 import GooglePlaces
 import GoogleMaps
 
-class mapViewController: UIViewController,GMSMapViewDelegate {
+class mapViewController: UIViewController, GMSMapViewDelegate {
     
     //MARK: - OUTLETS
     @IBOutlet weak var mapView: GMSMapView!
@@ -171,6 +171,14 @@ extension mapViewController : UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collVw.dequeueReusableCell(withReuseIdentifier: "mapViewCVC", for: indexPath) as! mapViewCVC
         cell.listing = tempNearBy[indexPath.row]
+        cell.offerTimings = tempNearBy[indexPath.row].offer_timings
+        cell.collVw.reloadData()
+        cell.callBack = { [weak self] restId in
+            let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+            vc.ProductID = self?.tempNearBy[indexPath.row].id ?? 0
+            vc.selectedOfferId = restId
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
         return cell
     }
     
@@ -181,7 +189,7 @@ extension mapViewController : UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collVw.frame.size.width, height: 120)
+        return CGSize(width: collVw.frame.size.width, height: 130)
     }
     
 }

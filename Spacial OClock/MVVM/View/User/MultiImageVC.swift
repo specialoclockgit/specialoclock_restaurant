@@ -12,6 +12,13 @@ class MultiImageVC: UIViewController, UIScrollViewDelegate  {
     @IBOutlet weak var collVw: UICollectionView!
     var imgArr = [String]()
     var index = 0
+    var scrollIndex = 0
+    
+    enum ScrollDirection {
+        case left
+        case right
+    }
+    
     @IBOutlet weak var pgController : UIPageControl!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,22 +28,43 @@ class MultiImageVC: UIViewController, UIScrollViewDelegate  {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let index = IndexPath(row: self.index, section: 0)
             self.collVw.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
+            
         }
     }
     
     @IBAction func btnBack (_ sender :  UIButton){
         self.navigationController?.popViewController(animated: true)
     }
+    
+    func getScrollDirection() -> ScrollDirection? {
+        guard let collectionView = collVw else { return nil }
+        let scrollVelocity = collectionView.panGestureRecognizer.velocity(in: collectionView.superview)
+        if (scrollVelocity.x > 0.0) {
+            return .right
+        } else if (scrollVelocity.x < 0.0) {
+            return .left
+        } else {
+            return nil
+        }
+    }
+
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let width = scrollView.frame.width - (scrollView.contentInset.left*2)
         let index = scrollView.contentOffset.x / width
         pgController.currentPage = Int(index)
+        scrollIndex = Int(index)
+        if getScrollDirection() == .left{
+            if scrollIndex == (imgArr.count - 1){
+                navigationController?.popViewController(animated: true)
+            }
+        } else if  getScrollDirection() == .right{
+            if scrollIndex == 0 {
+                navigationController?.popViewController(animated: true)
+            }
+        }
     }
-    
-    
-    
-    
-    
+
 }
 extension MultiImageVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -64,14 +92,15 @@ class MultiImageCVC : UICollectionViewCell, UIScrollViewDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
-        imgVw.addGestureRecognizer(pinchGesture)
-        imgVw.isUserInteractionEnabled = true
+        //let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+       // imgVw.addGestureRecognizer(pinchGesture)
+        //imgVw.isUserInteractionEnabled = false
+       
         scrollVw.minimumZoomScale = 1.0
         scrollVw.maximumZoomScale = 3.0
         scrollVw.delegate = self
     }
-    
+
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imgVw
     }
@@ -97,4 +126,17 @@ class MultiImageCVC : UICollectionViewCell, UIScrollViewDelegate {
 //        return zoomRect
   //  }
     
+}
+extension UICollectionView {
+    func isCurrentVisibleItemFirstOrLast() -> (isFirst: Bool, isLast: Bool)? {
+        guard let firstIndexPath = indexPathsForVisibleItems.min(),
+              let lastIndexPath = indexPathsForVisibleItems.max() else {
+            return nil
+        }
+        let numberOfSections = numberOfSections
+        let lastSection = numberOfSections - 1
+        
+        return (firstIndexPath == IndexPath(item: 0, section: 0),
+                lastIndexPath == IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection))
+    }
 }

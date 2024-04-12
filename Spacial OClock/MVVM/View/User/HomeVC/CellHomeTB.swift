@@ -137,6 +137,14 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             
             cell.lblRating.text = "\(heishtresto[indexPath.row].avgRating ?? 0)"
             
+            
+            cell.callBack = { restId in
+                let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                vc.ProductID = self.heishtresto[indexPath.row].id ?? 0
+                vc.selectedOfferId = restId
+                super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
+            }
+            
 //            if heishtresto[indexPath.row].offerTimings?.count == 1 {
 //                cell.viewOffer1.isHidden = false
 //
@@ -231,10 +239,9 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.layoutIfNeeded()
             cell.callBack = { restId in
                 let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-              //  let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-//                vc.ProductID = self?.allresto?[indexPath.row].id ?? 0
-//                vc.selectedOfferId = restId
-//                self?.navigationController?.pushViewController(vc, animated: true)
+                vc.ProductID = self.allresto[indexPath.row].id ?? 0
+                vc.selectedOfferId = restId
+                super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
             }
 //            if allresto[indexPath.row].offerTimings?.count == 1 {
 //                cell.stackHeight.constant = 46

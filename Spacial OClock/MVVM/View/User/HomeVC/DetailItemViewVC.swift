@@ -573,13 +573,13 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
         if setValue == "Location" {
-            return filterlocations?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 250) : CGSize(width: collectionView.frame.width, height: 250)
+            return filterlocations?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
         } else if setValue == "Category" {
-            return filterCategory?[indexPath.row].offers?.count == 0 ? CGSize(width: collectionView.frame.width, height: 250) : CGSize(width: collectionView.frame.width, height: 250)
+            return filterCategory?[indexPath.row].offers?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
         } else if setValue == "Cuisines" {
-            return filtercusin?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 250) :CGSize(width: collectionView.frame.width, height: 250)
+            return filtercusin?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) :CGSize(width: collectionView.frame.width, height: 260)
         } else {
-            return filtertheme?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 250) : CGSize(width: collectionView.frame.width, height: 250)
+            return filtertheme?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
         }
     }
     
