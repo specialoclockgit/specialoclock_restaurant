@@ -38,6 +38,7 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.1.1)
+  - INSPhotoGallery (1.2.8)
   - Instructions (2.2.0)
   - IQKeyboardManagerSwift (6.5.12)
   - MBProgressHUD (1.2.0)
@@ -57,6 +58,7 @@ PODS:
   - ShimmerSwift (2.1.1)
   - SKCountryPicker (2.0.2)
   - SkeletonView (1.30.4)
+  - SKPhotoBrowser (7.1.0)
   - Socket.IO-Client-Swift (16.0.1):
     - Starscream (~> 4.0)
   - Starscream (4.0.6)
@@ -95,6 +97,7 @@ DEPENDENCIES:
   - GoogleMaps (~> 3.7.0)
   - GooglePlaces
   - GoogleSignIn
+  - INSPhotoGallery
   - Instructions (~> 2.2.0)
   - IQKeyboardManagerSwift
   - MBProgressHUD
@@ -105,6 +108,7 @@ DEPENDENCIES:
   - ShimmerSwift
   - SKCountryPicker
   - SkeletonView
+  - SKPhotoBrowser
   - Socket.IO-Client-Swift
   - StripePaymentSheet
   - SVPinView (~> 1.0)
@@ -128,6 +132,7 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - INSPhotoGallery
     - Instructions
     - IQKeyboardManagerSwift
     - MBProgressHUD
@@ -138,6 +143,7 @@ SPEC REPOS:
     - ShimmerSwift
     - SKCountryPicker
     - SkeletonView
+    - SKPhotoBrowser
     - Socket.IO-Client-Swift
     - Starscream
     - StripeApplePay
@@ -166,6 +172,7 @@ SPEC CHECKSUMS:
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
+  INSPhotoGallery: ad317cb9a59c7a5f08550e4155b49622c24dcab3
   Instructions: 07052901a398b42eb1d83de9755b8a0bac3e2f7d
   IQKeyboardManagerSwift: 371b08cb39664fb56030f5345c815a4ffc74bbc0
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
@@ -176,6 +183,7 @@ SPEC CHECKSUMS:
   ShimmerSwift: f7ed2daf9c246de8299dfd9e12c6ab465cba9842
   SKCountryPicker: f4882c36fa432d6450099a3e07da60eceda0a8f0
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
+  SKPhotoBrowser: cd95b95a6f352fc2a50992721299f75ead77f9ab
   Socket.IO-Client-Swift: c116d6dc9fd6be9c259bacfe143f8725bce7d79e
   Starscream: fb2c4510bebf908c62bd383bcf05e673720e91fd
   StripeApplePay: 4d19e9f2fab4d6ed0a3f7939d13da4c64910af95
@@ -190,6 +198,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   WaterfallLayout: 030e04b041e5c6c47ae2c1eaa685c60289fab0b1
 
-PODFILE CHECKSUM: 025672c6c127a2c3f213ed245313120dce5f44b9
+PODFILE CHECKSUM: 067056f285de0f09df0bb7e6daad91fa9c77df9f
 
 COCOAPODS: 1.12.0

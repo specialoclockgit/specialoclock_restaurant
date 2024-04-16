@@ -13,8 +13,8 @@ import CoreLocation
 import QuartzCore
 import MapKit
 import Instructions
-
-
+import SKPhotoBrowser
+import INSPhotoGallery
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
@@ -291,13 +291,24 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     
     @objc func mainImageTapped (_ sender: UITapGestureRecognizer) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "MultiImageVC") as! MultiImageVC
-        var imgArr = self.images?.map({"\(imageURL)\($0.image ?? "")"}) ?? []
-        let mainImg = "\(imageURL)\(self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")"
-        imgArr.insert(mainImg, at: 0)
-        vc.imgArr = imgArr
-        vc.index = 0
-        self.navigationController?.pushViewController(vc, animated: true)
+        var photos = [INSPhotoViewable]()
+        for i in 0..<(self.images?.count ?? 0){
+                    if let url = URL(string: (imageURL) + (self.images?[i].image?.replacingOccurrences(of: " ", with: "%20") ?? "")){
+                        let image = INSPhoto(imageURL: url, thumbnailImage: nil)
+                        photos.append(image)
+                    }
+                }
+        
+        
+        if let url = URL(string: (imageURL) + (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")){
+            let image = INSPhoto(imageURL: url, thumbnailImage: nil)
+            photos.insert(image, at: 0)
+        }
+        
+        let photosViewController = INSPhotosViewController(photos: photos, initialPhoto: photos.first, referenceView: nil)
+        photosViewController.maximumZoomScale = 5.0
+        present(photosViewController, animated: true, completion: nil)
+
     }
     
     //MARK: - FUNCTION
@@ -765,9 +776,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
             if status == 1{
-                return CGSize (width: (144) - 2 , height: 222.0)
+                return CGSize (width: (124) - 2 , height: 222.0)
             }else{
-                return CGSize (width: (144) - 2, height: 176)
+                return CGSize (width: (124) - 2, height: 176)
             }
             
         } else if collectionView == viewFullMenu {
@@ -784,33 +795,43 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // print(status)
-        //debugPrint(indexPath.row)
+        
         if collectionView == collView{
-            //            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-            //            vc.settype = 0
-            //            vc.setImage = self.images?[indexPath.row].image ?? ""
-            //            self.navigationController?.pushViewController(vc, animated: true)
+    
+            var photos = [INSPhotoViewable]()
+            for i in 0..<(self.images?.count ?? 0) {
+                if let url = URL(string: (imageURL) + (self.images?[i].image?.replacingOccurrences(of: " ", with: "%20") ?? "")){
+                    let image = INSPhoto(imageURL: url, thumbnailImage: nil)
+                    photos.append(image)
+                }
+            }
             
-            let vc = storyboard?.instantiateViewController(withIdentifier: "MultiImageVC") as! MultiImageVC
-            var imgArr = self.images?.map({"\(imageURL)\($0.image ?? "")"}) ?? []
-            let mainImg = "\(imageURL)\(self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")"
-            imgArr.insert(mainImg, at: 0)
-            vc.imgArr = imgArr
-            vc.index = indexPath.row + 1
-            self.navigationController?.pushViewController(vc, animated: true)
             
-        }else if collectionView == viewFullMenu{
+            if let url = URL(string: (imageURL) + (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")){
+                let image = INSPhoto(imageURL: url, thumbnailImage: nil)
+                photos.insert(image, at: 0)
+            }
             
-            let vc = storyboard?.instantiateViewController(withIdentifier: "MultiImageVC") as! MultiImageVC
-            vc.imgArr = self.modalfullmenu?.map({"\($0.baseurl ?? "")\($0.image ?? "")"}) ?? []
-            vc.index = indexPath.row
-            self.navigationController?.pushViewController(vc, animated: true)
-            //            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-            //            vc.settype = 1
-            //            vc.url = self.modalfullmenu?[indexPath.row].baseurl ?? ""
-            //            vc.setImage = self.modalfullmenu?[indexPath.row].image ?? ""
-            //            self.navigationController?.pushViewController(vc, animated: true)
+            let photosViewController = INSPhotosViewController(photos: photos, initialPhoto: photos[indexPath.row + 1], referenceView: nil)
+            photosViewController.maximumZoomScale = 5.0
+            present(photosViewController, animated: true, completion: nil)
+
+            
+            
+        } else if collectionView == viewFullMenu {
+            
+            var photos = [INSPhotoViewable]()
+            for i in 0..<(self.modalfullmenu?.count ?? 0){
+                if let url = URL(string: (self.modalfullmenu?[i].baseurl ?? "") + (self.modalfullmenu?[i].image?.replacingOccurrences(of: " ", with: "%20") ?? "")){
+                    let image = INSPhoto(imageURL: url, thumbnailImage: nil)
+                    photos.append(image)
+                }
+            }
+            let photosViewController = INSPhotosViewController(photos: photos, initialPhoto: photos[indexPath.row], referenceView: nil)
+            photosViewController.maximumZoomScale = 5.0
+            present(photosViewController, animated: true, completion: nil)
+
+           
         }
         
         if collectionView == collViewMenu {
@@ -880,13 +901,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         DispatchQueue.main.async {
             if self.modalfullmenu?.count == 0 {
                 self.viewFCHeight.constant = 260
-                // self.ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
-                // self.ImgViewgifReview.isHidden = false
             }else{
-                // self.ImgViewgifReview.isHidden = true
                 self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
             }
-            //self.collViewMenuHeight.constant  = self.collViewMenu.contentSize.height
         }
     }
 }
@@ -911,16 +928,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
         }
         return 0
     }
-    
-    //    func numberOfSections(in tableView: UITableView) -> Int {
-    //        if tableView == tbReview{
-    //            return reviews?.count ?? 0
-    //        }  else{
-    //            return  0
-    //        }
-    //    }
-    
-    
+
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if tableView == tbMenu {
@@ -1037,26 +1045,31 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             if tableView == self.tbReview {
                 if self.reviews?.count == 0 {
                     self.heightTBReview.constant = 300
-                    // self.imgViewGifReview.image = UIImage.gif(name: "nodataFound")
-                    // self.imgViewGifReview.isHidden = false
                 } else {
-                    //self.imgViewGifReview.isHidden = true
-                    self.heightTBReview.constant = self.tbReview.contentSize.height
+                    self.heightTBReview.constant = self.tbReview.contentSize.height + 20
                 }
                 self.view.layoutIfNeeded()
                 self.tbReview.layoutIfNeeded()
             }
-            //
-            //            //self.heightTBMenu.constant = self.tbMenu.contentSize.height
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbMenu{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "fullImageView") as! fullImageView
-            vc.settype = 2
-            vc.setImage = products?[indexPath.row].image ?? ""
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
+     
+            var photos = [INSPhotoViewable]()
+           
+                if let url = URL(string: (productImgURL) + (products?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")){
+                    let image = INSPhoto(imageURL: url, thumbnailImage: nil)
+                    photos.append(image)
+                }
+            
+            let photosViewController = INSPhotosViewController(photos: photos, initialPhoto: photos.first, referenceView: nil)
+            photosViewController.maximumZoomScale = 5.0
+            present(photosViewController, animated: true, completion: nil)
+            
+            
+            
+        } else {
             
         }
         
@@ -1070,49 +1083,24 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                 heightTBMenu.constant = newsize.height
             }
         }
-        //        if (keyPath == "ReviewTblSize"){
-        //            if let newvalue = change?[.newKey]
-        //            {
-        //                let newsize  = newvalue as! CGSize
-        //
-        //                if self.reviews?.count == 0 {
-        //                    self.heightTBReview.constant = 300
-        //                } else {
-        //                    self.heightTBReview.constant = newsize.height + 40
-        //                }
-        //            }
-        //        }
         
-        //   self.view.layoutIfNeeded()
     }
-    
-    //    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    //            return 0
-    //        }
-    
+   
     
 }
 
 //MARK: InitialLoad Fnction
 extension ItemDetailsVC{
     func initialLoad(){
-        //        viewMenu.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        //        viewAbout.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        //        viewReview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        //        viewFullMeny.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+       
         viewMenu.viewCornerRadius(cornerRadius: 8.0)
         viewAbout.viewCornerRadius(cornerRadius: 8.0)
         viewReview.viewCornerRadius(cornerRadius: 8.0)
         viewFullMeny.viewCornerRadius(cornerRadius: 8.0)
-        // viewMenu.layer.cornerRadius = viewAbout.frame.height / 2
-        // viewMenu.layer.maskedCorners = [.layerMaxXMinYCorner]
-        // viewAbout.cornerRadius(cornerRadius: 30)
-        // viewReview.layer.cornerRadius = viewReview.frame.height / 2
-        // viewReview.layer.maskedCorners = [.layerMinXMinYCorner]
+       
         imgBottomView.layer.cornerRadius = 30.0
         imgBottomView.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
-        // viewFullMeny.layer.cornerRadius = 30
-        // viewFullMeny.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMinXMinYCorner]
+        
         
         btnFav.layer.cornerRadius = btnFav.frame.height / 2
         viewA.isHidden = true
@@ -1128,11 +1116,7 @@ extension ItemDetailsVC{
         viewUnselected.setImage(nil, for: .normal)
         viewUnselected2.setImage(nil, for: .normal)
         ViewUnselected3.setImage(nil, for: .normal)
-        
-        //        viewSelected.backgroundColor = UIColor.systemGray5
-        //        viewUnselected.backgroundColor = UIColor.white
-        //        viewUnselected2.backgroundColor = UIColor.white
-        //        ViewUnselected3.backgroundColor = UIColor.white
+       
         labelSelected.textColor = UIColor.white
         labelUnselected.textColor = UIColor.darkGray
         labelUnselecte2.textColor = UIColor.darkGray
@@ -1140,69 +1124,7 @@ extension ItemDetailsVC{
     }
 }
 
-//MARK: Objective function
-extension ItemDetailsVC{
-    @objc func isHidden(sender : UIButton){
-        debugPrint(sender.tag)
-        //        switch sender.tag {
-        //        case 0 :
-        if sender.isSelected  == false{
-            if arrCheck[sender.tag] == true{
-                arrCheck[sender.tag] = false
-                debugPrint(arrCheck)
-                debugPrint(sender.tag)
-                sender.isSelected = false
-                sender.setImage(UIImage(named: "aarrowIcon"), for: .selected)
-            }else{
-                arrCheck[sender.tag] = true
-                debugPrint(arrCheck)
-                debugPrint(sender.tag)
-                sender.isSelected = true
-                sender.setImage(UIImage(named: "arrowDefault"), for: .selected)
-            }
-        }
-        debugPrint("Case 0")
-        //        case 1 :
-        //            if sender.isSelected  == false{
-        //                if arrCheck[sender.tag] == false{
-        //                    arrCheck[sender.tag] = true
-        //                    sender.isSelected = true
-        //                }else{
-        //                    arrCheck[sender.tag] = false
-        //                    sender.isSelected = false
-        //                }
-        //            }
-        //            debugPrint("Case 1")
-        //        case 2 :
-        //            if sender.isSelected  == false{
-        //                if arrCheck[sender.tag] == false{
-        //                    arrCheck[sender.tag] = true
-        //                    sender.isSelected = true
-        //                }else{
-        //                    arrCheck[sender.tag] = false
-        //                    sender.isSelected = false
-        //                }
-        //            }
-        //            debugPrint("Case 2")
-        //        case 3 :
-        //            if sender.isSelected  == false{
-        //                if arrCheck[sender.tag] == false{
-        //                    arrCheck[sender.tag] = true
-        //                    sender.isSelected = true
-        //                }else{
-        //                    arrCheck[sender.tag] = false
-        //                    sender.isSelected = false
-        //                }
-        //            }
-        //            debugPrint("Case 3")
-        
-        //        default:
-        //            debugPrint("Is Hideen default run")
-        //        }
-        tbMenu.reloadData()
-    }
-    
-}
+
 
 
 extension ItemDetailsVC : CLLocationManagerDelegate{
@@ -1330,8 +1252,6 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         coachMarksController.start(in: .window(over: self))
         UserDefaults.standard.set(true, forKey: "isShow")
     }
-    
-    
     
     private func initializeInstruction(onSuccess: @escaping (()->())){
         coachMarksController.delegate = self
