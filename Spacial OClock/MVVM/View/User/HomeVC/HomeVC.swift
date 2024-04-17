@@ -412,8 +412,9 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
         
         if sectionArray[indexPath.section].name == "Banner" {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellImageViewTB, for: indexPath) as! CellImageViewTB
-            cell.banners = self.viewModel.homeData?.banners ?? [Banner]()
-            cell.collView.reloadData()
+            //cell.banners = self.viewModel.homeData?.banners ?? [Banner]()
+            cell.initializeBannerData(resp: self.viewModel.homeData?.banners)
+           // cell.collView.reloadData()
             return cell
         } else {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellHomeTB, for: indexPath) as! CellHomeTB
@@ -455,7 +456,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sectionArray[indexPath.section].name == "Banner" {
-            return CGFloat(160)
+            return CGFloat(260)
         } else if sectionArray[indexPath.section].name == "Popular" {
             if sectionArray[indexPath.section].objArray?.count  ==  0{
                 return CGFloat(0)
@@ -463,9 +464,9 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
                 return CGFloat(300)
             }
            // return CGFloat(300)
-        }else if sectionArray[indexPath.section].name == "A-Z"{
+        } else if sectionArray[indexPath.section].name == "A-Z" {
             return CGFloat(300)
-        }else{
+        } else {
             return CGFloat(280)//260
         }
     }

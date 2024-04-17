@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="r1f-1b-iup">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="r1f-1b-iup">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -11228,8 +11228,45 @@
                     <view key="view" contentMode="scaleToFill" id="Ljz-cH-JdQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YaU-FI-Hzt">
+                                <rect key="frame" x="30" y="248" width="354" height="400"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detailImage" translatesAutoresizingMaskIntoConstraints="NO" id="B9j-5T-cWa">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="SO5-KQ-Ubs"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yls-zt-6AD">
+                                        <rect key="frame" x="314" y="0.0" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="0aw-Wk-15w"/>
+                                            <constraint firstAttribute="width" constant="40" id="bFM-Pb-lhb"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="cross-48"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="8zX-qu-nm7"/>
+                                    <constraint firstItem="B9j-5T-cWa" firstAttribute="leading" secondItem="YaU-FI-Hzt" secondAttribute="leading" id="Bad-8o-IIQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yls-zt-6AD" secondAttribute="trailing" id="C0O-1A-TjY"/>
+                                    <constraint firstAttribute="trailing" secondItem="B9j-5T-cWa" secondAttribute="trailing" id="M1G-bh-PRF"/>
+                                    <constraint firstItem="Yls-zt-6AD" firstAttribute="top" secondItem="YaU-FI-Hzt" secondAttribute="top" id="a7a-1B-0uv"/>
+                                    <constraint firstItem="B9j-5T-cWa" firstAttribute="top" secondItem="YaU-FI-Hzt" secondAttribute="top" id="mdt-zJ-ckY"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Eea-6C-9Ml"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YaU-FI-Hzt" firstAttribute="centerX" secondItem="Ljz-cH-JdQ" secondAttribute="centerX" id="Mcs-6g-qJJ"/>
+                            <constraint firstItem="YaU-FI-Hzt" firstAttribute="centerY" secondItem="Ljz-cH-JdQ" secondAttribute="centerY" id="VXB-EH-gRo"/>
+                            <constraint firstItem="YaU-FI-Hzt" firstAttribute="leading" secondItem="Eea-6C-9Ml" secondAttribute="leading" constant="30" id="Zd3-Mk-xyd"/>
+                            <constraint firstItem="Eea-6C-9Ml" firstAttribute="trailing" secondItem="YaU-FI-Hzt" secondAttribute="trailing" constant="30" id="dV8-bO-0AO"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ox-xM-T2J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -14293,10 +14330,12 @@
         <image name="clubSandwich" width="40" height="43"/>
         <image name="creditCard" width="55" height="55"/>
         <image name="cross" width="16" height="16"/>
+        <image name="cross-48" width="48" height="48"/>
+        <image name="detailImage" width="340" height="252"/>
         <image name="drinkTheme2" width="183" height="125.5"/>
         <image name="edit" width="13" height="11.5"/>
         <image name="eye" catalog="system" width="128" height="79"/>
-        <image name="eye.slash" catalog="system" width="128" height="84"/>
+        <image name="eye.slash" catalog="system" width="128" height="95"/>
         <image name="history" width="27" height="27"/>
         <image name="homeBlack" width="11" height="10"/>
         <image name="homeGreen" width="35" height="27"/>
@@ -14340,7 +14379,7 @@
             <color red="0.97600001096725464" green="0.25499999523162842" blue="0.0040000001899898052" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

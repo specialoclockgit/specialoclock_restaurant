@@ -77,7 +77,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     lazy var coachMarksController = CoachMarksController()
     weak var snapshotDelegate: CoachMarksControllerDelegate?
     let nextButtonText = "Ok!"
-    let avatarText = "That's add to fav button. You can add this restaurant to favourites!"
+    let avatarText = "That's add to fav button. You can add this restaurant to favorites!"
     let avtarLoc = "You can select date of booking by clicking here!"
     let avtarSideMenu = "Tap here to select special!"
     var offerDescription = String()
@@ -417,7 +417,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //    }
     
     
-    func menuProductAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
+    func menuProductAPI(id: Int,index:Int,isfifty:Int,offerID:Int) {
         viewmodal.menuProductAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { dataa in
             self.productModal = dataa
             self.offerpresents = Double(dataa?.products?.first?.offerPercentage ?? "0") ?? 0
@@ -430,6 +430,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.pendingSlots = dataa?.offerdetails?.numberOfUserBook ?? 0
             self.offerDesHeaderVw.isHidden = false
             self.viewSV.isHidden = false
+            self.offerDesHeaderVw.backgroundColor = .systemGray5
             self.lblPricingWarning.isHidden = false
             self.tbMenu.reloadData()
             self.collViewMenu.reloadData()
@@ -547,10 +548,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         if sender.isSelected  == false{
             debugPrint("True")
             viewSV.isHidden = true
+            offerDesHeaderVw.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.3)
             sender.isSelected = true
-        }else{
+        } else {
             debugPrint("False")
             viewSV.isHidden = false
+            offerDesHeaderVw.backgroundColor = .systemGray5
             sender.isSelected = false
         }
     }
@@ -776,9 +779,9 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
             if status == 1{
-                return CGSize (width: (124) - 2 , height: 222.0)
-            }else{
-                return CGSize (width: (124) - 2, height: 176)
+                return CGSize (width: (150) - 4 , height: 222.0)
+            } else {
+                return CGSize (width: (150) - 4, height: 176)
             }
             
         } else if collectionView == viewFullMenu {
@@ -1124,10 +1127,30 @@ extension ItemDetailsVC{
     }
 }
 
+//MARK: Objective function
+extension ItemDetailsVC {
+    @objc func isHidden(sender : UIButton) {
+        if sender.isSelected  == false {
+            if arrCheck[sender.tag] == true {
+                arrCheck[sender.tag] = false
+                debugPrint(arrCheck)
+                debugPrint(sender.tag)
+                sender.isSelected = false
+                sender.setImage(UIImage(named: "aarrowIcon"), for: .selected)
+            } else {
+                arrCheck[sender.tag] = true
+                debugPrint(arrCheck)
+                debugPrint(sender.tag)
+                sender.isSelected = true
+                sender.setImage(UIImage(named: "arrowDefault"), for: .selected)
+            }
+        }
+        tbMenu.reloadData()
+    }
+}
 
 
-
-extension ItemDetailsVC : CLLocationManagerDelegate{
+extension ItemDetailsVC : CLLocationManagerDelegate {
     func getUpdatedLocation() {
         if (CLLocationManager.locationServicesEnabled())
         {
@@ -1252,6 +1275,8 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         coachMarksController.start(in: .window(over: self))
         UserDefaults.standard.set(true, forKey: "isShow")
     }
+    
+    
     
     private func initializeInstruction(onSuccess: @escaping (()->())){
         coachMarksController.delegate = self
