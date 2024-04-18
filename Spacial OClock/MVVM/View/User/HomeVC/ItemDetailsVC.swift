@@ -13,8 +13,8 @@ import CoreLocation
 import QuartzCore
 import MapKit
 import Instructions
-import SKPhotoBrowser
 import INSPhotoGallery
+
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
@@ -1282,9 +1282,10 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         coachMarksController.delegate = self
         coachMarksController.dataSource = self
         coachMarksController.animationDelegate = self
-        coachMarksController.overlay.backgroundColor = .black.withAlphaComponent(0.5)
+        coachMarksController.overlay.backgroundColor = .black.withAlphaComponent(0.8)
         let skipView = CoachMarkSkipDefaultView()
         skipView.setTitle("Skip", for: .normal)
+        skipView.titleLabel?.font =  UIFont(name: "Poppins-Bold", size: 16)
         coachMarksController.skipView = skipView
         coachMarksController.overlay.isUserInteractionEnabled = true
         onSuccess()

@@ -412,8 +412,8 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
         
         if sectionArray[indexPath.section].name == "Banner" {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellImageViewTB, for: indexPath) as! CellImageViewTB
-            //cell.banners = self.viewModel.homeData?.banners ?? [Banner]()
             cell.initializeBannerData(resp: self.viewModel.homeData?.banners)
+            //cell.banners = self.viewModel.homeData?.banners ?? [Banner]()
            // cell.collView.reloadData()
             return cell
         } else {

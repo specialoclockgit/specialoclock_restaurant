@@ -168,8 +168,10 @@ private extension CoachMarkBodyDefaultView {
         let textView = UITextView().preparedForAutoLayout()
 
         textView.textAlignment = .left
-        textView.textColor = InstructionsColor.coachMarkLabel
-        textView.font = UIFont.systemFont(ofSize: 15.0)
+        textView.textColor =  UIColor(named: "themeOrange")
+        //InstructionsColor.coachMarkLabel
+        textView.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        //UIFont.systemFont(ofSize: 15.0)
 
         textView.backgroundColor = .clear
 
@@ -202,7 +204,8 @@ private extension CoachMarkBodyDefaultView {
         let label = UILabel().preparedForAutoLayout()
 
         label.textAlignment = .center
-        label.textColor = InstructionsColor.coachMarkLabel
+        label.textColor = UIColor(named: "themeOrange")
+        //InstructionsColor.coachMarkLabel
         label.font = UIFont.systemFont(ofSize: 17.0)
 
         label.isUserInteractionEnabled = false
@@ -243,7 +246,6 @@ private extension CoachMarkBodyDefaultView {
         stackView.spacing = 10
         stackView.isUserInteractionEnabled = false
         stackView.alignment = .center
-
         return stackView
     }
 }

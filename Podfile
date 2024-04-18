@@ -32,7 +32,7 @@ target 'Spacial OClock' do
   pod 'WaterfallLayout'
   pod 'QCropper'
   pod 'Instructions', '~> 2.2.0'
-  pod 'SKPhotoBrowser'
+ # pod 'SKPhotoBrowser'
   pod 'INSPhotoGallery'
 
 

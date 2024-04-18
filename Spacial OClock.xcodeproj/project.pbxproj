@@ -178,10 +178,10 @@
 		EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */; };
 		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
 		EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */; };
-		EB6A78B72BC7F2F7001BA517 /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB6A78B62BC7F2F7001BA517 /* nodataFound.gif */; };
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
 		EBAB7ADE2BB6CCA80037676D /* MultiImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */; };
+		EBBA182C2BD0F8BB0084ED0E /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EBBA182B2BD0F8BB0084ED0E /* nodataFound.gif */; };
 		EBCA937B2BCEA2820088BB96 /* 01 (4).png in Resources */ = {isa = PBXBuildFile; fileRef = EBCA937A2BCEA2820088BB96 /* 01 (4).png */; };
 		EBE6CAA92B9B1E7C006D726B /* AvailabilityDatePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */; };
 		EBE82B332BA95F9200D4EC92 /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */; };
@@ -479,10 +479,10 @@
 		EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
 		EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeOfferCVC.xib; sourceTree = "<group>"; };
-		EB6A78B62BC7F2F7001BA517 /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
 		EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiImageVC.swift; sourceTree = "<group>"; };
+		EBBA182B2BD0F8BB0084ED0E /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EBCA937A2BCEA2820088BB96 /* 01 (4).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01 (4).png"; sourceTree = "<group>"; };
 		EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityDatePopupVC.swift; sourceTree = "<group>"; };
 		EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
@@ -929,8 +929,8 @@
 		C284FB2C2A402A0D006949B4 = {
 			isa = PBXGroup;
 			children = (
-				EB6A78B62BC7F2F7001BA517 /* nodataFound.gif */,
 				EBCA937A2BCEA2820088BB96 /* 01 (4).png */,
+				EBBA182B2BD0F8BB0084ED0E /* nodataFound.gif */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
 				C284FB372A402A0D006949B4 /* Spacial OClock */,
 				C284FB4E2A402A0E006949B4 /* Spacial OClockTests */,
@@ -1493,13 +1493,13 @@
 				A58CCC9A2A5EAB8000DFA478 /* Poppins-SemiBold.ttf in Resources */,
 				C284FB422A402A0E006949B4 /* Assets.xcassets in Resources */,
 				A5AB0E2B2A56842B00BB2BF4 /* CellBookingRestoTB.xib in Resources */,
+				EBBA182C2BD0F8BB0084ED0E /* nodataFound.gif in Resources */,
 				A55779D92A559159002B2FC2 /* HeaderMyOfferCell.xib in Resources */,
 				A5046FE62A4D838900C23627 /* HeaderMenuTB.xib in Resources */,
 				A51DBFF62A5292E1007535D7 /* CellBreakfastTB.xib in Resources */,
 				A529D2E42A5FC63400E416CD /* CellBarOfferTV.xib in Resources */,
 				A58CCC982A5EAB5D00DFA478 /* Poppins-Medium.ttf in Resources */,
 				EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */,
-				EB6A78B72BC7F2F7001BA517 /* nodataFound.gif in Resources */,
 				C2661A892A4B156C00EEE266 /* CellImageViewCB.xib in Resources */,
 				A5AC1FB42A4C57CA007EF488 /* CellItemDetailReviewTB.xib in Resources */,
 			);
