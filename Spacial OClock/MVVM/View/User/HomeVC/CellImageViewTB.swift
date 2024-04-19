@@ -30,7 +30,9 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         self.banners = resp
         pgController.numberOfPages = resp?.count ?? 0
         collView.reloadData()
-        startTimer()
+        if let bannersCount = resp?.count, bannersCount > 0 {
+            startTimer()
+        }
     }
     
     func startTimer() {
@@ -38,6 +40,10 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         }
         
         @objc func autoScroll() {
+            guard let bannersCount = banners?.count, bannersCount > 0 else {
+                return
+            }
+            
             let desiredOffset = CGPoint(x: collView.contentOffset.x + collView.frame.width, y: collView.contentOffset.y)
             collView.setContentOffset(desiredOffset, animated: true)
         }

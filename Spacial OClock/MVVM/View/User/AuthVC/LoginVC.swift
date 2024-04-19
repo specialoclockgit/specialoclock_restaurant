@@ -74,7 +74,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                 if Store.userDetails?.isOtpVerified != 1{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
                     self.navigationController?.pushViewController(vc, animated: true)
-                }else if Store.userDetails?.isCompleted != 1{
+                } else if Store.userDetails?.isCompleted != 1{
                     let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
                     vc.btnCheckStatus = self.restoselctStatus
                     if self.restoselctStatus == 1{
