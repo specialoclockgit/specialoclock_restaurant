@@ -240,7 +240,7 @@ struct NearbyRestaurant: Codable {
     let status: Int?
     let openTime, closeTime: String?
     let type, categoryID, cuisineID, themesRestrorantID: Int?
-    let isBlocked: Int?
+    let isBlocked, offer_available: Int?
     let profileImage, commission, offerDescription, offerPercentage: String?
     let isLiked: Int?
     let distance: Double?
@@ -253,7 +253,7 @@ struct NearbyRestaurant: Codable {
         case status
         case openTime = "open_time"
         case closeTime = "close_time"
-        case type, offerDescription, offerPercentage
+        case type, offerDescription, offerPercentage, offer_available
         case categoryID = "category_id"
         case cuisineID = "cuisine_id"
         case themesRestrorantID = "themes_restrorant_id"

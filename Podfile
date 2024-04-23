@@ -4,7 +4,7 @@
 target 'Spacial OClock' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  
   # Pods for Spacial OClock
   
   pod 'IQKeyboardManagerSwift'
@@ -32,28 +32,26 @@ target 'Spacial OClock' do
   pod 'WaterfallLayout'
   pod 'QCropper'
   pod 'Instructions', '~> 2.2.0'
- # pod 'SKPhotoBrowser'
+  pod 'Google-Maps-iOS-Utils'
   pod 'INSPhotoGallery'
-
-
   
-    target 'Spacial OClockTests' do
+  target 'Spacial OClockTests' do
     inherit! :search_paths
     # Pods for testing
   end
-
+  
   target 'Spacial OClockUITests' do
     # Pods for testing
   end
-
+  
 end
 
 post_install do |installer|
-    installer.generated_projects.each do |project|
-        project.targets.each do |target|
-            target.build_configurations.each do |config|
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-            end
-        end
+  installer.generated_projects.each do |project|
+    project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      end
     end
+  end
 end

@@ -8,6 +8,12 @@
 import UIKit
 import GooglePlaces
 import GoogleMaps
+import GoogleMapsUtils
+
+struct structName:Codable {
+    var lat: NearbyRestaurant?
+}
+
 
 class mapViewController: UIViewController, GMSMapViewDelegate {
     
@@ -15,31 +21,29 @@ class mapViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var collVw: UICollectionView!
     //MARK: - VARIABELS
+    private var clusterManager: GMUClusterManager!
     var latitude = Double()
     var longitude = Double()
     var locMarkers = [GMSMarker]()
     var nearBy = [NearbyRestaurant]()
     var tempNearBy = [NearbyRestaurant]()
     var iscomeFrom = Int()
-    
+    var selectedRestroId : Int?
+    var locationMarker = GMSMarker()
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         collVw.isHidden = true
-        // collVw.isHidden = iscomeFrom == 0 ? true : false
         collVw.delegate = self
         collVw.dataSource = self
-        mapView.delegate = self
-        if iscomeFrom == 0{
+       // mapView.delegate = self
+        if iscomeFrom == 0 {
             setLocation()
         } else {
-            getalllocations()
-            print("countis",nearBy.count)
+            initializeClusterItems()
         }
-        
-        
-        //getalllocations()
     }
+
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
     }
@@ -53,77 +57,127 @@ class mapViewController: UIViewController, GMSMapViewDelegate {
         marker.map = self.mapView
     }
     
-    //MARK: - FUNCTIONS
-    func getalllocations() {
-        mapView.clear()
-        for index in 0..<nearBy.count {
-            if let returnedPlace = nearBy[index] as? NearbyRestaurant {
-                
-                var percentage = ""
-                var latitude = ""
-                var longitude = ""
-                var image = ""
-                if let name = returnedPlace.offerPercentage {
-                    percentage = name
-                }
-                
-                if let latis = returnedPlace.latitude {
-                    latitude = latis
-                }
-                
-                if let longis = returnedPlace.longitude {
-                    longitude = longis
-                }
-                
-                if let img = returnedPlace.profileImage {
-                    image = img
-                    print("mapImg",image)
-                }
-                
-                let marker = GMSMarker()
-                
-                let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 16)
-                
-                print("=====map loc",latitude,longitude)
-                marker.position = checkIfMutlipleCoordinates(latitude: Float(Double(latitude) ?? 0.0), longitude: Float(Double(longitude) ?? 0.0))
-                let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-                if Store.screenType == 1 {
-                    view.lblPersot.text = "\(percentage)%"
-                    view.providerImageView.isHidden = true
-                }else {
-                    view.providerImageView.isHidden = false
-                    view.lblPersot.text = ""
-                    view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
-                }
-                self.locMarkers.append(marker)
-                marker.iconView = view
-                mapView.animate(to: camera)
-                marker.map = self.mapView
-            }
-        }
-    }
-    
+
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         if iscomeFrom == 0{
             
-        }else{
+        } else {
+     
             if let selectedindex = locMarkers.firstIndex(of: marker){
-                self.tempNearBy = self.nearBy.filter({$0.offerPercentage == self.nearBy[selectedindex].offerPercentage})
-                self.collVw.isHidden = self.tempNearBy.count == 0 ? true : false
-                self.collVw.reloadData()
-                //                let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
-                //                vc.ProductID = self.nearBy[selectedindex].id ?? 0
-                //                self.navigationController?.pushViewController(vc, animated: true)
+                
+                print(nearBy[selectedindex].name ?? "")
+                if let view = marker.iconView as? CustomMarker {
+                    view.detailVw.isHidden = false
+                }
+//                
+//                //                self.tempNearBy = self.nearBy.filter({$0.offerPercentage == self.nearBy[selectedindex].offerPercentage})
+//                //                self.collVw.isHidden = self.tempNearBy.count == 0 ? true : false
+//                //                self.collVw.reloadData()
+//                //                //                let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
+//                //                //                vc.ProductID = self.nearBy[selectedindex].id ?? 0
+//                //                //                self.navigationController?.pushViewController(vc, animated: true)
             }
-            
         }
         return true
     }
+    
+
+  
     @IBAction func backBtn(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
 }
 
+
+    
+extension mapViewController: GMUClusterManagerDelegate {
+    
+    func initializeClusterItems()
+    {
+        var iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm =  GMUNonHierarchicalDistanceBasedAlgorithm()
+        //GMUGridBasedClusterAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
+        renderer.delegate = self
+        self.clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
+        self.clusterManager.cluster()
+        self.clusterManager.setDelegate(self as GMUClusterManagerDelegate, mapDelegate: self)
+        self.clusterManager.setDelegate(self, mapDelegate: self)
+        self.clusterManager.setMapDelegate(self)
+        setmarkers()
+    }
+    
+    func setmarkers() {
+        mapView.clear()
+        mapView.isMyLocationEnabled = true
+        clusterManager.clearItems()
+        if self.nearBy.count != 0 {
+            for i in 0..<(self.nearBy.count){
+                let state_marker = GMSMarker()
+                state_marker.position = checkIfMutlipleCoordinates(latitude: Float(Double(self.nearBy[i].latitude ?? "0.0") ?? 0.0), longitude: Float(Double(self.nearBy[i].longitude ?? "0.0") ?? 0.0))
+                state_marker.map = self.mapView
+                let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
+                customInfoWindow.setupData(body: self.nearBy[i])
+                
+                let data = structName(lat: nearBy[i]) // initialize struct
+                state_marker.userData = data
+                self.mapView.camera = GMSCameraPosition.camera(withTarget: state_marker.position, zoom: 16)
+                self.mapView.animate(toZoom: 10)
+                state_marker.iconView = customInfoWindow
+                state_marker.zIndex = 50
+                locMarkers.append(state_marker)
+                clusterManager.add(state_marker)
+            }
+            clusterManager.cluster()
+        }
+        
+    }
+    func generatePOIItems(_ accessibilityLabel: String, position: CLLocationCoordinate2D, icon: UIImage?) {
+        //        guard let item = POIItem(position: position, name: accessibilityLabel, icon: icon) else {
+        //            return
+        //        }
+        //        self.clusterManager.add(item)
+    }
+}
+extension mapViewController : GMUClusterRendererDelegate {
+    func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
+        
+        print("will render call")
+        let val = (marker.userData as! GMUCluster)
+        for i in 0..<(self.nearBy.count){
+            
+      
+            let state_marker = GMSMarker()
+            let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
+            state_marker.position = CLLocationCoordinate2D(latitude: Double(
+                self.nearBy[i].latitude ?? "0.0") ?? 0.0, longitude:Double( self.nearBy[i].longitude ?? "0.0") ?? 0.0)
+           state_marker.iconView = customInfoWindow
+            customInfoWindow.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.nearBy[i].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+//            customInfoWindow.lblname.text = (self.nearBy[i].customer?.name ?? "")
+//            customInfoWindow.lblreview.text = "\(self.arrayGetLocation[i].reviewCount ?? 0) Reviews"
+//            customInfoWindow.LBLADDRESS.text = (self.arrayGetLocation[i].streetAddress ?? "")
+           
+        }
+    }
+    
+    
+    func allKeysForValue<K, V : Equatable>(dict: [K : V], val: V) -> [K] {
+        return dict.filter{ $0.1 == val }.map{ $0.0 }
+    }
+    
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
+        
+        return true
+    }
+    
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
+        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position,
+                                                 zoom: mapView.camera.zoom + 1)
+        let update = GMSCameraUpdate.setCamera(newCamera)
+        mapView.moveCamera(update)
+        return false
+    }
+}
 extension mapViewController{
     func checkIfMutlipleCoordinates(latitude : Float , longitude : Float) -> CLLocationCoordinate2D{
         
@@ -161,8 +215,6 @@ extension mapViewController{
         return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
     }
 }
-
-
 extension mapViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tempNearBy.count

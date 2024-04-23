@@ -124,12 +124,12 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                    
                    let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
                    if Store.screenType == 1 {
-                       view.lblPersot.text = "\(percentage)%"
-                       view.providerImageView.isHidden = true
+                       view.offerLbl.text = "\(percentage)%"
+                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
                    }else {
                        view.providerImageView.isHidden = false
                        view.lblPersot.text = ""
-                       view.providerImageView.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
+                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
                    }
                    
                    marker.iconView = view
@@ -351,7 +351,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     @IBAction func btnMapView(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
         vc.iscomeFrom = 1
-        vc.nearBy = self.nearBy.filter({ $0.offerPercentage != ""})
+        vc.nearBy = self.nearBy.filter({ $0.offer_available == 1})
         vc.latitude = self.lat ?? 0.0
         vc.longitude = self.long ?? 0.0
         self.navigationController?.pushViewController(vc, animated: true)

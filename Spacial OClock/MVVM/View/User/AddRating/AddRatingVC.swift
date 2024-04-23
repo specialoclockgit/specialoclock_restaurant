@@ -30,7 +30,7 @@ class AddRatingVC: UIViewController {
     
     
     //MARK: - FUCNTION
-    func add_Review(){
+    func add_Review() {
         viewmodal.addReviewAPI(restoid: restoID, rating: Double(cosmosView.rating) , review: txtView.text,bookingId: self.bookingID) { dataa in
             CommonUtilities.shared.showAlert(message: "Review submitted successfully", isSuccess: .success)
             self.navigationController?.popViewController(animated: true)

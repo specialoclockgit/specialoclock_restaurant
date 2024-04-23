@@ -28,9 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         GMSServices.provideAPIKey("AIzaSyA-Ga7BvTYtT6KGYYoMWfolfoPj7CswuL0")
     GMSPlacesClient.provideAPIKey("AIzaSyDG3ftTHL_IMGAd8c8vU-q0Oi-oURgTeKE")
         
-//        GMSServices.provideAPIKey("AIzaSyCIVy1w4jCuYDgqDjfNGU-uqxgJb_OjM4g")
-//           GMSPlacesClient.provideAPIKey("AIzaSyCIVy1w4jCuYDgqDjfNGU-uqxgJb_OjM4g")
-        
+
         SocketIOManager.sharedInstance.connectMySocket()
         SocketIOManager.sharedInstance.connect_user()
         SocketIOManager.sharedInstance.connect_user_listen()
@@ -233,7 +231,7 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                         navigationController.viewControllers = [tabVC]
                         UIApplication.shared.windows.first?.rootViewController = navigationController
                         UIApplication.shared.windows.first?.makeKeyAndVisible()
-                    }else if notificationType == 7 {
+                    } else if notificationType == 7 {
                         if let restrorant_bar_id = userInfo["restrorant_bar_id"] as? String, let booking_id = userInfo["booking_id"] as? String{
                             let vc = storyboard.instantiateViewController(withIdentifier: ViewController.bookingDetailsVC) as! bookingDetailsVC
                             let navigationController = UINavigationController(rootViewController: vc)

@@ -132,11 +132,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.layoutIfNeeded()
             cell.offerTimings = celldata
             cell.collVw.reloadData()
-            
             cell.imgLocaiton.showIndicator(baseUrl: imageURL, imageUrl: self.heishtresto[indexPath.row].profileImage ?? "")
-            
             cell.lblRating.text = "\(heishtresto[indexPath.row].avgRating ?? 0)"
-            
             
             cell.callBack = { restId in
                 let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
@@ -144,7 +141,6 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 vc.selectedOfferId = restId
                 super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
             }
-            
 //            if heishtresto[indexPath.row].offerTimings?.count == 1 {
 //                cell.viewOffer1.isHidden = false
 //

@@ -112,7 +112,7 @@ class AuthViewModel : NSObject {
     //MARK: Forgot Password
     func ForgotPassword(email: String, onSuccess : @escaping (()->())) {
         if  email.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter  email", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter email", isSuccess: .error)
         }else{
             let param: parameters = ["email" : email]
             print(param)
