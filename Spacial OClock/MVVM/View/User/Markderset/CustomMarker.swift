@@ -43,7 +43,12 @@ class CustomMarker: UIView {
         self.collVw.reloadData()
     }
     
-
+    @IBAction func goToDetails(_ sender: UIButton) {
+        let vc = super.viewContainingController()?.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
+        vc.ProductID = self.dataBody?.id ?? 0
+        super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 extension CustomMarker: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

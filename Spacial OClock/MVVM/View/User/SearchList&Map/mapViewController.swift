@@ -30,6 +30,7 @@ class mapViewController: UIViewController, GMSMapViewDelegate {
     var iscomeFrom = Int()
     var selectedRestroId : Int?
     var locationMarker = GMSMarker()
+    var selectedMarker: GMSMarker?
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,23 +60,28 @@ class mapViewController: UIViewController, GMSMapViewDelegate {
     
 
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        if iscomeFrom == 0{
-            
+        if iscomeFrom == 0 {
+            // Handle taps for different scenario if needed
         } else {
-     
-            if let selectedindex = locMarkers.firstIndex(of: marker){
-                
+            // Handle taps for cluster scenario
+            if let selectedindex = locMarkers.firstIndex(of: marker) {
                 print(nearBy[selectedindex].name ?? "")
+                
+                // Check if there is a previously selected marker
+                if let prevSelectedMarker = selectedMarker {
+                    // Hide detailVw for the previously selected marker
+                    if let prevView = prevSelectedMarker.iconView as? CustomMarker {
+                        prevView.detailVw.isHidden = true
+                    }
+                }
+                
+                // Show detailVw for the current marker
                 if let view = marker.iconView as? CustomMarker {
                     view.detailVw.isHidden = false
                 }
-//                
-//                //                self.tempNearBy = self.nearBy.filter({$0.offerPercentage == self.nearBy[selectedindex].offerPercentage})
-//                //                self.collVw.isHidden = self.tempNearBy.count == 0 ? true : false
-//                //                self.collVw.reloadData()
-//                //                //                let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
-//                //                //                vc.ProductID = self.nearBy[selectedindex].id ?? 0
-//                //                //                self.navigationController?.pushViewController(vc, animated: true)
+                
+                // Update selected marker
+                selectedMarker = marker
             }
         }
         return true
@@ -121,8 +127,8 @@ extension mapViewController: GMUClusterManagerDelegate {
                 
                 let data = structName(lat: nearBy[i]) // initialize struct
                 state_marker.userData = data
-                self.mapView.camera = GMSCameraPosition.camera(withTarget: state_marker.position, zoom: 16)
-                self.mapView.animate(toZoom: 10)
+                self.mapView.camera = GMSCameraPosition.camera(withTarget: state_marker.position, zoom: 20)
+                self.mapView.animate(toZoom: 20)
                 state_marker.iconView = customInfoWindow
                 state_marker.zIndex = 50
                 locMarkers.append(state_marker)
@@ -144,20 +150,20 @@ extension mapViewController : GMUClusterRendererDelegate {
         
         print("will render call")
         let val = (marker.userData as! GMUCluster)
-        for i in 0..<(self.nearBy.count){
-            
-      
-            let state_marker = GMSMarker()
-            let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
-            state_marker.position = CLLocationCoordinate2D(latitude: Double(
-                self.nearBy[i].latitude ?? "0.0") ?? 0.0, longitude:Double( self.nearBy[i].longitude ?? "0.0") ?? 0.0)
-           state_marker.iconView = customInfoWindow
-            customInfoWindow.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.nearBy[i].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
-//            customInfoWindow.lblname.text = (self.nearBy[i].customer?.name ?? "")
-//            customInfoWindow.lblreview.text = "\(self.arrayGetLocation[i].reviewCount ?? 0) Reviews"
-//            customInfoWindow.LBLADDRESS.text = (self.arrayGetLocation[i].streetAddress ?? "")
-           
-        }
+//        for i in 0..<(self.nearBy.count){
+//            
+//      
+//            let state_marker = GMSMarker()
+//            let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
+//            state_marker.position = CLLocationCoordinate2D(latitude: Double(
+//                self.nearBy[i].latitude ?? "0.0") ?? 0.0, longitude:Double( self.nearBy[i].longitude ?? "0.0") ?? 0.0)
+//           state_marker.iconView = customInfoWindow
+//            customInfoWindow.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.nearBy[i].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+////            customInfoWindow.lblname.text = (self.nearBy[i].customer?.name ?? "")
+////            customInfoWindow.lblreview.text = "\(self.arrayGetLocation[i].reviewCount ?? 0) Reviews"
+////            customInfoWindow.LBLADDRESS.text = (self.arrayGetLocation[i].streetAddress ?? "")
+//           
+//        }
     }
     
     
