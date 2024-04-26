@@ -51,7 +51,8 @@ class homeSeeMoreVC: UIViewController {
     }
     //MARK: - ACTIONS
     @IBAction func btnBack(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        
+        
     }
     
 }

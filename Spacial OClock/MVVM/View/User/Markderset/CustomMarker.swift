@@ -20,12 +20,14 @@ class CustomMarker: UIView {
     @IBOutlet weak var providerImageView: UIImageView!
     @IBOutlet weak var restroImgVw: UIImageView!
     @IBOutlet weak var offerLbl: UILabel!
-    var dataBody : NearbyRestaurant?
+    @IBOutlet weak var goToDetailBtn: UIButton!
+    var dataBody: NearbyRestaurant?
+   
     override func awakeFromNib() {
         let nib = UINib(nibName: "HomeOfferCVC", bundle: nil)
         collVw.register(nib, forCellWithReuseIdentifier: "HomeOfferCVC")
     }
-    
+     
     func setupData(body:NearbyRestaurant?){
         restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: body?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
         restroName.text = body?.name ?? ""
@@ -44,9 +46,8 @@ class CustomMarker: UIView {
     }
     
     @IBAction func goToDetails(_ sender: UIButton) {
-        let vc = super.viewContainingController()?.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
-        vc.ProductID = self.dataBody?.id ?? 0
-        super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
+        
+       
     }
     
 }
@@ -57,13 +58,36 @@ extension CustomMarker: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collVw.dequeueReusableCell(withReuseIdentifier: "HomeOfferCVC", for: indexPath) as? HomeOfferCVC else { return UICollectionViewCell() }
-        cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 8)
+        cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 9)
         let celldata = self.dataBody?.offer_timings?[indexPath.row]
-        cell.titleLbl.text = Store.screenType == 1 ? "\(celldata?.offer ?? "") \n\("-\(celldata?.percentage ?? "0")%")" : (celldata?.offer ?? "")
+        
+        if Store.screenType == 1 {
+            if celldata?.is_fifty == 1 {
+                cell.titleLbl.text = "\(celldata?.offer ?? "") \n\("-\(50)%")"
+            } else {
+                cell.titleLbl.text = "\(celldata?.offer ?? "") \n\("-\(celldata?.percentage ?? "0")%")"
+            }
+        }else {
+            cell.titleLbl.text =  (celldata?.offer ?? "")
+        }
+        
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (26), height: 40)
     }
     
+}
+extension UIView {
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while let responder = parentResponder {
+            if let viewController = responder as? UIViewController {
+                return viewController
+            }
+            parentResponder = responder.next
+        }
+        return nil
+    }
 }

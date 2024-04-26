@@ -1282,7 +1282,8 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         coachMarksController.delegate = self
         coachMarksController.dataSource = self
         coachMarksController.animationDelegate = self
-        coachMarksController.overlay.backgroundColor = .black.withAlphaComponent(0.8)
+        coachMarksController.overlay.backgroundColor = .darkGray.withAlphaComponent(0.8)
+            //.black.withAlphaComponent(0.8)
         let skipView = CoachMarkSkipDefaultView()
         skipView.setTitle("Skip", for: .normal)
         skipView.titleLabel?.font =  UIFont(name: "Poppins-Bold", size: 16)

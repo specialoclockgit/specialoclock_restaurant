@@ -14,8 +14,11 @@ struct structName:Codable {
     var lat: NearbyRestaurant?
 }
 
-
-class mapViewController: UIViewController, GMSMapViewDelegate {
+class mapViewController: UIViewController, GMSMapViewDelegate  {
+    func customMarkerDidTapDetailView(_ marker: CustomMarker) {
+        print("88888888888")
+    }
+    
     
     //MARK: - OUTLETS
     @IBOutlet weak var mapView: GMSMapView!
@@ -61,33 +64,34 @@ class mapViewController: UIViewController, GMSMapViewDelegate {
 
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         if iscomeFrom == 0 {
-            // Handle taps for different scenario if needed
-        } else {
-            // Handle taps for cluster scenario
-            if let selectedindex = locMarkers.firstIndex(of: marker) {
-                print(nearBy[selectedindex].name ?? "")
-                
-                // Check if there is a previously selected marker
-                if let prevSelectedMarker = selectedMarker {
-                    // Hide detailVw for the previously selected marker
-                    if let prevView = prevSelectedMarker.iconView as? CustomMarker {
-                        prevView.detailVw.isHidden = true
-                    }
+        } else if let selectedindex = locMarkers.firstIndex(of: marker) {
+            print(nearBy[selectedindex].name ?? "")
+            
+            if selectedMarker == marker {
+                if let view = marker.iconView as? CustomMarker {
+                    //view.detailVw.isHidden.toggle()
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                     let itemDetailsVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                    itemDetailsVC.ProductID = self.nearBy[selectedindex].id ?? 0
+                    self.navigationController?.pushViewController(itemDetailsVC, animated: true)
+                    
+                    
+                }
+            } else {
+                if let prevSelectedMarker = selectedMarker, let prevView = prevSelectedMarker.iconView as? CustomMarker {
+                    prevView.detailVw.isHidden = true
                 }
                 
-                // Show detailVw for the current marker
                 if let view = marker.iconView as? CustomMarker {
                     view.detailVw.isHidden = false
                 }
                 
-                // Update selected marker
                 selectedMarker = marker
             }
         }
         return true
     }
     
-
   
     @IBAction func backBtn(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -100,7 +104,7 @@ extension mapViewController: GMUClusterManagerDelegate {
     
     func initializeClusterItems()
     {
-        var iconGenerator = GMUDefaultClusterIconGenerator()
+        let iconGenerator = GMUDefaultClusterIconGenerator()
         let algorithm =  GMUNonHierarchicalDistanceBasedAlgorithm()
         //GMUGridBasedClusterAlgorithm()
         let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
@@ -124,11 +128,10 @@ extension mapViewController: GMUClusterManagerDelegate {
                 state_marker.map = self.mapView
                 let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
                 customInfoWindow.setupData(body: self.nearBy[i])
-                
-                let data = structName(lat: nearBy[i]) // initialize struct
+                let data = structName(lat: nearBy[i])
                 state_marker.userData = data
-                self.mapView.camera = GMSCameraPosition.camera(withTarget: state_marker.position, zoom: 20)
-                self.mapView.animate(toZoom: 20)
+                self.mapView.camera = GMSCameraPosition.camera(withTarget: state_marker.position, zoom: 18)
+                self.mapView.animate(toZoom: 18)
                 state_marker.iconView = customInfoWindow
                 state_marker.zIndex = 50
                 locMarkers.append(state_marker)

@@ -31,7 +31,9 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         pgController.numberOfPages = resp?.count ?? 0
         collView.reloadData()
         if let bannersCount = resp?.count, bannersCount > 0 {
-            startTimer()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                self.startTimer()
+            }
         }
     }
     
@@ -67,7 +69,6 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         let index = scrollView.contentOffset.x / width
         pgController.currentPage = Int(index)
         currentIndex = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-            // If we are at the last item and scrolling forward, immediately go back to the first item
             if currentIndex == (banners?.count ?? 0) - 1 && scrollView.contentOffset.x > CGFloat(currentIndex) * scrollView.frame.size.width {
                 collView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
             }

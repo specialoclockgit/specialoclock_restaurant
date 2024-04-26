@@ -587,33 +587,32 @@ extension HomeVC {
 }
 
 extension HomeVC {
-    func checkIfMutlipleCoordinates(latitude : Float , longitude : Float) -> CLLocationCoordinate2D {
+    func checkIfMutlipleCoordinates(latitude: Float, longitude: Float) -> CLLocationCoordinate2D {
         
         var lat = latitude
         var lng = longitude
-        // arrFilterData is array of model which is giving lat long
+        
         let arrTemp = nearBy.filter {
-            return (((latitude == Float($0.latitude ?? "")) && (longitude == Float($0.longitude ?? ""))))
+            return (latitude == Float($0.latitude ?? "")) && (longitude == Float($0.longitude ?? ""))
         }
-        // arrTemp giving array of objects with similar lat long
-        if (arrTemp.count ) > 1{
+        
+        if arrTemp.count > 1 {
             // Core Logic giving minor variation to similar lat long
-            let variation = (randomFloat(min: 0.0, max: 2.0) - 0.5) / 1500
-            lat = lat + variation
-            lng = lng + variation
-            let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
-            return  finalPos
+            let variation = randomFloat(min: -0.00005, max: 0.00005)
+            lat += variation
+            lng += variation
         } else {
-            let variation = (randomFloat(min: 0.0, max: 2.0) - 0.5) / 1500
-            lat = lat + variation
-            lng = lng + variation
-            let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
-            return  finalPos
+            let variation = randomFloat(min: -0.0001, max: 0.0001)
+            lat += variation
+            lng += variation
         }
+        
+        let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
+        return finalPos
     }
     
-    func randomFloat(min: Float, max:Float) -> Float {
-        return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
+    func randomFloat(min: Float, max: Float) -> Float {
+        return (Float(arc4random()) / Float(UINT32_MAX)) * (max - min) + min
     }
 }
 
