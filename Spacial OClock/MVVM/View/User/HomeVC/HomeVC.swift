@@ -74,10 +74,10 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
         //MARK: Dine or Drink UserDefault for itemDetailOffer
-        if Store.screenType == 2{
+        if Store.screenType == 2 {
             //UserDefaults.standard.value(forKey: "dineDrinkStatus") as? Int == 2{
             setDrink()
-        }else{
+        } else {
             setDine()
         }
         //UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
@@ -211,6 +211,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     
     func hasLocationPermission() -> Bool {
         var hasPermission = false
+        
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined, .restricted, .denied:

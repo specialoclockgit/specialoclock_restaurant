@@ -38,9 +38,9 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
         collVw.isHidden = true
-        collVw.delegate = self
-        collVw.dataSource = self
-       // mapView.delegate = self
+        //collVw.delegate = self
+       // collVw.dataSource = self
+        mapView.delegate = self
         if iscomeFrom == 0 {
             setLocation()
         } else {
@@ -61,37 +61,45 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
         marker.map = self.mapView
     }
     
+   
+    
 
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         if iscomeFrom == 0 {
         } else if let selectedindex = locMarkers.firstIndex(of: marker) {
-            print(nearBy[selectedindex].name ?? "")
-            
-            if selectedMarker == marker {
-                if let view = marker.iconView as? CustomMarker {
-                    //view.detailVw.isHidden.toggle()
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                     let itemDetailsVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-                    itemDetailsVC.ProductID = self.nearBy[selectedindex].id ?? 0
-                    self.navigationController?.pushViewController(itemDetailsVC, animated: true)
-                    
-                    
+            marker.tracksInfoWindowChanges = true
+                if selectedMarker == marker {
+                    mapView.selectedMarker = nil
+                    selectedMarker = nil
+                } else {
+                    mapView.selectedMarker = marker
+                    selectedMarker = marker
                 }
-            } else {
-                if let prevSelectedMarker = selectedMarker, let prevView = prevSelectedMarker.iconView as? CustomMarker {
-                    prevView.detailVw.isHidden = true
-                }
-                
-                if let view = marker.iconView as? CustomMarker {
-                    view.detailVw.isHidden = false
-                }
-                
-                selectedMarker = marker
-            }
+           
         }
-        return true
+            return true
+        }
+    
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        if let selectedindex = locMarkers.firstIndex(of: marker) {
+            let customInfoWindow = Bundle.main.loadNibNamed("WindowForMap", owner: self, options: nil)![0] as! WindowForMap
+            customInfoWindow.setupData(body: self.nearBy[selectedindex])
+          //  marker.infoWindowAnchor = CGPoint(x: 0.5, y: 8.0)
+            
+            return customInfoWindow
+        }
+        return UIView()
     }
     
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+        if let selectedindex = locMarkers.firstIndex(of: marker) {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let itemDetailsVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+            itemDetailsVC.ProductID = self.nearBy[selectedindex].id ?? 0
+            self.navigationController?.pushViewController(itemDetailsVC, animated: true)
+            
+        }
+    }
   
     @IBAction func backBtn(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -114,38 +122,95 @@ extension mapViewController: GMUClusterManagerDelegate {
         self.clusterManager.setDelegate(self as GMUClusterManagerDelegate, mapDelegate: self)
         self.clusterManager.setDelegate(self, mapDelegate: self)
         self.clusterManager.setMapDelegate(self)
-        setmarkers()
+        setMarkers()
     }
     
-    func setmarkers() {
+    
+    
+    func setMarkers() {
         mapView.clear()
         mapView.isMyLocationEnabled = true
         clusterManager.clearItems()
-        if self.nearBy.count != 0 {
-            for i in 0..<(self.nearBy.count){
+        
+        if !nearBy.isEmpty {
+            for i in 0..<nearBy.count {
+                guard let lat = Double(nearBy[i].latitude ?? "0.0"),
+                      let lng = Double(nearBy[i].longitude ?? "0.0") else {
+                    continue
+                }
+                
+                var offsetLat = lat
+                var offsetLng = lng
+                
+                // Add small random offset to avoid overlapping markers
+                let offset = 0.0001
+                offsetLat += Double.random(in: -offset...offset)
+                offsetLng += Double.random(in: -offset...offset)
+                
                 let state_marker = GMSMarker()
-                state_marker.position = checkIfMutlipleCoordinates(latitude: Float(Double(self.nearBy[i].latitude ?? "0.0") ?? 0.0), longitude: Float(Double(self.nearBy[i].longitude ?? "0.0") ?? 0.0))
-                state_marker.map = self.mapView
-                let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
-                customInfoWindow.setupData(body: self.nearBy[i])
-                let data = structName(lat: nearBy[i])
-                state_marker.userData = data
-                self.mapView.camera = GMSCameraPosition.camera(withTarget: state_marker.position, zoom: 18)
-                self.mapView.animate(toZoom: 18)
+                state_marker.position = CLLocationCoordinate2D(latitude: offsetLat, longitude: offsetLng)
+                
+                state_marker.map = mapView
+                
+                let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)?[0] as? CustomMarker
+                customInfoWindow?.setupData(body: nearBy[i])
                 state_marker.iconView = customInfoWindow
                 state_marker.zIndex = 50
+                
+                let data = structName(lat: nearBy[i])
+                state_marker.userData = data
+                
                 locMarkers.append(state_marker)
                 clusterManager.add(state_marker)
             }
+            
             clusterManager.cluster()
+            
+            // Move camera to the first marker
+            if let firstMarker = nearBy.first, let lat = Double(firstMarker.latitude ?? "0.0"), let lng = Double(firstMarker.longitude ?? "0.0") {
+                let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 20)
+                mapView.animate(to: camera)
+            }
         }
-        
     }
+
+    
+    
+    
+    
+//    func setmarkers() {
+//        mapView.clear()
+//        mapView.isMyLocationEnabled = true
+//        clusterManager.clearItems()
+//        if self.nearBy.count != 0 {
+//            
+//            for i in 0..<(self.nearBy.count) {
+//                let state_marker = GMSMarker()
+//                state_marker.position = checkIfMutlipleCoordinates(latitude: Float(Double(self.nearBy[i].latitude ?? "0.0") ?? 0.0), longitude: Float(Double(self.nearBy[i].longitude ?? "0.0") ?? 0.0))
+//                state_marker.map = self.mapView
+//                let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
+//                customInfoWindow.setupData(body: self.nearBy[i])
+//                let data = structName(lat: nearBy[i])
+//                state_marker.userData = data
+//                
+//                state_marker.iconView = customInfoWindow
+//                state_marker.zIndex = 50
+//                locMarkers.append(state_marker)
+//                clusterManager.add(state_marker)
+//            }
+//           
+//            clusterManager.cluster()
+//        }
+//        
+//        if self.nearBy.count > 0 {
+//            let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees((Double(self.nearBy[0].latitude ?? "0.0") ?? 0.0)), longitude: CLLocationDegrees((Double(self.nearBy[0].longitude ?? "0.0") ?? 0.0) ), zoom: 20)
+//            self.mapView.animate(to: camera)
+//        }
+//        
+//        
+//    }
     func generatePOIItems(_ accessibilityLabel: String, position: CLLocationCoordinate2D, icon: UIImage?) {
-        //        guard let item = POIItem(position: position, name: accessibilityLabel, icon: icon) else {
-        //            return
-        //        }
-        //        self.clusterManager.add(item)
+      
     }
 }
 extension mapViewController : GMUClusterRendererDelegate {
@@ -153,20 +218,7 @@ extension mapViewController : GMUClusterRendererDelegate {
         
         print("will render call")
         let val = (marker.userData as! GMUCluster)
-//        for i in 0..<(self.nearBy.count){
-//            
-//      
-//            let state_marker = GMSMarker()
-//            let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
-//            state_marker.position = CLLocationCoordinate2D(latitude: Double(
-//                self.nearBy[i].latitude ?? "0.0") ?? 0.0, longitude:Double( self.nearBy[i].longitude ?? "0.0") ?? 0.0)
-//           state_marker.iconView = customInfoWindow
-//            customInfoWindow.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.nearBy[i].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
-////            customInfoWindow.lblname.text = (self.nearBy[i].customer?.name ?? "")
-////            customInfoWindow.lblreview.text = "\(self.arrayGetLocation[i].reviewCount ?? 0) Reviews"
-////            customInfoWindow.LBLADDRESS.text = (self.arrayGetLocation[i].streetAddress ?? "")
-//           
-//        }
+
     }
     
     
@@ -203,7 +255,7 @@ extension mapViewController{
         // arrTemp giving array of objects with similar lat long
         if (arrTemp.count ) > 1{
             // Core Logic giving minor variation to similar lat long
-            let variation = (randomFloat(min: 0.0, max: 1.0) - 0.5) / 1500
+            let variation = (randomFloat(min: 0.0, max: 1.0) - 0.5) / 1000
             lat = lat + variation
             lng = lng + variation
             
@@ -211,7 +263,7 @@ extension mapViewController{
             return  finalPos
             
         }else{
-            let variation = (randomFloat(min: 0.0, max: 1.0) - 0.5) / 1500
+            let variation = (randomFloat(min: 0.0, max: 1.0) - 0.5) / 1000
             lat = lat + variation
             lng = lng + variation
             let finalPos = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
@@ -221,36 +273,36 @@ extension mapViewController{
     }
     
     func randomFloat(min: Float, max:Float) -> Float {
-        return (Float(arc4random()) / 0xFFFFFFFF) * (max - min) + min
+        return (Float(arc4random()) / Float(UINT32_MAX)) * (max - min) + min
     }
 }
-extension mapViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tempNearBy.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collVw.dequeueReusableCell(withReuseIdentifier: "mapViewCVC", for: indexPath) as! mapViewCVC
-        cell.listing = tempNearBy[indexPath.row]
-        cell.offerTimings = tempNearBy[indexPath.row].offer_timings
-        cell.collVw.reloadData()
-        cell.callBack = { [weak self] restId in
-            let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
-            vc.ProductID = self?.tempNearBy[indexPath.row].id ?? 0
-            vc.selectedOfferId = restId
-            self?.navigationController?.pushViewController(vc, animated: true)
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
-        vc.ProductID = self.tempNearBy[indexPath.row].id ?? 0
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collVw.frame.size.width, height: 130)
-    }
-    
-}
+//extension mapViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return tempNearBy.count
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collVw.dequeueReusableCell(withReuseIdentifier: "mapViewCVC", for: indexPath) as! mapViewCVC
+//        cell.listing = tempNearBy[indexPath.row]
+//        cell.offerTimings = tempNearBy[indexPath.row].offer_timings
+//        cell.collVw.reloadData()
+//        cell.callBack = { [weak self] restId in
+//            let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+//            vc.ProductID = self?.tempNearBy[indexPath.row].id ?? 0
+//            vc.selectedOfferId = restId
+//            self?.navigationController?.pushViewController(vc, animated: true)
+//        }
+//        return cell
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let vc = self.storyboard?.instantiateViewController(identifier: "ItemDetailsVC") as! ItemDetailsVC
+//        vc.ProductID = self.tempNearBy[indexPath.row].id ?? 0
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: collVw.frame.size.width, height: 130)
+//    }
+//    
+//}

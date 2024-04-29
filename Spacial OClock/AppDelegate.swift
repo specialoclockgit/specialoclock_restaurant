@@ -30,19 +30,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
 
         SocketIOManager.sharedInstance.connectMySocket()
-        SocketIOManager.sharedInstance.connect_user()
-        SocketIOManager.sharedInstance.connect_user_listen()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        LocationManager1.sharedInstance.determineMyCurrentLocation()
-        if CLLocationManager.locationServicesEnabled() {
-            locationUpdated = true
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }else{
-            locationUpdated = false
+       
+        
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                DispatchQueue.main.async {
+                    self.locationUpdated = true
+                    self.locationManager.delegate = self
+                    self.locationManager.requestWhenInUseAuthorization()
+                    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                    self.locationManager.startUpdatingLocation()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.locationUpdated = false
+                }
+            }
         }
+
         registerForPushNotifications()
         // Override point for customization after application launch.
         return true
