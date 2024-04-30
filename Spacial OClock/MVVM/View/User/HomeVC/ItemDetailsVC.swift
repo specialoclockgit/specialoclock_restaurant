@@ -283,7 +283,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                         self.restrorant_bar_id = self.offer?[self.isselectedoffer].restrorantBarID ?? 0
                         self.offerID = self.offer?[self.isselectedoffer].offerID ?? 0
                     }
-                    
                 }
            }
         }
@@ -307,6 +306,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         
         let photosViewController = INSPhotosViewController(photos: photos, initialPhoto: photos.first, referenceView: nil)
         photosViewController.maximumZoomScale = 5.0
+        photosViewController.overlayView.setHidden(false, animated: true)
         present(photosViewController, animated: true, completion: nil)
 
     }
@@ -817,6 +817,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             
             let photosViewController = INSPhotosViewController(photos: photos, initialPhoto: photos[indexPath.row + 1], referenceView: nil)
             photosViewController.maximumZoomScale = 5.0
+            photosViewController.overlayView.setHidden(false, animated: true)
             present(photosViewController, animated: true, completion: nil)
 
             
@@ -832,6 +833,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             }
             let photosViewController = INSPhotosViewController(photos: photos, initialPhoto: photos[indexPath.row], referenceView: nil)
             photosViewController.maximumZoomScale = 5.0
+            photosViewController.overlayView.setHidden(false, animated: true)
             present(photosViewController, animated: true, completion: nil)
 
            
@@ -1068,6 +1070,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             
             let photosViewController = INSPhotosViewController(photos: photos, initialPhoto: photos.first, referenceView: nil)
             photosViewController.maximumZoomScale = 5.0
+            photosViewController.overlayView.setHidden(false, animated: true)
             present(photosViewController, animated: true, completion: nil)
             
             

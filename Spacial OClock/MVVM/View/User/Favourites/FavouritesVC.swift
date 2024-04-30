@@ -24,7 +24,7 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
     override func viewDidLoad() {
         super.viewDidLoad()
         btnBack.isHidden = true
-        favouriteCV.showAnimatedGradientSkeleton()
+        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -35,6 +35,8 @@ class FavouritesVC: UIViewController,SkeletonCollectionViewDataSource,SkeletonCo
     
     //MARK: - FUNCTIONS
     func get_list(){
+        favouriteCV.backgroundView = nil
+        favouriteCV.showAnimatedGradientSkeleton()
         favViewModal.favListAPI { [weak self] dataa in
             self?.modal = dataa?.reversed()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

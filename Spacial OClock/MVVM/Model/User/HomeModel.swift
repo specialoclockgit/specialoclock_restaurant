@@ -141,9 +141,10 @@ struct AllBarsResto: Codable {
     let avgRating: Int?
     let offers: [TimeSlotoffer]?
     var offerTimings: [OfferTiminghome]?
+    var time_slots: [TimeSlotoffer]?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, location, country, state, city, latitude, longitude,disable_dates
+        case id, name, location, country, state, city, latitude, longitude,disable_dates,time_slots
         case userID = "user_id"
         case shortDescription = "short_description"
         case status,offers
@@ -173,6 +174,7 @@ struct AllBarsResto: Codable {
         self.userID = try container.decodeIfPresent(Int.self, forKey: .userID)
         self.shortDescription = try container.decodeIfPresent(String.self, forKey: .shortDescription)
         self.status = try container.decodeIfPresent(Int.self, forKey: .status)
+        self.time_slots = try container.decodeIfPresent([TimeSlotoffer].self, forKey: .time_slots)
         self.offers = try container.decodeIfPresent([TimeSlotoffer].self, forKey: .offers)
         self.offerTimings = try container.decodeIfPresent([OfferTiminghome].self, forKey: .offerTimings)
         self.openTime = try container.decodeIfPresent(String.self, forKey: .openTime)

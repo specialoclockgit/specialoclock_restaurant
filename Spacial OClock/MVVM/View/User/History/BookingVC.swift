@@ -43,7 +43,7 @@ class BookingVC: UIViewController, UIGestureRecognizerDelegate {
 
     //MARK: - FUNCTIONS
     func currentpastAPI(status:Int){
-        bookingTV.showSkeleton()
+        bookingTV.showAnimatedGradientSkeleton()
         self.modal?.removeAll()
         self.bookingTV.reloadData()
         viewmodal.currentPast_API(type: status, genre: "0") { [weak self] dataa in
@@ -76,7 +76,7 @@ class BookingVC: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 //MARK: - EXTENSIONS
-extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
+extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "bookingCell"
     }
@@ -85,7 +85,7 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource{
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if modal?.count == 0{
-            tableView.setNoDataMessage("No booking found")
+            tableView.setNoDataMessage("No booking found",yPosition: -120)
             //self.imgView.image = UIImage.gif(name: "nodataFound")
            // self.imgView.isHidden = false
         }else{

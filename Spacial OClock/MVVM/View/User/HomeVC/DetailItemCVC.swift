@@ -54,13 +54,13 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
             var percentage = String()
             if offerTimings?[indexPath.row].isFifty == 1 {
                 percentage = "-\(50)%"
-            } else if offerTimings?[indexPath.row].custom_discount != 0{
+            } else if offerTimings?[indexPath.row].custom_discount != 0 {
                 percentage = "-\(offerTimings?[indexPath.row].custom_discount ?? 0)%"
             } else{
                 percentage = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? "0")%"
             }
             cell.titleLbl.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
-        }else {
+        } else {
             cell.titleLbl.text = "\(offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")"
             
         }

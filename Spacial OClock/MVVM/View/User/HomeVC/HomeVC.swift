@@ -44,6 +44,8 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     @IBOutlet weak var btnDine : UIButton!
     @IBOutlet weak var btnDrinks : UIButton!
     @IBOutlet weak var lblUserName : UILabel!
+    @IBOutlet weak var mapIcon: UIImageView!
+    @IBOutlet weak var mapTitleLbl: UILabel!
     //MARK: - VARIABELS
     var lat : Double?
     var long : Double?
@@ -270,8 +272,10 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
                 let obj = SectionModel(name: "A-Z",objArray: objData?.all_bars_restos ?? [],image: "9411889")
                 self.sectionArray.append(obj)
             }
+            self.mapIcon.isHidden = false
+            self.mapTitleLbl.isHidden = false
             self.viewModel.homeData = objData
-     
+            self.gmsMapView.isHidden = false
             self.tabBarController?.tabBar.isHidden  = false
             self.tbHomeData.layoutSubviews()
             self.tbHomeData.reloadData()
@@ -490,6 +494,7 @@ extension HomeVC {
             screen.filterlocation = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
             screen.getcity = self.getcity
             screen.getcountry = self.getcountry
+            screen.iconImg = sectionArray[sender.tag].image ?? ""
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Cuisines" :
@@ -499,6 +504,7 @@ extension HomeVC {
             screen.filterCusine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
             screen.getcity = self.getcity
             screen.getcountry = self.getcountry
+            screen.iconImg = sectionArray[sender.tag].image ?? ""
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Category" :
@@ -508,6 +514,7 @@ extension HomeVC {
             screen.filtercategory = sectionArray[sender.tag].objArray as? [Category] ?? []
             screen.getcity = self.getcity
             screen.getcountry = self.getcountry
+            screen.iconImg = sectionArray[sender.tag].image ?? ""
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Popular" :
@@ -535,6 +542,7 @@ extension HomeVC {
             screen.filterthemeAry = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
             screen.getcity = self.getcity
             screen.getcountry = self.getcountry
+            screen.iconImg = sectionArray[sender.tag].image ?? ""
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "A-Z" :

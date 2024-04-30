@@ -43,7 +43,7 @@ class CellHomeCV: UICollectionViewCell {
     @IBOutlet weak var lblRestTiming: UILabel!
     //MARK: Variables
      var cellDelegate  : CellHomeCVDelegate?
-    var offerTimings: [OfferTiminghome]?
+    var offerTimings: [TimeSlotoffer]?
     
     var callBack: ((Int)->())?
     override func awakeFromNib() {
@@ -82,14 +82,32 @@ extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         }
         
         let celldata = self.offerTimings?[indexPath.row]
-        cell.titleLbl.text = Store.screenType == 1 ? "\(celldata?.offer ?? "") \n\("-\(celldata?.percentage ?? "0")%")" : (celldata?.offer ?? "")
+        
+        if Store.screenType == 1 {
+            var percentage = String()
+            if offerTimings?[indexPath.row].isFifty == 1 {
+                percentage = "-\(50)%"
+            } else if offerTimings?[indexPath.row].custom_discount != 0 {
+                percentage = "-\(offerTimings?[indexPath.row].custom_discount ?? 0)%"
+            } else{
+                percentage = "-\(offerTimings?[indexPath.row].offer?.offerPrice ?? "0")%"
+            }
+            cell.titleLbl.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
+        } else {
+            cell.titleLbl.text = "\(offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")"
+            
+        }
+        
+        
+        
+       
         
         return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.callBack?(self.offerTimings?[indexPath.row].id ?? 0)
+        self.callBack?(self.offerTimings?[indexPath.row].slot_id ?? 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

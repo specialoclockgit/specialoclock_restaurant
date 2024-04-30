@@ -18,7 +18,8 @@ class newSeeMoreVC: UIViewController {
     @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var imgViewGif: UIImageView!
     @IBOutlet weak var colleVeiw: UICollectionView!
-   
+    @IBOutlet weak var iconImgVw: UIImageView!
+    @IBOutlet weak var titleLbl: UILabel!
     
     //MARK: - VARIABELS
     var location = [HomeListLocation]()
@@ -35,18 +36,24 @@ class newSeeMoreVC: UIViewController {
     var objArray: [SectionModel] = []
     var getcity = String()
     var getcountry = String()
+    var iconImg = String()
     //MARK: - VIEW LIEFCYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         txtFldSearch.delegate  = self
+        iconImgVw.image = UIImage(named: iconImg)
         setupCollectionView()
         if setvalue == "Location"{
+            titleLbl.text = "Location"
             lblHeading.text = "Location"
         }else if setvalue == "Cuisines"{
+            titleLbl.text = "Cuisines"
             lblHeading.text = "Cuisines"
         }else if setvalue == "Category"{
+            titleLbl.text = "Category"
             lblHeading.text = "Category"
         }else if setvalue == "Theme"{
+            titleLbl.text = "Theme"
             lblHeading.text = "Theme"
         }
         

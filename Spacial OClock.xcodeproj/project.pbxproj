@@ -176,6 +176,7 @@
 		C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */; };
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
 		EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */; };
+		EB3703D72BE0FA480088A6FE /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB3703D62BE0FA480088A6FE /* nodataFound.gif */; };
 		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
 		EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */; };
 		EB3F4CAC2BD78E1100DF6FC7 /* 01 (4).png in Resources */ = {isa = PBXBuildFile; fileRef = EB3F4CAB2BD78E1100DF6FC7 /* 01 (4).png */; };
@@ -184,7 +185,6 @@
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
 		EBAB7ADE2BB6CCA80037676D /* MultiImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */; };
-		EBB9EA502BDBC67800E1BC1D /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EBB9EA4F2BDBC67800E1BC1D /* nodataFound.gif */; };
 		EBE6CAA92B9B1E7C006D726B /* AvailabilityDatePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */; };
 		EBE82B332BA95F9200D4EC92 /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */; };
 		EBEE940C2B88C44700A32DDA /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE940B2B88C44700A32DDA /* NavigationVC.swift */; };
@@ -479,6 +479,7 @@
 		C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailTVC.swift; sourceTree = "<group>"; };
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		EB3703D62BE0FA480088A6FE /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
 		EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeOfferCVC.xib; sourceTree = "<group>"; };
 		EB3F4CAB2BD78E1100DF6FC7 /* 01 (4).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01 (4).png"; sourceTree = "<group>"; };
@@ -487,7 +488,6 @@
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
 		EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiImageVC.swift; sourceTree = "<group>"; };
-		EBB9EA4F2BDBC67800E1BC1D /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityDatePopupVC.swift; sourceTree = "<group>"; };
 		EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
 		EBEE940B2B88C44700A32DDA /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
@@ -933,8 +933,8 @@
 		C284FB2C2A402A0D006949B4 = {
 			isa = PBXGroup;
 			children = (
+				EB3703D62BE0FA480088A6FE /* nodataFound.gif */,
 				EB3F4CAB2BD78E1100DF6FC7 /* 01 (4).png */,
-				EBB9EA4F2BDBC67800E1BC1D /* nodataFound.gif */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
 				C284FB372A402A0D006949B4 /* Spacial OClock */,
 				C284FB4E2A402A0E006949B4 /* Spacial OClockTests */,
@@ -1485,7 +1485,6 @@
 				A5046FE22A4D6EEB00C23627 /* CellMenuTV.xib in Resources */,
 				A5947AFA2A55416800519039 /* CellMyInvoicePendingTV.xib in Resources */,
 				C29CDAED2A42B8C90035E03D /* Main.storyboard in Resources */,
-				EBB9EA502BDBC67800E1BC1D /* nodataFound.gif in Resources */,
 				A58CCC962A5EAB4D00DFA478 /* Poppins-Black.ttf in Resources */,
 				ECBC37CC2AC44FE300ADEDC7 /* CustomMarker.xib in Resources */,
 				C2661A862A4B156C00EEE266 /* CellHomeCV.xib in Resources */,
@@ -1498,6 +1497,7 @@
 				A5F18B8E2A545505006979DD /* CellMyOfferTB.xib in Resources */,
 				A58CCC9A2A5EAB8000DFA478 /* Poppins-SemiBold.ttf in Resources */,
 				C284FB422A402A0E006949B4 /* Assets.xcassets in Resources */,
+				EB3703D72BE0FA480088A6FE /* nodataFound.gif in Resources */,
 				EB3F4CAE2BD7D18000DF6FC7 /* WindowForMap.xib in Resources */,
 				A5AB0E2B2A56842B00BB2BF4 /* CellBookingRestoTB.xib in Resources */,
 				A55779D92A559159002B2FC2 /* HeaderMyOfferCell.xib in Resources */,

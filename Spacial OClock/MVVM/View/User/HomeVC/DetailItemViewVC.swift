@@ -426,9 +426,10 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblDiscription.text = "\(data?.openTime ?? "") - " + "\(data?.closeTime ?? "")"
             cell.lblRaiting.text = "\(data?.avgRating ?? 0)"
             cell.cosmosView.rating = Double(data?.avgRating ?? 0)
-            let fetchresto = data?.offerTimings ?? []
+            let fetchresto = data?.time_slots ?? []
           //  cell.lblRaitingCount.text = "(\(data?.ratingCount?.description ?? "0"))"
-           // cell.offerTimings = fetchresto
+            
+            cell.offerTimings = fetchresto
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
@@ -477,9 +478,9 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblDiscription.text = "\(data?.openTime ?? "") - " + "\(data?.closeTime ?? "")"
             cell.lblRaiting.text = "\(data?.avgRating ?? 0)"
             cell.cosmosView.rating = Double(data?.avgRating ?? 0)
-            let fetchresto = data?.offerTimings ?? []
+            let fetchresto = data?.time_slots ?? []
           //  cell.lblRaitingCount.text = "(\(data?.ratingCount?.description ?? "0"))"
-           // cell.offerTimings = fetchresto
+            cell.offerTimings = fetchresto.reversed()
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
             cell.offerCollection.reloadData()

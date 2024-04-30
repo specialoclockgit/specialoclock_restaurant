@@ -84,7 +84,7 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
         if let selectedindex = locMarkers.firstIndex(of: marker) {
             let customInfoWindow = Bundle.main.loadNibNamed("WindowForMap", owner: self, options: nil)![0] as! WindowForMap
             customInfoWindow.setupData(body: self.nearBy[selectedindex])
-          //  marker.infoWindowAnchor = CGPoint(x: 0.5, y: 8.0)
+            marker.infoWindowAnchor = CGPoint(x: 0.5, y: 1.9)
             
             return customInfoWindow
         }
@@ -215,10 +215,7 @@ extension mapViewController: GMUClusterManagerDelegate {
 }
 extension mapViewController : GMUClusterRendererDelegate {
     func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
-        
         print("will render call")
-        let val = (marker.userData as! GMUCluster)
-
     }
     
     

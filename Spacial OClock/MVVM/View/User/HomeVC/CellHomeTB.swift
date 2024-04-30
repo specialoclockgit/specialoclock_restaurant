@@ -127,8 +127,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblRestName.text = heishtresto[indexPath.row].name ?? ""
             cell.lblRestLoc.text = heishtresto[indexPath.row].city ?? ""
             cell.lblRestTiming.text = "\(heishtresto[indexPath.row].openTime ?? "") - \(heishtresto[indexPath.row].closeTime ?? "")"
-            let celldata = heishtresto[indexPath.row].offerTimings
-            cell.collHeight.constant = heishtresto[indexPath.row].offerTimings?.count == 0 ? 0 : 60
+            let celldata = heishtresto[indexPath.row].time_slots
+            cell.collHeight.constant = celldata?.count == 0 ? 0 : 60
             cell.layoutIfNeeded()
             cell.offerTimings = celldata
             cell.collVw.reloadData()
@@ -227,9 +227,9 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblRestName.text = allresto[indexPath.row].name ?? ""
             cell.lblRestLoc.text = allresto[indexPath.row].city ?? ""
             cell.lblRestTiming.text = "\(allresto[indexPath.row].openTime ?? "") - \(allresto[indexPath.row].closeTime ?? "")"
-            let celldata = allresto[indexPath.row].offerTimings
+            let celldata = allresto[indexPath.row].time_slots
             cell.lblRating.text = "\(allresto[indexPath.row].avgRating ?? 0)"
-            cell.offerTimings = celldata
+            cell.offerTimings = celldata?.reversed()
             cell.collHeight.constant = celldata?.count == 0 ? 0 : 60
             cell.collVw.reloadData()
             cell.layoutIfNeeded()

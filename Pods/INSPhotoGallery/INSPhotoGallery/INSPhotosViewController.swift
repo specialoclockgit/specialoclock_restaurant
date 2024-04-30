@@ -120,6 +120,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     private var shouldHandleLongPressGesture = false
     
     private func newCurrentPhotoAfterDeletion(currentPhotoIndex: Int) -> INSPhotoViewable? {
+        
         let previousPhotoIndex = currentPhotoIndex - 1
         if let newCurrentPhoto = self.dataSource.photoAtIndex(currentPhotoIndex) {
             return newCurrentPhoto
@@ -253,6 +254,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     // MARK: - Helper methods
 
     private func deleteCurrentPhoto() {
+        
         guard let currentPhoto = self.currentPhoto else {
             return
         }
@@ -290,6 +292,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
      - parameter animated: Whether to animate the transition to the new photo.
      */
     open func changeToPhoto(_ photo: INSPhotoViewable, animated: Bool, direction: UIPageViewController.NavigationDirection = .forward) {
+        
         if !dataSource.containsPhoto(photo) {
             return
         }
@@ -325,6 +328,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     // MARK: - Target Actions
     
     open func handleDeleteButtonTapped(){
+        
         if shouldConfirmDeletion {
             confirmPhotoDeletion { [weak self] in
                 self?.deleteCurrentPhoto()
@@ -337,6 +341,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     // MARK: - View Controller Dismissal
     
     open override func dismiss(animated flag: Bool, completion: (() -> Void)?) {
+        
         if presentedViewController != nil {
             super.dismiss(animated: flag, completion: completion)
             return
@@ -373,6 +378,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     // MARK: - UIPageViewControllerDataSource / UIPageViewControllerDelegate
 
     public func initializePhotoViewControllerForPhoto(_ photo: INSPhotoViewable) -> INSPhotoViewController {
+        
         let photoViewController = INSPhotoViewController(photo: photo)
         singleTapGestureRecognizer.require(toFail: photoViewController.doubleTapGestureRecognizer)
         photoViewController.longPressGestureHandler = { [weak self] gesture in
@@ -402,6 +408,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     }
     
     @objc open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        
         guard let photoViewController = viewController as? INSPhotoViewController,
            let photoIndex = dataSource.indexOfPhoto(photoViewController.photo),
            let newPhoto = dataSource[photoIndex-1] else {
@@ -411,6 +418,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     }
     
     @objc open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        
         guard let photoViewController = viewController as? INSPhotoViewController,
             let photoIndex = dataSource.indexOfPhoto(photoViewController.photo),
             let newPhoto = dataSource[photoIndex+1] else {
@@ -420,6 +428,7 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     }
     
     @objc open func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        
         if completed {
             updateCurrentPhotosInformation()
             if let currentPhotoViewController = currentPhotoViewController {
@@ -463,9 +472,12 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     }
     
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        
         if let _ = currentPhoto?.image ?? currentPhotoViewController?.scalingImageView.image , shouldHandleLongPressGesture && action == #selector(NSObject.copy) {
             return true
         }
+      
+        
         return false
     }
     

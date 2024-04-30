@@ -31,7 +31,7 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         pgController.numberOfPages = resp?.count ?? 0
         collView.reloadData()
         if let bannersCount = resp?.count, bannersCount > 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
                 self.startTimer()
             }
         }
