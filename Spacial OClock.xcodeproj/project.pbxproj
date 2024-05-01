@@ -176,6 +176,7 @@
 		C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */; };
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
 		EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */; };
+		EB25739F2BE21913001C5766 /* ClusterResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25739E2BE21913001C5766 /* ClusterResultVC.swift */; };
 		EB3703D72BE0FA480088A6FE /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB3703D62BE0FA480088A6FE /* nodataFound.gif */; };
 		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
 		EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */; };
@@ -183,7 +184,7 @@
 		EB3F4CAE2BD7D18000DF6FC7 /* WindowForMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3F4CAD2BD7D18000DF6FC7 /* WindowForMap.xib */; };
 		EB3F4CB02BD7D19900DF6FC7 /* WindowForMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3F4CAF2BD7D19900DF6FC7 /* WindowForMap.swift */; };
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
-		EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewCVC.swift */; };
+		EBA2C29D2B83541A0053269F /* mapViewTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewTVC.swift */; };
 		EBAB7ADE2BB6CCA80037676D /* MultiImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */; };
 		EBE6CAA92B9B1E7C006D726B /* AvailabilityDatePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */; };
 		EBE82B332BA95F9200D4EC92 /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */; };
@@ -479,6 +480,7 @@
 		C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailTVC.swift; sourceTree = "<group>"; };
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		EB25739E2BE21913001C5766 /* ClusterResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterResultVC.swift; sourceTree = "<group>"; };
 		EB3703D62BE0FA480088A6FE /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
 		EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeOfferCVC.xib; sourceTree = "<group>"; };
@@ -486,7 +488,7 @@
 		EB3F4CAD2BD7D18000DF6FC7 /* WindowForMap.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WindowForMap.xib; sourceTree = "<group>"; };
 		EB3F4CAF2BD7D19900DF6FC7 /* WindowForMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowForMap.swift; sourceTree = "<group>"; };
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
-		EBA2C29C2B83541A0053269F /* mapViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewCVC.swift; sourceTree = "<group>"; };
+		EBA2C29C2B83541A0053269F /* mapViewTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewTVC.swift; sourceTree = "<group>"; };
 		EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiImageVC.swift; sourceTree = "<group>"; };
 		EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityDatePopupVC.swift; sourceTree = "<group>"; };
 		EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
@@ -1257,7 +1259,8 @@
 				ECA4AC882ADD736F00502E43 /* SearchVC.swift */,
 				ECA4AC8A2ADD738200502E43 /* SearchCVC.swift */,
 				ECB020642ADE6594002D2C07 /* mapViewController.swift */,
-				EBA2C29C2B83541A0053269F /* mapViewCVC.swift */,
+				EBA2C29C2B83541A0053269F /* mapViewTVC.swift */,
+				EB25739E2BE21913001C5766 /* ClusterResultVC.swift */,
 			);
 			path = "SearchList&Map";
 			sourceTree = "<group>";
@@ -1690,7 +1693,7 @@
 				8B91546E2A85F06E00CCB83E /* CuisineListingModel.swift in Sources */,
 				ECA1A4D92B171451007748F3 /* TermsconditionModel.swift in Sources */,
 				ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */,
-				EBA2C29D2B83541A0053269F /* mapViewCVC.swift in Sources */,
+				EBA2C29D2B83541A0053269F /* mapViewTVC.swift in Sources */,
 				C29CDAFE2A42BB1D0035E03D /* VerifypopUpVC.swift in Sources */,
 				A5F18B882A545149006979DD /* AddProductVC.swift in Sources */,
 				A58CCCAA2A5EDAAE00DFA478 /* EditProfileVC.swift in Sources */,
@@ -1728,6 +1731,7 @@
 				A5E8370C2A56C94600C2D16A /* HelpFAQRestoVC.swift in Sources */,
 				C284FB392A402A0D006949B4 /* AppDelegate.swift in Sources */,
 				8B9CF07C2A81F10B006C90E9 /* forgotpasswordmodel.swift in Sources */,
+				EB25739F2BE21913001C5766 /* ClusterResultVC.swift in Sources */,
 				A5947AFD2A5543E900519039 /* CellMyInvoicePaidTV.swift in Sources */,
 				A529D2E32A5FC63400E416CD /* CellBarOfferTV.swift in Sources */,
 				ECAF62EE2B1DBBB400BF242E /* CHTCollectionViewWaterfallLayout.swift in Sources */,

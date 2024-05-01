@@ -138,7 +138,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
         if setvalue == "Location" {
             cell.imgView.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblName.text = self.filterlocation[indexPath.row].locality_area ?? ""
-            let count  = Store.screenType == 2 ? (self.filterlocation[indexPath.row].restroCount ?? 0) : (self.filterlocation[indexPath.row].restroCount ?? 0)
+            let count  = Store.screenType == 2 ? (self.filterlocation[indexPath.row].restrorants?.count ?? 0) : (self.filterlocation[indexPath.row].restrorants?.count ?? 0)
             
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
@@ -148,7 +148,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             let image = "\(self.filterCusine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count  = Store.screenType == 2 ? (self.filterCusine[indexPath.row].restroCount ?? 0) : (self.filterCusine[indexPath.row].restroCount ?? 0)
+            let count  = Store.screenType == 2 ? (self.filterCusine[indexPath.row].restrorants?.count ?? 0) : (self.filterCusine[indexPath.row].restrorants?.count ?? 0)
     
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
@@ -162,7 +162,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             let image = "\(self.filtercategory[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count  = Store.screenType == 2 ? (self.filtercategory[indexPath.row].clubCount ?? 0) : (self.filtercategory[indexPath.row].clubCount ?? 0)
+            let count  = Store.screenType == 2 ? (self.filtercategory[indexPath.row].clubs?.count ?? 0) : (self.filtercategory[indexPath.row].clubs?.count ?? 0)
     
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
@@ -173,7 +173,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             let image = "\(self.filterthemeAry[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count  = Store.screenType == 2 ? (self.filterthemeAry[indexPath.row].barCount ?? 0) : (self.filterthemeAry[indexPath.row].barCount ?? 0)
+            let count  = Store.screenType == 2 ? (self.filterthemeAry[indexPath.row].restrorant?.count ?? 0) : (self.filterthemeAry[indexPath.row].restrorant?.count ?? 0)
     
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"

@@ -18,6 +18,7 @@ import INSPhotoGallery
 class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Outlet
+    @IBOutlet weak var sharecVw: UIView!
     @IBOutlet weak var btnSpecialOutlet:  UIButton!
     @IBOutlet weak var btnFullMenuOutlet:  UIButton!
     @IBOutlet weak var btnAboutOutlet:  UIButton!
@@ -230,7 +231,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.showAlertForTodayOff(date: self.txtFldDate.text ?? "", dateArr: self.disableDatedArr)
             }
             
-            
+            self.sharecVw.isHidden = self.modal?.userID == Store.userDetails?.id ? true : false
             self.favIconVw.isHidden = self.modal?.userID == Store.userDetails?.id ? true : false
             self.lblAboutDetail.text = self.ourMenu?.first?.offers?.description ?? ""
             self.lblRating.text = self.modal?.avgRating ?? ""
@@ -458,6 +459,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     
     //MARK: Button Action
+    
+    @IBAction func btnShareAction(_ sender: UIButton) {
+        let items = ["https://app.specialoclock.com"]
+        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        present(ac, animated: true)
+    }
+    
+    
     @IBAction func btnAudioCall(_ sender: UIButton) {
         if let phoneURL = URL(string: "\(Store.userDetails?.phone ?? 0)") {
             if UIApplication.shared.canOpenURL(phoneURL) {
@@ -466,8 +475,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 
             }
         }
-        
     }
+    
     @IBAction func btnBackAct(sender : UIButton){
         self.navigationController?.popViewController(animated: true)
     }
@@ -949,7 +958,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                 titleLbl.text = products?[section].menuTypeName ?? ""
             }
             
-            titleLbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
+            titleLbl.font = UIFont(name: "Poppins-SemiBold", size: 14)
+            //UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
             let viewAllBtn = UIButton.init(frame: CGRect(x: tableView.frame.width-30, y: 6, width: 30, height: 30))
             viewAllBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             if arrCheck[section] == true {

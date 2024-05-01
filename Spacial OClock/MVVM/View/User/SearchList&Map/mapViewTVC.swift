@@ -8,11 +8,10 @@
 import UIKit
 import SDWebImage
 
-class mapViewCVC: UICollectionViewCell {
+class mapViewTVC: UITableViewCell {
     @IBOutlet weak var lblName: UILabel!
-    @IBOutlet weak var lblReservations: UILabel!
-    @IBOutlet weak var lbldesc: UILabel!
-    @IBOutlet weak var lblRating: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
+    @IBOutlet weak var lblTiming: UILabel!
     @IBOutlet weak var imgVw: UIImageView!
     @IBOutlet weak var collVw: UICollectionView!
     
@@ -20,27 +19,29 @@ class mapViewCVC: UICollectionViewCell {
     var callBack: ((Int)->())?
     override func awakeFromNib() {
         super.awakeFromNib()
+        collVw.delegate = self
+        collVw.dataSource = self
         let nib = UINib(nibName: "HomeOfferCVC", bundle: nil)
         collVw.register(nib, forCellWithReuseIdentifier: "HomeOfferCVC")
     }
     
     var listing : NearbyRestaurant?{
         didSet {
-           // lblRating.text = listing?.distance?.description ?? ""
-            lblName.text = "\(listing?.name?.capitalized ?? "") (\(listing?.openTime ?? "") - \(listing?.closeTime ?? ""))"
-            lbldesc.text = listing?.offerDescription?.capitalized ?? ""
-            lbldesc.numberOfLines = 0
-            //lblReservations.text  = "\(listing?.openTime ?? "") - \(listing?.closeTime ?? "")"
-            let imageIndex = (imageURL) + (listing?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
-            imgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            imgVw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            lblName.text = (listing?.name?.capitalized ?? "")
+            lblLocation.text = listing?.location ?? ""
+            lblTiming.text = "\(listing?.openTime ?? "") - \(listing?.closeTime ?? "")"
+            offerTimings = listing?.offer_timings ?? []
+            collVw.reloadData()
+            //let imageIndex = (imageURL) + (listing?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+           // imgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            //imgVw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
         }
     }
     
 }
-extension mapViewCVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension mapViewTVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.offerTimings?.count ?? 0
+        return min(3, self.offerTimings?.count ?? 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -50,7 +51,6 @@ extension mapViewCVC : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         }
         let celldata = self.offerTimings?[indexPath.row]
         cell.titleLbl.text = Store.screenType == 1 ? "\(celldata?.offer ?? "") \n\("-\(celldata?.percentage ?? "0")%")" : (celldata?.offer ?? "")
-        
         return cell
     }
     
@@ -60,14 +60,11 @@ extension mapViewCVC : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.size.width / 4) - 6, height: 50)
+        return CGSize(width: (collectionView.frame.size.width / 3) - 6, height: 50)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 12
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 6
-//    }
-    
+
 }
