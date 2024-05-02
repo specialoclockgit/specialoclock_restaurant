@@ -129,6 +129,7 @@ open class INSPhotosOverlayView: UIView , INSPhotosOverlayViewable {
                 navigationItem.title = String(format:NSLocalizedString("%d of %d",comment:""), index+1, photosViewController.dataSource.numberOfPhotos)
             }
             captionLabel.attributedText = photo.attributedTitle
+            
         }
         self.deleteToolbar.isHidden = photo.isDeletable != true
     }

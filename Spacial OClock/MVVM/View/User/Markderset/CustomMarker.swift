@@ -33,11 +33,13 @@ class CustomMarker: UIView {
         restroName.text = body?.name ?? ""
         locationLbl.text = body?.location ?? ""
         timingLbl.text = "\(body?.openTime ?? "")-\(body?.closeTime ?? "")"
-        if let offerData = body?.offer_timings, offerData.count > 0 {
-            if offerData.first?.is_fifty == 1 {
+        if let offerData = body?.time_slots, offerData.count > 0 {
+            if offerData.last?.isFifty == 1 {
                 offerLbl.text = "50%"
-            } else {
-                offerLbl.text = "\(body?.offer_timings?.first?.percentage ?? "0")%"
+            } else if offerData.last?.custom_discount != 0 {
+                offerLbl.text = "\(offerData.last?.custom_discount ?? 0)%"
+            }else {
+                offerLbl.text = "\(offerData.last?.offer?.offerPrice ?? "0")%"
             }
             
         }

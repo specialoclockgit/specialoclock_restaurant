@@ -34,9 +34,9 @@ struct productDetailModalBody: Codable {
     let ourMenu: [OurMenud]?
     var offers: [Offersd]?
     let offer_timings : [OfferTimingDetail]? 
-
+    let time_slots : [TimeSlotoffer]?
     enum CodingKeys: String, CodingKey {
-        case id, name, location, country, state, city, latitude, longitude, offer_timings,ratingCount
+        case id, name, location, country, state, city, latitude, longitude, offer_timings,ratingCount, time_slots
         case userID = "user_id"
         case shortDescription = "short_description"
         case status
@@ -80,6 +80,7 @@ struct productDetailModalBody: Codable {
         self.commission = try container.decodeIfPresent(String.self, forKey: .commission)
         self.isLiked = try container.decodeIfPresent(Int.self, forKey: .isLiked)
         self.ratingCount = try container.decodeIfPresent(Int.self, forKey: .ratingCount)
+        self.time_slots = try container.decodeIfPresent([TimeSlotoffer].self, forKey: .time_slots)
        // self.totalBookings = try container.decodeIfPresent(String.self, forKey: .totalBookings)
         if let value = try? container.decode(String.self, forKey: .totalBookings) {
             self.totalBookings = value

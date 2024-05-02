@@ -110,7 +110,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var valueSelect = false
     var isselectedoffer = -1
     var restrorant_bar_id = Int()
-    var offer : [OfferTimingDetail]?
+    var offer : [TimeSlotoffer]?
     var currentDate = Date()
     var datecuurent = String()
     var slottime = String()
@@ -163,7 +163,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         tbMenu.dataSource = self
         
         
-        for i in 0...(self.products?.count ?? 0){
+        for _ in 0...(self.products?.count ?? 0){
             self.arrCheck.append(false)
         }
         
@@ -201,10 +201,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.reviews = data?.reviews ?? []
             self.ourMenu = data?.ourMenu ?? []
             if self.status == 1 {
-                self.offer = data?.offer_timings ?? []
+                self.offer = data?.time_slots?.reversed() ?? []
             } else {
                 // self.offer = self.processOfferResponse()
-                self.offer = data?.offer_timings?.unique(map: {$0.offerID})
+                self.offer = data?.time_slots?.unique(map: {$0.offerID}).reversed()
                 //
             }
             
@@ -257,28 +257,50 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 if let offerId = self.selectedOfferId , offerId != 0 {
                     let Index = self.offer?.firstIndex(where: {$0.id == offerId})
                     self.isselectedoffer  = Index ?? 0
-                    print("self.selectedOfferIdIndex---",Index)
-                    if let is_fifty = self.offer?[self.isselectedoffer].is_fifty {
-                        self.discount = is_fifty == 0 ? Int(self.offer?[self.isselectedoffer].percentage ?? "") ?? 0 : 50
+                    
+                    if let is_fifty = self.offer?[self.isselectedoffer].isFifty {
+                        if is_fifty != 0 {
+                            self.discount = 50
+                        }else if self.offer?[self.isselectedoffer].custom_discount != 0 {
+                            self.discount = self.offer?[self.isselectedoffer].custom_discount
+                        }else {
+                            self.discount = Int(self.offer?[self.isselectedoffer].offer?.offerPrice ?? "0")
+                        }
+                        
                     } else {
-                        self.discount = Int(self.offer?[self.isselectedoffer].percentage ?? "") ?? 0
+                        if self.offer?[self.isselectedoffer].custom_discount != 0 {
+                            self.discount = self.offer?[self.isselectedoffer].custom_discount
+                        } else {
+                            self.discount = Int(self.offer?[self.isselectedoffer].offer?.offerPrice ?? "0")
+                        }
                     }
                     let index = IndexPath(row: self.isselectedoffer, section: 0)
                     self.collViewMenu.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
                     self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                     self.selectedOfferId = 0
-                    self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].is_fifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
+                    self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].isFifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
                     let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
                     self.scrollView.setContentOffset(bottomOffset, animated: true)
                     if self.status == 1 {
-                        self.slottime = self.offer?[self.isselectedoffer].offer ?? ""
+                        self.slottime = self.offer?[self.isselectedoffer].startTime ?? ""
                         self.slotid = self.offer?[self.isselectedoffer].id ?? 0
                         self.menuid = self.offer?[self.isselectedoffer].menuID ?? 0
                         self.restrorant_bar_id = self.offer?[self.isselectedoffer].restrorantBarID ?? 0
                         self.offerID = self.offer?[self.isselectedoffer].offerID ?? 0
-                        self.offerDis = (self.offer?[self.isselectedoffer].is_fifty == 1 ? 50 : Int(self.offer?[self.isselectedoffer].percentage ?? "0")) ?? 0
+                        
+                        
+                        if self.offer?[self.isselectedoffer].isFifty != 0 {
+                            self.offerDis = 50
+                        }else if self.offer?[self.isselectedoffer].custom_discount != 0 {
+                            self.offerDis = self.offer?[self.isselectedoffer].custom_discount ?? 0
+                        }else {
+                            self.offerDis = Int(self.offer?[self.isselectedoffer].offer?.offerPrice ?? "0") ?? 0
+                        }
+                        
+                        
+                        //self.offerDis = (self.offer?[self.isselectedoffer].isFifty == 1 ? 50 : Int(self.offer?[self.isselectedoffer].percentage ?? "0")) ?? 0
                     }else {
-                        self.slottime = self.offer?[self.isselectedoffer].offer ?? ""
+                        self.slottime = self.offer?[self.isselectedoffer].startTime ?? ""
                         self.slotid = self.offer?[self.isselectedoffer].id ?? 0
                         self.menuid = self.offer?[self.isselectedoffer].menuID ?? 0
                         self.restrorant_bar_id = self.offer?[self.isselectedoffer].restrorantBarID ?? 0
@@ -461,9 +483,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //MARK: Button Action
     
     @IBAction func btnShareAction(_ sender: UIButton) {
-        let items = ["https://app.specialoclock.com"]
-        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        present(ac, animated: true)
+        if let restroID = self.modal?.id {
+            let items = ["\(shareUrl)\(restroID)"]
+            let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            present(ac, animated: true)
+        }
+        
     }
     
     
@@ -736,12 +761,26 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.percentageVw.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
-                cell.lblMenuSchedule.text = data?.menuName ?? ""
-                cell.lblTime.text = data?.offer ?? ""
-                if let isFifty = data?.is_fifty {
-                    cell.lblOffer.text = isFifty == 0 ? "-\(Int(data?.percentage ?? "0") ?? 0)%" : "-\(50)%"
+                cell.lblMenuSchedule.text = data?.offer?.menuName ?? ""
+                cell.lblTime.text = data?.startTime ?? ""
+                if let isFifty = data?.isFifty {
+                    
+                    if isFifty != 0 {
+                        cell.lblOffer.text = "-\(50)%"
+                    }else if self.offer?[indexPath.row].custom_discount != 0 {
+                        cell.lblOffer.text = "-\(self.offer?[indexPath.row].custom_discount ?? 0)%"
+                    }else {
+                        cell.lblOffer.text = "-\(self.offer?[indexPath.row].offer?.offerPrice ?? "0")%"
+                    }
+                    
+                    
+                    //cell.lblOffer.text = isFifty == 0 ? "-\(Int(data?.percentage ?? "0") ?? 0)%" : "-\(50)%"
                 }else {
-                    cell.lblOffer.text = "-\(Int(data?.percentage ?? "0") ?? 0)%"
+                    if self.offer?[indexPath.row].custom_discount != 0 {
+                        cell.lblOffer.text = "-\(self.offer?[indexPath.row].custom_discount ?? 0)%"
+                    }else {
+                        cell.lblOffer.text = "-\(self.offer?[indexPath.row].offer?.offerPrice ?? "0")%"
+                    }
                 }
                 // cell.lblOffer.backgroundColor = data?.is_fifty == 0 ? UIColor(named: "themeOrange") : UIColor.red
                 
@@ -768,8 +807,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     //cell.lblOffer.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
-                cell.lblMenuSchedule.text = data?.menuName ?? ""
-                cell.lblTime.text = "\(data?.openTime ?? "") - \(data?.closeTime ?? "")"
+                cell.lblMenuSchedule.text = data?.offer?.menuName ?? ""
+                cell.lblTime.text = "\(data?.startTime ?? "") - \(data?.endTime ?? "")"
                 
             }
             return cell
@@ -861,21 +900,49 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 //valueSelect = true
                 if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
                     
-                    if let is_fifty = self.offer?[indexPath.row].is_fifty{
-                        self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
+                    if let is_fifty = self.offer?[indexPath.row].isFifty{
+                        
+                        if is_fifty != 0 {
+                            self.discount = 50
+                        }else if self.offer?[indexPath.row].custom_discount != 0 {
+                            self.discount = self.offer?[indexPath.row].custom_discount
+                        }else {
+                            self.discount = Int(self.offer?[indexPath.row].offer?.offerPrice ?? "0")
+                        }
+                        
+                        
+                        //self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
                     }else {
-                        self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
+                        
+                        if self.offer?[indexPath.row].custom_discount != 0 {
+                            self.discount = self.offer?[indexPath.row].custom_discount
+                        }else {
+                            self.discount = Int(self.offer?[indexPath.row].offer?.offerPrice ?? "0")
+                        }
+                        
+                        
+                        //self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
                     }
                     
-                    menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+                    menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
                     
                 }
-                self.slottime = offer?[indexPath.row].offer ?? ""
+                self.slottime = offer?[indexPath.row].offer?.offerName ?? ""
                 self.slotid = offer?[indexPath.row].id ?? 0
                 self.menuid = offer?[indexPath.row].menuID ?? 0
                 self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
                 self.offerID = offer?[indexPath.row].offerID ?? 0
-                self.offerDis = (offer?[indexPath.row].is_fifty == 1 ? 50 : Int(offer?[indexPath.row].percentage ?? "0")) ?? 0
+                
+                if offer?[indexPath.row].isFifty != 0 {
+                    self.offerDis = 50
+                }else if self.offer?[indexPath.row].custom_discount != 0 {
+                    self.offerDis = self.offer?[indexPath.row].custom_discount ?? 0
+                }else {
+                    self.offerDis = Int(self.offer?[indexPath.row].offer?.offerPrice ?? "0") ?? 0
+                }
+                
+                
+                //self.offerDis = (offer?[indexPath.row].is_fifty == 1 ? 50 : Int(offer?[indexPath.row].percentage ?? "0")) ?? 0
             } else if status == 2 {
                 if collectionView == collViewMenu {
                     isselectedoffer = indexPath.row
@@ -885,14 +952,37 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 
                 if let id = offer?[indexPath.row].menuID,let offerId = offer?[indexPath.row].offerID{
                     
-                    if let is_fifty = self.offer?[indexPath.row].is_fifty {
-                        self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
-                    } else {
-                        self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
+                    if let is_fifty = self.offer?[indexPath.row].isFifty{
+                        
+                        if is_fifty != 0 {
+                            self.discount = 50
+                        }else if self.offer?[indexPath.row].custom_discount != 0 {
+                            self.discount = self.offer?[indexPath.row].custom_discount
+                        }else {
+                            self.discount = Int(self.offer?[indexPath.row].offer?.offerPrice ?? "0")
+                        }
+                        
+                        
+                        //self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
+                    }else {
+                        
+                        if self.offer?[indexPath.row].custom_discount != 0 {
+                            self.discount = self.offer?[indexPath.row].custom_discount
+                        }else {
+                            self.discount = Int(self.offer?[indexPath.row].offer?.offerPrice ?? "0")
+                        }
                     }
-                    menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].is_fifty ?? 0,offerID: offerId)
+                    
+                    
+                    
+//                    if let is_fifty = self.offer?[indexPath.row].isFifty {
+//                        self.discount = is_fifty == 0 ? Int(self.offer?[indexPath.row].percentage ?? "") ?? 0 : 50
+//                    } else {
+//                        self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
+                   // }
+                    menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
                 }
-                self.slottime = offer?[indexPath.row].offer ?? ""
+                self.slottime = offer?[indexPath.row].offer?.offerName ?? ""
                 self.slotid = offer?[indexPath.row].id ?? 0
                 self.menuid = offer?[indexPath.row].menuID ?? 0
                 self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
@@ -1165,17 +1255,19 @@ extension ItemDetailsVC {
 
 extension ItemDetailsVC : CLLocationManagerDelegate {
     func getUpdatedLocation() {
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager.delegate = self
-            //   locationManager.distanceFilter = 100.0
-            if #available(iOS 14.0, *) {
-                locationManager.desiredAccuracy = kCLLocationAccuracyReduced
-            } else {
-                // Fallback on earlier versions0000
+        DispatchQueue.global().async {
+            if (CLLocationManager.locationServicesEnabled())
+            {
+                self.locationManager.delegate = self
+                //   locationManager.distanceFilter = 100.0
+                if #available(iOS 14.0, *) {
+                    self.locationManager.desiredAccuracy = kCLLocationAccuracyReduced
+                } else {
+                    // Fallback on earlier versions0000
+                }
+                self.locationManager.requestAlwaysAuthorization()
+                self.locationManager.startUpdatingLocation()
             }
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
         }
     }
     
@@ -1261,7 +1353,7 @@ extension ItemDetailsVC {
         let directions = MKDirections(request: directionsRequest)
         directions.calculate { response, error in
             guard let response = response else { return }
-            let route = response.routes[0]
+            _ = response.routes[0]
             let mapLaunchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
             destinationMapItem.openInMaps(launchOptions: mapLaunchOptions)
         }
@@ -1348,7 +1440,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         
         if self.offer?.count == 0 {
             switch index {
-            case 0 :  return coachMarksController.helper.makeCoachMark(for: imgFav)
+            case 0 :  return coachMarksController.helper.makeCoachMark(for: favIconVw)
             case 1 :  return coachMarksController.helper.makeCoachMark(for: calenderDateVw)
             default : return coachMarksController.helper.makeCoachMark()
             }

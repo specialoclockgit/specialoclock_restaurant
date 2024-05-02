@@ -30,7 +30,7 @@ let imageURL = "https://app.specialoclock.com/"
 let imageBaseURL =  "https://app.specialoclock.com/assets/images/"
 let menuImgURL = "https://app.specialoclock.com/uploads/"
 let productImgURL = "https://app.specialoclock.com/assets/img/"
-let shareUrl = "https://app.specialoclock.com/share_restaurant?"
+let shareUrl = "https://app.specialoclock.com/api/share_restaurant/"
 
 //let imagePickerSources = ImagePickerClass()
 

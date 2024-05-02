@@ -6118,9 +6118,9 @@
                                                                 <rect key="frame" x="348" y="12" width="38" height="38"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white h" translatesAutoresizingMaskIntoConstraints="NO" id="lt2-IC-Td9">
-                                                                        <rect key="frame" x="6" y="8" width="26" height="26"/>
+                                                                        <rect key="frame" x="7" y="8" width="24" height="26"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="26" id="Pn2-k7-Fdb"/>
+                                                                            <constraint firstAttribute="width" constant="24" id="Pn2-k7-Fdb"/>
                                                                             <constraint firstAttribute="height" constant="26" id="bxw-il-a3i"/>
                                                                         </constraints>
                                                                     </imageView>
@@ -9731,6 +9731,18 @@ EE1lbnU
             </objects>
             <point key="canvasLocation" x="11262" y="1028"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rGD-3k-79N">
+            <objects>
+                <navigationController storyboardIdentifier="nav" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="x87-7p-1S1" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jZG-gi-LMQ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2cI-bf-Kpf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12219" y="1193"/>
+        </scene>
         <!--New See MoreVC-->
         <scene sceneID="162-ux-eTC">
             <objects>
@@ -11505,6 +11517,9 @@ EE1lbnU
         <designable name="N8h-m2-7ZI">
             <size key="intrinsicContentSize" width="81.5" height="37"/>
         </designable>
+        <designable name="NJT-yG-MO4">
+            <size key="intrinsicContentSize" width="107" height="19"/>
+        </designable>
         <designable name="RRZ-On-5Fg">
             <size key="intrinsicContentSize" width="45" height="18.5"/>
         </designable>
@@ -11513,6 +11528,9 @@ EE1lbnU
         </designable>
         <designable name="VnG-nd-xE7">
             <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="XaK-IR-ZvE">
+            <size key="intrinsicContentSize" width="72" height="12"/>
         </designable>
         <designable name="Y8v-u6-zA0">
             <size key="intrinsicContentSize" width="42" height="33"/>
@@ -11541,6 +11559,9 @@ EE1lbnU
         <designable name="hSR-FW-rfd">
             <size key="intrinsicContentSize" width="288" height="105"/>
         </designable>
+        <designable name="htu-DD-8LG">
+            <size key="intrinsicContentSize" width="83" height="15"/>
+        </designable>
         <designable name="jlz-dY-RoH">
             <size key="intrinsicContentSize" width="72" height="35"/>
         </designable>
@@ -11565,6 +11586,9 @@ EE1lbnU
         <designable name="prE-WT-kUz">
             <size key="intrinsicContentSize" width="168" height="115.5"/>
         </designable>
+        <designable name="sKi-hL-Uen">
+            <size key="intrinsicContentSize" width="95" height="15"/>
+        </designable>
         <designable name="tQw-5c-1Wm">
             <size key="intrinsicContentSize" width="375" height="256"/>
         </designable>
@@ -11573,6 +11597,9 @@ EE1lbnU
         </designable>
         <designable name="u9i-YD-XUX">
             <size key="intrinsicContentSize" width="114.5" height="37"/>
+        </designable>
+        <designable name="uou-KM-at9">
+            <size key="intrinsicContentSize" width="270" height="50"/>
         </designable>
         <designable name="w4h-Sj-OJW">
             <size key="intrinsicContentSize" width="39" height="36"/>

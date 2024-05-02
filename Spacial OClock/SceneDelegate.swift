@@ -32,17 +32,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     if let index = arrayString.range(of: "restaurantId=")?.upperBound{
                         let restaurantId = String(arrayString[index...])
                         print("restaurantId--=====\(restaurantId)")
-//                        if Store.authKey != nil && Store.authKey != "" {
-//                            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-//                            let nav = storyBoard.instantiateViewController(withIdentifier: "nav") as! UINavigationController
-//                            let tab = storyBoard.instantiateViewController(withIdentifier: "CreateTabBarContVC") as! CreateTabBarContVC
-//                            tab.selectedIndex = 0
-//                            let eventDetailVC = storyBoard.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsVC
-//                            eventDetailVC.eventId = Int(eventId) ?? 0
-//                            eventDetailVC.isfrom = .newBooking
-//                            nav.viewControllers = [tab,eventDetailVC]
-//                            window?.rootViewController = nav
-//                        }
+                        if Store.authKey != nil && Store.authKey != "" && Store.autoLogin == true{
+                            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                            let nav = storyBoard.instantiateViewController(withIdentifier: "nav") as! UINavigationController
+                            let tab = storyBoard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                            tab.selectedIndex = 0
+                            let eventDetailVC = storyBoard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                            eventDetailVC.ProductID = Int(restaurantId) ?? 0
+                            nav.viewControllers = [tab,eventDetailVC]
+                            window?.rootViewController = nav
+                        }
                     }
                 }
             }
@@ -81,7 +80,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else { return }
+       
         if  let url = URLContexts.first?.url {
             if let scheme = url.scheme,
                scheme.localizedCaseInsensitiveContains("com.live.specialOClockUser") == true {
@@ -89,17 +88,16 @@ extension SceneDelegate {
                 if let index = arrayString.range(of: "restaurantId=")?.upperBound{
                     let restaurantId = String(arrayString[index...])
                     print("restaurantId--=====\(restaurantId)")
-//                    if Store.authKey != nil && Store.authKey != "" {
-//                        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-//                        let nav = storyBoard.instantiateViewController(withIdentifier: "nav") as! UINavigationController
-//                        let tab = storyBoard.instantiateViewController(withIdentifier: "CreateTabBarContVC") as! CreateTabBarContVC
-//                        tab.selectedIndex = 0
-//                        let eventDetailVC = storyBoard.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsVC
-//                        eventDetailVC.eventId = Int(eventId) ?? 0
-//                        eventDetailVC.isfrom = .newBooking
-//                        nav.viewControllers = [tab,eventDetailVC]
-//                        window?.rootViewController = nav
-//                    }
+                    if Store.authKey != nil && Store.authKey != "" && Store.autoLogin == true{
+                        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                        let nav = storyBoard.instantiateViewController(withIdentifier: "nav") as! UINavigationController
+                        let tab = storyBoard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                        tab.selectedIndex = 0
+                        let eventDetailVC = storyBoard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                        eventDetailVC.ProductID = Int(restaurantId) ?? 0
+                        nav.viewControllers = [tab,eventDetailVC]
+                        window?.rootViewController = nav
+                    }
                 }
             }
         }

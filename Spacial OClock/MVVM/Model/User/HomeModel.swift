@@ -246,9 +246,9 @@ struct NearbyRestaurant: Codable {
     let isLiked: Int?
     let distance: Double?
     let offer_timings : [OfferTiminghome]?
-
+    let time_slots : [TimeSlotoffer]?
     enum CodingKeys: String, CodingKey {
-        case id, name, location, country, state, city, latitude, longitude,offer_timings
+        case id, name, location, country, state, city, latitude, longitude,offer_timings, time_slots
         case userID = "user_id"
         case shortDescription = "short_description"
         case status

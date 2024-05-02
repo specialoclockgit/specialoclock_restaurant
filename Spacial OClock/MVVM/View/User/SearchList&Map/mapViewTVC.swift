@@ -15,7 +15,7 @@ class mapViewTVC: UITableViewCell {
     @IBOutlet weak var imgVw: UIImageView!
     @IBOutlet weak var collVw: UICollectionView!
     
-    var offerTimings: [OfferTiminghome]?
+    var offerTimings: [TimeSlotoffer]?
     var callBack: ((Int)->())?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +30,7 @@ class mapViewTVC: UITableViewCell {
             lblName.text = (listing?.name?.capitalized ?? "")
             lblLocation.text = listing?.location ?? ""
             lblTiming.text = "\(listing?.openTime ?? "") - \(listing?.closeTime ?? "")"
-            offerTimings = listing?.offer_timings ?? []
+            offerTimings = listing?.time_slots?.reversed() ?? []
             collVw.reloadData()
             //let imageIndex = (imageURL) + (listing?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
            // imgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -50,7 +50,19 @@ extension mapViewTVC : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             
         }
         let celldata = self.offerTimings?[indexPath.row]
-        cell.titleLbl.text = Store.screenType == 1 ? "\(celldata?.offer ?? "") \n\("-\(celldata?.percentage ?? "0")%")" : (celldata?.offer ?? "")
+        if Store.screenType == 1 {
+            var percentage = String()
+            if celldata?.isFifty == 1 {
+                percentage = "-\(50)%"
+            } else if celldata?.custom_discount != 0 {
+                percentage = "-\(celldata?.custom_discount ?? 0)%"
+            } else{
+                percentage = "-\(celldata?.offer?.offerPrice ?? "0")%"
+            }
+            cell.titleLbl.text = "\((celldata?.startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
+        } else {
+            cell.titleLbl.text =  "\(celldata?.startTime?.components(separatedBy: " ").first ?? "")"
+        }
         return cell
     }
     
