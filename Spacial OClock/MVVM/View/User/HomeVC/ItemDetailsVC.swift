@@ -201,10 +201,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.reviews = data?.reviews ?? []
             self.ourMenu = data?.ourMenu ?? []
             if self.status == 1 {
-                self.offer = data?.time_slots?.reversed() ?? []
+                self.offer = data?.time_slots
             } else {
                 // self.offer = self.processOfferResponse()
-                self.offer = data?.time_slots?.unique(map: {$0.offerID}).reversed()
+                self.offer = data?.time_slots?.unique(map: {$0.offerID})
                 //
             }
             
@@ -253,10 +253,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.initializeInstruction {
                     self.startInstructions()
                 }
-           } else {
+          } else {
+               
                 if let offerId = self.selectedOfferId , offerId != 0 {
-                    let Index = self.offer?.firstIndex(where: {$0.id == offerId})
-                    self.isselectedoffer  = Index ?? 0
+                    guard  let Index = self.offer?.firstIndex(where: {$0.slot_id == offerId}) else {
+                        return
+                    }
+                   
+                    self.isselectedoffer  = Index
                     
                     if let is_fifty = self.offer?[self.isselectedoffer].isFifty {
                         if is_fifty != 0 {
@@ -283,11 +287,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     self.scrollView.setContentOffset(bottomOffset, animated: true)
                     if self.status == 1 {
                         self.slottime = self.offer?[self.isselectedoffer].startTime ?? ""
-                        self.slotid = self.offer?[self.isselectedoffer].id ?? 0
+                        self.slotid = self.offer?[self.isselectedoffer].slot_id ?? 0
                         self.menuid = self.offer?[self.isselectedoffer].menuID ?? 0
                         self.restrorant_bar_id = self.offer?[self.isselectedoffer].restrorantBarID ?? 0
                         self.offerID = self.offer?[self.isselectedoffer].offerID ?? 0
-                        
                         
                         if self.offer?[self.isselectedoffer].isFifty != 0 {
                             self.offerDis = 50
@@ -301,7 +304,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                         //self.offerDis = (self.offer?[self.isselectedoffer].isFifty == 1 ? 50 : Int(self.offer?[self.isselectedoffer].percentage ?? "0")) ?? 0
                     }else {
                         self.slottime = self.offer?[self.isselectedoffer].startTime ?? ""
-                        self.slotid = self.offer?[self.isselectedoffer].id ?? 0
+                        self.slotid = self.offer?[self.isselectedoffer].slot_id ?? 0
                         self.menuid = self.offer?[self.isselectedoffer].menuID ?? 0
                         self.restrorant_bar_id = self.offer?[self.isselectedoffer].restrorantBarID ?? 0
                         self.offerID = self.offer?[self.isselectedoffer].offerID ?? 0
@@ -484,11 +487,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func btnShareAction(_ sender: UIButton) {
         if let restroID = self.modal?.id {
-            let items = ["\(shareUrl)\(restroID)"]
-            let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            guard let items = URL(string: "\(shareUrl)\(restroID)"), UIApplication.shared.canOpenURL(items) else { return }
+            let ac = UIActivityViewController(activityItems: [items], applicationActivities: nil)
             present(ac, animated: true)
         }
-        
     }
     
     
@@ -927,8 +929,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
                     
                 }
-                self.slottime = offer?[indexPath.row].offer?.offerName ?? ""
-                self.slotid = offer?[indexPath.row].id ?? 0
+                self.slottime = offer?[indexPath.row].startTime ?? ""
+                self.slotid = offer?[indexPath.row].slot_id ?? 0
                 self.menuid = offer?[indexPath.row].menuID ?? 0
                 self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
                 self.offerID = offer?[indexPath.row].offerID ?? 0
@@ -980,10 +982,10 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
 //                    } else {
 //                        self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
                    // }
-                    menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
+                menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
                 }
-                self.slottime = offer?[indexPath.row].offer?.offerName ?? ""
-                self.slotid = offer?[indexPath.row].id ?? 0
+                self.slottime = offer?[indexPath.row].startTime ?? ""
+                self.slotid = offer?[indexPath.row].slot_id ?? 0
                 self.menuid = offer?[indexPath.row].menuID ?? 0
                 self.restrorant_bar_id = offer?[indexPath.row].restrorantBarID ?? 0
                 //  self.numberofperson = offer?[indexPath.row].slotsleft ?? 0
@@ -1401,7 +1403,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
     
     func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: Instructions.CoachMark) -> (bodyView: (UIView & Instructions.CoachMarkBodyView), arrowView: (UIView & Instructions.CoachMarkArrowView)?) {
         
-        
+       
         let coachViews = coachMarksController.helper.makeDefaultCoachViews(
             withArrow: true,
             arrowOrientation: coachMark.arrowOrientation
@@ -1433,7 +1435,6 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }
     
-
     
     
     func coachMarksController(_ coachMarksController: Instructions.CoachMarksController, coachMarkAt index: Int) -> Instructions.CoachMark {
@@ -1446,7 +1447,7 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
             }
         } else {
             switch index {
-            case 0 :  return coachMarksController.helper.makeCoachMark(for: imgFav)
+            case 0 :  return coachMarksController.helper.makeCoachMark(for: favIconVw)
             case 1 :  return coachMarksController.helper.makeCoachMark(for: calenderDateVw)
             case 2 : return coachMarksController.helper.makeCoachMark(for: collViewMenu)
             default : return coachMarksController.helper.makeCoachMark()
@@ -1477,12 +1478,12 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
                 self.view.layoutIfNeeded()
             }, completion: { _ -> Void in
                 let maker = { (frame: CGRect) -> UIBezierPath in
-                    return UIBezierPath(ovalIn: frame.insetBy(dx: -4, dy: -4))
+                    return UIBezierPath(ovalIn: frame.insetBy(dx: 0 , dy: 0))
                 }
                 // Once the animation is completed, we update the coach mark,
                 // and start the display again.
                 coachMarksController.helper.updateCurrentCoachMark(
-                    usingView: self.imgFav,
+                    usingView: self.favIconVw,
                     pointOfInterest: nil,
                     cutoutPathMaker: maker
                 )

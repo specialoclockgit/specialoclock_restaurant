@@ -445,7 +445,6 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
                 cell.category = sectionArray[indexPath.section].objArray as? [Category] ?? []
                 cell.collView.reloadData()
             } else if sectionArray[indexPath.section].name == "Popular" {
-                //cell.isCellSelected = true
                 cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
             } else if sectionArray[indexPath.section].name == "Theme" {

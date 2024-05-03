@@ -18,7 +18,7 @@ class HomeViewModel : NSObject {
         print(param)
         WebService.service(API.home, param: param, service: .post) {
             (modaldata: HomeListModel, Data , json) in
-            self.homeData = modaldata.body
+//            self.homeData = modaldata.body
             onsuccess(modaldata.body)
         }
     }

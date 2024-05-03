@@ -49,7 +49,7 @@ struct WebService {
             }
             
             print(fullUrlString)
-            print(param)
+            print(param as Any)
             guard let encodedString = fullUrlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else {return}
             var request = URLRequest(url: URL(string: encodedString)!, cachePolicy: URLRequest.CachePolicy.useProtocolCachePolicy, timeoutInterval: 2000)
             
@@ -105,7 +105,6 @@ struct WebService {
                             request.httpBody = postData as Data
                         }
                     }
-                    
                 }else {
                     
                     if let parameter = param{

@@ -28,7 +28,7 @@ class WindowForMap: UIView {
         restroName.text = body?.name ?? ""
         locationLbl.text = body?.location ?? ""
         timingLbl.text = "\(body?.openTime ?? "")-\(body?.closeTime ?? "")"
-        self.dataBody = body?.time_slots?.reversed()
+        self.dataBody = body?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""})
         self.collVw.reloadData()
     }
 

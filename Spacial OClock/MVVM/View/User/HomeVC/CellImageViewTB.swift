@@ -25,7 +25,7 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         collView.dataSource = self
         
     }
-
+    
     func initializeBannerData(resp:[Banner]?){
         self.banners = resp
         pgController.numberOfPages = resp?.count ?? 0
@@ -39,16 +39,16 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
     
     func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
+    }
+    
+    @objc func autoScroll() {
+        guard let bannersCount = banners?.count, bannersCount > 0 else {
+            return
         }
         
-        @objc func autoScroll() {
-            guard let bannersCount = banners?.count, bannersCount > 0 else {
-                return
-            }
-            
-            let desiredOffset = CGPoint(x: collView.contentOffset.x + collView.frame.width, y: collView.contentOffset.y)
-            collView.setContentOffset(desiredOffset, animated: true)
-        }
+        let desiredOffset = CGPoint(x: collView.contentOffset.x + collView.frame.width, y: collView.contentOffset.y)
+        collView.setContentOffset(desiredOffset, animated: true)
+    }
     
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -69,9 +69,9 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         let index = scrollView.contentOffset.x / width
         pgController.currentPage = Int(index)
         currentIndex = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-            if currentIndex == (banners?.count ?? 0) - 1 && scrollView.contentOffset.x > CGFloat(currentIndex) * scrollView.frame.size.width {
-                collView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
-            }
+        if currentIndex == (banners?.count ?? 0) - 1 && scrollView.contentOffset.x > CGFloat(currentIndex) * scrollView.frame.size.width {
+            collView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
+        }
     }
     
 }

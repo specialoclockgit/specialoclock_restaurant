@@ -302,7 +302,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblfirstLocaton.text = filterlocations?[indexPath.row].city ?? ""
             cell.lblDiscription.text = "\(filterlocations?[indexPath.row].openTime ?? "") - \(filterlocations?[indexPath.row].closeTime ?? "")"
             //filterlocations?[indexPath.row].shortDescription ?? ""
-            let fetchresto = filterlocations?[indexPath.row].timeSlots ?? []
+            let fetchresto = filterlocations?[indexPath.row].timeSlots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
             cell.lblRaiting.text = "\(filterlocations?[indexPath.row].avgRating ?? 0)"
             cell.cosmosView.rating = Double(filterlocations?[indexPath.row].avgRating ?? 0)
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
@@ -319,7 +319,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblDiscription.text = "\(filterCategory?[indexPath.row].openTime ?? "") - " + "\(filterCategory?[indexPath.row].closeTime ?? "")"
             cell.lblRaitingCount.text = "(\(filterCategory?[indexPath.row].ratingCount?.description ?? "0"))"
            // let fetchresto = Store.screenType == 1 ? filterCategory?[indexPath.row].offers ?? [] : filterCategory?[indexPath.row].offers?.unique(map: {$0.offer?.id ?? 0}) ?? []
-            let fetchresto = filterCategory?[indexPath.row].offers ?? []
+            let fetchresto = filterCategory?[indexPath.row].offers?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
             cell.offerTimings = fetchresto
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
@@ -373,7 +373,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblRaiting.text = "\(filtercusin?[indexPath.row].avgRating ?? 0)"
             cell.lblRaitingCount.text = "(\(filtercusin?[indexPath.row].ratingCount?.description ?? "0"))"
             cell.cosmosView.rating = Double(filtercusin?[indexPath.row].avgRating ?? 0)
-            let fetchresto = filtercusin?[indexPath.row].timeSlots ?? []
+            let fetchresto = filtercusin?[indexPath.row].timeSlots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
             cell.offerTimings = fetchresto
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
@@ -426,7 +426,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblDiscription.text = "\(data?.openTime ?? "") - " + "\(data?.closeTime ?? "")"
             cell.lblRaiting.text = "\(data?.avgRating ?? 0)"
             cell.cosmosView.rating = Double(data?.avgRating ?? 0)
-            let fetchresto = data?.time_slots ?? []
+            let fetchresto = data?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
           //  cell.lblRaitingCount.text = "(\(data?.ratingCount?.description ?? "0"))"
             
             cell.offerTimings = fetchresto
@@ -478,9 +478,9 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblDiscription.text = "\(data?.openTime ?? "") - " + "\(data?.closeTime ?? "")"
             cell.lblRaiting.text = "\(data?.avgRating ?? 0)"
             cell.cosmosView.rating = Double(data?.avgRating ?? 0)
-            let fetchresto = data?.time_slots ?? []
+            let fetchresto = data?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
           //  cell.lblRaitingCount.text = "(\(data?.ratingCount?.description ?? "0"))"
-            cell.offerTimings = fetchresto.reversed()
+            cell.offerTimings = fetchresto
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
@@ -528,7 +528,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblDiscription.text = "\(filtertheme?[indexPath.row].openTime ?? "") - " + "\(filtertheme?[indexPath.row].closeTime ?? "")"
             cell.lblRaiting.text = "\(filtertheme?[indexPath.row].avgRating ?? 0)"
             cell.cosmosView.rating = Double(filtertheme?[indexPath.row].avgRating ?? 0)
-            let fetchresto = filtertheme?[indexPath.row].timeSlots ?? []
+            let fetchresto = filtertheme?[indexPath.row].timeSlots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
             cell.lblRaitingCount.text = "(\(filtertheme?[indexPath.row].ratingCount?.description ?? "0"))"
             cell.offerTimings = fetchresto
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56

@@ -66,7 +66,8 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
 
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         if iscomeFrom == 0 {
-        } else if let selectedindex = locMarkers.firstIndex(of: marker) {
+        } 
+        //else if let selectedindex = locMarkers.firstIndex(of: marker) {
             marker.tracksInfoWindowChanges = true
                 if selectedMarker == marker {
                     mapView.selectedMarker = nil
@@ -76,7 +77,7 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
                     selectedMarker = marker
                 }
            
-        }
+     //   }
             return true
         }
     

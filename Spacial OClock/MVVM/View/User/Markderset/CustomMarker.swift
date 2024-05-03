@@ -33,7 +33,7 @@ class CustomMarker: UIView {
         restroName.text = body?.name ?? ""
         locationLbl.text = body?.location ?? ""
         timingLbl.text = "\(body?.openTime ?? "")-\(body?.closeTime ?? "")"
-        if let offerData = body?.time_slots, offerData.count > 0 {
+        if let offerData = body?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}), offerData.count > 0 {
             if offerData.last?.isFifty == 1 {
                 offerLbl.text = "50%"
             } else if offerData.last?.custom_discount != 0 {

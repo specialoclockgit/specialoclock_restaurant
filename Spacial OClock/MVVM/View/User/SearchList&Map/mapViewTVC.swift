@@ -30,11 +30,11 @@ class mapViewTVC: UITableViewCell {
             lblName.text = (listing?.name?.capitalized ?? "")
             lblLocation.text = listing?.location ?? ""
             lblTiming.text = "\(listing?.openTime ?? "") - \(listing?.closeTime ?? "")"
-            offerTimings = listing?.time_slots?.reversed() ?? []
+            offerTimings = listing?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
             collVw.reloadData()
-            //let imageIndex = (imageURL) + (listing?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
-           // imgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            //imgVw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            let imageIndex = (imageURL) + (listing?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            imgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            imgVw.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
         }
     }
     

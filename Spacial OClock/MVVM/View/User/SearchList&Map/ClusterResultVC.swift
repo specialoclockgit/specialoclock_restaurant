@@ -15,8 +15,8 @@ class ClusterResultVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     var callBack: ((NearbyRestaurant?)->())?
     override func viewDidLoad() {
         super.viewDidLoad()
-       // tblVw.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tblVw.bounds.size.width - 10)
-       // tblVw.transform = CGAffineTransform(rotationAngle: (-.pi))
+      //  tblVw.scrollIndicatorInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: tblVw.bounds.size.width - 8.0)
+       // tblVw.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
         tblVw.delegate = self
         tblVw.dataSource = self
         tblVw.reloadData()
@@ -36,7 +36,7 @@ class ClusterResultVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         guard let cell = tblVw.dequeueReusableCell(withIdentifier: "mapViewTVC", for: indexPath) as? mapViewTVC else {
             return UITableViewCell()
         }
-       // cell.transform = CGAffineTransform(rotationAngle: (-.pi))
+       // cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
         cell.listing = nearByBody?[indexPath.row]
         return cell
     }
