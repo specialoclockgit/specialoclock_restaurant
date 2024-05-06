@@ -100,6 +100,9 @@ class bookingDetailsVC: UIViewController {
             self.lblUDNAme.text = self.modalDetail?.user?.name?.capitalized ?? ""
             self.lblUDEmail.text = self.modalDetail?.user?.email ?? ""
             self.lblUDPhoneNumber.text = "\(self.modalDetail?.user?.countryCode ?? "") " + "\(self.modalDetail?.user?.phone ?? 0)"
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(self.callToUser(_:)))
+            self.lblUDPhoneNumber.addGestureRecognizer(gesture)
+            self.lblUDPhoneNumber.isUserInteractionEnabled = true
             //self.lblDis.text = self.modalDetail?.restrorant?.offers?.first?.description ?? ""
             self.lblBookingDate.text = self.modalDetail?.bookingDate ?? ""
             self.lblNumberOfPeople.text = "\(self.modalDetail?.numberOfPeople ?? 0)"
@@ -186,6 +189,20 @@ class bookingDetailsVC: UIViewController {
     }
     
     //MARK: - ACTIONS
+    
+    @objc func callToUser(_ sender: UITapGestureRecognizer) {
+        if let number = self.modalDetail?.user?.phone?.description, let code = self.modalDetail?.user?.countryCode?.description  {
+            if let phoneURL = URL(string: "tel://\(code)\(number)") {
+                if UIApplication.shared.canOpenURL(phoneURL){
+                    UIApplication.shared.open(phoneURL)
+                }else {
+                    CommonUtilities.shared.showAlert(message: "Invalid phone number")
+                }
+            }
+        }
+    }
+    
+    
     @IBAction func btnCheckOffer(_ sender: UIButton) {
         viewOffer.isHidden = sender.isSelected == false ? true : false
         sender.isSelected = !sender.isSelected
@@ -310,7 +327,7 @@ func convertTimeFormat(_ timeString: String) -> String? {
 }
 func isDateTimePassed(dateTimeString: String) -> Bool {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+    dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
     
     if let dateTime = dateFormatter.date(from: dateTimeString) {
         let currentDate = Date()

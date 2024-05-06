@@ -143,7 +143,7 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
         let val = Store.userDetails?.notificationStatus == 0 ? 1 : 0
             self.viewModel.NotificationStatus(notistatus: val) {
                 Store.userDetails?.notificationStatus = val
-                CommonUtilities.shared.showAlert(message: "Notification status update successfully", isSuccess: .success)
+                CommonUtilities.shared.showAlert(message: "Notification status updated successfully", isSuccess: .success)
                 self.settingTV.reloadData()
         }
     }

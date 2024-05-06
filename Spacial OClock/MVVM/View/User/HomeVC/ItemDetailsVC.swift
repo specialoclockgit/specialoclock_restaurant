@@ -77,11 +77,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     //MARK: Variable
     lazy var coachMarksController = CoachMarksController()
     weak var snapshotDelegate: CoachMarksControllerDelegate?
-    let nextButtonText = "Ok!"
-    let avatarText = "That's add to fav button. You can add this restaurant to favorites!"
-    let avtarLoc = "You can select date of booking by clicking here!"
-    let avtarSideMenu = "Tap here to select special!"
-    var offerDescription = String()
+    
     var lat : Double?
     var long : Double?
     var discount : Int?
@@ -103,8 +99,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     let status = Store.screenType
     //UserDefaults.standard.value(forKey: "dineDrinkStatus") as? Int
     var actualprice = String()
-    var offerlessprice = String()
-    var idsave = Int()
     var menuid = Int()
     var numberofperson = Int()
     var valueSelect = false
@@ -192,8 +186,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - FUNCTION
-    func product_detail(){
-        viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.txtFldDate.text ?? "",timezone: self.timeZone ) { data in
+    func product_detail() {
+        viewmodal.restoDetial_API(resto_id: ProductID, currentdate: self.txtFldDate.text ?? "",timezone: self.timeZone) { data in
             self.modal = data
             self.disableDatedArr.removeAll()
             self.disableDatedArr = data?.disableDates?.components(separatedBy: ",") ?? []
@@ -451,8 +445,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.lblOfferDiscription.text = dataa?.offerdetails?.description?.capitalized ?? ""
             self.numberofperson = dataa?.offerdetails?.numberOfUserPerBooking ?? 0
             self.actualprice = "\(self.products?.first?.price ?? "0")"
-            self.offerlessprice = "\(dataa?.offerdetails?.offerPrice ?? "0")"
-            self.offerDescription = dataa?.offerdetails?.description ?? ""
             self.pendingSlots = dataa?.offerdetails?.numberOfUserBook ?? 0
             self.offerDesHeaderVw.isHidden = false
             self.viewSV.isHidden = false
@@ -488,7 +480,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBAction func btnShareAction(_ sender: UIButton) {
         if let restroID = self.modal?.id {
             guard let items = URL(string: "\(shareUrl)\(restroID)"), UIApplication.shared.canOpenURL(items) else { return }
-            let ac = UIActivityViewController(activityItems: [items], applicationActivities: nil)
+            var activityItems: [AnyObject] = [items as AnyObject]
+            let ac = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
             present(ac, animated: true)
         }
     }
@@ -1024,11 +1017,8 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
         } else {
             if reviews?.count == 0{
                 tbReview.setNoDataMessage("No review found", txtColor: .black)
-                //ImgViewgifReview.image = UIImage.gif(name: "nodataFound")
-                // ImgViewgifReview.isHidden = false
             }else{
                 tbReview.backgroundView = nil
-                // ImgViewgifReview.isHidden = true
                 return reviews?.count ?? 0
             }
         }
@@ -1376,14 +1366,10 @@ extension ItemDetailsVC {
 // MARK: Setup Instruction
 extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataSource , CoachMarksControllerAnimationDelegate {
     
-    
-    
-    private  func startInstructions() {
+    private func startInstructions() {
         coachMarksController.start(in: .window(over: self))
         UserDefaults.standard.set(true, forKey: "isShow")
     }
-    
-    
     
     private func initializeInstruction(onSuccess: @escaping (()->())){
         coachMarksController.delegate = self
@@ -1411,24 +1397,24 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         if self.offer?.count == 0 {
             switch index {
             case 0:
-                coachViews.bodyView.hintLabel.text = avatarText
-                coachViews.bodyView.nextLabel.text = nextButtonText
+                coachViews.bodyView.hintLabel.text = "That's add to fav button. You can add this restaurant to favorites!"
+                coachViews.bodyView.nextLabel.text = "Ok!"
             case 1 :
-                coachViews.bodyView.hintLabel.text = avtarLoc
-                coachViews.bodyView.nextLabel.text = nextButtonText
+                coachViews.bodyView.hintLabel.text = "You can select date of booking by clicking here!"
+                coachViews.bodyView.nextLabel.text = "Ok!"
             default: break
             }
         }else {
             switch index {
             case 0:
-                coachViews.bodyView.hintLabel.text = avatarText
-                coachViews.bodyView.nextLabel.text = nextButtonText
+                coachViews.bodyView.hintLabel.text = "That's add to fav button. You can add this restaurant to favorites!"
+                coachViews.bodyView.nextLabel.text = "Ok!"
             case 1 :
-                coachViews.bodyView.hintLabel.text = avtarLoc
-                coachViews.bodyView.nextLabel.text = nextButtonText
+                coachViews.bodyView.hintLabel.text = "You can select date of booking by clicking here!"
+                coachViews.bodyView.nextLabel.text = "Ok!"
             case 2 :
-                coachViews.bodyView.hintLabel.text = avtarSideMenu
-                coachViews.bodyView.nextLabel.text = nextButtonText
+                coachViews.bodyView.hintLabel.text = "Tap here to select special!"
+                coachViews.bodyView.nextLabel.text = "Ok!"
             default: break
             }
         }

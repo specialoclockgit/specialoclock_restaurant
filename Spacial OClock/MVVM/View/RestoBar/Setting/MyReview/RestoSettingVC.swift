@@ -180,7 +180,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
         let val = Store.userDetails?.notificationStatus == 0 ? 1 : 0
             self.viewmodel.NotificationStatus(notistatus: val) {
                 Store.userDetails?.notificationStatus = val
-                CommonUtilities.shared.showAlert(message: "Notification status update successfully", isSuccess: .success)
+                CommonUtilities.shared.showAlert(message: "Notification status updated successfully", isSuccess: .success)
                 self.tableVW.reloadData()
         }
     }

@@ -32,13 +32,10 @@ let menuImgURL = "https://app.specialoclock.com/uploads/"
 let productImgURL = "https://app.specialoclock.com/assets/img/"
 let shareUrl = "https://app.specialoclock.com/api/share_restaurant/"
 
-//let imagePickerSources = ImagePickerClass()
 
 let securitykey = "sk_Dac1t2GMfvvgO1+ZtLvOjwEhQluidxzVy9Av5fiV5kCZzCr+PjdB0ap0Qx6zCPkBDRS8gSGyFw=="
-
 let publishedkey = "pk_ndhUQm9z9VVAEDQAKUjM5nQ6F690crObNnPPobC36LUWJcUKQQC/aSzj9kqTQ22rurF2B6DvyiI="
 
-var datePicker = UIDatePicker()
 
 //MARK: - root vc
 var rootVC: UIViewController? {
@@ -54,8 +51,6 @@ var rootVC: UIViewController? {
 
 enum AppStoryboard : String {
     case Main      = "Main"
-//    case Psychic  = "Psychic"
-
     var instance : UIStoryboard {
         return UIStoryboard(name: self.rawValue, bundle: Bundle.main)
     }

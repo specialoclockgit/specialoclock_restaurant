@@ -29,7 +29,7 @@ class NotificationRestoVC: UIViewController {
     //MARK: - FUNCTION
     func notificationlist(){
         viewmodal.getNotificationList { [weak self] fetchdata in
-            self?.modal = fetchdata
+            self?.modal = fetchdata?.reversed()
             self?.tvNotification.reloadData()
         }
     }
@@ -52,7 +52,7 @@ extension NotificationRestoVC  : UITableViewDelegate , UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.CellNotificationRestoTB, for: indexPath) as! CellNotificationRestoTB
         cell.lblUserName.text = modal?[indexPath.row].userName ?? ""
         cell.lblNotificationMessage.text = modal?[indexPath.row].message ?? ""
-        cell.lblDay.text = modal?[indexPath.row].createdAt ?? ""
+        cell.lblDay.text =  convertDateToString(formatString: modal?[indexPath.row].createdAt ?? "")
         let imageIndex = (imageURL) + (modal?[indexPath.row].userImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.imgUser.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.imgUser.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
