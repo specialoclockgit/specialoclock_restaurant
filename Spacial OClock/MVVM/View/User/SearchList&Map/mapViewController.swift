@@ -15,25 +15,19 @@ struct structName:Codable {
 }
 
 class mapViewController: UIViewController, GMSMapViewDelegate  {
-    func customMarkerDidTapDetailView(_ marker: CustomMarker) {
-        print("88888888888")
-    }
-    
-    
+        
     //MARK: - OUTLETS
     @IBOutlet weak var mapView: GMSMapView!
 
     //MARK: - VARIABELS
     private var clusterManager: GMUClusterManager!
-    private var clusterItem : [GMUClusterItem]!
+    
     var latitude = Double()
     var longitude = Double()
     var locMarkers = [GMSMarker]()
     var nearBy = [NearbyRestaurant]()
     var tempNearBy = [NearbyRestaurant]()
     var iscomeFrom = Int()
-    var selectedRestroId : Int?
-    var locationMarker = GMSMarker()
     var selectedMarker: GMSMarker?
     var items: [MapItem] = []
     //MARK: - VIEW LIFECYCLE
@@ -62,11 +56,10 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
     }
     
    
-    
-
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         if iscomeFrom == 0 {
         } 
+        print("3")
         //else if let selectedindex = locMarkers.firstIndex(of: marker) {
             marker.tracksInfoWindowChanges = true
                 if selectedMarker == marker {
@@ -76,8 +69,7 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
                     mapView.selectedMarker = marker
                     selectedMarker = marker
                 }
-           
-     //   }
+ 
             return true
         }
     
@@ -86,7 +78,6 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
             let customInfoWindow = Bundle.main.loadNibNamed("WindowForMap", owner: self, options: nil)![0] as! WindowForMap
             customInfoWindow.setupData(body: self.nearBy[selectedindex])
             marker.infoWindowAnchor = CGPoint(x: 0.5, y: 1.9)
-            
             return customInfoWindow
         }
         return UIView()
@@ -98,7 +89,6 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
             let itemDetailsVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             itemDetailsVC.ProductID = self.nearBy[selectedindex].id ?? 0
             self.navigationController?.pushViewController(itemDetailsVC, animated: true)
-            
         }
     }
   
@@ -113,22 +103,23 @@ extension mapViewController: GMUClusterManagerDelegate {
     
     func initializeClusterItems()
     {
+        
         let iconGenerator = GMUDefaultClusterIconGenerator()
-        let algorithm =  GMUNonHierarchicalDistanceBasedAlgorithm()
-        //GMUGridBasedClusterAlgorithm()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
         renderer.delegate = self
         self.clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
-        renderer.minimumClusterSize = 4
-       // renderer.maximumClusterZoom = 4
-        //self.clusterManager.cluster()
-       // self.clusterManager.setDelegate(self as GMUClusterManagerDelegate, mapDelegate: self)
+        renderer.minimumClusterSize = 2
+        renderer.maximumClusterZoom = 16
         self.clusterManager.setDelegate(self, mapDelegate: self)
         self.clusterManager.setMapDelegate(self)
         setMarkers()
+        self.clusterManager.cluster()
     }
     
-    
+    func randomScale() -> Double {
+        return Double(arc4random()) / Double(UINT32_MAX) * 2.0 - 1.0
+    }
     
     func setMarkers() {
         mapView.clear()
@@ -142,62 +133,87 @@ extension mapViewController: GMUClusterManagerDelegate {
                     continue
                 }
                 
-                var offsetLat = lat
-                var offsetLng = lng
-                
-                // Add small random offset to avoid overlapping markers
                 let offset = 0.0001
-                offsetLat += Double.random(in: -offset...offset)
-                offsetLng += Double.random(in: -offset...offset)
+                let offsetLat = lat + Double.random(in: -offset...offset)
+                let offsetLng = lng + Double.random(in: -offset...offset)
                 
                 let state_marker = GMSMarker()
-                state_marker.position = CLLocationCoordinate2D(latitude: offsetLat, longitude: offsetLng)
+               
+                let position =  CLLocationCoordinate2D(latitude: offsetLat, longitude: offsetLng)
+               // state_marker.position = position
+               // state_marker.map = mapView
                 
-                state_marker.map = mapView
-                
-                let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)?[0] as? CustomMarker
-                customInfoWindow?.setupData(body: nearBy[i])
-                state_marker.iconView = customInfoWindow
+//                let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)?[0] as? CustomMarker
+//                customInfoWindow?.setupData(body: nearBy[i])
+//                state_marker.iconView = customInfoWindow
                 state_marker.zIndex = 50
-                
-                let data = structName(lat: nearBy[i])
-                state_marker.userData = data
-                
+                let data =  structName(lat: nearBy[i])
+                //state_marker.userData = data
                 locMarkers.append(state_marker)
-                let newData = MapItem(position: state_marker.position, data: nearBy[i])
+                let newData = MapItem(position: position, data: nearBy[i])
                 items.append(newData)
-//                let clusterItem = GMUStaticCluster(item: state_marker)
                 clusterManager.add(newData)
                
             }
-        
-            
             clusterManager.cluster()
-            
-            // Move camera to the first marker
             if let firstMarker = nearBy.first, let lat = Double(firstMarker.latitude ?? "0.0"), let lng = Double(firstMarker.longitude ?? "0.0") {
-                let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 20)
+                let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 30)
                 mapView.animate(to: camera)
             }
         }
     }
 
 
-    func generatePOIItems(_ accessibilityLabel: String, position: CLLocationCoordinate2D, icon: UIImage?) {
-      
-    }
+   
 }
 extension mapViewController : GMUClusterRendererDelegate {
     func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
         print("will render call")
     }
     
+    func renderer(_ renderer: GMUClusterRenderer, markerFor object: Any) -> GMSMarker? {
+        switch object {
+        case let item as MapItem:
+            let marker = GMSMarker()
+            marker.position = item.position
+            let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)?[0] as? CustomMarker
+            customInfoWindow?.setupData(body:item.data)
+            marker.zIndex = 50
+            marker.iconView = customInfoWindow
+            marker.isTappable = true
+            marker.userData = item.data
+            marker.map = mapView
+            return marker
+            
+        default:
+            return nil
+        }
+    }
+    
+    
+    
     func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
+       
+        
+        if let item = clusterItem as? MapItem {
+            // Create a marker for the cluster item
+            let marker = GMSMarker(position: item.position)
+            marker.map = mapView
+            
+            if selectedMarker == marker {
+                mapView.selectedMarker = nil
+                selectedMarker = nil
+            } else {
+                mapView.selectedMarker = marker
+                selectedMarker = marker
+            }
+        }
         
         return true
     }
 
     func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
+        
         var newBody = [NearbyRestaurant]()
         if let items = cluster.items as? [MapItem] {
             for item in items {
@@ -215,20 +231,8 @@ extension mapViewController : GMUClusterRendererDelegate {
                 self?.navigationController?.pushViewController(itemDetailsVC, animated: true)
         }
             vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .pageSheet
-            
-            if #available(iOS 15.0, *) {
-                if let sheet = vc.sheetPresentationController {
-                    sheet.detents = [.medium()]
-                    sheet.selectedDetentIdentifier = .medium
-                    //sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-                }
-            } else {
-                // Fallback on earlier versions
-            }
-            
+            vc.modalPresentationStyle = .overCurrentContext
             self.present(vc, animated: true)
-            
             
         }else {
             print("Something went wrong")
@@ -240,7 +244,7 @@ extension mapViewController : GMUClusterRendererDelegate {
 //               let update = GMSCameraUpdate.setCamera(newCamera)
 //               mapView.moveCamera(update)
 
-        return true
+        return false
     }
 }
 extension mapViewController{
@@ -271,37 +275,7 @@ extension mapViewController{
     }
 }
 
-//    func setmarkers() {
-//        mapView.clear()
-//        mapView.isMyLocationEnabled = true
-//        clusterManager.clearItems()
-//        if self.nearBy.count != 0 {
-//
-//            for i in 0..<(self.nearBy.count) {
-//                let state_marker = GMSMarker()
-//                state_marker.position = checkIfMutlipleCoordinates(latitude: Float(Double(self.nearBy[i].latitude ?? "0.0") ?? 0.0), longitude: Float(Double(self.nearBy[i].longitude ?? "0.0") ?? 0.0))
-//                state_marker.map = self.mapView
-//                let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)![0] as! CustomMarker
-//                customInfoWindow.setupData(body: self.nearBy[i])
-//                let data = structName(lat: nearBy[i])
-//                state_marker.userData = data
-//
-//                state_marker.iconView = customInfoWindow
-//                state_marker.zIndex = 50
-//                locMarkers.append(state_marker)
-//                clusterManager.add(state_marker)
-//            }
-//
-//            clusterManager.cluster()
-//        }
-//
-//        if self.nearBy.count > 0 {
-//            let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees((Double(self.nearBy[0].latitude ?? "0.0") ?? 0.0)), longitude: CLLocationDegrees((Double(self.nearBy[0].longitude ?? "0.0") ?? 0.0) ), zoom: 20)
-//            self.mapView.animate(to: camera)
-//        }
-//
-//
-//    }
+
 class MapItem: NSObject, GMUClusterItem {
     var position: CLLocationCoordinate2D
     var data: NearbyRestaurant?

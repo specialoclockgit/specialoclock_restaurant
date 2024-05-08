@@ -11,16 +11,38 @@ class ClusterResultVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     
     @IBOutlet weak var tblVw: UITableView!
+    @IBOutlet weak var tableHeight: NSLayoutConstraint!
+    
     var nearByBody : [NearbyRestaurant]?
     var callBack: ((NearbyRestaurant?)->())?
     override func viewDidLoad() {
         super.viewDidLoad()
-      //  tblVw.scrollIndicatorInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: tblVw.bounds.size.width - 8.0)
-       // tblVw.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
         tblVw.delegate = self
         tblVw.dataSource = self
         tblVw.reloadData()
+        tblVw.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
+
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            if(keyPath == "contentSize"){
+                if let newvalue = change?[.newKey]  {
+                    let newsize  = newvalue as! CGSize
+                    if newsize.height >= (self.view.frame.height / 2) {
+                        tableHeight.constant = (self.view.frame.height / 2)
+                        tblVw.isScrollEnabled = true
+                    } else {
+                        tblVw.isScrollEnabled = false
+                        tableHeight.constant = newsize.height
+                    }
+                }
+            }
+        }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.first?.view == self.view {
@@ -36,7 +58,6 @@ class ClusterResultVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         guard let cell = tblVw.dequeueReusableCell(withIdentifier: "mapViewTVC", for: indexPath) as? mapViewTVC else {
             return UITableViewCell()
         }
-       // cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
         cell.listing = nearByBody?[indexPath.row]
         return cell
     }

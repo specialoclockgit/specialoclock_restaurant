@@ -26,27 +26,15 @@ class ChatVC: UIViewController, UITextViewDelegate {
     var selectedText: Bool?
     let dropDown = DropDown()
     var chatmodel :[MessageListModel]?
-    
     //MARK: - LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.scroolTOLast()
         keyboardHandling()
-//        if SocketIOManager.sharedInstance.socket.status != .connected
-//        {
-//            SocketIOManager.sharedInstance.connectMySocket()
-//        }
-//        SocketIOManager.sharedInstance.connect_user()
         allsockets()
-        
         IQKeyboardManager.shared.enable = true
         msgTextView.delegate = self
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            viewBottom.layer.cornerRadius = 30
-        }else {
-            viewBottom.layer.cornerRadius = 25
-        }
+        viewBottom.layer.cornerRadius = UIDevice.current.userInterfaceIdiom == .pad ? 30 : 25
         DispatchQueue.main.async {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         }
@@ -63,7 +51,6 @@ class ChatVC: UIViewController, UITextViewDelegate {
             }
         } else{
             SocketIOManager.sharedInstance.connectMySocket()
-//            SocketIOManager.sharedInstance.connect_user()
             DispatchQueue.main.asyncAfter(deadline: .now()+2.0) {
                 self.sockectConnnet()
             }
@@ -78,7 +65,6 @@ class ChatVC: UIViewController, UITextViewDelegate {
     }
     
     //     MARK: - ACTION
-    
     @IBAction func btnClearChat(_ sender: UIButton) {
         if chatmodel?.count == 0 {
             CommonUtilities.shared.showAlert(message: "There is no message that needs deleting", isSuccess: .error)
