@@ -35,7 +35,7 @@ class DetailItemCVC: UICollectionViewCell {
         offerCollection.register(nib, forCellWithReuseIdentifier: "HomeOfferCVC")
     }
 }
-extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionViewDelegate, UICollectionViewDelegateFlowLayout { 
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "HomeOfferCVC"
     }

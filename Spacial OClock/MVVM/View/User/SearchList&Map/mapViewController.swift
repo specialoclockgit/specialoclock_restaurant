@@ -61,30 +61,33 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
         } 
         print("3")
         //else if let selectedindex = locMarkers.firstIndex(of: marker) {
-            marker.tracksInfoWindowChanges = true
-                if selectedMarker == marker {
-                    mapView.selectedMarker = nil
-                    selectedMarker = nil
-                } else {
-                    mapView.selectedMarker = marker
-                    selectedMarker = marker
-                }
+           // marker.tracksInfoWindowChanges = true
+//                if selectedMarker == marker {
+//                    mapView.selectedMarker = nil
+//                    selectedMarker = nil
+//                } else {
+//                    mapView.selectedMarker = marker
+//                    selectedMarker = marker
+//                }
  
             return true
         }
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        if let selectedindex = locMarkers.firstIndex(of: marker) {
+        
+//        if let selectedindex = locMarkers.firstIndex(of: marker) {
+        if let selectedindex = locMarkers.firstIndex(where: { $0.position.latitude == marker.position.latitude && $0.position.longitude == marker.position.longitude }) {
             let customInfoWindow = Bundle.main.loadNibNamed("WindowForMap", owner: self, options: nil)![0] as! WindowForMap
             customInfoWindow.setupData(body: self.nearBy[selectedindex])
-            marker.infoWindowAnchor = CGPoint(x: 0.5, y: 1.9)
+            marker.infoWindowAnchor = CGPoint(x: 0.5, y: 2.8)
             return customInfoWindow
         }
         return UIView()
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        if let selectedindex = locMarkers.firstIndex(of: marker) {
+      //  if let selectedindex = locMarkers.firstIndex(of: marker) {
+        if let selectedindex = locMarkers.firstIndex(where: { $0.position.latitude == marker.position.latitude && $0.position.longitude == marker.position.longitude }) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let itemDetailsVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             itemDetailsVC.ProductID = self.nearBy[selectedindex].id ?? 0
@@ -110,7 +113,7 @@ extension mapViewController: GMUClusterManagerDelegate {
         renderer.delegate = self
         self.clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
         renderer.minimumClusterSize = 2
-        renderer.maximumClusterZoom = 16
+        renderer.maximumClusterZoom = 10
         self.clusterManager.setDelegate(self, mapDelegate: self)
         self.clusterManager.setMapDelegate(self)
         setMarkers()
@@ -140,15 +143,9 @@ extension mapViewController: GMUClusterManagerDelegate {
                 let state_marker = GMSMarker()
                
                 let position =  CLLocationCoordinate2D(latitude: offsetLat, longitude: offsetLng)
-               // state_marker.position = position
-               // state_marker.map = mapView
-                
-//                let customInfoWindow = Bundle.main.loadNibNamed("CustomMarker", owner: self, options: nil)?[0] as? CustomMarker
-//                customInfoWindow?.setupData(body: nearBy[i])
-//                state_marker.iconView = customInfoWindow
-                state_marker.zIndex = 50
-                let data =  structName(lat: nearBy[i])
-                //state_marker.userData = data
+                state_marker.position = position
+               // state_marker.zIndex = 50
+             //   let data =  structName(lat: nearBy[i])
                 locMarkers.append(state_marker)
                 let newData = MapItem(position: position, data: nearBy[i])
                 items.append(newData)
@@ -157,7 +154,7 @@ extension mapViewController: GMUClusterManagerDelegate {
             }
             clusterManager.cluster()
             if let firstMarker = nearBy.first, let lat = Double(firstMarker.latitude ?? "0.0"), let lng = Double(firstMarker.longitude ?? "0.0") {
-                let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 30)
+                let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 18)
                 mapView.animate(to: camera)
             }
         }
@@ -167,8 +164,15 @@ extension mapViewController: GMUClusterManagerDelegate {
    
 }
 extension mapViewController : GMUClusterRendererDelegate {
+   
+    func renderer(_ renderer: GMUClusterRenderer, didRenderMarker marker: GMSMarker) {
+        print("did render call")
+        mapView.selectedMarker = nil
+        selectedMarker = nil
+    }
     func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
         print("will render call")
+        
     }
     
     func renderer(_ renderer: GMUClusterRenderer, markerFor object: Any) -> GMSMarker? {
@@ -180,7 +184,6 @@ extension mapViewController : GMUClusterRendererDelegate {
             customInfoWindow?.setupData(body:item.data)
             marker.zIndex = 50
             marker.iconView = customInfoWindow
-            marker.isTappable = true
             marker.userData = item.data
             marker.map = mapView
             return marker
@@ -193,24 +196,25 @@ extension mapViewController : GMUClusterRendererDelegate {
     
     
     func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
-       
-        
         if let item = clusterItem as? MapItem {
-            // Create a marker for the cluster item
-            let marker = GMSMarker(position: item.position)
-            marker.map = mapView
-            
-            if selectedMarker == marker {
+            let selectedPosition = item.position
+            let tappedMarker = GMSMarker(position: selectedPosition)
+            if let currentSelectedMarker = selectedMarker, currentSelectedMarker.position.latitude == tappedMarker.position.latitude && currentSelectedMarker.position.longitude == tappedMarker.position.longitude {
                 mapView.selectedMarker = nil
                 selectedMarker = nil
             } else {
-                mapView.selectedMarker = marker
-                selectedMarker = marker
+                tappedMarker.map = mapView
+                mapView.selectedMarker = tappedMarker
+                selectedMarker = tappedMarker
+                mapView.animate(to: GMSCameraPosition(target: selectedPosition, zoom: mapView.camera.zoom))
             }
+
+            return false
         }
-        
-        return true
+        return false
     }
+
+
 
     func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
         
@@ -237,12 +241,7 @@ extension mapViewController : GMUClusterRendererDelegate {
         }else {
             print("Something went wrong")
         }
-  
-        
-//        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position,
-//                                                        zoom: mapView.camera.zoom + 1)
-//               let update = GMSCameraUpdate.setCamera(newCamera)
-//               mapView.moveCamera(update)
+
 
         return false
     }

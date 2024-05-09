@@ -26,11 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         sleep(3)
         IQKeyboardManager.shared.enable = true
         GMSServices.provideAPIKey("AIzaSyA-Ga7BvTYtT6KGYYoMWfolfoPj7CswuL0")
-        GMSPlacesClient.provideAPIKey("AIzaSyDG3ftTHL_IMGAd8c8vU-q0Oi-oURgTeKE")
-        
-
+        GMSPlacesClient.provideAPIKey("AIzaSyCIVy1w4jCuYDgqDjfNGU-uqxgJb_OjM4g")
         SocketIOManager.sharedInstance.connectMySocket()
-       
         
         DispatchQueue.global().async {
             if CLLocationManager.locationServicesEnabled() {

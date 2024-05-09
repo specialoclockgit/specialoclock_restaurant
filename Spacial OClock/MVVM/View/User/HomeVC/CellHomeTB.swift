@@ -179,66 +179,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 vc.selectedOfferId = restId
                 super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
             }
-//            if allresto[indexPath.row].offerTimings?.count == 1 {
-//                cell.stackHeight.constant = 46
-//                cell.viewOffer1.isHidden = false
-//                cell.offerImg1.isHidden = false
-//                cell.offerImg2.isHidden = true
-//                cell.offerImg3.isHidden = true
-//                cell.lblOffer1.isHidden = false
-//                cell.lblOffer2.isHidden = true
-//                cell.lblOffer3.isHidden = true
-//                cell.lblTime1.isHidden = false
-//                cell.lblTime2.isHidden = true
-//                cell.lblTime3.isHidden = true
-//               // cell.lblOffer1.text = "-\(celldata?[0].percentage ?? 0)%"
-//                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
-//            } else if allresto[indexPath.row].offerTimings?.count == 2 {
-//                cell.stackHeight.constant = 46
-//                cell.viewOffer1.isHidden  = false
-//                cell.viewOffer2.isHidden  = false
-//                cell.offerImg1.isHidden   = false
-//                cell.offerImg2.isHidden   = false
-//                cell.offerImg3.isHidden   = true
-//                cell.lblOffer1.isHidden   = false
-//                cell.lblOffer2.isHidden   = false
-//                cell.lblOffer3.isHidden   = true
-//                cell.lblTime1.isHidden    = false
-//                cell.lblTime2.isHidden    = false
-//                cell.lblTime3.isHidden    = true
-//
-//               // cell.lblOffer1.text = "-\(celldata?[0].percentage ?? 0)%"
-//               // cell.lblOffer2.text = "-\(celldata?[1].percentage ?? 0)%"
-//                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
-//                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[1].offer ?? "")
-//            } else if allresto[indexPath.row].offerTimings?.count ?? 0 >= 3 {
-//                cell.stackHeight.constant = 46
-//                cell.viewOffer1.isHidden = false
-//                cell.viewOffer2.isHidden = false
-//                cell.viewOffer3.isHidden = false
-//                cell.offerImg1.isHidden = false
-//                cell.offerImg2.isHidden = false
-//                cell.offerImg3.isHidden = false
-//                cell.lblOffer1.isHidden = false
-//                cell.lblOffer2.isHidden = false
-//                cell.lblOffer3.isHidden = false
-//                cell.lblTime1.isHidden = false
-//                cell.lblTime2.isHidden = false
-//                cell.lblTime3.isHidden = false
-//                cell.viewOffer1.isHidden = false
-//                cell.viewOffer2.isHidden = false
-//                cell.viewOffer3.isHidden = false
-//               // cell.lblOffer1.text = "-\(celldata?[0].percentage ?? 0)%"
-//                //cell.lblOffer2.text = "-\(celldata?[1].percentage ?? 0)%"
-//               // cell.lblOffer3.text = "-\(celldata?[2].percentage ?? 0)%"
-//                cell.lblTime1.text = Store.screenType == 1 ? "\(celldata?[0].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[0].offer ?? "")
-//                cell.lblTime2.text = Store.screenType == 1 ? "\(celldata?[1].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[1].offer ?? "")
-//                cell.lblTime3.text = Store.screenType == 1 ? "\(celldata?[2].offer ?? "") \n\("-\(celldata?[0].percentage ?? "0")%")" : (celldata?[2].offer ?? "")
-//
-//            } else {
-//                cell.stackHeight.constant = 0
-//            }
-           // print(cell.lblTime1.text,cell.lblTime2.text,cell.lblTime3.text)
+
             cell.viewReview.isHidden = true
             let imageIndex = (imageURL) + (allresto[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgLocaiton.sd_imageIndicator = SDWebImageActivityIndicator.gray

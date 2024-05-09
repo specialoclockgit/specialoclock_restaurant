@@ -180,7 +180,6 @@
 		EB3703D72BE0FA480088A6FE /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB3703D62BE0FA480088A6FE /* nodataFound.gif */; };
 		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
 		EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */; };
-		EB3F4CAC2BD78E1100DF6FC7 /* 01 (4).png in Resources */ = {isa = PBXBuildFile; fileRef = EB3F4CAB2BD78E1100DF6FC7 /* 01 (4).png */; };
 		EB3F4CAE2BD7D18000DF6FC7 /* WindowForMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3F4CAD2BD7D18000DF6FC7 /* WindowForMap.xib */; };
 		EB3F4CB02BD7D19900DF6FC7 /* WindowForMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3F4CAF2BD7D19900DF6FC7 /* WindowForMap.swift */; };
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
@@ -485,7 +484,6 @@
 		EB3703D62BE0FA480088A6FE /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
 		EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeOfferCVC.xib; sourceTree = "<group>"; };
-		EB3F4CAB2BD78E1100DF6FC7 /* 01 (4).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01 (4).png"; sourceTree = "<group>"; };
 		EB3F4CAD2BD7D18000DF6FC7 /* WindowForMap.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WindowForMap.xib; sourceTree = "<group>"; };
 		EB3F4CAF2BD7D19900DF6FC7 /* WindowForMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowForMap.swift; sourceTree = "<group>"; };
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
@@ -939,7 +937,6 @@
 			children = (
 				EB3703D62BE0FA480088A6FE /* nodataFound.gif */,
 				EBCFA7B52BE380B300D108FB /* Special.png */,
-				EB3F4CAB2BD78E1100DF6FC7 /* 01 (4).png */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
 				C284FB372A402A0D006949B4 /* Spacial OClock */,
 				C284FB4E2A402A0E006949B4 /* Spacial OClockTests */,
@@ -1514,7 +1511,6 @@
 				A58CCC982A5EAB5D00DFA478 /* Poppins-Medium.ttf in Resources */,
 				EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */,
 				C2661A892A4B156C00EEE266 /* CellImageViewCB.xib in Resources */,
-				EB3F4CAC2BD78E1100DF6FC7 /* 01 (4).png in Resources */,
 				A5AC1FB42A4C57CA007EF488 /* CellItemDetailReviewTB.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -69,9 +69,9 @@ class HomeViewModel : NSObject {
     }
     
     //MARK: - FAV LIST
-    func favListAPI(onsuccess: @escaping (([favListModalBody]?)->())){
-        WebService.service(API.liked_listing, service: .post) {
-            (modaldata: favListModal, Data , json) in
+    func favListAPI(onsuccess: @escaping (([locationByRestoModalBody]?)->())){
+        WebService.service(API.liked_listing, service: .post,showHud: false) {
+            (modaldata: locationByRestoModal, Data , json) in
             onsuccess(modaldata.body)
         }
     }
