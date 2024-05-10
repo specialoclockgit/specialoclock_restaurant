@@ -113,7 +113,7 @@ extension mapViewController: GMUClusterManagerDelegate {
         renderer.delegate = self
         self.clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
         renderer.minimumClusterSize = 2
-        renderer.maximumClusterZoom = 10
+        renderer.maximumClusterZoom = 12
         self.clusterManager.setDelegate(self, mapDelegate: self)
         self.clusterManager.setMapDelegate(self)
         setMarkers()
@@ -145,22 +145,19 @@ extension mapViewController: GMUClusterManagerDelegate {
                 let position =  CLLocationCoordinate2D(latitude: offsetLat, longitude: offsetLng)
                 state_marker.position = position
                // state_marker.zIndex = 50
-             //   let data =  structName(lat: nearBy[i])
+               //   let data =  structName(lat: nearBy[i])
                 locMarkers.append(state_marker)
                 let newData = MapItem(position: position, data: nearBy[i])
                 items.append(newData)
                 clusterManager.add(newData)
-               
             }
             clusterManager.cluster()
             if let firstMarker = nearBy.first, let lat = Double(firstMarker.latitude ?? "0.0"), let lng = Double(firstMarker.longitude ?? "0.0") {
-                let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 18)
+                let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 11.5)
                 mapView.animate(to: camera)
             }
         }
     }
-
-
    
 }
 extension mapViewController : GMUClusterRendererDelegate {

@@ -25,7 +25,7 @@ var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Ce
 
 var arrHome = ["Location","Cuisines","","Theme"]
 
-class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GMSMapViewDelegate, UIGestureRecognizerDelegate {
+class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGestureRecognizerDelegate {
     
     //MARK: - OUTLETS
     
@@ -49,7 +49,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
     //MARK: - VARIABELS
     var lat : Double?
     var long : Double?
-    let locationManager = CLLocationManager()
+    var locationManager: CLLocationManager!
     let manager = CLLocationManager()
     var isSelected  = Bool()
     var viewModel = HomeViewModel()
@@ -75,158 +75,50 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         initialLoad()
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
-        //MARK: Dine or Drink UserDefault for itemDetailOffer
-        if Store.screenType == 2 {
-            //UserDefaults.standard.value(forKey: "dineDrinkStatus") as? Int == 2{
-            setDrink()
-        } else {
-            setDine()
-        }
-        //UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
-        self.getUpdatedLocation()
         self.isSelected = true
         self.lblLocation.text = self.getcity
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        if Store.screenType == 2 {
+            self.setDrink()
+        } else {
+            self.setDine()
+        }
+        
     }
     
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+    }
     
-    //MARK: - MARK SHOW IN GOOGLE MAP
-    func getalllocations() {
-           gmsMapView.clear()
-        let nearbyWithOffers = nearBy.filter { $0.offerPercentage != nil && !$0.offerPercentage!.isEmpty }
-           for index in 0..<(nearbyWithOffers.count) {
-               if let returnedPlace = nearbyWithOffers[index] as? NearbyRestaurant {
-                   
-                   var percentage = ""
-                   var latitude = "0.0"
-                   var longitude = "0.0"
-                   var image = ""
-                   if let name = returnedPlace.offerPercentage {
-                       percentage = name
-                   }
-                   
-                   if let latis = returnedPlace.latitude {
-                       latitude = latis
-                   }
-                   
-                   if let longis = returnedPlace.longitude {
-                       longitude = longis
-                   }
-                   
-                   if let img = returnedPlace.profileImage {
-                       image = img
-                   
-                   }
-                   
-                   let marker = GMSMarker()
-                   
-                   
-                   print("=====map loc",latitude,longitude)
-                   let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 16)
-                   marker.position = checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
-                   
-                   let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-                   if Store.screenType == 1 {
-                       view.offerLbl.text = "\(percentage)%"
-                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
-                   }else {
-                       view.providerImageView.isHidden = false
-                       view.lblPersot.text = ""
-                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
-                   }
-                   
-                   marker.iconView = view
-                   marker.map = self.gmsMapView
-                   marker.userData = returnedPlace
-                   self.gmsMapView.animate(to: camera)
-               }
-               if self.nearBy.count == 0 {
-                   let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
-                   let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
-                   gmsMapView.animate(to: camera1)
-               } else {
-                   let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 16)
-                   gmsMapView.animate(to: camera2)
-               }
-           }
-           
-       }
-
-
-
+    @objc func appMovedToBackground() {
+        print("appMovedToBackground")
+    }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        if isSelected == false {
-//            setDrink()
-//        } else {
-//            self.setDine()
-//        }
+    @objc func appMovedToForeground() {
+        print("appMovedToForeground")
+        locationManagerDidChangeAuthorization(locationManager)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.requestLocationPermission()
+    }
+    
+    func requestLocationPermission() {
+        if locationManager == nil {
+            locationManager = CLLocationManager()
+        }
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         
+    }
+    
+
+    override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
-    }
-    
-    func getUpdatedLocation() {
-        
-        DispatchQueue.global().async {
-            if (CLLocationManager.locationServicesEnabled())
-            {
-                self.locationManager.delegate = self
-                //   locationManager.distanceFilter = 100.0
-                if #available(iOS 14.0, *) {
-                    self.locationManager.desiredAccuracy = kCLLocationAccuracyReduced
-                } else {
-                    // Fallback on earlier versions0000
-                }
-                self.locationManager.requestAlwaysAuthorization()
-                self.locationManager.startUpdatingLocation()
-            }
-        }
-        
-        
-        //MARK:- Enable Location Services
-        if !hasLocationPermission() {
-            let alertController = UIAlertController(title: "Enable Location Services", message: "Special O'Clock wants to access your location only to provide better experience to you.", preferredStyle: UIAlertController.Style.alert)
-            
-            let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
-                //Redirect to Settings app
-                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
-            })
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
-            alertController.addAction(cancelAction)
-            
-            alertController.addAction(okAction)
-            locationManager.delegate = self
-            locationManager.requestWhenInUseAuthorization()
-            if CLLocationManager.locationServicesEnabled() {
-                locationUpdated = true
-                locationManager.delegate = self
-                //   locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                locationManager.startUpdatingLocation()
-            }else{
-                locationUpdated = false
-            }
-            self.present(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    func hasLocationPermission() -> Bool {
-        var hasPermission = false
-        
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined, .restricted, .denied:
-                hasPermission = false
-            case .authorizedAlways, .authorizedWhenInUse:
-                hasPermission = true
-            @unknown default:
-                print("")
-            }
-        } else {
-            hasPermission = false
-        }
-        return hasPermission
     }
     
     
@@ -374,33 +266,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GM
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.UserProfileVC) as! UserProfileVC
         self.navigationController?.pushViewController(screen, animated: true)
     }
-    //FUNCTION CURRENT LOCATIONS
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            locationManager.startUpdatingLocation()
-        }
-    }
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        self.lat = locValue.latitude
-        self.long = locValue.longitude
-        //let location = locations.last! as CLLocation
-        //let geocoder = CLGeocoder()
-//        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-//            if (error != nil){
-//                print("error in reverseGeocode")
-//            }
-//            let placemark = placemarks as? [CLPlacemark]
-//            if placemark?.count ?? 0 > 0{
-//                let placemark = placemarks![0]
-//                self.getcountry = placemark.country ?? ""
-//                self.getstate = placemark.locality ?? ""
-//                self.lblLocation.text = "\(placemark.locality!)"
-//            }
-//        }
-        locationManager.stopUpdatingLocation()
-    }
+
 }
 
 //MARK: - EXETNSIONS
@@ -517,13 +383,7 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Popular" :
-//            let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
-//            screen.setvalue = sectionArray[sender.tag].name ?? ""
-//            screen.all_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
-//            screen.getcity = self.getcity
-//            screen.getcountry = self.getcountry
-//            self.navigationController?.pushViewController(screen, animated: true)
-            
+
             let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.highilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.filterHighilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
@@ -545,12 +405,6 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "A-Z" :
-//            let screen = storyboard?.instantiateViewController(withIdentifier: "homeSeeMoreVC") as! homeSeeMoreVC
-//            screen.setvalue = sectionArray[sender.tag].name ?? ""
-//            screen.highily_rated_bars_restos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
-//            screen.getcity = self.getcity
-//            screen.getcountry = self.getcountry
-//            self.navigationController?.pushViewController(screen, animated: true)
             
             let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.allBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
@@ -629,4 +483,158 @@ struct SectionModel {
     var name: String?
     var objArray: [Any]?
     var image: String?
+}
+extension HomeVC : CLLocationManagerDelegate {
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch  manager.authorizationStatus{
+            
+        case .notDetermined:
+            print("notDetermined")
+        case .restricted:
+            print("restricted")
+            openAlert()
+        case .denied:
+            print("denied")
+            openAlert()
+        case .authorizedAlways:
+            self.locationManager.startUpdatingLocation()
+            print("authorizedAlways")
+        case .authorizedWhenInUse:
+            self.locationManager.startUpdatingLocation()
+            print("authorizedWhenInUse")
+        @unknown default:
+            print("@unknown")
+        }
+    }
+    
+    func openAlert() {
+        let alertController = UIAlertController(title: "Enable Location Services", message: "Special O'Clock wants to access your location only to show you nearby restaurants and bars.", preferredStyle: UIAlertController.Style.alert)
+        
+        let okAction = UIAlertAction(title: "Go to Settings", style: .default, handler: {(cAlertAction) in
+            alertController.dismiss(animated: true) {
+                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+            }
+        })
+        alertController.addAction(okAction)
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+        }else{
+        }
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        if let location = locations.last {
+            self.lat = location.coordinate.latitude
+            self.long = location.coordinate.longitude
+            let geocoder = CLGeocoder()
+//            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+//                if (error != nil){
+//                    print("error in reverseGeocode")
+//                }
+//                if let placemark = placemarks {
+//                    if placemark.count > 0{
+//                        let placemark = placemark[0]
+//                        
+//                        self.getcountry = placemark.country ?? ""
+//                        self.getcity = placemark.locality ?? ""
+//                        self.getstate = placemark.administrativeArea ?? ""
+//                        self.lblLocation.text = placemark.locality ?? ""
+//                        
+//                        if Store.screenType == 2 {
+//                            self.setDrink()
+//                        } else {
+//                            self.setDine()
+//                        }
+//                    }
+//                } else {
+//                    if Store.screenType == 2 {
+//                        self.setDrink()
+//                    } else {
+//                        self.setDine()
+//                    }
+//                }
+//                print(locations.last as Any)
+//                self.locationManager.stopUpdatingLocation()
+//            }
+            self.locationManager.startUpdatingLocation()
+        }
+    }
+}
+
+extension HomeVC {
+    //MARK: - MARK SHOW IN GOOGLE MAP
+    func getalllocations() {
+        gmsMapView.clear()
+        let nearbyWithOffers = nearBy.filter { $0.offerPercentage != nil && !$0.offerPercentage!.isEmpty }
+           for index in 0..<(nearbyWithOffers.count) {
+               if let returnedPlace = nearbyWithOffers[index] as? NearbyRestaurant {
+                   
+                   var percentage = ""
+                   var latitude = "0.0"
+                   var longitude = "0.0"
+                   var image = ""
+                   if let name = returnedPlace.offerPercentage {
+                       percentage = name
+                   }
+                   
+                   if let latis = returnedPlace.latitude {
+                       latitude = latis
+                   }
+                   
+                   if let longis = returnedPlace.longitude {
+                       longitude = longis
+                   }
+                   
+                   if let img = returnedPlace.profileImage {
+                       image = img
+                   
+                   }
+                   
+                   let offset = 0.0001
+                   let offsetLat = (Double(latitude) ?? 0) + Double.random(in: -offset...offset)
+                   let offsetLng = (Double(longitude) ?? 0) + Double.random(in: -offset...offset)
+                   
+                   
+                   let marker = GMSMarker()
+                   
+                   
+                   print("=====map loc",latitude,longitude)
+                   let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 16)
+                   marker.position = CLLocationCoordinate2D(latitude: offsetLat, longitude: offsetLng)
+                   //checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
+                   
+                   let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
+                   if Store.screenType == 1 {
+                       view.offerLbl.text = "\(percentage)%"
+                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
+                   }else {
+                       view.providerImageView.isHidden = false
+                       view.lblPersot.text = ""
+                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
+                   }
+                   
+                   marker.iconView = view
+                   marker.map = self.gmsMapView
+                   marker.userData = returnedPlace
+                   self.gmsMapView.animate(to: camera)
+               }
+               if self.nearBy.count == 0 {
+                   let location = CLLocationCoordinate2D(latitude: Double(Store.userDetails?.latitude ?? "" ) ?? 0, longitude: Double(Store.userDetails?.longitude ?? "" ) ?? 0)
+                   let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
+                   gmsMapView.animate(to: camera1)
+               } else {
+                   let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 11.5)
+                   gmsMapView.animate(to: camera2)
+               }
+           }
+           
+       }
 }
