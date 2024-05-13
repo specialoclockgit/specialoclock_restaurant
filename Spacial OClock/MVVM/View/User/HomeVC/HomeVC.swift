@@ -6,26 +6,13 @@
 //
 
 import UIKit
-import AVFAudio
-import MapKit
+
 import CoreLocation
 import GooglePlaces
 import GoogleMaps
 import SDWebImage
 
-struct Header {
-    var heading : String
-    var img : String
-}
-var arrHomeTBModel : [HomeTBModel] = [HomeTBModel(heading: "Location", name:["Central Cape Town","Rondebosch" ],
-                                                  img: ["location1" ,"location2"],  restoClub: ["32 Restaurants" , "7 Restaurants"]) ,
-                                      HomeTBModel(heading: "Cuisines", name: ["Grill","Sushi" ], img: ["image3" ,"image2"], restoClub:  ["32 Restaurants" , "7 Restaurants"]),
-                                      HomeTBModel(heading: "", name: [""], img: [""], restoClub: [""]),
-                                      HomeTBModel(heading: "Theme", name: ["OceanView","Hotel" ], img:  ["Theme1","theme2" ], restoClub:  ["32 Restaurants" , "7 Restaurants"])]
-
-var arrHome = ["Location","Cuisines","","Theme"]
-
-class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGestureRecognizerDelegate {
+class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate {
     
     //MARK: - OUTLETS
     
@@ -40,7 +27,6 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
     @IBOutlet weak var scrollView : UIScrollView!
     @IBOutlet weak var tbHomeData : UITableView!
     @IBOutlet weak var heightTBHomeData : NSLayoutConstraint!
-    @IBOutlet weak var mapView : MKMapView!
     @IBOutlet weak var btnDine : UIButton!
     @IBOutlet weak var btnDrinks : UIButton!
     @IBOutlet weak var lblUserName : UILabel!
@@ -69,7 +55,6 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
         self.lblUserName.text = "Hi \(Store.userDetails?.name?.capitalized ?? ""), you’re in"
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.timeZone = TimeZone.current.identifier
-        print(timeZone)
         gmsMapView.isMyLocationEnabled = true
         gmsMapView.delegate = self
         initialLoad()
@@ -79,12 +64,6 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
         self.lblLocation.text = self.getcity
         NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        if Store.screenType == 2 {
-            self.setDrink()
-        } else {
-            self.setDine()
-        }
-        
     }
     
     deinit{
@@ -97,7 +76,10 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
     
     @objc func appMovedToForeground() {
         print("appMovedToForeground")
-        locationManagerDidChangeAuthorization(locationManager)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.locationManagerDidChangeAuthorization(self.locationManager)
+        }
+       
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -113,14 +95,17 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
         locationManager.requestWhenInUseAuthorization()
         
     }
-    
-
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden  = false
         self.tbHomeData.layoutSubviews()
         self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.first?.view == self.view {
+            self.dismiss(animated: true)
+        }
+    }
     
     
     func setData(type: Int) {
@@ -177,21 +162,11 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
     
     //MARK: - ACTIONS
     @IBAction func btnLocationAct(_ sender : UIButton){
-//        let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-//        let vc = serviceStoryboard.instantiateViewController(withIdentifier: "MyOfferVC") as! MyOfferVC
-//        vc.valueChange = "Select Country"
-//        vc.callback = { dataa, time in
-//            self.getcity = dataa
-//            self.gettimezone = time
-//            self.lblLocation.text = self.getcity
-//        }
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
         let vc = serviceStoryboard.instantiateViewController(withIdentifier: "LocationsVC") as! LocationsVC
         vc.hidesBottomBarWhenPushed = true
         vc.callBack = {  [weak self] countryy, statee, cityy in
-            print(countryy,statee,cityy)
+            
             self?.lblLocation.text = cityy.capitalized
             self?.getcity = cityy
             self?.getcountry = countryy
@@ -204,22 +179,28 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
     
     
     @IBAction func btnDine(_ sender: UIButton) {
-        if sender.isSelected == false{
-            sender.isSelected = false
-        }
         setDine()
     }
     
     @IBAction func btnDrinks(_ sender: UIButton) {
-        if sender.isSelected == false{
-            
-            sender.isSelected = false
+        let alert = UIAlertController(title: appName, message: nil, preferredStyle: .actionSheet)
+        let club = UIAlertAction(title: "Show Clubs", style: .default) {
+            UIAlertAction in
+            self.setDrink(type: 2)
         }
-        setDrink()
+        let bar = UIAlertAction(title: "Show Bars", style: .default) {
+            UIAlertAction in
+            self.setDrink(type: 3)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        alert.addAction(club)
+        alert.addAction(bar)
+        alert.addAction(cancel)
+        alert.modalTransitionStyle = .crossDissolve
+        self.present(alert, animated: true)
     }
     
     func setDine() {
-
         imgViewDinein.image = UIImage(named: "DiningGreen")
         imgViewDrinks.image = UIImage(named: "greyDrink")
         lblDrinks.textColor = UIColor.lightGray
@@ -232,19 +213,19 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
         self.tbHomeData.layoutSubviews()
     }
     
-    func setDrink() {
+    func setDrink(type:Int) {
         imgViewDrinks.image = UIImage(named: "greenDrink")
         imgViewDinein.image = UIImage(named: "DiningGray")
         lblDineIn.textColor = UIColor.lightGray
         lblDrinks.textColor = UIColor.black
         isSelected = false
-        
         UserDefaults.standard.set(2, forKey: "dineDrinkStatus")
         UserDefaults.standard.synchronize()
-        Store.screenType = 2
-        setData(type: 2)
+        Store.screenType = type
+        setData(type: type)
         self.tbHomeData.layoutSubviews()
     }
+    
     @IBAction func btnMapView(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
         vc.iscomeFrom = 1
@@ -262,6 +243,7 @@ class HomeVC: UIViewController, MKMapViewDelegate, GMSMapViewDelegate, UIGesture
         vc.longitude = self.long ?? 0.0
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     @IBAction func btnProfileAct(_ sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.UserProfileVC) as! UserProfileVC
         self.navigationController?.pushViewController(screen, animated: true)
@@ -488,7 +470,6 @@ extension HomeVC : CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch  manager.authorizationStatus{
-            
         case .notDetermined:
             print("notDetermined")
         case .restricted:
@@ -530,41 +511,40 @@ extension HomeVC : CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         if let location = locations.last {
             self.lat = location.coordinate.latitude
             self.long = location.coordinate.longitude
+            
             let geocoder = CLGeocoder()
-//            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-//                if (error != nil){
-//                    print("error in reverseGeocode")
-//                }
-//                if let placemark = placemarks {
-//                    if placemark.count > 0{
-//                        let placemark = placemark[0]
-//                        
-//                        self.getcountry = placemark.country ?? ""
-//                        self.getcity = placemark.locality ?? ""
-//                        self.getstate = placemark.administrativeArea ?? ""
-//                        self.lblLocation.text = placemark.locality ?? ""
-//                        
-//                        if Store.screenType == 2 {
-//                            self.setDrink()
-//                        } else {
-//                            self.setDine()
-//                        }
-//                    }
-//                } else {
-//                    if Store.screenType == 2 {
-//                        self.setDrink()
-//                    } else {
-//                        self.setDine()
-//                    }
-//                }
-//                print(locations.last as Any)
-//                self.locationManager.stopUpdatingLocation()
-//            }
-            self.locationManager.startUpdatingLocation()
+            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                if (error != nil){
+                    print("error in reverseGeocode")
+                }
+                if let placemark = placemarks {
+                    if placemark.count > 0{
+                        let placemark = placemark[0]
+                        
+                        self.lblLocation.text = placemark.locality ?? ""
+                        
+                        if Store.screenType == 2 {
+                            self.setDrink(type: 2)
+                        }else if Store.screenType == 3 {
+                            self.setDrink(type: 3)
+                        } else {
+                            self.setDine()
+                        }
+                    }
+                } else {
+                    if Store.screenType == 2 {
+                        self.setDrink(type: 2)
+                    }else if Store.screenType == 3 {
+                        self.setDrink(type: 3)
+                    } else {
+                        self.setDine()
+                    }
+                }
+                self.locationManager.stopUpdatingLocation()
+            }
         }
     }
 }
@@ -576,7 +556,6 @@ extension HomeVC {
         let nearbyWithOffers = nearBy.filter { $0.offerPercentage != nil && !$0.offerPercentage!.isEmpty }
            for index in 0..<(nearbyWithOffers.count) {
                if let returnedPlace = nearbyWithOffers[index] as? NearbyRestaurant {
-                   
                    var percentage = ""
                    var latitude = "0.0"
                    var longitude = "0.0"
@@ -584,29 +563,21 @@ extension HomeVC {
                    if let name = returnedPlace.offerPercentage {
                        percentage = name
                    }
-                   
                    if let latis = returnedPlace.latitude {
                        latitude = latis
                    }
-                   
                    if let longis = returnedPlace.longitude {
                        longitude = longis
                    }
-                   
                    if let img = returnedPlace.profileImage {
                        image = img
-                   
                    }
-                   
                    let offset = 0.0001
                    let offsetLat = (Double(latitude) ?? 0) + Double.random(in: -offset...offset)
                    let offsetLng = (Double(longitude) ?? 0) + Double.random(in: -offset...offset)
                    
                    
                    let marker = GMSMarker()
-                   
-                   
-                   print("=====map loc",latitude,longitude)
                    let camera = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(latitude ) ?? 0.0), longitude: CLLocationDegrees(Double(longitude ) ?? 0.0 ), zoom: 16)
                    marker.position = CLLocationCoordinate2D(latitude: offsetLat, longitude: offsetLng)
                    //checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)

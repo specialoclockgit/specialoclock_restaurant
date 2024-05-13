@@ -63,4 +63,5 @@ struct SignupBody: Codable {
         case notificationStatus = "notification_status"
         case createdAt, updatedAt, token
     }
+    
 }

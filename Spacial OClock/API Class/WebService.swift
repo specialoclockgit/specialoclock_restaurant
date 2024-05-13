@@ -62,11 +62,6 @@ struct WebService {
                 
             }
             
-//            if (api == API.login ||  api == API.signup ) {
-//                request.addValue("dfdf", forHTTPHeaderField: "deviceToken")
-//                request.addValue("2", forHTTPHeaderField: "deviceType")
-//            }
-            
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             request.addValue(securitykey, forHTTPHeaderField: "secret_key")
             request.addValue(publishedkey, forHTTPHeaderField: "publish_key")
@@ -81,7 +76,7 @@ struct WebService {
                         request.httpBody = postData as Data
                     }else if param is Dictionary<String, Any>{
                         var parm = self.getString(from: param as! Dictionary<String, Any>)
-                        //print(parm)
+                       
                         parm.removeFirst()
                         let postData = NSMutableData(data: parm.data(using: String.Encoding.utf8)!)
                         request.httpBody = postData as Data

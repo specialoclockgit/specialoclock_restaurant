@@ -89,11 +89,11 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblLocationName.text = self.cuisine[indexPath.row].name ?? ""
             
             let count = (self.cuisine[indexPath.row].restrorants?.filter({$0.offer_available == 1}).count ?? 0)
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newClubsCount = count == 0 ? "\(count) Clubs" : count == 1 ? "0\(count) Club" : count < 9 ? "0\(count) Clubs" : "\(count) Clubs"
+            let newBarsCount = count == 0 ? "\(count) Bars" : count == 1 ? "0\(count) Bar" : count < 9 ? "0\(count) Bars" : "\(count) Bars"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
-            cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
+            cell.lblTotalRestaurant.text = Store.screenType == 1 ? (newRestoCount) : Store.screenType == 2 ? (newClubsCount) : (newBarsCount)
             
-//            cell.lblRating.text = self.cuisine[indexPath.row].
             cell.viewReview.isHidden = true
         } else  if objArray[collView.tag].name == "Category" {
             cell.view1.isHidden = false
@@ -104,9 +104,10 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblLocationName.text = self.category[indexPath.row].title ?? ""
             let count = (self.category[indexPath.row].clubCount ?? 0)
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newClubsCount = count == 0 ? "\(count) Clubs" : count == 1 ? "0\(count) Club" : count < 9 ? "0\(count) Clubs" : "\(count) Clubs"
+            let newBarsCount = count == 0 ? "\(count) Bars" : count == 1 ? "0\(count) Bar" : count < 9 ? "0\(count) Bars" : "\(count) Bars"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
-            cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
+            cell.lblTotalRestaurant.text = Store.screenType == 1 ? (newRestoCount) : Store.screenType == 2 ? (newClubsCount) : (newBarsCount)
             cell.viewReview.isHidden = true
         } else if objArray[collView.tag].name == "Location" {
             cell.view1.isHidden = false
@@ -116,11 +117,12 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblLocationName.text = self.location[indexPath.row].locality_area
             
             let count = (self.location[indexPath.row].restrorants?.filter({$0.offer_available == 1}).count ?? 0)
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            
+            let newClubsCount = count == 0 ? "\(count) Clubs" : count == 1 ? "0\(count) Club" : count < 9 ? "0\(count) Clubs" : "\(count) Clubs"
+            let newBarsCount = count == 0 ? "\(count) Bars" : count == 1 ? "0\(count) Bar" : count < 9 ? "0\(count) Bars" : "\(count) Bars"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
-            cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
+            cell.lblTotalRestaurant.text = Store.screenType == 1 ? (newRestoCount) : Store.screenType == 2 ? (newClubsCount) : (newBarsCount)
             cell.viewReview.isHidden = true
-            //cell.lblRating.text = self.location[indexPath.row].
         } else if objArray[collView.tag].name == "Popular" {
             cell.view1.isHidden = true
             cell.view2.isHidden = false
@@ -157,9 +159,10 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             
             let count = self.themeArr[indexPath.row].restrorant?.count ?? 0
             //(self.themeArr[indexPath.row].restrorants?.filter({$0.offer_available == 1}).count ?? 0)
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newClubsCount = count == 0 ? "\(count) Clubs" : count == 1 ? "0\(count) Club" : count < 9 ? "0\(count) Clubs" : "\(count) Clubs"
+            let newBarsCount = count == 0 ? "\(count) Bars" : count == 1 ? "0\(count) Bar" : count < 9 ? "0\(count) Bars" : "\(count) Bars"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
-            cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
+            cell.lblTotalRestaurant.text = Store.screenType == 1 ? (newRestoCount) : Store.screenType == 2 ? (newClubsCount) : (newBarsCount)
             
         } else if objArray[collView.tag].name == "A-Z" {
             cell.view1.isHidden = true

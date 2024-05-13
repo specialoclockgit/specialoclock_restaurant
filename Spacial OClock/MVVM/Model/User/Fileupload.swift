@@ -24,6 +24,7 @@ struct FileuploadModelBody: Codable {
         case image, thumbnail, fileName, folder
         case file_type
     }
+    
 }
 
 extension Collection where Iterator.Element == [String:Any] {

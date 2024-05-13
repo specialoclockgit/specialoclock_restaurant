@@ -113,7 +113,7 @@ class bookingDetailsVC: UIViewController {
             self.specailofferless = self.totalamount - self.prsentsamount
             
             
-            if let reviewData = self.modalDetail?.review, reviewData.review != ""{
+            if let reviewData = self.modalDetail?.review, reviewData.review != "" {
                 
                 self.reviewVw.isHidden = reviewData.reply == "" ? false : true
                 self.reviewRatingVw.rating = Double(reviewData.rating ?? "") ?? 0.0
@@ -263,7 +263,7 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
         cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "Default_Image"))
         
-        if self.modalDetail?.restrorant?.type == 2 {
+        if self.modalDetail?.restrorant?.type == 2 || self.modalDetail?.restrorant?.type == 3{
             cell.lblPrevPrice.text = "R\(self.productsUnderOffer?[indexPath.row].actual_price ?? "0")"
             cell.lblNewPrice.text = "R\(self.productsUnderOffer?[indexPath.row].discounted_price ?? "0")"
         }else {

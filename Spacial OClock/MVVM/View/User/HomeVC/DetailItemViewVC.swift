@@ -60,8 +60,6 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         txtFldSearch.delegate = self
         self.type = Store.screenType ?? 1
         //UserDefaults.standard.integer(forKey: "dineDrinkStatus")
-       
-        print(cusinessID)
         lblTwo.text = lblName
         lblOne.text = "\(setValue)> "
         lblHeader.text = setValue 

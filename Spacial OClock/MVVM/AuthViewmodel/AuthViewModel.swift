@@ -15,7 +15,7 @@ class AuthViewModel : NSObject {
     var eventImgString = String()
     
     //MARK: - SIGN UP API
-    func signUpapi(isImage:Bool,image: [FileuploadModelBody], name : String, email: String,country_code: String,countrySymbol:String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String,role:Int, onsuccess: @escaping ((()->()))) {
+    func signUpapi(isImage:Bool,image: [FileuploadModelBody], name : String, email: String,country_code: String,countrySymbol:String, phone: String ,password:String, confirmpassword: String,devicetype: Int,  isselected:Bool,longitude:Double,latitude:Double,location:String,role:Int,dob:String, onsuccess: @escaping ((()->()))) {
         
         if CheckValidations.validationSignUp(isImage:isImage,name: name, email: email, country_code: country_code,countrySymbol:countrySymbol, phone: phone, password: password, confirmpassword: confirmpassword, devicetype:1 , isselected: isselected){
             let jsonEncoder = JSONEncoder()
@@ -23,7 +23,12 @@ class AuthViewModel : NSObject {
                 let jsonData = try jsonEncoder.encode(image)
                 let jsonString = String(data: jsonData, encoding: .utf8)
                 guard let json = jsonString else{return}
-                let param : parameters = [ "image":json,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":role, "device_type":1,"timezone":TimeZone.current.identifier] as [String : Any]
+                var param = parameters()
+                param = [ "image":json,"name":name, "email":email, "country_code":country_code ,"phone":phone,  "password":password,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"role":role, "device_type":1,"timezone":TimeZone.current.identifier]
+                
+                if role == 1 {
+                    param["dob"] = dob
+                }
                 
                 WebService.service(API.signup,  param: param, service: .post){
                     (modeldata: SignupModel, data, json) in

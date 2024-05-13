@@ -598,6 +598,16 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     showPopupForDisableDate(date:txtFldDate.text ?? "" ,msg: "Sorry we are not available on the selected date")
                     // CommonUtilities.shared.showAlert(message: "Closed on your selected date. Please select another date")
                 } else {
+                    guard let restType = self.modal?.type else {
+                        return
+                    }
+                    if restType == 2 {
+                        guard let isLegal = isAge18(from: Store.userDetails?.dob ?? "", withFormat: "dd/MM/yyyy"), isLegal else {
+                            CommonUtilities.shared.showAlert(message: "Club bookings are available for 18+ only.")
+                            return
+                        }
+                    }
+                    
                     let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
                     screen.offerSelectePretns = self.offerpresents
                     screen.slotId = self.slotid
@@ -623,7 +633,6 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                         self?.isselectedoffer = -1
                         self?.product_detail()
                     }
-                    
                     self.navigationController?.pushViewController(screen, animated: true)
                 }
                 
@@ -1131,7 +1140,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             cell.replyImgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.replyImgVw.sd_setImage(with: URL(string: restImage), placeholderImage: UIImage(named: "placeholder (1)"))
             cell.replyDateLbl.text = string_date_ToDate(reviews?[indexPath.row].updatedAt ?? "", currentFormat: .BackEndFormat, requiredFormat: .mon_dd_yyyy)
-            cell.replyTypeLbl.text = self.modal?.type == 1 ? "Restaurant Reply" : "Bar/Club Reply"
+            cell.replyTypeLbl.text = self.modal?.type == 1 ? "Restaurant Reply" : self.modal?.type == 2 ? "Club Reply" : "Bar Reply"
             cell.replyComment.text = self.reviews?[indexPath.row].reply?.capitalized ?? ""
             return cell
         }

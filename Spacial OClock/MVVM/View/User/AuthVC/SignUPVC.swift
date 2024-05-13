@@ -28,10 +28,11 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var signUpBtn : UIButton!
     @IBOutlet weak var btnBar : UIButton!
     @IBOutlet weak var btnRestaurant : UIButton!
-    
+    @IBOutlet weak var dobVw: UIView!
+    @IBOutlet weak var dobTf: UITextField!
     //MARK: Variables
     var viewmodel = AuthViewModel()
-    let locationManager = CLLocationManager()
+    var locationManager : CLLocationManager!
     var isImageSelected = false
     var isselected = false
     var lat : Double?
@@ -42,7 +43,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     var image = [FileuploadModelBody]()
     var selectStatus = Int()
     var restoselctStatus = Int()
-    
+    let datePicker = UIDatePicker()
     
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
@@ -54,14 +55,22 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         tfEmail.delegate = self
         tfPassword.delegate = self
         tfConfirmPass.delegate = self
-        self.getUpdatedLocation()
+        dobVw.isHidden = selectStatus == 1 ? false : true
         uiSet()
-        
+        showDatePicker()
         NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.requestLocationPermission()
+    }
+    
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     //MARK: FUNCTIONS FOR LOCATION
     @objc func appMovedToBackground() {
@@ -69,8 +78,10 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     }
 
     @objc func appMovedToForeground() {
-        getUpdatedLocation()
         print("appMovedToForeground")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.locationManagerDidChangeAuthorization(self.locationManager)
+        }
     }
     
     
@@ -79,21 +90,9 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         tapGesture()
         view.hideKeyboardWhenTappedAround()
         viewButton.isHidden = true
-//        let anywhereSwipeGestureRecognizer = AnywhereSwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
-//        anywhereSwipeGestureRecognizer.edges = .left
-//        anywhereSwipeGestureRecognizer.delegate = self
-//        view.addGestureRecognizer(anywhereSwipeGestureRecognizer)
+
     }
-    
-//    @objc func handleSwipe(_ gestureRecognizer: AnywhereSwipeGestureRecognizer) {
-//        if gestureRecognizer.state == .ended {
-//            navigationController?.popViewController(animated: true)
-//        }
-//    }
-//
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return true
-//    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -109,7 +108,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
                 self?.image = imageData ?? [FileuploadModelBody]()
                 self?.isImageSelected = true
                 
-                if self?.checkFilledDeatils(isImage: self?.isImageSelected ?? false, name: self?.tfName.text ?? "", email: self?.tfEmail.text ?? "", phone: self?.tfPhone.text ?? "", pass: self?.tfPassword.text ?? "", conPass: self?.tfConfirmPass.text ?? "",isSelected: self?.isselected ?? false) == true{
+                if self?.checkFilledDeatils(isImage: self?.isImageSelected ?? false, name: self?.tfName.text ?? "", email: self?.tfEmail.text ?? "", phone: self?.tfPhone.text ?? "", dob: self?.dobTf.text ?? "", pass: self?.tfPassword.text ?? "", conPass: self?.tfConfirmPass.text ?? "",isSelected: self?.isselected ?? false) == true{
                     print("True")
                     self?.signUpBtn.isUserInteractionEnabled = true
                     self?.signUpBtn.backgroundColor = UIColor(named: "themeOrange")
@@ -158,7 +157,6 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     
     @IBAction func btbnSelectBar(_ sender: UIButton) {
         restoselctStatus = 2
-        
         viewButton.isHidden = true
         restaurantBtn.setTitle("Bar/Club ▼", for: .normal)
     }
@@ -175,7 +173,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     
     @IBAction func btnSignUp(_ sender: UIButton) {
         
-        self.viewmodel.signUpapi(isImage: self.isImageSelected, image: self.image , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location, role: self.selectStatus) {
+        self.viewmodel.signUpapi(isImage: self.isImageSelected, image: self.image , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location, role: self.selectStatus,dob: self.dobTf.text ?? "") {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
             vc.btnCheckStatus = self.selectStatus
             vc.restoselctStatus = self.restoselctStatus
@@ -209,7 +207,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
             isselected = false
         }
         
-        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? "",isSelected: isselected){
+        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", dob: dobTf.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? "",isSelected: isselected){
             print("True")
             signUpBtn.isUserInteractionEnabled = true
             signUpBtn.backgroundColor = UIColor(named: "themeOrange")
@@ -225,22 +223,29 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
 
 extension SignUPVC {
     
-    func checkFilledDeatils(isImage:Bool,name:String,email:String,phone:String,pass:String,conPass:String,isSelected:Bool) -> Bool{
-        
-//        if isImage == false {
-//            return false
-//        } else
+    func checkFilledDeatils(isImage:Bool,name:String,email:String,phone:String,dob:String,pass:String,conPass:String,isSelected:Bool) -> Bool{
+
         if name.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
-        } else if email.trimmingCharacters(in: .whitespaces).isEmpty{
+        }
+        if email.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
-        } else if phone.trimmingCharacters(in: .whitespaces).isEmpty{
+        }
+        if phone.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
-        }else if pass.trimmingCharacters(in: .whitespaces).isEmpty{
+        }
+        if selectStatus == 1{
+            if dob.trimmingCharacters(in: .whitespaces).isEmpty {
+                return false
+            }
+        }
+        if pass.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
-        }else if conPass.trimmingCharacters(in: .whitespaces).isEmpty{
+        }
+        if conPass.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
-        }else if isSelected == false {
+        }
+        if isSelected == false {
             return false
         }
         return true
@@ -259,13 +264,50 @@ extension SignUPVC {
     }
 }
 
-extension SignUPVC : CLLocationManagerDelegate{
+extension SignUPVC : CLLocationManagerDelegate {
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            locationManager.startUpdatingLocation()
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch  manager.authorizationStatus{
+            
+        case .notDetermined:
+            print("notDetermined")
+        case .restricted:
+            print("restricted")
+            openAlert()
+        case .denied:
+            print("denied")
+            openAlert()
+        case .authorizedAlways:
+            self.locationManager.startUpdatingLocation()
+            print("authorizedAlways")
+        case .authorizedWhenInUse:
+            self.locationManager.startUpdatingLocation()
+            print("authorizedWhenInUse")
+        @unknown default:
+            print("@unknown")
         }
     }
+    
+    func openAlert() {
+        let alertController = UIAlertController(title: "Enable Location Services", message: "Special O'Clock wants to access your location only to show you nearby restaurants and bars.", preferredStyle: UIAlertController.Style.alert)
+        
+        let okAction = UIAlertAction(title: "Go to Settings", style: .default, handler: {(cAlertAction) in
+            alertController.dismiss(animated: true) {
+                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+            }
+        })
+        alertController.addAction(okAction)
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+        }else{
+        }
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
@@ -292,24 +334,17 @@ extension SignUPVC : CLLocationManagerDelegate{
     }
 }
 
+
+
+
 extension SignUPVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        //        if textField == self.tfPhone{
-        //            let maxLength = AuthViewModel.getCountryBasedMobileNumberRange(code: self.countryCode)
-        //            let currentString: NSString = (textField.text ?? "") as NSString
-        //            let newString: String =
-        //            currentString.replacingCharacters(in: range, with: string) as String
-        //            if newString.first == "0"{
-        //                return false
-        //            }
-        //            return newString.count <= maxLength
-        //        }else
         
-        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? "",isSelected: isselected){
+        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", dob: dobTf.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? "",isSelected: isselected){
             print("True")
             signUpBtn.isUserInteractionEnabled = true
             signUpBtn.backgroundColor = UIColor(named: "themeOrange")
-        }else {
+        } else {
             print("false")
             signUpBtn.isUserInteractionEnabled = false
             signUpBtn.backgroundColor = .lightGray
@@ -388,60 +423,54 @@ class AnywhereSwipeGestureRecognizer: UIScreenEdgePanGestureRecognizer {
     }
 }
 extension SignUPVC {
-    func getUpdatedLocation() {
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager.delegate = self
-            //   locationManager.distanceFilter = 100.0
-            if #available(iOS 14.0, *) {
-                locationManager.desiredAccuracy = kCLLocationAccuracyReduced
-            } else {
-                // Fallback on earlier versions0000
-            }
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
+    
+    
+    func requestLocationPermission() {
+        if locationManager == nil {
+            locationManager = CLLocationManager()
         }
-        //MARK:- Enable Location Services
-        if !hasLocationPermission() {
-            let alertController = UIAlertController(title: "Enable Location Services", message: "Special o'Clock wants to access your location only to provide better experience to you.", preferredStyle: UIAlertController.Style.alert)
-            
-            let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
-                //Redirect to Settings app
-                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
-            })
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
-            alertController.addAction(cancelAction)
-            
-            alertController.addAction(okAction)
-            locationManager.delegate = self
-            locationManager.requestWhenInUseAuthorization()
-            if CLLocationManager.locationServicesEnabled() {
-                locationManager.delegate = self
-                locationManager.startUpdatingLocation()
-            }else{
-            }
-            self.present(alertController, animated: true, completion: nil)
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        
+    }
+}
+extension SignUPVC {
+    //MARK: - DatePicker 1
+    func showDatePicker(){
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        dobTf.inputAccessoryView = toolbar
+        dobTf.inputView = datePicker
+    }
+    
+    @objc func donedatePicker(){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        dobTf.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+        
+        if checkFilledDeatils(isImage: self.isImageSelected, name: tfName.text ?? "", email: tfEmail.text ?? "", phone: tfPhone.text ?? "", dob: dobTf.text ?? "", pass: tfPassword.text ?? "", conPass: tfConfirmPass.text ?? "",isSelected: isselected){
+            print("True")
+            signUpBtn.isUserInteractionEnabled = true
+            signUpBtn.backgroundColor = UIColor(named: "themeOrange")
+        } else {
+            print("false")
+            signUpBtn.isUserInteractionEnabled = false
+            signUpBtn.backgroundColor = .lightGray
         }
     }
     
-    func hasLocationPermission() -> Bool {
-        var hasPermission = false
-        
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-            case  .restricted, .denied:
-                hasPermission = false
-            case .authorizedAlways, .authorizedWhenInUse:
-                hasPermission = true
-            case  .notDetermined :
-                getUpdatedLocation()
-            @unknown default:
-                print("")
-            }
-        } else {
-            hasPermission = false
-        }
-        return hasPermission
+    @objc func cancelDatePicker(){
+        self.view.endEditing(true)
     }
+    
+    
 }

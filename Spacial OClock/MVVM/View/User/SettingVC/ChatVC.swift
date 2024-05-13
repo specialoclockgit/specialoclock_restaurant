@@ -191,13 +191,10 @@ extension ChatVC {
             if UIDevice().userInterfaceIdiom == .phone {
                 switch UIScreen.main.nativeBounds.height {
                 case 1136,1334,1920, 2208:
-                    print("")
                     self.bottomView.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+3)
                 case 2436,2688,1792:
-                    print("")
                     self.bottomView.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+10)
                 default:
-                    print("")
                     self.bottomView.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+10)
                 }
             }

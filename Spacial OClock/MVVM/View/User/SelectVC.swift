@@ -15,6 +15,7 @@ class SelectVC: UIViewController {
     @IBOutlet weak var restroBgImage : UIImageView!
     @IBOutlet weak var clubBgImage : UIImageView!
     @IBOutlet weak var continueBtn : UIButton!
+    @IBOutlet weak var barBgImageVw: UIImageView!
     //MARK: - VARIABLES
     var selectStatus = 0
     var restoselctStatus = 0
@@ -34,8 +35,8 @@ class SelectVC: UIViewController {
         continueBtn.backgroundColor = UIColor.init(named: "themeOrange")
         userBgImage.image = UIImage(named: "userSelected")
         restroBgImage.image = UIImage(named: "restroUnselected")
-        clubBgImage.image = UIImage(named: "barUnselected")
-        
+        clubBgImage.image = UIImage(named: "clubUnselected")
+        barBgImageVw.image = UIImage(named: "barUnselected")
     }
     
     @IBAction func btnRestro(_ sender: UIButton) {
@@ -44,7 +45,8 @@ class SelectVC: UIViewController {
         continueBtn.backgroundColor = UIColor.init(named: "themeOrange")
         userBgImage.image = UIImage(named: "userUnselected")
         restroBgImage.image = UIImage(named: "restroSelected")
-        clubBgImage.image = UIImage(named: "barUnselected")
+        clubBgImage.image = UIImage(named: "clubUnselected")
+        barBgImageVw.image = UIImage(named: "barUnselected")
     }
     
     @IBAction func btnClub(_ sender: UIButton) {
@@ -54,7 +56,18 @@ class SelectVC: UIViewController {
         userBgImage.image = UIImage(named: "userUnselected")
         restroBgImage.image = UIImage(named: "restroUnselected")
         clubBgImage.image = UIImage(named: "clubSelected")
+        barBgImageVw.image = UIImage(named: "barUnselected")
     }
+    
+    @IBAction func btnBar(_ sender: UIButton){
+        selectStatus = 2
+        restoselctStatus = 3
+        userBgImage.image = UIImage(named: "userUnselected")
+        restroBgImage.image = UIImage(named: "restroUnselected")
+        clubBgImage.image = UIImage(named: "clubUnselected")
+        barBgImageVw.image = UIImage(named: "barSelected")
+    }
+    
     
     @IBAction func btnContinue(_ sender: UIButton) {
         if selectStatus == 0 {
@@ -66,7 +79,5 @@ class SelectVC: UIViewController {
             vc.restoselctStatus = self.restoselctStatus
              self.navigationController?.pushViewController(vc, animated: true)
         }
-       
     }
-    
 }

@@ -88,20 +88,7 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         self.setupCuisineApi()
         self.setupCategoryApi()
         self.setupLocations()
-//        DispatchQueue.global().async {
-//            if (CLLocationManager.locationServicesEnabled()){
-//                self.locationManager.delegate = self
-//                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//                self.locationManager.requestWhenInUseAuthorization()
-//                self.locationManager.startUpdatingLocation()
-//            }
-//            else
-//            {
-//#if debug
-//                println("Location services are not enabled");
-//#endif
-//            }
-//        }
+
     }
     
     func setupLocations(){
@@ -354,8 +341,14 @@ extension restoCreateVC{
             lblName.text = "Restaurant Name"
             viewCategory.isHidden = true
         }else if btnCheckStatus == 2 {
-            lblName.text = "Bar/Club Name"
-            lblHeading.text = "Pub & Bar Profiler"
+            lblName.text = "Club Name"
+            lblHeading.text = "Club Profile"
+            viewCuisines.isHidden = true
+            viewOffer.isHidden = true
+            viewCategory.isHidden = false
+        }else {
+            lblName.text = "Bar Name"
+            lblHeading.text = "Bar Profile"
             viewCuisines.isHidden = true
             viewOffer.isHidden = true
             viewCategory.isHidden = false
@@ -522,9 +515,7 @@ extension restoCreateVC{
                 self?.country = item
                 self?.tfCity.text = ""
             }
-//            let placePickerController = GMSAutocompleteViewController()
-//            placePickerController.delegate = self
-//            present(placePickerController, animated: true, completion: nil)
+
             return false
         }else if textField == tfCity {
             
@@ -562,19 +553,3 @@ extension restoCreateVC{
     }
 }
 
-//extension restoCreateVC : CLLocationManagerDelegate{
-//
-//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        if status == .authorizedWhenInUse || status == .authorizedAlways {
-//            locationManager.startUpdatingLocation()
-//        }
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-//        print("locations = \(locValue.latitude) \(locValue.longitude)")
-//        self.latitude = locValue.latitude
-//        self.longitude = locValue.longitude
-//        locationManager.stopUpdatingLocation()
-//    }
-//}

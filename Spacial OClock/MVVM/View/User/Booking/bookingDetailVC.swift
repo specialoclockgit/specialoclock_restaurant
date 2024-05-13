@@ -134,7 +134,7 @@ class bookingDetailVC: UIViewController {
                     self.replyCommentLbl.text = review.reply?.capitalized ?? ""
                     self.replyRestroNameLbl.text = self.modal?.restrorant?.name?.capitalized ?? ""
                     self.replyRestroImgVw.showIndicator(baseUrl: imageURL, imageUrl: self.modal?.restrorant?.profileImage ?? "")
-                    self.replyRestroType.text = self.modal?.restrorant?.type == 1 ? "Restaurant Reply" : "Bar/Club Reply"
+                    self.replyRestroType.text = self.modal?.restrorant?.type == 1 ? "Restaurant Reply" : self.modal?.restrorant?.type == 2 ? "Club Reply" : "Bar Reply"
                     
                 } else {
                     self.replyVw.isHidden = true
@@ -149,7 +149,7 @@ class bookingDetailVC: UIViewController {
                 self.btnMain.isHidden = true
                 self.lblstatus.text = "Cancelled"
             }
-            if fetchdata?.restrorant?.type == 2 {
+            if fetchdata?.restrorant?.type == 2 || fetchdata?.restrorant?.type == 3{
               
                // self.bookingSlotStartEndTime.text = "Offer from \(fetchdata?.restrorant?.offers?.first?.openTime ?? "") to \(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
                 self.lblSpeOffer.text = fetchdata?.restrorant?.offers?.first?.menuName ?? ""
@@ -249,7 +249,7 @@ extension bookingDetailVC : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "bookingDetailTVC", for: indexPath) as! bookingDetailTVC
         let dataIs = products?[indexPath.row]
-        if self.modal?.restrorant?.type == 2 {
+        if self.modal?.restrorant?.type == 2 || self.modal?.restrorant?.type == 3{
             
             if products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" {
                 cell.lblPreviousPrice.text = ""

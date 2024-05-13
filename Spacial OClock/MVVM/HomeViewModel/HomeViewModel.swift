@@ -15,7 +15,7 @@ class HomeViewModel : NSObject {
     //MARK: - CUISINE GET LIST
     func homeApi(type:Int, country: String, city:String, state:String, lat:Double, long:Double,timezone:String, onsuccess: @escaping ((HomeListBody?)->())){
         let param:parameters = ["type":type, "country":country, "state": state, "latitude":lat,"city":city, "longitude":long, "timezone":timezone]
-        print(param)
+        
         WebService.service(API.home, param: param, service: .post) {
             (modaldata: HomeListModel, Data , json) in
 //            self.homeData = modaldata.body
@@ -106,7 +106,7 @@ class HomeViewModel : NSObject {
     //MARK: - MENU PRODUCT API
     func menuProductAPI(offerID:Int,restoid:Int, menutypeid:Int ,isfifty:Int, onsuccess: @escaping ((menuProductModalBody?)->())){
         let param = ["resto_id":restoid, "menu_type_id":menutypeid, "is_fifty":isfifty, "offer_id":offerID] as [String:Any]
-        print(param)
+        
         WebService.service(API.fetch_data_by_menutype, param: param, service: .post) {
             (modaldata: menuProductModal, Data , json) in
             onsuccess(modaldata.body)
@@ -117,7 +117,7 @@ class HomeViewModel : NSObject {
     //MARK: - MENU PRODUCT API
     func menuProductForBarAPI(offerID:Int,restoid:Int, menutypeid:Int ,isfifty:Int, onsuccess: @escaping ((menuProductModalBody?)->())){
         let param : parameters = ["resto_id":restoid , "menu_type_id":menutypeid, "is_fifty":isfifty,"offer_id":offerID]
-        print(param)
+       
         WebService.service(API.fetch_bardata_by_menutype, param: param, service: .post) {
             (modaldata: menuProductModal, Data , json) in
             onsuccess(modaldata.body)
@@ -172,7 +172,7 @@ class HomeViewModel : NSObject {
     //MARK: - FETCH AVAILABLE API
     func fetchAvialbleAPI(date:String, restrorant_bar_id:Int,offerid:String, slot_id:Int,onsuccess: @escaping ((AvalSlotModalBody?)->())){
         let param = ["date":date, "slot_id":slot_id, "restrorant_bar_id":restrorant_bar_id, "offer_id":offerid] as [String:Any]
-        print("============",param)
+      
         WebService.service(API.fetch_available_slots, param: param, service: .post) {
             (modaldata: AvalSlotModal, Data , json) in
             onsuccess(modaldata.body)
@@ -182,7 +182,7 @@ class HomeViewModel : NSObject {
     //MARK: - FETCH ALL MENU API
     func allMenu_API(resto_bar_id:Int,onsuccess: @escaping (([allMenuModalBody]?)->())){
         let param = ["resto_bar_id":resto_bar_id] as [String:Any]
-        print("============",param)
+       
         WebService.service(API.fetch_menu_gallery, param: param, service: .post) {
             (modaldata: allMenuModal, Data , json) in
             onsuccess(modaldata.body)
@@ -192,7 +192,7 @@ class HomeViewModel : NSObject {
     //MARK: - FETCH CATEGORY BY RESTO LIST API
     func categoryBYResto(categoryID:Int,country:String,city:String,type:String,onsuccess: @escaping (([CategoryByRModalBody]?)->())){
         let param = ["category_id":categoryID,"country":country, "city":city, "type":type] as [String:Any]
-        print("============",param)
+        
         WebService.service(API.fetch_restos_by_category, param: param, service: .post) {
             (modaldata: CategoryByRModal, Data , json) in
             onsuccess(modaldata.body)

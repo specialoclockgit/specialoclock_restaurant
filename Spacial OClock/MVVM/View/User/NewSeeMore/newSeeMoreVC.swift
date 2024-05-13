@@ -90,44 +90,32 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             self.colleVeiw.hideSkeleton()
             if cuisine.count == 0{
                 collectionView.setNoDataMessage("No cuisines found", txtColor: .black)
-               // imgViewGif.image = UIImage.gif(name: "nodataFound")
-               // imgViewGif.isHidden = false
             }else{
                 collectionView.backgroundView = nil
-                //imgViewGif.isHidden = true
                 return filterCusine.count
             }
         }else if setvalue == "Category"{
             self.colleVeiw.hideSkeleton()
             if category.count == 0{
                 collectionView.setNoDataMessage("No category found", txtColor: .black)
-                //imgViewGif.image = UIImage.gif(name: "nodataFound")
-                //imgViewGif.isHidden = false
             }else{
                 collectionView.backgroundView = nil
-               // imgViewGif.isHidden = true
                 return filtercategory.count
             }
         }else if setvalue == "Theme"{
             self.colleVeiw.hideSkeleton()
             if themeArr.count == 0{
                 collectionView.setNoDataMessage("No theme found", txtColor: .black)
-                //imgViewGif.image = UIImage.gif(name: "nodataFound")
-                //imgViewGif.isHidden = false
             }else{
                 collectionView.backgroundView = nil
-                //imgViewGif.isHidden = true
                 return filterthemeAry.count
             }
         }else if setvalue == "Location"{
             self.colleVeiw.hideSkeleton()
             if location.count == 0{
                 collectionView.setNoDataMessage("No location found", txtColor: .black)
-                //imgViewGif.image = UIImage.gif(name: "nodataFound")
-                //imgViewGif.isHidden = false
             }else{
                 collectionView.backgroundView = nil
-              //  imgViewGif.isHidden = true
                 return filterlocation.count
             }
         }
@@ -138,47 +126,47 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
         if setvalue == "Location" {
             cell.imgView.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblName.text = self.filterlocation[indexPath.row].locality_area ?? ""
-            let count  = Store.screenType == 2 ? (self.filterlocation[indexPath.row].restrorants?.count ?? 0) : (self.filterlocation[indexPath.row].restrorants?.count ?? 0)
+            let count = (self.filterlocation[indexPath.row].restrorants?.count ?? 0)
             
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newClubsCount = count == 0 ? "\(count) Clubs" : count == 1 ? "0\(count) Club" : count < 9 ? "0\(count) Clubs" : "\(count) Clubs"
+            let newBarsCount = count == 0 ? "\(count) Bars" : count == 1 ? "0\(count) Bar" : count < 9 ? "0\(count) Bars" : "\(count) Bars"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
-            cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
+            cell.lblTotalREs.text = Store.screenType == 1 ? (newRestoCount) : Store.screenType == 2 ? (newClubsCount) : (newBarsCount)
     
         } else if setvalue == "Cuisines" {
             let image = "\(self.filterCusine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count  = Store.screenType == 2 ? (self.filterCusine[indexPath.row].restrorants?.count ?? 0) : (self.filterCusine[indexPath.row].restrorants?.count ?? 0)
+            let count = (self.filterCusine[indexPath.row].restrorants?.count ?? 0)
     
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newClubsCount = count == 0 ? "\(count) Clubs" : count == 1 ? "0\(count) Club" : count < 9 ? "0\(count) Clubs" : "\(count) Clubs"
+            let newBarsCount = count == 0 ? "\(count) Bars" : count == 1 ? "0\(count) Bar" : count < 9 ? "0\(count) Bars" : "\(count) Bars"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
-            
-            cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
+            cell.lblTotalREs.text = Store.screenType == 1 ? (newRestoCount) : Store.screenType == 2 ? (newClubsCount) : (newBarsCount)
     
 
-            //"\(self.filterCusine[indexPath.row].restroCount ?? 0) Bars" : "\(self.filterCusine[indexPath.row].restroCount ?? 0) Restaurants"
             cell.lblName.text = self.filterCusine[indexPath.row].name?.capitalized ?? ""
         } else if setvalue == "Category"{
             let image = "\(self.filtercategory[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count  = Store.screenType == 2 ? (self.filtercategory[indexPath.row].clubs?.count ?? 0) : (self.filtercategory[indexPath.row].clubs?.count ?? 0)
+            let count  =  (self.filtercategory[indexPath.row].clubs?.count ?? 0)
     
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newClubsCount = count == 0 ? "\(count) Clubs" : count == 1 ? "0\(count) Club" : count < 9 ? "0\(count) Clubs" : "\(count) Clubs"
+            let newBarsCount = count == 0 ? "\(count) Bars" : count == 1 ? "0\(count) Bar" : count < 9 ? "0\(count) Bars" : "\(count) Bars"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
-            cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
-            //"\(self.filtercategory[indexPath.row].clubCount ?? 0) Bars" : "\(self.filtercategory[indexPath.row].clubCount ?? 0) Restaurants"
+            cell.lblTotalREs.text = Store.screenType == 1 ? (newRestoCount) : Store.screenType == 2 ? (newClubsCount) : (newBarsCount)
             cell.lblName.text = self.filtercategory[indexPath.row].title ?? ""
         } else if setvalue == "Theme" {
             let image = "\(self.filterthemeAry[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count  = Store.screenType == 2 ? (self.filterthemeAry[indexPath.row].restrorant?.count ?? 0) : (self.filterthemeAry[indexPath.row].restrorant?.count ?? 0)
+            let count  = (self.filterthemeAry[indexPath.row].restrorant?.count ?? 0)
     
-            let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
+            let newClubsCount = count == 0 ? "\(count) Clubs" : count == 1 ? "0\(count) Club" : count < 9 ? "0\(count) Clubs" : "\(count) Clubs"
+            let newBarsCount = count == 0 ? "\(count) Bars" : count == 1 ? "0\(count) Bar" : count < 9 ? "0\(count) Bars" : "\(count) Bars"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
-            cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
-            //"\(self.filterthemeAry[indexPath.row].barCount ?? 0) Bars" : "\(self.filterthemeAry[indexPath.row].barCount ?? 0) Restaurants"
+            cell.lblTotalREs.text = Store.screenType == 1 ? (newRestoCount) : Store.screenType == 2 ? (newClubsCount) : (newBarsCount)
             cell.lblName.text = self.filterthemeAry[indexPath.row].productName ?? ""
         }
         return cell

@@ -249,56 +249,7 @@ extension String {
 }
 
 
-//MARK: SHOW - IMAGE PICKER
-//extension UIImageView{
-//    func imageLoad(imageUrl:String)   {
-//        let url = URL(string:imageURL + imageUrl)
-//        self.kf.indicatorType = .activity
-//        self.kf.setImage(
-//            with: url,
-//            placeholder: UIImage(named: "Guest"),
-//            options: [
-//                .transition(.fade(1)),
-//                .cacheOriginalImage
-//            ])
-//    }
-//    func LoadSocial(imageUrl:String)   {
-//        let base = imageURL
-//        let url = URL(string:  base + imageUrl)
-//        self.kf.indicatorType = .activity
-//        self.kf.setImage(
-//            with: url,
-//            placeholder: UIImage(named: "Background"),
-//            options: [
-//                .transition(.fade(1)),
-//                .cacheOriginalImage
-//            ])
-//    }
-//    //    func socialChatImage(imageUrl:String)   {
-//    //
-//    //        let base = socketImgUrl
-//    //        let url = URL(string:  base + imageUrl)
-//    //        self.kf.indicatorType = .activity
-//    //        self.kf.setImage(
-//    //            with: url,
-//    //            placeholder: UIImage(named: "Background"),
-//    //            options: [
-//    //                .transition(.fade(1)),
-//    //                .cacheOriginalImage
-//    //            ])
-//    //    }
-//    func imageLoadProfile(imageUrl:String)   {
-//        let url = URL(string:imageUrl)
-//        self.kf.indicatorType = .activity
-//        self.kf.setImage(
-//            with: url,
-//            placeholder: UIImage(named: "Background"),
-//            options: [
-//                .transition(.fade(1)),
-//                .cacheOriginalImage
-//            ])
-//    }
-//}
+
 
 extension String{
     
@@ -657,35 +608,16 @@ extension UIButton{
     }
 }
     
-//    func createThumbnailOfVideoFromFileURL(videoURL: URL) -> UIImage? {
-//           let asset = AVAsset(url: videoURL)
-//           let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-//           assetImgGenerate.appliesPreferredTrackTransform = true
-//           let time = CMTimeMakeWithSeconds(Float64(1), preferredTimescale: 100)
-//           do {
-//               let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-//               let thumbnail = UIImage(cgImage: img)
-//               return thumbnail
-//           } catch {
-//               return UIImage(named: "music")
-//           }
-//       }
-//}
-//MARK: - GIF DATA NOT FOUND
-extension UIViewController {
-    func createCenteredImageView(image: UIImage?, width: CGFloat, height: CGFloat) -> UIImageView {
-        let imageView = UIImageView()
-        imageView.image = image
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        
-        NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: width),
-            imageView.heightAnchor.constraint(equalToConstant: height)
-        ])
-        
-        return imageView
+
+func isAge18(from dateString: String, withFormat format: String) -> Bool? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = format
+    
+    if let date = dateFormatter.date(from: dateString) {
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: date, to: Date())
+        let age = ageComponents.year ?? 0
+        return age >= 18 ? true : false
     }
+    return nil
 }

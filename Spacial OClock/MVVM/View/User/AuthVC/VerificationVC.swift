@@ -44,12 +44,17 @@ class VerificationVC: UIViewController {
         viewmodel.otpverification(otp: viewPin.getPin()) {
             
             //MARK: - USER SIDE STATUS 0
-            if self.btnCheckStatus == 1{
+            if self.btnCheckStatus == 1 {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerifypopUpVC") as! VerifypopUpVC
                 vc.modalPresentationStyle = .overFullScreen
                 vc.callBack = {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabbarVC")as! TabbarVC
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    Store.autoLogin = true
+                    let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+                    let redViewController = mainStoryBoard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                    let nav = UINavigationController.init(rootViewController: redViewController)
+                    nav.isNavigationBarHidden = true
+                    UIApplication.shared.windows.first?.rootViewController = nav
+                    
                 }
                 self.navigationController?.present(vc, animated: true)
             }
@@ -59,13 +64,17 @@ class VerificationVC: UIViewController {
                 let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
                 let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC") as! restoCreateVC
                 vc.btnCheckStatus = self.restoselctStatus
-                if self.restoselctStatus == 1{
+                if self.restoselctStatus == 1 {
                     vc.heading = "Restaurant Profile"
                     vc.name = "Restaurant Name"
                     UserDefaults.standard.set("Restaurant", forKey: "name")
-                }else{
-                    vc.heading = "Pub & Bar Profile"
-                    vc.name = "Bar/Club Name"
+                }else if  self.restoselctStatus == 2 {
+                    vc.heading = "Club Profile"
+                    vc.name = "Club Name"
+                    UserDefaults.standard.set("Club", forKey: "name")
+                } else {
+                    vc.heading = "Bar Profile"
+                    vc.name = "Bar Name"
                     UserDefaults.standard.set("Bar", forKey: "name")
                 }
                 UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
