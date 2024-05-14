@@ -24,7 +24,10 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     @IBOutlet weak var lblTwo: UILabel!
     @IBOutlet weak var lblOne: UILabel!
     @IBOutlet weak var imgViewHead: UIImageView!
-    
+    @IBOutlet weak var clubVw: UIView!
+    @IBOutlet weak var clubBgImgVw: UIImageView!
+    @IBOutlet weak var barVw: UIView!
+    @IBOutlet weak var barBgImgVw: UIImageView!
     //MARK: Variables
    
     var country = String()
@@ -56,32 +59,42 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     var disableDatesArr : [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        clubVw.isHidden = Store.screenType == 1 ? true : false
+        barVw.isHidden = Store.screenType == 1 ? true : false
         txtFldSearch.delegate = self
         self.type = Store.screenType ?? 1
-        //UserDefaults.standard.integer(forKey: "dineDrinkStatus")
         lblTwo.text = lblName
         lblOne.text = "\(setValue)> "
-        lblHeader.text = setValue 
+        lblHeader.text = setValue
         imgViewHead.image = UIImage(named: setimage)
         
         if setValue == "Location" {
             CollectionView.showAnimatedGradientSkeleton()
-            location_By_RestoAPI()
+            location_By_RestoAPI(type: (Store.screenType ?? 1))
         } else if setValue == "Cuisines" {
             CollectionView.showAnimatedGradientSkeleton()
-            get_resto_list()
+            get_resto_list(type: (Store.screenType ?? 1))
         } else if setValue == "Category" {
             CollectionView.showAnimatedGradientSkeleton()
-            fetch_Category_REsto()
+            fetch_Category_REsto(type: (Store.screenType ?? 1))
         } else if setValue == "Theme" {
             CollectionView.showAnimatedGradientSkeleton()
-            theme_Resto_API()
+            theme_Resto_API(type: (Store.screenType ?? 1))
         } else if setValue == "Popular"{
+            if Store.screenType != 1 {
+                let clubData = highilyRatedBarsRestos?.filter({$0.type == 2})
+                highilyRatedBarsRestos = clubData
+                filterHighilyRatedBarsRestos = clubData
+                self.CollectionView.reloadData()
+            }
             
-        } else if setValue == "A-Z"{
-//            CollectionView.stopSkeletonAnimation()
-//            self.CollectionView.reloadData()
+        } else if setValue == "A-Z" {
+            if Store.screenType != 1 {
+                let clubData = allBarsRestos?.filter({$0.type == 2})
+                allBarsRestos = clubData
+                filterAllBarsRestos = clubData
+                self.CollectionView.reloadData()
+            }
         }
     }
     
@@ -94,16 +107,71 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func btnClubSelect(_ sender: Any) {
+        clubBgImgVw.image = UIImage(named: "clubSelected")
+        barBgImgVw.image = UIImage(named: "barUnselected")
+        if setValue == "Location" {
+            CollectionView.showAnimatedGradientSkeleton()
+            location_By_RestoAPI(type: 2)
+        } else if setValue == "Cuisines" {
+            CollectionView.showAnimatedGradientSkeleton()
+            get_resto_list(type: 2)
+        } else if setValue == "Category" {
+            CollectionView.showAnimatedGradientSkeleton()
+            fetch_Category_REsto(type: 2)
+        } else if setValue == "Theme" {
+            CollectionView.showAnimatedGradientSkeleton()
+            theme_Resto_API(type: 2)
+        } else if setValue == "Popular"{
+            let clubData = highilyRatedBarsRestos?.filter({$0.type == 2})
+            highilyRatedBarsRestos = clubData
+            filterHighilyRatedBarsRestos = clubData
+            self.CollectionView.reloadData()
+        } else if setValue == "A-Z"{
+            let clubData = allBarsRestos?.filter({$0.type == 2})
+            allBarsRestos = clubData
+            filterAllBarsRestos = clubData
+            self.CollectionView.reloadData()
+        }
+    }
+    
+    @IBAction func btnBarSelect(_ sender: Any) {
+        clubBgImgVw.image = UIImage(named: "clubUnselected")
+        barBgImgVw.image = UIImage(named: "barSelected")
+        if setValue == "Location" {
+            CollectionView.showAnimatedGradientSkeleton()
+            location_By_RestoAPI(type: 3)
+        } else if setValue == "Cuisines" {
+            CollectionView.showAnimatedGradientSkeleton()
+            get_resto_list(type: 3)
+        } else if setValue == "Category" {
+            CollectionView.showAnimatedGradientSkeleton()
+            fetch_Category_REsto(type: 3)
+        } else if setValue == "Theme" {
+            CollectionView.showAnimatedGradientSkeleton()
+            theme_Resto_API(type: 3)
+        } else if setValue == "Popular"{
+            let clubData = highilyRatedBarsRestos?.filter({$0.type == 3})
+            highilyRatedBarsRestos = clubData
+            filterHighilyRatedBarsRestos = clubData
+            self.CollectionView.reloadData()
+        } else if setValue == "A-Z"{
+            let clubData = allBarsRestos?.filter({$0.type == 3})
+            allBarsRestos = clubData
+            filterAllBarsRestos = clubData
+            self.CollectionView.reloadData()
+        }
+    }
+    
     //MARK: - CUSINS BY RESTO
-    func get_resto_list(){
-        viewmodal.cusinsRestoAPI(cuisineid: cusinessID,country: country, city: city,type: String(Store.screenType ?? 1)) { [weak self] fetchdata in
+    func get_resto_list(type:Int){
+        viewmodal.cusinsRestoAPI(cuisineid: cusinessID,country: country, city: city,type: type) { [weak self] fetchdata in
             var objModel = fetchdata ?? []
             for i in 0 ..< (objModel.count ) {
                 var obj = objModel[i]
                 obj.timeSlots?.reverse()
                 objModel[i] = obj
             }
-
             self?.modal = objModel
             self?.filtercusin = objModel
            // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -114,8 +182,8 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     }
     
     //MARK: - THEME BY RESTO
-    func theme_Resto_API() {
-        viewmodal.restoThemelistAPI(restoid: themeID, type: (Store.screenType ?? 1),country: country,city: city) { [weak self] dataa in
+    func theme_Resto_API(type:Int) {
+        viewmodal.restoThemelistAPI(restoid: themeID, type: type,country: country,city: city) { [weak self] dataa in
 //            var objModel = dataa ?? []
 //            for i in 0 ..< (objModel.count ) {
 //                var obj = objModel[i]
@@ -134,8 +202,8 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     }
     
     //MARK: - CATEGORY BY GET RESTO LIST API
-    func fetch_Category_REsto(){
-        viewmodal.categoryBYResto(categoryID: cusinessID,country: country,city: city,type: String(Store.screenType ?? 1)) { [weak self] dataaa in
+    func fetch_Category_REsto(type:Int){
+        viewmodal.categoryBYResto(categoryID: cusinessID,country: country,city: city,type: type) { [weak self] dataaa in
             
 //            var objModel = dataaa ?? []
 //            for i in 0 ..< (objModel.count ) {
@@ -160,8 +228,8 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     
     
     //MARK: - LOCATION BY RESTO
-    func location_By_RestoAPI() {
-        viewmodal.locationByRestoAPI(country: country, city: city,type: String(Store.screenType ?? 1)) { [weak self] dataa in
+    func location_By_RestoAPI(type:Int) {
+        viewmodal.locationByRestoAPI(country: country, city: city,type: type) { [weak self] dataa in
             
             var objModel = dataa ?? []
             for i in 0 ..< (objModel.count ) {
@@ -181,8 +249,6 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         }
     }
     
-    
-    
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "DetailItemCVC"
     }
@@ -190,7 +256,6 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
-    
 }
 //MARK: - EXTENTION
 extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -198,43 +263,34 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         if setValue == "Location" {
             if filterlocations?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
-               // imgViewGif.image = UIImage.gif(name: "nodataFound")
-                //imgViewGif.isHidden = false
             } else {
                 collectionView.backgroundView = nil
-               // imgViewGif.isHidden = true
                 return filterlocations?.count ?? 0
             }
         } else if setValue == "Category" {
             if filterCategory?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
-//                imgViewGif.image = UIImage.gif(name: "nodataFound")
-//                imgViewGif.isHidden = false
             } else {
                 collectionView.backgroundView = nil
-               // imgViewGif.isHidden = true
                 return filterCategory?.count ?? 0
             }
         }
         else if setValue == "Cuisines" {
             if filtercusin?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
-               // imgViewGif.image = UIImage.gif(name: "nodataFound")
-                //imgViewGif.isHidden = false
             } else {
                 collectionView.backgroundView = nil
-               // imgViewGif.isHidden = true
                 return filtercusin?.count ?? 0
             }
             
-        } else if setValue == "Popular"{
+        } else if setValue == "Popular" {
             if filterHighilyRatedBarsRestos?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
             } else {
                 collectionView.backgroundView = nil
                 return filterHighilyRatedBarsRestos?.count ?? 0
             }
-        }else if setValue == "A-Z"{
+        }else if setValue == "A-Z" {
             if filterAllBarsRestos?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
             } else {
@@ -244,11 +300,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
         } else {
             if filtertheme?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
-               // imgViewGif.image = UIImage.gif(name: "nodataFound")
-               // imgViewGif.isHidden = false
             } else {
                 collectionView.backgroundView = nil
-              //  imgViewGif.isHidden = true
                 return filtertheme?.count ?? 0
             }
         }
@@ -570,16 +623,16 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    
-        if setValue == "Location" {
-            return filterlocations?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
-        } else if setValue == "Category" {
-            return filterCategory?[indexPath.row].offers?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
-        } else if setValue == "Cuisines" {
-            return filtercusin?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) :CGSize(width: collectionView.frame.width, height: 260)
-        } else {
-            return filtertheme?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
-        }
+       return CGSize(width: collectionView.frame.width, height: 260)
+//        if setValue == "Location" {
+//            return filterlocations?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
+//        } else if setValue == "Category" {
+//            return filterCategory?[indexPath.row].offers?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
+//        } else if setValue == "Cuisines" {
+//            return filtercusin?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) :CGSize(width: collectionView.frame.width, height: 260)
+//        } else {
+//            return filtertheme?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -603,12 +656,13 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterAllBarsRestos?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
-        }else {
+        } else {
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filtertheme?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
 }
 
 extension DetailItemViewVC : UITextFieldDelegate {
@@ -638,7 +692,7 @@ extension DetailItemViewVC : UITextFieldDelegate {
 }
 
 func blurEffect(image: UIImageView) {
-    var context = CIContext(options: nil)
+    let context = CIContext(options: nil)
     let currentFilter = CIFilter(name: "CIGaussianBlur")
     let beginImage = CIImage(image: image.image!)
     currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
@@ -654,12 +708,4 @@ func blurEffect(image: UIImageView) {
     image.image = processedImage
 }
 
-extension UIView {
-    func applyBlurEffect(_ style: UIBlurEffect.Style = .light) {
-        let blurEffect = UIBlurEffect(style: style)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(blurEffectView)
-    }
-}
+

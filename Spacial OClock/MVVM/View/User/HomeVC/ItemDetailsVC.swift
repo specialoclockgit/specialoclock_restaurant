@@ -155,29 +155,18 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         self.tbMenu.register(nibMenuTB, forCellReuseIdentifier: Cell.CellMenuTV)
         tbMenu.delegate = self
         tbMenu.dataSource = self
-        
-        
         for _ in 0...(self.products?.count ?? 0){
             self.arrCheck.append(false)
         }
-        
         product_detail()
         valueSelect = false
         tabBarController?.tabBar.isHidden = true
-        
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         coachMarksController.stop(immediately: true)
-        // tbReview.removeObserver(self, forKeyPath: "contentSizeReview")
     }
-    
-    
     
     func string(format: String) -> String {
         let formatter = DateFormatter()
@@ -197,9 +186,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             if self.status == 1 {
                 self.offer = data?.time_slots
             } else {
-                // self.offer = self.processOfferResponse()
                 self.offer = data?.time_slots?.unique(map: {$0.offerID})
-                //
             }
             
             
@@ -480,7 +467,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBAction func btnShareAction(_ sender: UIButton) {
         if let restroID = self.modal?.id {
             guard let items = URL(string: "\(shareUrl)\(restroID)"), UIApplication.shared.canOpenURL(items) else { return }
-            var activityItems: [AnyObject] = [items as AnyObject]
+            let activityItems: [AnyObject] = [items as AnyObject]
             let ac = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
             present(ac, animated: true)
         }

@@ -29,16 +29,12 @@
 			<key>UIWindowSceneSessionRoleApplication</key>
 			<array>
 				<dict>
-					<key>NSLocationUsageDescription</key>
-					<string></string>
-					<key>NSLocationWhenInUseUsageDescription</key>
-					<string></string>
 					<key>UISceneConfigurationName</key>
 					<string>Default Configuration</string>
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
-					<string>RestoBar</string>
+					<string>Main</string>
 				</dict>
 			</array>
 		</dict>

@@ -12,10 +12,17 @@ import GooglePlaces
 import GoogleMaps
 import SDWebImage
 
+struct SectionModel {
+    var name: String?
+    var objArray: [Any]?
+    var image: String?
+}
+
+
+
 class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate {
     
     //MARK: - OUTLETS
-    
     @IBOutlet weak var gmsMapView: GMSMapView!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var tfSearch : UITextField!
@@ -76,9 +83,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     
     @objc func appMovedToForeground() {
         print("appMovedToForeground")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.locationManagerDidChangeAuthorization(self.locationManager)
-        }
+    self.locationManagerDidChangeAuthorization(self.locationManager)
        
     }
     
@@ -111,6 +116,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     func setData(type: Int) {
         self.sectionArray.removeAll()
         self.viewModel.homeApi(type: type, country: self.getcountry, city: self.getcity, state: self.getstate,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.timeZone) { (objData) in
+            
             self.sectionArray.removeAll()
             self.nearBy = objData?.nearby_restaurants ?? []
             self.getalllocations()
@@ -183,37 +189,22 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     }
     
     @IBAction func btnDrinks(_ sender: UIButton) {
-        let alert = UIAlertController(title: appName, message: nil, preferredStyle: .actionSheet)
-        let club = UIAlertAction(title: "Show Clubs", style: .default) {
-            UIAlertAction in
-            self.setDrink(type: 2)
-        }
-        let bar = UIAlertAction(title: "Show Bars", style: .default) {
-            UIAlertAction in
-            self.setDrink(type: 3)
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
-        alert.addAction(club)
-        alert.addAction(bar)
-        alert.addAction(cancel)
-        alert.modalTransitionStyle = .crossDissolve
-        self.present(alert, animated: true)
+        self.setDrink()
     }
     
-    func setDine() {
+    func setDine(){
         imgViewDinein.image = UIImage(named: "DiningGreen")
         imgViewDrinks.image = UIImage(named: "greyDrink")
         lblDrinks.textColor = UIColor.lightGray
         lblDineIn.textColor = UIColor.black
         isSelected = true
         UserDefaults.standard.set(1, forKey: "dineDrinkStatus")
-        UserDefaults.standard.synchronize()
         Store.screenType = 1
         setData(type: 1)
         self.tbHomeData.layoutSubviews()
     }
     
-    func setDrink(type:Int) {
+    func setDrink() {
         imgViewDrinks.image = UIImage(named: "greenDrink")
         imgViewDinein.image = UIImage(named: "DiningGray")
         lblDineIn.textColor = UIColor.lightGray
@@ -221,8 +212,8 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
         isSelected = false
         UserDefaults.standard.set(2, forKey: "dineDrinkStatus")
         UserDefaults.standard.synchronize()
-        Store.screenType = type
-        setData(type: type)
+        Store.screenType = 2
+        setData(type: 2)
         self.tbHomeData.layoutSubviews()
     }
     
@@ -258,7 +249,21 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+       1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tbHomeData.dequeueReusableCell(withIdentifier: "HomeHeaderTVC") as! HomeHeaderTVC
+        let data = sectionArray[section]
+        cell.lblHeading.text = data.name
+        cell.img.image =  UIImage(named: data.image ?? "")
+        cell.btnSeeMore.addTarget(self, action: #selector(btnSeeMoreAct), for: .touchUpInside)
+        cell.btnSeeMore.tag = section
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return sectionArray[section].name == "Banner" ? 0 : 34
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -266,8 +271,6 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
         if sectionArray[indexPath.section].name == "Banner" {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellImageViewTB, for: indexPath) as! CellImageViewTB
             cell.initializeBannerData(resp: self.viewModel.homeData?.banners)
-            //cell.banners = self.viewModel.homeData?.banners ?? [Banner]()
-           // cell.collView.reloadData()
             return cell
         } else {
             let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellHomeTB, for: indexPath) as! CellHomeTB
@@ -275,8 +278,8 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             cell.country = self.getcountry
             cell.lblHeading.text = sectionArray[indexPath.section].name
             cell.img.image =  UIImage(named: sectionArray[indexPath.section].image ?? "")
-            cell.btnSeeMore.addTarget(self, action: #selector(btnSeeMoreAct), for: .touchUpInside)
-            cell.btnSeeMore.tag = indexPath.section
+           // cell.btnSeeMore.addTarget(self, action: #selector(btnSeeMoreAct), for: .touchUpInside)
+            //cell.btnSeeMore.tag = indexPath.section
             cell.objArray = sectionArray
             cell.collView.tag = indexPath.section
             cell.iconString = sectionArray[indexPath.section].image ?? ""
@@ -288,7 +291,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
                 cell.isCellSelected = true
                 cell.cuisine = sectionArray[indexPath.section].objArray as? [Cuisine] ?? []
                 cell.collView.reloadData()
-            } else if sectionArray[indexPath.section].name == "Category"{
+            } else if sectionArray[indexPath.section].name == "Category" {
                 cell.isCellSelected = true
                 cell.category = sectionArray[indexPath.section].objArray as? [Category] ?? []
                 cell.collView.reloadData()
@@ -313,13 +316,16 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             if sectionArray[indexPath.section].objArray?.count  ==  0{
                 return CGFloat(0)
             }else{
-                return CGFloat(300)
+                return CGFloat(260)
             }
-           // return CGFloat(300)
         } else if sectionArray[indexPath.section].name == "A-Z" {
-            return CGFloat(300)
+            if sectionArray[indexPath.section].objArray?.count  ==  0{
+                return CGFloat(0)
+            }else{
+                return CGFloat(260)
+            }
         } else {
-            return CGFloat(280)//260
+            return CGFloat(230)
         }
     }
     
@@ -427,6 +433,8 @@ extension HomeVC {
         self.tbHomeData.register(nib, forCellReuseIdentifier: Cell.CellHomeTB)
         let nibImgView = UINib(nibName: Cell.CellImageViewTB, bundle: nil)
         self.tbHomeData.register(nibImgView, forCellReuseIdentifier: Cell.CellImageViewTB)
+        let nibHeader = UINib(nibName: "HomeHeaderTVC", bundle: nil)
+        self.tbHomeData.register(nibHeader, forCellReuseIdentifier: "HomeHeaderTVC")
     }
 }
 
@@ -461,15 +469,12 @@ extension HomeVC {
 }
 
 
-struct SectionModel {
-    var name: String?
-    var objArray: [Any]?
-    var image: String?
-}
+
 extension HomeVC : CLLocationManagerDelegate {
+ 
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch  manager.authorizationStatus{
+        switch  manager.authorizationStatus {
         case .notDetermined:
             print("notDetermined")
         case .restricted:
@@ -503,7 +508,7 @@ extension HomeVC : CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
-        }else{
+        } else {
         }
         self.present(alertController, animated: true, completion: nil)
     }
@@ -511,6 +516,7 @@ extension HomeVC : CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.dismiss()
         if let location = locations.last {
             self.lat = location.coordinate.latitude
             self.long = location.coordinate.longitude
@@ -523,22 +529,16 @@ extension HomeVC : CLLocationManagerDelegate {
                 if let placemark = placemarks {
                     if placemark.count > 0{
                         let placemark = placemark[0]
-                        
                         self.lblLocation.text = placemark.locality ?? ""
-                        
                         if Store.screenType == 2 {
-                            self.setDrink(type: 2)
-                        }else if Store.screenType == 3 {
-                            self.setDrink(type: 3)
+                            self.setDrink()
                         } else {
                             self.setDine()
                         }
                     }
                 } else {
                     if Store.screenType == 2 {
-                        self.setDrink(type: 2)
-                    }else if Store.screenType == 3 {
-                        self.setDrink(type: 3)
+                        self.setDrink()
                     } else {
                         self.setDine()
                     }

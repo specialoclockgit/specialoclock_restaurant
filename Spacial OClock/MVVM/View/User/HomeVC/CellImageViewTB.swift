@@ -88,6 +88,16 @@ extension CellImageViewTB : UICollectionViewDelegate, UICollectionViewDataSource
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView.isDragging ||  collectionView.isDecelerating {
+            cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+            UIView.animate(withDuration: 0.25, animations: {
+                cell.layer.transform = CATransform3DMakeScale(1,1,1)
+            })
+        }
+
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width:collView.frame.width/1 , height: 240)
     }

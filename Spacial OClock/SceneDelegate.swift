@@ -101,16 +101,13 @@ extension SceneDelegate {
                 }
             }
         }
-        
-        
-        
     }
 }
 
 
 extension SceneDelegate {
     func auttooLogin(){
-        if Store.userDetails?.role == 1{
+        if Store.userDetails?.role == 1 {
             if Store.autoLogin == true {
                 let homeStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
                 let vc = homeStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC

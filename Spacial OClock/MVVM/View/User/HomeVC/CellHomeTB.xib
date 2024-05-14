@@ -27,8 +27,66 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4rF-cC-cKo">
                         <rect key="frame" x="6" y="2" width="308" height="141"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bQm-KZ-TnN">
+                                <rect key="frame" x="0.0" y="0.0" width="308" height="0.0"/>
+                                <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWf-m9-Ovn">
+                                        <rect key="frame" x="0.0" y="0.0" width="308" height="30"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PIN" translatesAutoresizingMaskIntoConstraints="NO" id="xfX-6R-Pdg">
+                                                <rect key="frame" x="20" y="5" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="MXX-YX-bEP"/>
+                                                    <constraint firstAttribute="height" constant="20" id="auf-RJ-ESj"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8C-JF-JJe">
+                                                <rect key="frame" x="45" y="5" width="60.5" height="20"/>
+                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="14"/>
+                                                <color key="textColor" name="ThemeLabel"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhn-Fu-vNu" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
+                                                <rect key="frame" x="230" y="5" width="58" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="AoY-2a-8sF"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="See more">
+                                                    <color key="titleColor" name="ThemeOrange"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                        <color key="value" systemColor="systemGray4Color"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                        <size key="value" width="1" height="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                        <real key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                        <real key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="zhn-Fu-vNu" secondAttribute="trailing" constant="20" id="1oO-Te-r4F"/>
+                                            <constraint firstItem="zhn-Fu-vNu" firstAttribute="centerY" secondItem="G8C-JF-JJe" secondAttribute="centerY" id="9cm-i4-K2j"/>
+                                            <constraint firstAttribute="bottom" secondItem="xfX-6R-Pdg" secondAttribute="bottom" constant="5" id="9o3-i4-kAY"/>
+                                            <constraint firstItem="G8C-JF-JJe" firstAttribute="centerY" secondItem="xfX-6R-Pdg" secondAttribute="centerY" id="Ci2-Zl-97c"/>
+                                            <constraint firstItem="G8C-JF-JJe" firstAttribute="leading" secondItem="xfX-6R-Pdg" secondAttribute="trailing" constant="5" id="F4n-69-mIF"/>
+                                            <constraint firstItem="xfX-6R-Pdg" firstAttribute="leading" secondItem="kWf-m9-Ovn" secondAttribute="leading" constant="20" id="IsH-w4-kFE"/>
+                                            <constraint firstItem="xfX-6R-Pdg" firstAttribute="top" secondItem="kWf-m9-Ovn" secondAttribute="top" constant="5" id="MRL-FP-xGq"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="BeO-yV-8iZ">
-                                <rect key="frame" x="0.0" y="29" width="308" height="110"/>
+                                <rect key="frame" x="0.0" y="0.0" width="308" height="139"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="I1W-Cn-slL">
                                     <size key="itemSize" width="128" height="128"/>
@@ -37,56 +95,15 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                             </collectionView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PIN" translatesAutoresizingMaskIntoConstraints="NO" id="xfX-6R-Pdg">
-                                <rect key="frame" x="6" y="5" width="20" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="MXX-YX-bEP"/>
-                                    <constraint firstAttribute="height" constant="20" id="auf-RJ-ESj"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8C-JF-JJe">
-                                <rect key="frame" x="31" y="7" width="52.5" height="16.5"/>
-                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="14"/>
-                                <color key="textColor" name="ThemeLabel"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhn-Fu-vNu" customClass="CustomButton" customModule="Spacial_OClock" customModuleProvider="target">
-                                <rect key="frame" x="246" y="5" width="52" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="AoY-2a-8sF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="12"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="See more">
-                                    <color key="titleColor" name="ThemeOrange"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" systemColor="systemGray4Color"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                        <size key="value" width="1" height="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="G8C-JF-JJe" firstAttribute="leading" secondItem="xfX-6R-Pdg" secondAttribute="trailing" constant="5" id="73I-4Q-xIY"/>
                             <constraint firstAttribute="bottom" secondItem="BeO-yV-8iZ" secondAttribute="bottom" constant="2" id="7iU-2i-vav"/>
-                            <constraint firstItem="xfX-6R-Pdg" firstAttribute="leading" secondItem="4rF-cC-cKo" secondAttribute="leading" constant="6" id="84p-Qi-kzU"/>
-                            <constraint firstItem="xfX-6R-Pdg" firstAttribute="top" secondItem="4rF-cC-cKo" secondAttribute="top" constant="5" id="Nqf-f9-8A4"/>
-                            <constraint firstItem="G8C-JF-JJe" firstAttribute="centerY" secondItem="xfX-6R-Pdg" secondAttribute="centerY" id="bB5-7T-gtJ"/>
+                            <constraint firstItem="BeO-yV-8iZ" firstAttribute="top" secondItem="bQm-KZ-TnN" secondAttribute="bottom" id="GQp-FX-Mbi"/>
+                            <constraint firstItem="bQm-KZ-TnN" firstAttribute="leading" secondItem="4rF-cC-cKo" secondAttribute="leading" id="ioG-UW-I8T"/>
+                            <constraint firstAttribute="trailing" secondItem="bQm-KZ-TnN" secondAttribute="trailing" id="mmy-nU-Hgm"/>
                             <constraint firstItem="BeO-yV-8iZ" firstAttribute="leading" secondItem="4rF-cC-cKo" secondAttribute="leading" id="oKl-ov-5Mq"/>
-                            <constraint firstItem="zhn-Fu-vNu" firstAttribute="centerY" secondItem="G8C-JF-JJe" secondAttribute="centerY" id="qVu-pB-NhD"/>
-                            <constraint firstAttribute="trailing" secondItem="zhn-Fu-vNu" secondAttribute="trailing" constant="10" id="vHL-Rf-slt"/>
-                            <constraint firstItem="BeO-yV-8iZ" firstAttribute="top" secondItem="xfX-6R-Pdg" secondAttribute="bottom" constant="4" id="z82-S2-dcd"/>
+                            <constraint firstItem="bQm-KZ-TnN" firstAttribute="top" secondItem="4rF-cC-cKo" secondAttribute="top" id="z13-bZ-KBw"/>
                             <constraint firstAttribute="trailing" secondItem="BeO-yV-8iZ" secondAttribute="trailing" id="zag-4s-jBo"/>
                         </constraints>
                     </view>
@@ -112,7 +129,7 @@
     </objects>
     <designables>
         <designable name="zhn-Fu-vNu">
-            <size key="intrinsicContentSize" width="52" height="26"/>
+            <size key="intrinsicContentSize" width="58" height="29"/>
         </designable>
     </designables>
     <resources>
@@ -123,6 +140,9 @@
         <namedColor name="ThemeOrange">
             <color red="0.99599999189376831" green="0.44699999690055847" blue="0.075000002980232239" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemGray4Color">
             <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

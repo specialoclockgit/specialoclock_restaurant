@@ -94,7 +94,7 @@ struct WebService {
                             request.httpBody = postData as Data
                         }else if param is Dictionary<String, Any>{
                             var parm = self.getString(from: param as! Dictionary<String, Any>)
-                            //print(parm)
+                           
                             parm.removeFirst()
                             let postData = NSMutableData(data: parm.data(using: String.Encoding.utf8)!)
                             request.httpBody = postData as Data
