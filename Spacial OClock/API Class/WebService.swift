@@ -165,7 +165,7 @@ struct WebService {
                             print(jsonSer)
                             let codeInt = jsonSer["code"] as? Int ?? 0
                            
-                            var code = "\(codeInt)"
+                            let code = "\(codeInt)"
                             
 //                            if let httpResponse = jsonResponse as? HTTPURLResponse {
 //                                print("statusCode: \(httpResponse.statusCode)")
@@ -180,56 +180,21 @@ struct WebService {
                                         UIApplication.shared.unregisterForRemoteNotifications()
                                         UIApplication.shared.registerForRemoteNotifications()
                                     }
+                                    if let message = jsonSer["message"] as? String{
+                                        //WebService.showAlert(message)
+                                        CommonUtilities.shared.showAlert(message: message)
+                                    }
                                     SceneDelegate().LoginRoot()
-//                                    Store.userDetails = nil
-//                                    Store.autoLogin = false
-//                                    let mainStoryBoard = UIStoryboard(name: "Login", bundle: nil)
-//                                    let redViewController = mainStoryBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-//                                    let nav = UINavigationController.init(rootViewController: redViewController)
-//                                    nav.isNavigationBarHidden = true
-//                                    UIApplication.shared.windows.first?.rootViewController = nav
                                 }
-                                
                             }
                             else if code != "200" {
-                                
-                                
-                                    DispatchQueue.main.async {
-                                        if let errorMessage = jsonSer["msg"] as? String{
-                                            if errorMessage == "Unauthenticated."
-                                            {
-//                                                Store.userDetails = nil
-                                             //  Store.autoLogin = false
-                                                
-                                                //                                                applicationDelegate.setUpLogin()
-                                            }
-                                            else
-                                            {
-                                                if errorMessage != "Data not found"
-                                                {
-                                                    WebService.showAlert(errorMessage)
-                                                }
-                                            }
-                                        }else if let message = jsonSer["message"] as? String{
-                                            
-                                            if message == "Unauthenticated."
-                                            {
-                                                //Store.userDetails = nil
-                                              //  Store.autoLogin = false
-                                                //                                                applicationDelegate.setUpLogin()
-                                            }
-                                            else
-                                            {
-                                                if message != "Data not found"
-                                                {
-                                                    WebService.showAlert(message)
-                                                }
-                                        }
+                                DispatchQueue.main.async {
+                                    if let errorMessage = jsonSer["msg"] as? String {
+                                        WebService.showAlert(errorMessage)
+                                    }else if let message = jsonSer["message"] as? String{
+                                        WebService.showAlert(message)
                                     }
                                 }
-                                
-
-                                
                             }else{
                                 let decoder = JSONDecoder()
                                 let model = try decoder.decode(Model.self, from: jsonData)

@@ -116,11 +116,11 @@ struct State: Codable {
 
 // MARK: - City
 struct City: Codable {
-    var city: String?
+    var city, latitude, longitude: String?
     var localityAreas: [String]?
 
     enum CodingKeys: String, CodingKey {
-        case city
+        case city, longitude, latitude
         case localityAreas = "locality_areas"
     }
 }

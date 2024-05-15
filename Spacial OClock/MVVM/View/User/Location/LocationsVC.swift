@@ -11,7 +11,7 @@ class LocationsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     var dataArr : [LocationList_Body]?
     lazy var viewModel = AuthViewModel()
-    var callBack: ((String,String,String)->())?
+    var callBack: ((String,String,String,_ lat :String,_ long: String)->())?
     @IBOutlet weak var tblVw: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,9 +118,9 @@ class LocationsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
             cell.tblListVw.isHidden = true
         }
         
-        
-        cell.callBack = { [weak self] city in
-            self?.callBack?(self?.dataArr?[indexPath.section].country ?? "",self?.dataArr?[indexPath.section].states?[indexPath.row].state ?? "",city)
+    
+        cell.callBack = { [weak self] city, lat, long in
+            self?.callBack?(self?.dataArr?[indexPath.section].country ?? "",self?.dataArr?[indexPath.section].states?[indexPath.row].state ?? "",city,lat,long)
             self?.navigationController?.popViewController(animated: true)
         }
         
@@ -142,8 +142,6 @@ class LocationsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 }
 
 
-
-
 class locationCellOne: UITableViewCell, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tblListVw: UITableView!
@@ -153,7 +151,7 @@ class locationCellOne: UITableViewCell, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var imgVw: UIImageView!
     @IBOutlet weak var tblListVwHeight: NSLayoutConstraint!
     var townsArr : [City]?
-    var callBack: ((String)->())?
+    var callBack: ((_ city: String,_ lat: String,_ long: String)->())?
     override func awakeFromNib() {
         super.awakeFromNib()
         tblListVw.delegate = self
@@ -172,7 +170,7 @@ class locationCellOne: UITableViewCell, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        callBack?(townsArr?[indexPath.row].city ?? "")
+        callBack?(townsArr?[indexPath.row].city ?? "",townsArr?[indexPath.row].latitude ?? "",townsArr?[indexPath.row].longitude ?? "")
     }
     
     

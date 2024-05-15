@@ -778,7 +778,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             } else {
                 cell.lblSpecial.isHidden = true
                 
-                if indexPath.row == isselectedoffer{
+                if indexPath.row == isselectedoffer {
                     // self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                     
                     //  cell.img.image = UIImage(named: "greenRectangle")

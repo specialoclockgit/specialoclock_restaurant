@@ -16,7 +16,7 @@ class UserProfileVC: UIViewController {
     @IBOutlet weak var lblName : UILabel!
     @IBOutlet weak var lblPhoneNumber : UILabel!
     @IBOutlet weak var lblEmail : UILabel!
-  
+    @IBOutlet weak var dobLbl: UILabel!
     //MARK: Varibale
     var btnCheckStatus = Int()
     var viewModel = AuthViewModel()
@@ -41,6 +41,7 @@ class UserProfileVC: UIViewController {
             self.lblEmail.text = data?.email ?? ""
             self.lblPhoneNumber.text = "\(data?.countryCode ?? "") \(data?.phone ?? 0)"
             self.profileImg.showIndicator(baseUrl: imageURL, imageUrl: data?.image ?? "")
+            self.dobLbl.text = data?.dob ?? ""
         }
     }
     

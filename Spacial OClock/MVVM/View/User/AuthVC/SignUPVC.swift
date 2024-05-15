@@ -11,6 +11,7 @@ import GooglePlaces
 import CoreLocation
 import AVFoundation
 
+
 class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK: - Outlets
@@ -439,13 +440,14 @@ extension SignUPVC {
     //MARK: - DatePicker 1
     func showDatePicker(){
         datePicker.datePickerMode = .date
+        datePicker.maximumDate = Date()
         datePicker.preferredDatePickerStyle = .wheels
         //ToolBar
-        let toolbar = UIToolbar();
+        let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker))
         toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
         dobTf.inputAccessoryView = toolbar
         dobTf.inputView = datePicker
@@ -474,3 +476,4 @@ extension SignUPVC {
     
     
 }
+

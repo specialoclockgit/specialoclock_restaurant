@@ -28,8 +28,10 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     @IBOutlet weak var clubBgImgVw: UIImageView!
     @IBOutlet weak var barVw: UIView!
     @IBOutlet weak var barBgImgVw: UIImageView!
+    @IBOutlet weak var clubLbl: UILabel!
+    @IBOutlet weak var barlbl: UILabel!
+    
     //MARK: Variables
-   
     var country = String()
     var city = String()
     var iconImage = String()
@@ -108,8 +110,11 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     }
     
     @IBAction func btnClubSelect(_ sender: Any) {
-        clubBgImgVw.image = UIImage(named: "clubSelected")
-        barBgImgVw.image = UIImage(named: "barUnselected")
+        CollectionView.backgroundView = nil
+        clubLbl.textColor = .black
+        barlbl.textColor = .darkGray
+        clubBgImgVw.image = UIImage(named: "newSelectedClub")
+        barBgImgVw.image = UIImage(named: "newUnSelectedBar")
         if setValue == "Location" {
             CollectionView.showAnimatedGradientSkeleton()
             location_By_RestoAPI(type: 2)
@@ -136,8 +141,11 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     }
     
     @IBAction func btnBarSelect(_ sender: Any) {
-        clubBgImgVw.image = UIImage(named: "clubUnselected")
-        barBgImgVw.image = UIImage(named: "barSelected")
+        CollectionView.backgroundView = nil
+        barlbl.textColor = .black
+        clubLbl.textColor = .darkGray
+        clubBgImgVw.image = UIImage(named: "newUnSelectedClub")
+        barBgImgVw.image = UIImage(named: "newSelectedBar")
         if setValue == "Location" {
             CollectionView.showAnimatedGradientSkeleton()
             location_By_RestoAPI(type: 3)

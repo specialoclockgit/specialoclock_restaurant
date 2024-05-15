@@ -30,7 +30,12 @@ class mapViewTVC: UITableViewCell {
             lblName.text = (listing?.name?.capitalized ?? "")
             lblLocation.text = listing?.location ?? ""
             lblTiming.text = "\(listing?.openTime ?? "") - \(listing?.closeTime ?? "")"
-            offerTimings = listing?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
+            if listing?.type == 1 {
+                offerTimings = listing?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
+            }else  {
+                offerTimings = listing?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}).unique(map: {$0.offerID}) ?? []
+            }
+            
             collVw.reloadData()
             let imageIndex = (imageURL) + (listing?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             imgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -61,7 +66,8 @@ extension mapViewTVC : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             }
             cell.titleLbl.text = "\((celldata?.startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         } else {
-            cell.titleLbl.text =  "\(celldata?.startTime?.components(separatedBy: " ").first ?? "")"
+            cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 8.0)
+            cell.titleLbl.text =  "\(celldata?.startTime ?? "")-\(celldata?.endTime ?? "")"
         }
         return cell
     }

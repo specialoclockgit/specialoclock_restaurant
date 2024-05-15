@@ -48,9 +48,9 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     var viewModel = HomeViewModel()
     var nearBy = [NearbyRestaurant]()
     var locationUpdated = Bool()
-    var getstate = "Western Cape"
-    var getcity = "Cape Town"
-    var getcountry = "South Africa"
+    var getstate = ""
+    var getcity = ""
+    var getcountry = ""
     var gettimezone = String()
     var timeZone = String()
     
@@ -120,6 +120,13 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
             self.sectionArray.removeAll()
             self.nearBy = objData?.nearby_restaurants ?? []
             self.getalllocations()
+            
+            self.lblLocation.text = objData?.nearbyLocations?.city ?? ""
+            self.getcity = objData?.nearbyLocations?.city ?? ""
+            self.getcountry = objData?.nearbyLocations?.country ?? ""
+            self.getstate = objData?.nearbyLocations?.state ?? ""
+            
+            
             if objData?.location?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Location",objArray: objData?.location ?? [],image: "PIN")
                 self.sectionArray.append(obj)
@@ -136,9 +143,11 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
             }
             
             if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
-                let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0})
-                let obj = SectionModel(name: "Popular",objArray: filterArray ?? [],image: "Popular")
-                self.sectionArray.append(obj)
+                if let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0}), filterArray.count != 0 {
+                    let obj = SectionModel(name: "Popular",objArray: filterArray ,image: "Popular")
+                    self.sectionArray.append(obj)
+                }
+               
             }
             
             if objData?.banners?.count ?? 0 != 0 {
@@ -171,12 +180,13 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
         let vc = serviceStoryboard.instantiateViewController(withIdentifier: "LocationsVC") as! LocationsVC
         vc.hidesBottomBarWhenPushed = true
-        vc.callBack = {  [weak self] countryy, statee, cityy in
-            
+        vc.callBack = {  [weak self] countryy, statee, cityy, lat, long in
             self?.lblLocation.text = cityy.capitalized
             self?.getcity = cityy
             self?.getcountry = countryy
             self?.getstate = statee
+            self?.lat = Double(lat)
+            self?.long = Double(long)
             self?.setData(type: Store.screenType ?? 1)
         }
         self.navigationController?.pushViewController(vc, animated: true)
@@ -237,6 +247,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     
     @IBAction func btnProfileAct(_ sender : UIButton){
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.UserProfileVC) as! UserProfileVC
+        screen.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(screen, animated: true)
     }
 
@@ -529,7 +540,7 @@ extension HomeVC : CLLocationManagerDelegate {
                 if let placemark = placemarks {
                     if placemark.count > 0{
                         let placemark = placemark[0]
-                        self.lblLocation.text = placemark.locality ?? ""
+                        print("current location is-----",(placemark.country,placemark.locality,placemark.administrativeArea) as Any)
                         if Store.screenType == 2 {
                             self.setDrink()
                         } else {

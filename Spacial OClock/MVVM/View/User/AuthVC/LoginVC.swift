@@ -20,7 +20,6 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     var swipeGesture = UISwipeGestureRecognizer()
     var selectStatus = Int()
     var restoselctStatus = Int()
-    
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,19 +31,15 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         viewMain.clipsToBounds = true
         viewMain.layer.cornerRadius = 40
         viewMain.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-
         txtEmail.text = UserDefaults.standard.value(forKey: "loginEmail") as? String ?? ""
         txtPassword.text = UserDefaults.standard.value(forKey: "loginPassword") as? String ?? ""
         btnRemember.isSelected = UserDefaults.standard.value(forKey: "rememberMe") as? Bool ?? false
-      //  txtEmail.keyboardType = .alphabet
-        
     }
+    
     //MARK: - ACTIONS
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
-    
-    
 
     @IBAction func btnSignIn(_ sender: UIButton){
         self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: 0, timeZone: TimeZone.current.identifier) {

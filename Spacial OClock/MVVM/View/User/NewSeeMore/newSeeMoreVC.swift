@@ -126,7 +126,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
         if setvalue == "Location" {
             cell.imgView.showIndicator(baseUrl: "", imageUrl: self.location[indexPath.row].image ?? "")
             cell.lblName.text = self.filterlocation[indexPath.row].locality_area ?? ""
-            let count = (self.filterlocation[indexPath.row].restrorants?.count ?? 0)
+            let count = (self.filterlocation[indexPath.row].restrorants?.filter({$0.offer_available == 1}).count ?? 0)
             
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
@@ -137,21 +137,19 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             let image = "\(self.filterCusine[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count = (self.filterCusine[indexPath.row].restrorants?.count ?? 0)
+            let count = (self.filterCusine[indexPath.row].restrorants?.filter({$0.offer_available == 1}).count ?? 0)
             
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             
             cell.lblTotalREs.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
             
-            
-            
             cell.lblName.text = self.filterCusine[indexPath.row].name?.capitalized ?? ""
         } else if setvalue == "Category"{
             let image = "\(self.filtercategory[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count  =  (self.filtercategory[indexPath.row].clubs?.count ?? 0)
+            let count  =  (self.filtercategory[indexPath.row].clubs?.filter({$0.offer_available == 1}).count ?? 0)
             
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
@@ -162,7 +160,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             let image = "\(self.filterthemeAry[indexPath.row].image ?? "")"
             let urlString = image.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             cell.imgView.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
-            let count  = (self.filterthemeAry[indexPath.row].restrorant?.count ?? 0)
+            let count  = (self.filterthemeAry[indexPath.row].restrorant?.filter({$0.offer_available == 1}).count ?? 0)
             
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"

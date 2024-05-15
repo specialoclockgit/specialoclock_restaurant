@@ -102,7 +102,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.collHeight.constant = 0
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblLocationName.text = self.category[indexPath.row].title ?? ""
-            let count = (self.category[indexPath.row].clubCount ?? 0)
+            let count = (self.category[indexPath.row].clubs?.filter({$0.offer_available == 1}).count ?? 0)
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
@@ -154,8 +154,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.imgLocaiton.showIndicator(baseUrl: imageBaseURL, imageUrl: urlString)
             cell.lblLocationName.text = self.themeArr[indexPath.row].productName ?? ""
             
-            let count = self.themeArr[indexPath.row].restrorant?.count ?? 0
-            //(self.themeArr[indexPath.row].restrorants?.filter({$0.offer_available == 1}).count ?? 0)
+            let count = self.themeArr[indexPath.row].restrorant?.filter({$0.offer_available == 1}).count ?? 0
             let newBarsCount = count == 0 ? "\(count) Bars/Clubs" : count == 1 ? "0\(count) Bar/Club" : count < 9 ? "0\(count) Bars/Clubs" : "\(count) Bars/Clubs"
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
