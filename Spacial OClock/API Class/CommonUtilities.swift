@@ -9,12 +9,10 @@
 import Foundation
 import UIKit
 import SwiftMessages
-class CommonUtilities{
-    static let shared = CommonUtilities()
-    
-//    static let shared = CommonUtilities()
 
-    
+class CommonUtilities {
+    static let shared = CommonUtilities()
+
     func showAlert(message :String){
         DispatchQueue.main.async
         {
@@ -28,7 +26,7 @@ class CommonUtilities{
             alert.addAction(ok)
             
             DispatchQueue.main.async {
-                //if let window = UIApplication.shared.keyWindow
+
                 if let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first{
                     DispatchQueue.main.async {
                         window.rootViewController!.present(alert, animated: true)
@@ -53,5 +51,4 @@ class CommonUtilities{
             SwiftMessages.show(config: warningConfig, view: warning)
         }
     }
-
 }

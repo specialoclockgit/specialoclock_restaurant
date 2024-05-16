@@ -29,8 +29,10 @@ class ProfileVC: UIViewController {
        // self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         if Store.userDetails?.bussinesstype == 1{
             btnViewProfile.setTitle("Restaurant Profile", for: .normal)
+        }else if Store.userDetails?.bussinesstype == 2{
+            btnViewProfile.setTitle("Club Profile", for: .normal)
         } else {
-            btnViewProfile.setTitle("Bar/Club Profile", for: .normal)
+            btnViewProfile.setTitle("Bar Profile", for: .normal)
         }
         
         initialLoad()
@@ -72,7 +74,9 @@ extension ProfileVC{
         if Store.userDetails?.bussinesstype == 1 {
             btnViewProfile.setTitle("Restaurant Profile", for: .normal)
         } else if Store.userDetails?.bussinesstype == 2 {
-            btnViewProfile.setTitle("Bar/Club Profile", for: .normal)
+            btnViewProfile.setTitle("Club Profile", for: .normal)
+        }else {
+            btnViewProfile.setTitle("Bar Profile", for: .normal)
         }
     }
 }

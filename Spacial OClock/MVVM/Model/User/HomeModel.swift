@@ -7,7 +7,27 @@
 
 import Foundation
 
+struct HomeLocationModel: Codable {
+    var success: Bool?
+    var code: Int?
+    var message: String?
+    var body: HomeLocationBody?
+}
 
+struct HomeLocationBody: Codable {
+    var id: Int?
+    var country, state, city, localityArea: String?
+    var flagImage, latitude, longitude, timezone: String?
+    var image: String?
+    var distance: Double?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, country, state, city
+        case localityArea = "locality_area"
+        case flagImage = "flag_image"
+        case latitude, longitude, timezone, image, distance
+    }
+}
 
 // MARK: - HomeList
 struct HomeListModel: Codable {
@@ -27,16 +47,26 @@ struct HomeListBody: Codable {
     var category: [Category]?
     var nearby_restaurants: [NearbyRestaurant]?
     var all_bars_restos, highily_rated_bars_restos: [AllBarsResto]?
-    
+    var clubBarListing: ClubBarListing?
     enum CodingKeys: String, CodingKey {
-            case nearbyLocations = "nearby_locations"
-            case location, cuisine, theme, banners
-            case nearby_restaurants
-            case all_bars_restos
-            case highily_rated_bars_restos
-        }
+        case nearbyLocations = "nearby_locations"
+        case location, cuisine, theme, banners
+        case nearby_restaurants
+        case all_bars_restos
+        case highily_rated_bars_restos
+        case clubBarListing
+    }
     
 }
+
+// MARK: - ClubBarListing
+struct ClubBarListing: Codable {
+    var clubListing: [AllBarsResto]?
+    var barListing: [AllBarsResto]?
+}
+
+
+
 // MARK: - NearbyLocations
 struct NearbyLocations: Codable {
     var id: Int?
@@ -44,7 +74,7 @@ struct NearbyLocations: Codable {
     var flagImage, latitude, longitude, timezone: String?
     var image: String?
     var distance: Double?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, country, state, city
         case localityArea = "locality_area"
@@ -74,7 +104,7 @@ struct AllBarsResto: Codable {
     let offers: [TimeSlotoffer]?
     var offerTimings: [OfferTiminghome]?
     var time_slots: [TimeSlotoffer]?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude,disable_dates,time_slots
         case userID = "user_id"
@@ -150,7 +180,7 @@ struct ThemeData: Codable {
     var restroCount: Int?
     var barCount: Int?
     var restrorant: [CuisineRestrorant]?
-
+    
     enum CodingKeys: String, CodingKey {
         case id
         case productName = "product_name"
@@ -206,7 +236,7 @@ struct Category: Codable {
     var image: String?
     var clubCount: Int?
     var clubs: [CuisineRestrorant]?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, title, description, status, image
         case clubCount = "club_count"
@@ -219,7 +249,7 @@ struct Banner: Codable {
     var id: Int?
     var title, image, description: String?
     var isBlocked, status: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, title, image, description
         case isBlocked = "is_blocked"
@@ -235,7 +265,7 @@ struct Cuisine: Codable {
     var image: String?
     var restroCount: Int?
     var restrorants: [CuisineRestrorant]?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, name, status, image
         case restroCount = "restro_count"
@@ -255,7 +285,7 @@ struct CuisineRestrorant: Codable {
     var type, categoryID, cuisineID, themesRestrorantID: Int?
     var isBlocked: Int?
     var profileImage: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, name, location, country, state, city, latitude, longitude
         case userID = "user_id"
@@ -279,7 +309,7 @@ struct HomeListLocation: Codable {
     var image: String?
     var restroCount: Int?
     var restrorants: [LocationRestrorant]?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, country, state, city, image, locality_area
         case restroCount = "restro_count"
@@ -294,7 +324,7 @@ struct LocationRestrorant: Codable {
     var openTime, closeTime: String?
     var type, categoryID, themesRestrorantID, isBlocked,offer_available: Int?
     var profileImage: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, name, location, country
         case shortDescription = "short_description"

@@ -104,8 +104,10 @@ extension RestoProfileVC{
     func initialLoad(){
         if Store.userDetails?.bussinesstype == 1{
             self.lblHeading.text = "Restaurant Profile"
-        }else{
-            self.lblHeading.text = "Bar/Club Profile"
+        }else if Store.userDetails?.bussinesstype == 2{
+            self.lblHeading.text = "Club Profile"
+        }else  {
+            self.lblHeading.text = "Bar Profile"
         }
         debugPrint(heading)
         lblname.text = UserDefaults.standard.name.capitalized

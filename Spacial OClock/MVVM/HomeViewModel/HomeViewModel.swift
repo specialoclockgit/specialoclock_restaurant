@@ -14,14 +14,22 @@ class HomeViewModel : NSObject {
     
     //MARK: - CUISINE GET LIST
     func homeApi(type:Int, country: String, city:String, state:String, lat:Double, long:Double,timezone:String, onsuccess: @escaping ((HomeListBody?)->())){
-        let param:parameters = ["type":type, "latitude":lat,"longitude":long,"timezone":timezone]
-        //"country":country, "state": state,"city":city, 
+        let param:parameters = ["country":country, "state": state,"city":city,"type":type, "latitude":lat,"longitude":long,"timezone":timezone]
         WebService.service(API.home, param: param, service: .post) {
             (modaldata: HomeListModel, Data , json) in
-//            self.homeData = modaldata.body
             onsuccess(modaldata.body)
         }
     }
+    
+    
+    func homeApiNew(lat:Double, long:Double, onsuccess: @escaping ((HomeLocationBody?)->())){
+        let param:parameters = ["latitude":lat,"longitude":long]
+        WebService.service(API.nearbyLocation, param: param, service: .post,showHud: false) {
+            (modaldata: HomeLocationModel, Data , json) in
+            onsuccess(modaldata.body)
+        }
+    }
+    
     
     //MARK: - CUISINE RESTO LIST
     func cusinsRestoAPI(cuisineid:Int,country:String,city:String,type:Int,onsuccess: @escaping (([CussinesRestoModalBody]?)->())){

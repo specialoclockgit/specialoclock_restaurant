@@ -189,7 +189,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                 self.offer = data?.time_slots?.unique(map: {$0.offerID})
             }
             
-            
+            self.collViewMenuHeight.constant = self.status == 1 ? 220 : 170
             let imageIndex = (imageURL) + (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
@@ -292,6 +292,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     }
                 }
            }
+            self.view.updateConstraintsIfNeeded()
         }
     }
     
@@ -799,7 +800,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }
                 let data = offer?[indexPath.row]
                 cell.lblMenuSchedule.text = data?.offer?.menuName ?? ""
-                cell.lblTime.text = "\(data?.startTime ?? "") - \(data?.endTime ?? "")"
+                cell.lblTime.text = "\(data?.offer?.openTime ?? "") - \(data?.offer?.closeTime ?? "")"
                 
             }
             return cell
@@ -1088,14 +1089,16 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                 cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
                 
                 let newPrice = (calCulateDiscount(actualPrice: Double(products?[indexPath.row].price ?? "0") ?? 0, discount: Double(self.discount ?? 0)))
-                cell.lblNewPrice.text = String(format: "%.2f", newPrice)
+                cell.lblNewPrice.text = "R\(String(format: "%.2f", newPrice))"
                 cell.lblDiscount.text = "SAVE \(self.discount ?? 0)%"
                 let price = Double(products?[indexPath.row].price ?? "0") ?? 0
-                cell.lblPrePrice.text = String(format: "%.2f", price)
+                cell.lblPrePrice.text = "R\(String(format: "%.2f", price))"
             } else {
-                if products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" || products?[indexPath.row].actual_price == ""{
+                if  productModal?.offerdetails?.discountedPrice == "0" || productModal?.offerdetails?.actualPrice == "0" || productModal?.offerdetails?.actualPrice == "" {
+                    //products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" || products?[indexPath.row].actual_price == ""{
                     cell.lblNewPrice.text = ""
                     cell.lblPrePrice.text = ""
+                    cell.lblDiscount.text = ""
                     cell.itemNameTop.constant = 14
                     cell.lblItemName.text = (products?[indexPath.row].productName?.capitalized ?? "")
                     cell.desLbl.text =  "" /*(self.offerDescription)*/
@@ -1104,11 +1107,17 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                     cell.desLbl.text = ""
                     cell.itemNameTop.constant = 5
                     cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
-                    cell.lblPrePrice.text = "\(products?[indexPath.row].actual_price ?? "0")"
-                    cell.lblNewPrice.text = "\(products?[indexPath.row].discounted_price ?? "0")"
+                    cell.lblPrePrice.text =  "R\(productModal?.offerdetails?.actualPrice ?? "0")"
+                    //"\(products?[indexPath.row].actual_price ?? "0")"
+                    cell.lblNewPrice.text = "R\(productModal?.offerdetails?.discountedPrice ?? "0")"
+                    //"\(products?[indexPath.row].discounted_price ?? "0")"
+                    if let intValue1 = Int(productModal?.offerdetails?.actualPrice ?? ""), let intValue2 = Int(productModal?.offerdetails?.discountedPrice ?? "") {
+                        let result = intValue1 - intValue2
+                        cell.lblDiscount.text = "SAVE R\(result.description)"
+                        
+                    }
                 }
-                cell.lblDiscount.text = ""
-                cell.lblDiscount.isHidden = true
+               // cell.lblDiscount.isHidden = true
             }
             
             return cell

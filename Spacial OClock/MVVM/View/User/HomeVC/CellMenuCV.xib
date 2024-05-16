@@ -31,19 +31,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="121" height="217"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8I-dT-1gg" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
-                                <rect key="frame" x="8" y="16" width="101" height="96"/>
+                                <rect key="frame" x="8" y="16" width="101" height="100"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0pc-IU-RBc">
-                                        <rect key="frame" x="4" y="20" width="93" height="56"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0pc-IU-RBc">
+                                        <rect key="frame" x="4" y="10" width="93" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tonight" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-FJ-upr">
-                                                <rect key="frame" x="14" y="0.0" width="65" height="24"/>
+                                                <rect key="frame" x="19" y="0.0" width="55.5" height="40"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eH3-AV-9hM">
-                                                <rect key="frame" x="20" y="34" width="53" height="22"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eH3-AV-9hM">
+                                                <rect key="frame" x="10" y="40" width="73" height="40"/>
                                                 <fontDescription key="fontDescription" name="Astral-Sisters" family="Astral Sisters" pointSize="22"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -53,8 +53,9 @@
                                 </subviews>
                                 <color key="backgroundColor" name="themeOrange"/>
                                 <constraints>
-                                    <constraint firstItem="0pc-IU-RBc" firstAttribute="top" secondItem="B8I-dT-1gg" secondAttribute="top" constant="20" id="SZb-ag-2Lk"/>
-                                    <constraint firstAttribute="bottom" secondItem="0pc-IU-RBc" secondAttribute="bottom" constant="20" id="hH9-4I-lI7"/>
+                                    <constraint firstItem="0pc-IU-RBc" firstAttribute="top" secondItem="B8I-dT-1gg" secondAttribute="top" constant="10" id="SZb-ag-2Lk"/>
+                                    <constraint firstAttribute="height" constant="100" id="cLg-Ap-JS8"/>
+                                    <constraint firstAttribute="bottom" secondItem="0pc-IU-RBc" secondAttribute="bottom" constant="10" id="hH9-4I-lI7"/>
                                     <constraint firstItem="0pc-IU-RBc" firstAttribute="leading" secondItem="B8I-dT-1gg" secondAttribute="leading" constant="4" id="hvZ-GC-LmG"/>
                                     <constraint firstAttribute="trailing" secondItem="0pc-IU-RBc" secondAttribute="trailing" constant="4" id="ijN-6t-Pdf"/>
                                 </constraints>
@@ -74,10 +75,10 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="082-jJ-eD2" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
-                                <rect key="frame" x="8" y="124" width="105" height="38"/>
+                                <rect key="frame" x="8" y="128" width="105" height="38"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08:00 to 8:30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zK-gD-B4f" customClass="CustomLabel" customModule="Spacial_OClock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="8" width="105" height="22.5"/>
+                                        <rect key="frame" x="5.5" y="9.5" width="94.5" height="19"/>
                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -105,10 +106,10 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btT-dA-CiL" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
-                                <rect key="frame" x="8" y="174" width="105" height="38"/>
+                                <rect key="frame" x="8" y="178" width="105" height="38"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-10%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jba-UX-6ji" customClass="CustomLabel" customModule="Spacial_OClock" customModuleProvider="target">
-                                        <rect key="frame" x="34" y="8" width="37" height="22.5"/>
+                                        <rect key="frame" x="32.5" y="9.5" width="40.5" height="19"/>
                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -175,10 +176,10 @@
     </objects>
     <designables>
         <designable name="8zK-gD-B4f">
-            <size key="intrinsicContentSize" width="105" height="22.5"/>
+            <size key="intrinsicContentSize" width="94.5" height="19"/>
         </designable>
         <designable name="Jba-UX-6ji">
-            <size key="intrinsicContentSize" width="37" height="22.5"/>
+            <size key="intrinsicContentSize" width="40.5" height="19"/>
         </designable>
     </designables>
     <resources>

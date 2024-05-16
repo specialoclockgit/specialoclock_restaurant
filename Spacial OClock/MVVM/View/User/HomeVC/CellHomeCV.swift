@@ -81,7 +81,7 @@ extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             
         }
         
-        let celldata = self.offerTimings?[indexPath.row]
+        
         
         if Store.screenType == 1 {
             var percentage = String()
@@ -94,7 +94,8 @@ extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             }
             cell.titleLbl.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         } else {
-            cell.titleLbl.text = "\(offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")"
+            cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 8.0)
+            cell.titleLbl.text = "\(offerTimings?[indexPath.row].offer?.openTime ?? "")-\(offerTimings?[indexPath.row].offer?.closeTime ?? "")"
             
         }
         

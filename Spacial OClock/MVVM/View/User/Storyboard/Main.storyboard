@@ -3820,7 +3820,7 @@
                                 <rect key="frame" x="0.0" y="130" width="414" height="1036"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXX-dS-Wit">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="655"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image2" translatesAutoresizingMaskIntoConstraints="NO" id="ZRy-7C-dyp">
                                                 <rect key="frame" x="20" y="10" width="374" height="170"/>
@@ -4165,10 +4165,10 @@
                                                 </connections>
                                             </tableView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qKF-58-Gdb" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="365" width="374" height="224"/>
+                                                <rect key="frame" x="20" y="365" width="374" height="192"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Sfv-GV-MYo">
-                                                        <rect key="frame" x="4" y="16" width="366" height="192"/>
+                                                        <rect key="frame" x="4" y="16" width="366" height="160"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uD3-Rk-Dxc">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="32"/>
@@ -4266,7 +4266,7 @@
                                                                     <constraint firstAttribute="bottom" secondItem="dCV-Do-rXb" secondAttribute="bottom" constant="4" id="u7U-mb-kkB"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wWt-Jw-NSc">
+                                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wWt-Jw-NSc">
                                                                 <rect key="frame" x="0.0" y="128" width="366" height="32"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discount: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DWm-25-dPJ">
@@ -4293,7 +4293,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Adg-mS-Mwu">
-                                                                <rect key="frame" x="0.0" y="160" width="366" height="32"/>
+                                                                <rect key="frame" x="0.0" y="128" width="366" height="32"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of People:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFu-8a-aeQ">
                                                                         <rect key="frame" x="4" y="4" width="130.5" height="24"/>
@@ -4347,7 +4347,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XSB-9y-ftc">
-                                                <rect key="frame" x="20" y="595" width="374" height="50"/>
+                                                <rect key="frame" x="20" y="563" width="374" height="50"/>
                                                 <color key="backgroundColor" name="themeOrange"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="TaP-ol-lY9"/>
@@ -4368,7 +4368,7 @@
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2TS-H9-5il">
-                                                <rect key="frame" x="20" y="645" width="374" height="0.0"/>
+                                                <rect key="frame" x="20" y="613" width="374" height="0.0"/>
                                                 <subviews>
                                                     <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvI-R6-uCQ" customClass="CustomView" customModule="Spacial_OClock" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="472" height="73"/>
@@ -4684,6 +4684,7 @@
                         <outlet property="VeiwOfferCheck" destination="Ds2-jI-gi5" id="73C-5K-3Il"/>
                         <outlet property="bookingSlotStartEndTime" destination="ID8-Md-9Rf" id="tCC-35-iMr"/>
                         <outlet property="btnMain" destination="XSB-9y-ftc" id="KpZ-T9-Hj5"/>
+                        <outlet property="discountVW" destination="wWt-Jw-NSc" id="1jH-yL-ymm"/>
                         <outlet property="img" destination="ZRy-7C-dyp" id="zsA-FO-BOt"/>
                         <outlet property="labelDiscuount" destination="sX8-Qa-vxV" id="t10-He-hQg"/>
                         <outlet property="lblAvgRating" destination="bvq-eT-AzF" id="bQU-we-tHd"/>

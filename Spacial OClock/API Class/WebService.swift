@@ -25,13 +25,10 @@ struct WebService {
                     if let vc = UIApplication.shared.keyWindow{
                         MBProgressHUD.showAdded(to: vc, animated: true)
                     }
-                    
                 }
             }
-            
             var fullUrlString = baseURL + api.rawValue
-            if let idApend = urlAppendId
-            {
+            if let idApend = urlAppendId {
                 fullUrlString = baseURL + api.rawValue + "/\(idApend)"
             }
             
@@ -54,7 +51,6 @@ struct WebService {
             var request = URLRequest(url: URL(string: encodedString)!, cachePolicy: URLRequest.CachePolicy.useProtocolCachePolicy, timeoutInterval: 2000)
             
             request.httpMethod = service.rawValue
-            
             if let authKey = Store.authKey
             {
                 request.addValue("Bearer " + authKey, forHTTPHeaderField: "Authorization")
@@ -76,7 +72,6 @@ struct WebService {
                         request.httpBody = postData as Data
                     }else if param is Dictionary<String, Any>{
                         var parm = self.getString(from: param as! Dictionary<String, Any>)
-                       
                         parm.removeFirst()
                         let postData = NSMutableData(data: parm.data(using: String.Encoding.utf8)!)
                         request.httpBody = postData as Data

@@ -154,7 +154,7 @@ class AuthViewModel : NSObject {
     func helpandFaq(onSuccess : @escaping (([HelpandFAQModelBody]?)->())){
         WebService.service(API.faq ,service: .get, showHud: true) {
             (modaldata: HelpandFAQModel , Data, Json) in
-            onSuccess(modaldata.body ?? [])
+            onSuccess(modaldata.body )
         }
     }
     
@@ -274,19 +274,19 @@ class AuthViewModel : NSObject {
 //            return false
 //        } else
         
-        if name.trimmingCharacters(in: .whitespaces).isEmpty{
+        if name.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Enter your restaurant name", isSuccess: .error)
             return false
-        } else if country.trimmingCharacters(in: .whitespaces).isEmpty{
+        } else if country.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Select your country", isSuccess: .error)
             return false
-        }else if location.trimmingCharacters(in: .whitespaces).isEmpty{
+        } else if location.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Select your location", isSuccess: .error)
             return false
-        }else if opentime.trimmingCharacters(in: .whitespaces).isEmpty{
+        } else if opentime.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Enter open time", isSuccess: .error)
             return false
-        } else if closetime.trimmingCharacters(in: .whitespaces).isEmpty{
+        } else if closetime.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Enter close time", isSuccess: .error)
             return false
         }
@@ -298,15 +298,13 @@ class AuthViewModel : NSObject {
 //            CommonUtilities.shared.showAlert(message: "Select your cuisines", isSuccess: .error)
 //            return false
 //        }
-        else if shortdescription.trimmingCharacters(in: .whitespaces).isEmpty{
+        else if shortdescription.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Enter your short description", isSuccess: .error)
             return false
-        }else if category.trimmingCharacters(in: .whitespaces).isEmpty{
+        } else if category.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Select your category", isSuccess: .error)
             return false
-        }
-        else
-        {
+        } else {
             addResto(type: type,Profileimage:Profileimage, country:country,state:state,city:city,latitude:latitude,longitude:longitude,name: name, image: image, location: location, opentime: opentime, closetime: closetime, themesrestrorantid: themesrestrorantid, cusine: cusine, shortdescription: shortdescription, category: category) { (data) in
                 onsuccess()
             }
@@ -327,20 +325,20 @@ class AuthViewModel : NSObject {
             let jsonStringimage = String(data: jsonDataimage, encoding: .utf8)
             guard let jsonimage = jsonStringimage else{return}
             var param =  parameters()
-             param = ["type":type,"name": name,
-                                     "location":location,
-                                     "open_time": opentime,
-                                     "close_time":closetime,
-                                     "short_description": shortdescription,
-                                     "cuisine_ids":cusine,
-                                     "country":country,
-                                     "state":state,
-                                     "city":city,
-                                     "category_ids":category,
-                                     "latitude":latitude,
-                                     "country_code":Store.userDetails?.countryCode ?? "",
-                                     "mobile":Store.userDetails?.phone ?? 0,
-                                     "longitude":longitude]
+            param = ["type":type,"name": name,
+                     "location":location,
+                     "open_time": opentime,
+                     "close_time":closetime,
+                     "short_description": shortdescription,
+                     "cuisine_ids":cusine,
+                     "country":country,
+                     "state":state,
+                     "city":city,
+                     "category_ids":category,
+                     "latitude":latitude,
+                     "country_code":Store.userDetails?.countryCode ?? "",
+                     "mobile":Store.userDetails?.phone ?? 0,
+                     "longitude":longitude]
             
             if json != "[]"{
                 param["profile_image"] = json
@@ -354,8 +352,7 @@ class AuthViewModel : NSObject {
                 param["themes_restrorant_id"] = themesrestrorantid
             }
             
-                print(param)
-                WebService.service(API.add_business, param: param, service: .post){
+            WebService.service(API.add_business, param: param, service: .post){
                 (modeldata: AddbusinessModel, data, json) in
                 onsuccess(modeldata)
             }
@@ -452,7 +449,7 @@ class AuthViewModel : NSObject {
         WebService.service(API.file_upload, param: param, service: .post, showHud: true) {
             (userData: FileuploadModel , data, json) in
             
-            for indx in 0..<(userData.body.count ?? 0){
+            for indx in 0..<(userData.body.count ){
                 let image = userData.body[indx].image
                 let thumbnail = userData.body[indx].thumbnail
                 let fileName = userData.body[indx].fileName

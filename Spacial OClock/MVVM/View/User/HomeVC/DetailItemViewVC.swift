@@ -10,12 +10,8 @@ import SDWebImage
 import SwiftGifOrigin
 import SkeletonView
 
-//MARK: Variable image3
-var arrModel : [ItemsModel] = []
-
 class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, SkeletonCollectionViewDelegate {
 
-    
     //MARK: Outlets
     @IBOutlet weak var txtFldSearch: CustomTextField!
     @IBOutlet weak var lblHeader: UILabel!
@@ -48,8 +44,10 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     var filtertheme : [themeRestolistModalBody]?
     var categoryModal : [CategoryByRModalBody]?
     var filterCategory : [CategoryByRModalBody]?
+    var tempHighilyRatedBarsRestos : [AllBarsResto]?
     var highilyRatedBarsRestos : [AllBarsResto]?
     var filterHighilyRatedBarsRestos : [AllBarsResto]?
+    var tempAllBarsRestos : [AllBarsResto]?
     var allBarsRestos : [AllBarsResto]?
     var filterAllBarsRestos : [AllBarsResto]?
     
@@ -69,7 +67,6 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         lblOne.text = "\(setValue)> "
         lblHeader.text = setValue
         imgViewHead.image = UIImage(named: setimage)
-        
         if setValue == "Location" {
             CollectionView.showAnimatedGradientSkeleton()
             location_By_RestoAPI(type: (Store.screenType ?? 1))
@@ -82,8 +79,9 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         } else if setValue == "Theme" {
             CollectionView.showAnimatedGradientSkeleton()
             theme_Resto_API(type: (Store.screenType ?? 1))
-        } else if setValue == "Popular"{
+        } else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
             if Store.screenType != 1 {
+                tempHighilyRatedBarsRestos = highilyRatedBarsRestos
                 let clubData = highilyRatedBarsRestos?.filter({$0.type == 2})
                 highilyRatedBarsRestos = clubData
                 filterHighilyRatedBarsRestos = clubData
@@ -92,6 +90,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
             
         } else if setValue == "A-Z" {
             if Store.screenType != 1 {
+                tempAllBarsRestos = allBarsRestos
                 let clubData = allBarsRestos?.filter({$0.type == 2})
                 allBarsRestos = clubData
                 filterAllBarsRestos = clubData
@@ -127,12 +126,14 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         } else if setValue == "Theme" {
             CollectionView.showAnimatedGradientSkeleton()
             theme_Resto_API(type: 2)
-        } else if setValue == "Popular"{
+        } else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
+            highilyRatedBarsRestos = tempHighilyRatedBarsRestos
             let clubData = highilyRatedBarsRestos?.filter({$0.type == 2})
             highilyRatedBarsRestos = clubData
             filterHighilyRatedBarsRestos = clubData
             self.CollectionView.reloadData()
         } else if setValue == "A-Z"{
+            allBarsRestos = tempAllBarsRestos
             let clubData = allBarsRestos?.filter({$0.type == 2})
             allBarsRestos = clubData
             filterAllBarsRestos = clubData
@@ -158,12 +159,14 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         } else if setValue == "Theme" {
             CollectionView.showAnimatedGradientSkeleton()
             theme_Resto_API(type: 3)
-        } else if setValue == "Popular"{
+        } else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
+            highilyRatedBarsRestos = tempHighilyRatedBarsRestos
             let clubData = highilyRatedBarsRestos?.filter({$0.type == 3})
             highilyRatedBarsRestos = clubData
             filterHighilyRatedBarsRestos = clubData
             self.CollectionView.reloadData()
         } else if setValue == "A-Z"{
+            allBarsRestos = tempAllBarsRestos
             let clubData = allBarsRestos?.filter({$0.type == 3})
             allBarsRestos = clubData
             filterAllBarsRestos = clubData
@@ -182,9 +185,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
             }
             self?.modal = objModel
             self?.filtercusin = objModel
-           // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
-          //  }
             self?.CollectionView.reloadData()
         }
     }
@@ -192,19 +193,9 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     //MARK: - THEME BY RESTO
     func theme_Resto_API(type:Int) {
         viewmodal.restoThemelistAPI(restoid: themeID, type: type,country: country,city: city) { [weak self] dataa in
-//            var objModel = dataa ?? []
-//            for i in 0 ..< (objModel.count ) {
-//                var obj = objModel[i]
-//                obj.timeSlots?.reverse()
-//                objModel[i] = obj
-//            }
-            
-            
             self?.thememodla = dataa
             self?.filtertheme = dataa
-           // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
-            //}
             self?.CollectionView.reloadData()
         }
     }
@@ -212,28 +203,14 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     //MARK: - CATEGORY BY GET RESTO LIST API
     func fetch_Category_REsto(type:Int){
         viewmodal.categoryBYResto(categoryID: cusinessID,country: country,city: city,type: type) { [weak self] dataaa in
-            
-//            var objModel = dataaa ?? []
-//            for i in 0 ..< (objModel.count ) {
-//                var obj = objModel[i]
-//                obj.timeSlots?.reverse()
-//                objModel[i] = obj
-//            }
-            
-            
             self?.categoryModal = dataaa
             self?.filterCategory = dataaa
-           // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
-            //}
             self?.CollectionView.reloadData()
         }
     }
     
     //MARK: - Blur ImageView
-    
-
-    
     
     //MARK: - LOCATION BY RESTO
     func location_By_RestoAPI(type:Int) {
@@ -249,10 +226,8 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
             
             self?.location = objModel
             self?.filterlocations = objModel
-           // DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.CollectionView.hideSkeleton()
                 self?.CollectionView.reloadData()
-            //}
             
         }
     }
@@ -266,8 +241,9 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     }
 }
 //MARK: - EXTENTION
-extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if setValue == "Location" {
             if filterlocations?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
@@ -291,7 +267,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 return filtercusin?.count ?? 0
             }
             
-        } else if setValue == "Popular" {
+        } else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
             if filterHighilyRatedBarsRestos?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
             } else {
@@ -366,7 +342,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.cosmosView.rating = Double(filterlocations?[indexPath.row].avgRating ?? 0)
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
-            cell.offerTimings = fetchresto
+            cell.offerTimings = filterlocations?[indexPath.row].type == 1 ? fetchresto : fetchresto.unique(map: {$0.offerID})
             cell.offerCollection.reloadData()
         } else if setValue == "Category" {
             let imageIndex = (imageURL) + (filterCategory?[indexPath.row].profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
@@ -379,7 +355,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblRaitingCount.text = "(\(filterCategory?[indexPath.row].ratingCount?.description ?? "0"))"
            // let fetchresto = Store.screenType == 1 ? filterCategory?[indexPath.row].offers ?? [] : filterCategory?[indexPath.row].offers?.unique(map: {$0.offer?.id ?? 0}) ?? []
             let fetchresto = filterCategory?[indexPath.row].offers?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
-            cell.offerTimings = fetchresto
+            cell.offerTimings = filterCategory?[indexPath.row].type == 1 ? fetchresto : fetchresto.unique(map: {$0.offerID})
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
@@ -433,7 +409,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblRaitingCount.text = "(\(filtercusin?[indexPath.row].ratingCount?.description ?? "0"))"
             cell.cosmosView.rating = Double(filtercusin?[indexPath.row].avgRating ?? 0)
             let fetchresto = filtercusin?[indexPath.row].timeSlots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
-            cell.offerTimings = fetchresto
+            cell.offerTimings = filtercusin?[indexPath.row].type == 1 ? fetchresto : fetchresto.unique(map: {$0.offerID})
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
@@ -474,7 +450,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             
             
         }
-        else if setValue == "Popular" {
+        else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
             let data = filterHighilyRatedBarsRestos?[indexPath.row]
             let imageIndex = (imageURL) + (data?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -488,7 +464,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let fetchresto = data?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
           //  cell.lblRaitingCount.text = "(\(data?.ratingCount?.description ?? "0"))"
             
-            cell.offerTimings = fetchresto
+            cell.offerTimings = data?.type == 1 ? fetchresto : fetchresto.unique(map: {$0.offerID})
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
@@ -539,7 +515,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.cosmosView.rating = Double(data?.avgRating ?? 0)
             let fetchresto = data?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
           //  cell.lblRaitingCount.text = "(\(data?.ratingCount?.description ?? "0"))"
-            cell.offerTimings = fetchresto
+            cell.offerTimings = data?.type == 1 ?  fetchresto : fetchresto.unique(map: {$0.offerID})
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
@@ -589,7 +565,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             cell.cosmosView.rating = Double(filtertheme?[indexPath.row].avgRating ?? 0)
             let fetchresto = filtertheme?[indexPath.row].timeSlots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}) ?? []
             cell.lblRaitingCount.text = "(\(filtertheme?[indexPath.row].ratingCount?.description ?? "0"))"
-            cell.offerTimings = fetchresto
+            cell.offerTimings = filtertheme?[indexPath.row].type == 1 ? fetchresto : fetchresto.unique(map: {$0.offerID})
             cell.offerCollectionHeight.constant = fetchresto.count == 0 ? 0 : 56
             cell.layoutIfNeeded()
             cell.offerCollection.reloadData()
@@ -656,7 +632,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filtercusin?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
-        } else if setValue == "Popular"{
+        } else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterHighilyRatedBarsRestos?[indexPath.row].id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)

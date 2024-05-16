@@ -61,11 +61,11 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
             }
             cell.titleLbl.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         } else {
-            cell.titleLbl.text = "\(offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? "")"
+            cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 8.0)
+            cell.titleLbl.text = "\(offerTimings?[indexPath.row].offer?.openTime ?? "")-\(offerTimings?[indexPath.row].offer?.closeTime ?? "")"
             
         }
         
-//        cell.lblOfferPrecntage.text = ""
         
         
         return cell

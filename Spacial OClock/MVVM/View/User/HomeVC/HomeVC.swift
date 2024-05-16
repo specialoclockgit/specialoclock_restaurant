@@ -115,17 +115,20 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     
     func setData(type: Int) {
         self.sectionArray.removeAll()
-        self.viewModel.homeApi(type: type, country: self.getcountry, city: self.getcity, state: self.getstate,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.timeZone) { (objData) in
+        
+        self.viewModel.homeApiNew(lat: self.lat ?? 0.0, long: self.long ?? 0.0) { resp in
+            self.locationManager.stopUpdatingLocation()
+            self.lblLocation.text = resp?.city ?? ""
+            self.getcity = resp?.city ?? ""
+            self.getcountry = resp?.country ?? ""
+            self.getstate = resp?.state ?? ""
+            self.lat = Double(resp?.latitude ?? "")
+            self.long = Double(resp?.longitude ?? "")
+            self.viewModel.homeApi(type: type, country: self.getcountry, city: self.getcity, state: self.getstate,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.timeZone) { (objData) in
             
             self.sectionArray.removeAll()
             self.nearBy = objData?.nearby_restaurants ?? []
             self.getalllocations()
-            
-            self.lblLocation.text = objData?.nearbyLocations?.city ?? ""
-            self.getcity = objData?.nearbyLocations?.city ?? ""
-            self.getcountry = objData?.nearbyLocations?.country ?? ""
-            self.getstate = objData?.nearbyLocations?.state ?? ""
-            
             
             if objData?.location?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Location",objArray: objData?.location ?? [],image: "PIN")
@@ -141,14 +144,30 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
                 let obj = SectionModel(name: "Cuisines",objArray: objData?.cuisine ?? [],image: "soup")
                 self.sectionArray.append(obj)
             }
-            
-            if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
-                if let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0}), filterArray.count != 0 {
-                    let obj = SectionModel(name: "Popular",objArray: filterArray ,image: "Popular")
-                    self.sectionArray.append(obj)
+                if type == 1 {
+                    if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
+                        if let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0}), filterArray.count != 0 {
+                            let obj = SectionModel(name: "Popular",objArray: filterArray ,image: "Popular")
+                            self.sectionArray.append(obj)
+                        }
+                    }
+                } else  {
+                    if objData?.clubBarListing?.barListing?.count ?? 0 != 0 {
+                        if let filterArray = objData?.clubBarListing?.barListing?.filter({$0.avgRating != 0}), filterArray.count != 0 {
+                            let obj = SectionModel(name: "Popular Bar",objArray: filterArray ,image: "Popular")
+                            self.sectionArray.append(obj)
+                        }
+                    }
+                    
+                    if objData?.clubBarListing?.clubListing?.count ?? 0 != 0 {
+                        if let filterArray = objData?.clubBarListing?.clubListing?.filter({$0.avgRating != 0}), filterArray.count != 0 {
+                            let obj = SectionModel(name: "Popular Club",objArray: filterArray ,image: "Popular")
+                            self.sectionArray.append(obj)
+                        }
+                    }
+                    
                 }
-               
-            }
+            
             
             if objData?.banners?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Banner",objArray: objData?.banners ?? [],image: "")
@@ -174,7 +193,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
             
         }
     }
-    
+    }
     //MARK: - ACTIONS
     @IBAction func btnLocationAct(_ sender : UIButton){
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
@@ -315,6 +334,12 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             } else if sectionArray[indexPath.section].name == "A-Z" {
                 cell.allresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
+            }else if sectionArray[indexPath.section].name == "Popular Bar" {
+                cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
+                cell.collView.reloadData()
+            } else if sectionArray[indexPath.section].name == "Popular Club" {
+                cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
+                cell.collView.reloadData()
             }
             return cell
         }
@@ -323,7 +348,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sectionArray[indexPath.section].name == "Banner" {
             return CGFloat(260)
-        } else if sectionArray[indexPath.section].name == "Popular" {
+        } else if sectionArray[indexPath.section].name == "Popular" || sectionArray[indexPath.section].name == "Popular Bar" || sectionArray[indexPath.section].name == "Popular Club"{
             if sectionArray[indexPath.section].objArray?.count  ==  0{
                 return CGFloat(0)
             }else{
@@ -380,9 +405,8 @@ extension HomeVC {
             screen.getcountry = self.getcountry
             screen.iconImg = sectionArray[sender.tag].image ?? ""
             self.navigationController?.pushViewController(screen, animated: true)
-            
+           
         case "Popular" :
-
             let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
             vc.highilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.filterHighilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
@@ -392,7 +416,27 @@ extension HomeVC {
             vc.country = self.getcountry
             vc.city = self.getcity
             self.navigationController?.pushViewController(vc, animated: true)
-            
+        case "Popular Club" :
+            let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            vc.highilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.filterHighilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.lblName =  ""
+            vc.setValue = "Popular Club"
+            vc.setimage = "Popular"
+            vc.country = self.getcountry
+            vc.city = self.getcity
+            self.navigationController?.pushViewController(vc, animated: true)
+        case "Popular Bar" :
+
+            let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            vc.highilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.filterHighilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.lblName =  ""
+            vc.setValue = "Popular Bar"
+            vc.setimage = "Popular"
+            vc.country = self.getcountry
+            vc.city = self.getcity
+            self.navigationController?.pushViewController(vc, animated: true)
         case "Theme" :
             let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
             screen.setvalue = sectionArray[sender.tag].name ?? ""

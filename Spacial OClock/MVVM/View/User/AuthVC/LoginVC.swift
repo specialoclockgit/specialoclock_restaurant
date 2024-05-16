@@ -76,9 +76,13 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                         vc.heading = "Restaurant Profile"
                         vc.name = "Restaurant Name"
                         UserDefaults.standard.set("Restaurant", forKey: "name")
-                    }else{
-                        vc.heading = "Pub & Bar Profile"
-                        vc.name = "Bar/Club Name"
+                    }else  if self.restoselctStatus == 2{
+                        vc.heading = "Club Profile"
+                        vc.name = "Club Name"
+                        UserDefaults.standard.set("Club", forKey: "name")
+                    }else {
+                        vc.heading = "Bar Profile"
+                        vc.name = "Bar Name"
                         UserDefaults.standard.set("Bar", forKey: "name")
                     }
                     UserDefaults.standard.set(self.restoselctStatus, forKey: "status")

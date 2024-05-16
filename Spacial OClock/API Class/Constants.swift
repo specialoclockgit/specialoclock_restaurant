@@ -106,6 +106,7 @@ enum API: String{
     case roomLeaderboad      = "leaderboard"
     case leaderboard         = "userQuizResult"
     case home                = "home"
+    case nearbyLocation = "nearbyLocation"
     case theme_UserRestro    = "theme_UserRestro"
     case product_details = "fetch_resto_by_id"
     case liked_listing = "liked_listing"

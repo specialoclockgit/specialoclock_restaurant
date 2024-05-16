@@ -64,7 +64,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             return objArray[collView.tag].objArray?.count ?? 0
         }else if objArray[collView.tag].name == "Location" {
             return objArray[collView.tag].objArray?.count ?? 0
-        }else if objArray[collView.tag].name == "Popular" {
+        }else if objArray[collView.tag].name == "Popular" || objArray[collView.tag].name == "Popular Bar" || objArray[collView.tag].name == "Popular Club"{
             return objArray[collView.tag].objArray?.count ?? 0
         }else if objArray[collView.tag].name == "Theme" {
             return objArray[collView.tag].objArray?.count ?? 0
@@ -120,7 +120,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
             cell.viewReview.isHidden = true
-        } else if objArray[collView.tag].name == "Popular" {
+        } else if objArray[collView.tag].name == "Popular" || objArray[collView.tag].name == "Popular Bar" || objArray[collView.tag].name == "Popular Club" {
             cell.view1.isHidden = true
             cell.view2.isHidden = false
             cell.lblRestName.text = heishtresto[indexPath.row].name ?? ""
@@ -129,7 +129,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             let celldata = heishtresto[indexPath.row].time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""})
             cell.collHeight.constant = celldata?.count == 0 ? 0 : 60
             cell.layoutIfNeeded()
-            cell.offerTimings = celldata
+            cell.offerTimings = heishtresto[indexPath.row].type == 1 ?  celldata : celldata?.unique(map: {$0.offerID})
             cell.collVw.reloadData()
             cell.imgLocaiton.showIndicator(baseUrl: imageURL, imageUrl: self.heishtresto[indexPath.row].profileImage ?? "")
             cell.lblRating.text = "\(heishtresto[indexPath.row].avgRating ?? 0)"
@@ -167,7 +167,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             cell.lblRestTiming.text = "\(allresto[indexPath.row].openTime ?? "") - \(allresto[indexPath.row].closeTime ?? "")"
             let celldata = allresto[indexPath.row].time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""})
             cell.lblRating.text = "\(allresto[indexPath.row].avgRating ?? 0)"
-            cell.offerTimings = celldata
+            cell.offerTimings = allresto[indexPath.row].type == 1 ? celldata : celldata?.unique(map: {$0.offerID})
             cell.collHeight.constant = celldata?.count == 0 ? 0 : 60
             cell.collVw.reloadData()
             cell.layoutIfNeeded()
@@ -191,7 +191,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if objArray[collView.tag].name == "A-Z" {
             return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 260)
-        } else if objArray[collView.tag].name == "Popular" {
+        } else if objArray[collView.tag].name == "Popular" || objArray[collView.tag].name == "Popular Bar" || objArray[collView.tag].name == "Popular Club"{
             return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 260)
         } else {
             return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 228)
@@ -236,7 +236,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.city = self.city
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
-        else if objArray[collView.tag].name == "Popular" {
+        else if objArray[collView.tag].name == "Popular" || objArray[collView.tag].name == "Popular Bar" || objArray[collView.tag].name == "Popular Club"{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
             vc.ProductID = heishtresto[indexPath.row].id ?? 0
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)

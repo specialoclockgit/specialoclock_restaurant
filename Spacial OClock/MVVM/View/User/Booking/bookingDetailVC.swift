@@ -17,7 +17,7 @@ struct ModelItemDetail {
 }
 
 class bookingDetailVC: UIViewController {
-
+    @IBOutlet weak var discountVW: UIView!
     @IBOutlet weak var labelDiscuount: UILabel!
     //MARK: - OUTLETS
     @IBOutlet weak var lblStatus: UILabel!
@@ -154,7 +154,9 @@ class bookingDetailVC: UIViewController {
                // self.bookingSlotStartEndTime.text = "Offer from \(fetchdata?.restrorant?.offers?.first?.openTime ?? "") to \(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
                 self.lblSpeOffer.text = fetchdata?.restrorant?.offers?.first?.menuName ?? ""
                 self.lblBookingtime.text = "\(fetchdata?.restrorant?.offers?.first?.openTime ?? "")-\(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
+                self.discountVW.isHidden = true
             } else {
+                self.discountVW.isHidden = false
                 self.labelDiscuount.text = "\(fetchdata?.offer_discount ?? "")%"
                 self.lblSpeOffer.text = "\(fetchdata?.offerName ?? "")  (-\(fetchdata?.offer_discount ?? "")%)"
                 //self.bookingSlotStartEndTime.text = fetchdata?.bookingSlot ?? ""

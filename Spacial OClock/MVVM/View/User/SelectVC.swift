@@ -75,8 +75,8 @@ class SelectVC: UIViewController {
         } else {
             let stry = UIStoryboard(name: "Main", bundle: nil)
              let vc = stry.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-            vc.selectStatus = self.selectStatus
-            vc.restoselctStatus = self.restoselctStatus
+             vc.selectStatus = self.selectStatus
+             vc.restoselctStatus = self.restoselctStatus
              self.navigationController?.pushViewController(vc, animated: true)
         }
     }
