@@ -193,7 +193,7 @@ extension NewBookingVC : FSCalendarDelegate , FSCalendarDataSource {
         df.locale = Locale.current
         currentDate = df.string(from: date)
         self.navigationController?.popViewController(animated: true)
-        self.dateCallBack?(currentDate ?? "")
+        self.dateCallBack?(currentDate )
     }
     
     

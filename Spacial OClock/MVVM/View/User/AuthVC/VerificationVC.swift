@@ -49,6 +49,7 @@ class VerificationVC: UIViewController {
                 vc.modalPresentationStyle = .overFullScreen
                 vc.callBack = {
                     Store.autoLogin = true
+                    Store.screenType = 1
                     let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
                     let redViewController = mainStoryBoard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
                     let nav = UINavigationController.init(rootViewController: redViewController)

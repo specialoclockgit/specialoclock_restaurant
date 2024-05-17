@@ -68,12 +68,10 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
         self.isSelected = true
-        self.lblLocation.text = self.getcity
-        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
     }
     
-    deinit{
+    deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -86,6 +84,17 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     self.locationManagerDidChangeAuthorization(self.locationManager)
        
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden  = false
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        self.tbHomeData.layoutSubviews()
+        self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         self.requestLocationPermission()
@@ -100,11 +109,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
         locationManager.requestWhenInUseAuthorization()
         
     }
-    override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden  = false
-        self.tbHomeData.layoutSubviews()
-        self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
-    }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.first?.view == self.view {
@@ -114,22 +119,30 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     
     
     func setData(type: Int) {
-        self.sectionArray.removeAll()
+        if self.lblLocation.text == "" {
+            self.viewModel.homeApiNew(lat: self.lat ?? 0.0, long: self.long ?? 0.0) { resp in
+                self.locationManager.stopUpdatingLocation()
+                self.lblLocation.text = resp?.city ?? ""
+                self.getcity = resp?.city ?? ""
+                self.getcountry = resp?.country ?? ""
+                self.getstate = resp?.state ?? ""
+                self.lat = Double(resp?.latitude ?? "")
+                self.long = Double(resp?.longitude ?? "")
+                self.setListingData(type: type)
+            }
+        } else {
+            self.setListingData(type: type)
+        }
         
-        self.viewModel.homeApiNew(lat: self.lat ?? 0.0, long: self.long ?? 0.0) { resp in
-            self.locationManager.stopUpdatingLocation()
-            self.lblLocation.text = resp?.city ?? ""
-            self.getcity = resp?.city ?? ""
-            self.getcountry = resp?.country ?? ""
-            self.getstate = resp?.state ?? ""
-            self.lat = Double(resp?.latitude ?? "")
-            self.long = Double(resp?.longitude ?? "")
-            self.viewModel.homeApi(type: type, country: self.getcountry, city: self.getcity, state: self.getstate,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.timeZone) { (objData) in
-            
+    }
+    
+    
+    
+    func setListingData(type:Int){
+        self.viewModel.homeApi(type: type, country: self.getcountry, city: self.getcity, state: self.getstate,lat: self.lat ?? 0.0, long: self.long ?? 0.0, timezone: self.timeZone) { (objData) in
             self.sectionArray.removeAll()
             self.nearBy = objData?.nearby_restaurants ?? []
             self.getalllocations()
-            
             if objData?.location?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Location",objArray: objData?.location ?? [],image: "PIN")
                 self.sectionArray.append(obj)
@@ -144,31 +157,28 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
                 let obj = SectionModel(name: "Cuisines",objArray: objData?.cuisine ?? [],image: "soup")
                 self.sectionArray.append(obj)
             }
-                if type == 1 {
-                    if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
-                        if let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0}), filterArray.count != 0 {
-                            let obj = SectionModel(name: "Popular",objArray: filterArray ,image: "Popular")
-                            self.sectionArray.append(obj)
-                        }
+            if type == 1 {
+                if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
+                    if let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0}), filterArray.count != 0 {
+                        let obj = SectionModel(name: "Popular",objArray: filterArray ,image: "Popular")
+                        self.sectionArray.append(obj)
                     }
-                } else  {
-                    if objData?.clubBarListing?.barListing?.count ?? 0 != 0 {
-                        if let filterArray = objData?.clubBarListing?.barListing?.filter({$0.avgRating != 0}), filterArray.count != 0 {
-                            let obj = SectionModel(name: "Popular Bar",objArray: filterArray ,image: "Popular")
-                            self.sectionArray.append(obj)
-                        }
-                    }
-                    
-                    if objData?.clubBarListing?.clubListing?.count ?? 0 != 0 {
-                        if let filterArray = objData?.clubBarListing?.clubListing?.filter({$0.avgRating != 0}), filterArray.count != 0 {
-                            let obj = SectionModel(name: "Popular Club",objArray: filterArray ,image: "Popular")
-                            self.sectionArray.append(obj)
-                        }
-                    }
-                    
                 }
-            
-            
+            } else  {
+                if objData?.clubBarListing?.barListing?.count ?? 0 != 0 {
+                    if let filterArray = objData?.clubBarListing?.barListing?.filter({$0.avgRating != 0}), filterArray.count != 0 {
+                        let obj = SectionModel(name: "Popular Bar",objArray: filterArray ,image: "Popular")
+                        self.sectionArray.append(obj)
+                    }
+                }
+                
+                if objData?.clubBarListing?.clubListing?.count ?? 0 != 0 {
+                    if let filterArray = objData?.clubBarListing?.clubListing?.filter({$0.avgRating != 0}), filterArray.count != 0 {
+                        let obj = SectionModel(name: "Popular Club",objArray: filterArray ,image: "Popular")
+                        self.sectionArray.append(obj)
+                    }
+                }
+            }
             if objData?.banners?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Banner",objArray: objData?.banners ?? [],image: "")
                 self.sectionArray.append(obj)
@@ -179,10 +189,24 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
                 self.sectionArray.append(obj)
             }
             
-            if objData?.all_bars_restos?.count ?? 0 != 0 {
-                let obj = SectionModel(name: "A-Z",objArray: objData?.all_bars_restos ?? [],image: "9411889")
-                self.sectionArray.append(obj)
+            if type == 1 {
+                if objData?.all_bars_restos?.count ?? 0 != 0 {
+                    let obj = SectionModel(name: "A-Z",objArray: objData?.all_bars_restos ?? [],image: "9411889")
+                    self.sectionArray.append(obj)
+                }
+            } else {
+                if objData?.atozListing?.atozbarListing?.count ?? 0 != 0 {
+                    let obj = SectionModel(name: "A-Z Bar",objArray: objData?.atozListing?.atozbarListing ?? [],image: "9411889")
+                    self.sectionArray.append(obj)
+                }
+                
+                if objData?.atozListing?.atozclubListing?.count ?? 0 != 0 {
+                    let obj = SectionModel(name: "A-Z Club",objArray: objData?.atozListing?.atozclubListing ?? [],image: "9411889")
+                    self.sectionArray.append(obj)
+                }
             }
+            
+            
             self.mapIcon.isHidden = false
             self.mapTitleLbl.isHidden = false
             self.viewModel.homeData = objData
@@ -190,14 +214,16 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
             self.tabBarController?.tabBar.isHidden  = false
             self.tbHomeData.layoutSubviews()
             self.tbHomeData.reloadData()
-            
         }
     }
-    }
+    
+    
+    
+    
     //MARK: - ACTIONS
-    @IBAction func btnLocationAct(_ sender : UIButton){
+    @IBAction func btnLocationAct(_ sender : UIButton) {
         let serviceStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-        let vc = serviceStoryboard.instantiateViewController(withIdentifier: "LocationsVC") as! LocationsVC
+        guard let vc = serviceStoryboard.instantiateViewController(withIdentifier: "LocationsVC") as? LocationsVC else { return }
         vc.hidesBottomBarWhenPushed = true
         vc.callBack = {  [weak self] countryy, statee, cityy, lat, long in
             self?.lblLocation.text = cityy.capitalized
@@ -247,7 +273,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     }
     
     @IBAction func btnMapView(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as! mapViewController
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "mapViewController") as? mapViewController else { return }
         vc.iscomeFrom = 1
         vc.nearBy = self.nearBy.filter({ $0.offer_available == 1})
         vc.latitude = self.lat ?? 0.0
@@ -256,8 +282,10 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     }
     
     @IBAction func btnSearch(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "SearchVC") as? SearchVC else { return }
         vc.city = self.getcity
+        vc.state = self.getstate
+        vc.country = self.getcountry
         vc.type = Store.screenType ?? 1
         vc.latitude = self.lat ?? 0.0
         vc.longitude = self.long ?? 0.0
@@ -265,7 +293,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     }
     
     @IBAction func btnProfileAct(_ sender : UIButton){
-        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.UserProfileVC) as! UserProfileVC
+        guard let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.UserProfileVC) as? UserProfileVC else { return }
         screen.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(screen, animated: true)
     }
@@ -283,7 +311,8 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tbHomeData.dequeueReusableCell(withIdentifier: "HomeHeaderTVC") as! HomeHeaderTVC
+        guard let cell = tbHomeData.dequeueReusableCell(withIdentifier: "HomeHeaderTVC") as? HomeHeaderTVC else {
+            return UIView() }
         let data = sectionArray[section]
         cell.lblHeading.text = data.name
         cell.img.image =  UIImage(named: data.image ?? "")
@@ -299,11 +328,15 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if sectionArray[indexPath.section].name == "Banner" {
-            let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellImageViewTB, for: indexPath) as! CellImageViewTB
+            guard let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellImageViewTB, for: indexPath) as? CellImageViewTB else {
+                return UITableViewCell()
+            }
             cell.initializeBannerData(resp: self.viewModel.homeData?.banners)
             return cell
         } else {
-            let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellHomeTB, for: indexPath) as! CellHomeTB
+            guard let cell = tbHomeData.dequeueReusableCell(withIdentifier: Cell.CellHomeTB, for: indexPath) as? CellHomeTB else {
+                return UITableViewCell()
+            }
             cell.city = self.getcity
             cell.country = self.getcountry
             cell.lblHeading.text = sectionArray[indexPath.section].name
@@ -334,6 +367,12 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             } else if sectionArray[indexPath.section].name == "A-Z" {
                 cell.allresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
+            } else if sectionArray[indexPath.section].name == "A-Z Club" {
+                cell.allresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
+                cell.collView.reloadData()
+            } else if sectionArray[indexPath.section].name == "A-Z Bar"{
+                cell.allresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
+                cell.collView.reloadData()
             }else if sectionArray[indexPath.section].name == "Popular Bar" {
                 cell.heishtresto = sectionArray[indexPath.section].objArray as? [AllBarsResto] ?? []
                 cell.collView.reloadData()
@@ -354,7 +393,7 @@ extension HomeVC : UITableViewDelegate , UITableViewDataSource {
             }else{
                 return CGFloat(260)
             }
-        } else if sectionArray[indexPath.section].name == "A-Z" {
+        } else if sectionArray[indexPath.section].name == "A-Z" || sectionArray[indexPath.section].name == "A-Z Club" || sectionArray[indexPath.section].name == "A-Z Bar"{
             if sectionArray[indexPath.section].objArray?.count  ==  0{
                 return CGFloat(0)
             }else{
@@ -377,7 +416,7 @@ extension HomeVC {
     @objc func btnSeeMoreAct(sender : UIButton){
         switch sectionArray[sender.tag].name {
         case "Location" :
-            let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
+            guard let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as? newSeeMoreVC else { return }
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.location = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
             screen.filterlocation = sectionArray[sender.tag].objArray as? [HomeListLocation] ?? []
@@ -387,7 +426,7 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Cuisines" :
-            let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
+            guard let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as? newSeeMoreVC else { return }
             screen.setvalue = "Cuisines"
             screen.cuisine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
             screen.filterCusine = sectionArray[sender.tag].objArray as? [Cuisine] ?? []
@@ -397,7 +436,7 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "Category" :
-            let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
+            guard let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as? newSeeMoreVC else { return }
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.category = sectionArray[sender.tag].objArray as? [Category] ?? []
             screen.filtercategory = sectionArray[sender.tag].objArray as? [Category] ?? []
@@ -407,7 +446,7 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
            
         case "Popular" :
-            let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as? DetailItemViewVC else { return }
             vc.highilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.filterHighilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.lblName =  ""
@@ -417,7 +456,7 @@ extension HomeVC {
             vc.city = self.getcity
             self.navigationController?.pushViewController(vc, animated: true)
         case "Popular Club" :
-            let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as? DetailItemViewVC else { return }
             vc.highilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.filterHighilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.lblName =  ""
@@ -427,8 +466,7 @@ extension HomeVC {
             vc.city = self.getcity
             self.navigationController?.pushViewController(vc, animated: true)
         case "Popular Bar" :
-
-            let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as? DetailItemViewVC else { return }
             vc.highilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.filterHighilyRatedBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.lblName =  ""
@@ -438,7 +476,7 @@ extension HomeVC {
             vc.city = self.getcity
             self.navigationController?.pushViewController(vc, animated: true)
         case "Theme" :
-            let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as! newSeeMoreVC
+            guard let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as? newSeeMoreVC else { return }
             screen.setvalue = sectionArray[sender.tag].name ?? ""
             screen.themeArr = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
             screen.filterthemeAry = sectionArray[sender.tag].objArray as? [ThemeData] ?? []
@@ -448,8 +486,7 @@ extension HomeVC {
             self.navigationController?.pushViewController(screen, animated: true)
             
         case "A-Z" :
-            
-            let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as? DetailItemViewVC else { return }
             vc.allBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.filterAllBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
             vc.lblName =  ""
@@ -459,6 +496,27 @@ extension HomeVC {
             vc.city = self.getcity
             self.navigationController?.pushViewController(vc, animated: true)
             
+        case "A-Z Club" :
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as? DetailItemViewVC else { return }
+            vc.allBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.filterAllBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.lblName =  ""
+            vc.setValue = "A-Z Club"
+            vc.setimage = "9411889"
+            vc.country = self.getcountry
+            vc.city = self.getcity
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        case "A-Z Bar" :
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as? DetailItemViewVC else { return }
+            vc.allBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.filterAllBarsRestos = sectionArray[sender.tag].objArray as? [AllBarsResto] ?? []
+            vc.lblName =  ""
+            vc.setValue = "A-Z Bar"
+            vc.setimage = "9411889"
+            vc.country = self.getcountry
+            vc.city = self.getcity
+            self.navigationController?.pushViewController(vc, animated: true)
             
         default:
             debugPrint("default btnSeeMoreAct")
@@ -611,22 +669,22 @@ extension HomeVC {
         let nearbyWithOffers = nearBy.filter { $0.offerPercentage != nil && !$0.offerPercentage!.isEmpty }
            for index in 0..<(nearbyWithOffers.count) {
                if let returnedPlace = nearbyWithOffers[index] as? NearbyRestaurant {
-                   var percentage = ""
+                  
                    var latitude = "0.0"
                    var longitude = "0.0"
-                   var image = ""
-                   if let name = returnedPlace.offerPercentage {
-                       percentage = name
-                   }
+                   
+//                   if let name = returnedPlace.offerPercentage {
+//                       percentage = name
+//                   }
                    if let latis = returnedPlace.latitude {
                        latitude = latis
                    }
                    if let longis = returnedPlace.longitude {
                        longitude = longis
                    }
-                   if let img = returnedPlace.profileImage {
-                       image = img
-                   }
+//                   if let img = returnedPlace.profileImage {
+//                       image = img
+//                   }
                    let offset = 0.0001
                    let offsetLat = (Double(latitude) ?? 0) + Double.random(in: -offset...offset)
                    let offsetLng = (Double(longitude) ?? 0) + Double.random(in: -offset...offset)
@@ -638,14 +696,15 @@ extension HomeVC {
                    //checkIfMutlipleCoordinates(latitude: Float(latitude) ?? 0.0, longitude: Float(longitude) ?? 0.0)
                    
                    let view = Bundle.main.loadNibNamed("CustomMarker", owner: nil, options: nil)?.first as! CustomMarker
-                   if Store.screenType == 1 {
-                       view.offerLbl.text = "\(percentage)%"
-                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
-                   }else {
-                       view.providerImageView.isHidden = false
-                       view.lblPersot.text = ""
-                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
-                   }
+                   view.setupData(body: nearbyWithOffers[index])
+//                   if Store.screenType == 1 {
+//                       view.offerLbl.text = "\(percentage)%"
+//                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
+//                   }else {
+//                       view.providerImageView.isHidden = false
+//                       view.lblPersot.text = ""
+//                       view.restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: image.replacingOccurrences(of: " ", with: "%20"))
+//                   }
                    
                    marker.iconView = view
                    marker.map = self.gmsMapView
@@ -657,10 +716,9 @@ extension HomeVC {
                    let camera1 = GMSCameraPosition.camera(withTarget: location, zoom: 20)
                    gmsMapView.animate(to: camera1)
                } else {
-                   let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearBy.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearBy.first?.longitude ?? "" ) ?? 0.0 ), zoom: 11.5)
+                   let camera2 = GMSCameraPosition.camera(withLatitude: CLLocationDegrees(Double(nearbyWithOffers.first?.latitude ?? "" ) ?? 0.0), longitude: CLLocationDegrees(Double(nearbyWithOffers.first?.longitude ?? "" ) ?? 0.0 ), zoom: 11.5)
                    gmsMapView.animate(to: camera2)
                }
            }
-           
        }
 }

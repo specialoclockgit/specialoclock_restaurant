@@ -20,6 +20,7 @@ class CustomMarker: UIView {
     @IBOutlet weak var providerImageView: UIImageView!
     @IBOutlet weak var restroImgVw: UIImageView!
     @IBOutlet weak var offerLbl: UILabel!
+    @IBOutlet weak var offerBgImgVw: UIImageView!
     var dataBody: NearbyRestaurant?
     var callBack: (()->())?
     override func awakeFromNib() {
@@ -30,21 +31,27 @@ class CustomMarker: UIView {
     
     func setupData(body:NearbyRestaurant?){
         restroImgVw.showIndicator(baseUrl: imageURL, imageUrl: body?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+        offerBgImgVw.isHidden = Store.screenType == 1 ? false : true
         restroName.text = body?.name ?? ""
         locationLbl.text = body?.location ?? ""
         timingLbl.text = "\(body?.openTime ?? "")-\(body?.closeTime ?? "")"
-        if let offerData = body?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}), offerData.count > 0 {
-            if offerData.last?.isFifty == 1 {
-                offerLbl.text = "50%"
-            } else if offerData.last?.custom_discount != 0 {
-                offerLbl.text = "\(offerData.last?.custom_discount ?? 0)%"
-            }else {
-                offerLbl.text = "\(offerData.last?.offer?.offerPrice ?? "0")%"
+        
+        if Store.screenType == 1 {
+            if let offerData = body?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""}), offerData.count > 0 {
+                if offerData.last?.isFifty == 1 {
+                    offerLbl.text = "50%"
+                } else if offerData.last?.custom_discount != 0 {
+                    offerLbl.text = "\(offerData.last?.custom_discount ?? 0)%"
+                }else {
+                    offerLbl.text = "\(offerData.last?.offer?.offerPrice ?? "0")%"
+                }
+                
             }
-            
+        }else {
+            offerLbl.text = ""
         }
-       // self.dataBody = body
-       // self.collVw.reloadData()
+        
+       
     }
     
     

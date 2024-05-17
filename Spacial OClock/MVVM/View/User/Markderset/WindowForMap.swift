@@ -28,7 +28,8 @@ class WindowForMap: UIView {
         restroName.text = body?.name ?? ""
         locationLbl.text = body?.location ?? ""
         timingLbl.text = "\(body?.openTime ?? "")-\(body?.closeTime ?? "")"
-        self.dataBody = body?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""})
+        let slotData = body?.time_slots?.sorted(by: {$0.startTime ?? "" < $1.startTime ?? ""})
+        self.dataBody = body?.type == 1 ? slotData : slotData?.unique(map: {$0.offerID})
         self.collVw.reloadData()
     }
 
@@ -54,7 +55,7 @@ extension WindowForMap: UICollectionViewDelegate, UICollectionViewDataSource, UI
             }
             cell.titleLbl.text = "\((celldata?.startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         } else {
-            cell.titleLbl.text =  "\(celldata?.startTime?.components(separatedBy: " ").first ?? "")"
+            cell.titleLbl.text =  "\(celldata?.offer?.openTime ?? "")"
         }
         
         return cell

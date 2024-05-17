@@ -60,7 +60,7 @@ class CellHomeCV: UICollectionViewCell {
     }
     @IBAction func btnNectAct(sender : UIButton){
         cellDelegate?.btnNextTag(sender: sender)
-        switch sender.tag{
+        switch sender.tag {
         case 0 :
             debugPrint("Case 0 Run")
         
@@ -80,10 +80,8 @@ extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             return UICollectionViewCell()
             
         }
-        
-        
-        
         if Store.screenType == 1 {
+         //   cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 12.0)
             var percentage = String()
             if offerTimings?[indexPath.row].isFifty == 1 {
                 percentage = "-\(50)%"
@@ -94,15 +92,11 @@ extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             }
             cell.titleLbl.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         } else {
-            cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 8.0)
+          //  cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 9.0)
             cell.titleLbl.text = "\(offerTimings?[indexPath.row].offer?.openTime ?? "")-\(offerTimings?[indexPath.row].offer?.closeTime ?? "")"
-            
         }
         
-        
-        
-       
-        
+      
         return cell
     }
     
@@ -112,7 +106,12 @@ extension CellHomeCV : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.size.width / 4) - 6, height: 60)
+        if Store.screenType == 1 {
+            return CGSize(width: (collectionView.frame.size.width / 4) - 6, height: 60)
+        }else {
+            return CGSize(width: (collectionView.frame.size.width / 3) - 6, height: 60)
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 12

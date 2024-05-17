@@ -88,7 +88,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
                 self.CollectionView.reloadData()
             }
             
-        } else if setValue == "A-Z" {
+        } else if setValue == "A-Z" || setValue == "A-Z Bar" || setValue == "A-Z Club"{
             if Store.screenType != 1 {
                 tempAllBarsRestos = allBarsRestos
                 let clubData = allBarsRestos?.filter({$0.type == 2})
@@ -132,7 +132,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
             highilyRatedBarsRestos = clubData
             filterHighilyRatedBarsRestos = clubData
             self.CollectionView.reloadData()
-        } else if setValue == "A-Z"{
+        } else if setValue == "A-Z" || setValue == "A-Z Bar" || setValue == "A-Z Club"{
             allBarsRestos = tempAllBarsRestos
             let clubData = allBarsRestos?.filter({$0.type == 2})
             allBarsRestos = clubData
@@ -165,7 +165,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
             highilyRatedBarsRestos = clubData
             filterHighilyRatedBarsRestos = clubData
             self.CollectionView.reloadData()
-        } else if setValue == "A-Z"{
+        } else if setValue == "A-Z" || setValue == "A-Z Bar" || setValue == "A-Z Club"{
             allBarsRestos = tempAllBarsRestos
             let clubData = allBarsRestos?.filter({$0.type == 3})
             allBarsRestos = clubData
@@ -183,8 +183,8 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
                 obj.timeSlots?.reverse()
                 objModel[i] = obj
             }
-            self?.modal = objModel
-            self?.filtercusin = objModel
+            self?.modal = objModel.filter({$0.offerAvailable == 1})
+            self?.filtercusin = objModel.filter({$0.offerAvailable == 1})
                 self?.CollectionView.hideSkeleton()
             self?.CollectionView.reloadData()
         }
@@ -193,8 +193,8 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     //MARK: - THEME BY RESTO
     func theme_Resto_API(type:Int) {
         viewmodal.restoThemelistAPI(restoid: themeID, type: type,country: country,city: city) { [weak self] dataa in
-            self?.thememodla = dataa
-            self?.filtertheme = dataa
+            self?.thememodla = dataa?.filter({$0.offerAvailable == 1})
+            self?.filtertheme = dataa?.filter({$0.offerAvailable == 1})
                 self?.CollectionView.hideSkeleton()
             self?.CollectionView.reloadData()
         }
@@ -203,8 +203,8 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     //MARK: - CATEGORY BY GET RESTO LIST API
     func fetch_Category_REsto(type:Int){
         viewmodal.categoryBYResto(categoryID: cusinessID,country: country,city: city,type: type) { [weak self] dataaa in
-            self?.categoryModal = dataaa
-            self?.filterCategory = dataaa
+            self?.categoryModal = dataaa?.filter({$0.offerAvailable == 1})
+            self?.filterCategory = dataaa?.filter({$0.offerAvailable == 1})
                 self?.CollectionView.hideSkeleton()
             self?.CollectionView.reloadData()
         }
@@ -224,8 +224,8 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
             }
             
             
-            self?.location = objModel
-            self?.filterlocations = objModel
+            self?.location = objModel.filter({$0.offerAvailable == 1})
+            self?.filterlocations = objModel.filter({$0.offerAvailable == 1})
                 self?.CollectionView.hideSkeleton()
                 self?.CollectionView.reloadData()
             
@@ -274,7 +274,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 collectionView.backgroundView = nil
                 return filterHighilyRatedBarsRestos?.count ?? 0
             }
-        }else if setValue == "A-Z" {
+        }else if setValue == "A-Z" || setValue == "A-Z Bar" || setValue == "A-Z Club" {
             if filterAllBarsRestos?.count == 0 {
                 collectionView.setNoDataMessage("No data found")
             } else {
@@ -305,6 +305,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 vc.ProductID = self?.filterlocations?[indexPath.row].id ?? 0
                 vc.selectedOfferId = ID
+                vc.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             
@@ -327,7 +328,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                     cell.closeDateVw.isHidden = true
                 }
                 
-            }else {
+            } else {
+                //if isRestaurantClosed(now: Date(), openingTime: filterlocations?[indexPath.row].openTime ?? "", closingTime: filterlocations?[indexPath.row].closeTime ?? "") {}else{}
                 cell.whiteBlurVw.isHidden = true
                 cell.closeDateVw.isHidden = true
             }
@@ -368,6 +370,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 vc.ProductID = self?.filterCategory?[indexPath.row].id ?? 0
                 vc.selectedOfferId = ID
+                vc.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             
@@ -420,6 +423,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 vc.ProductID = self?.filtercusin?[indexPath.row].id ?? 0
                 vc.selectedOfferId = ID
+                vc.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             
@@ -474,6 +478,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 vc.ProductID = data?.id ?? 0
                 vc.selectedOfferId = ID
+                vc.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
 
@@ -502,7 +507,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
             }
 
         }
-        else if setValue == "A-Z"{
+        else if setValue == "A-Z" || setValue == "A-Z Bar" || setValue == "A-Z Club" {
             let data = filterAllBarsRestos?[indexPath.row]
             let imageIndex = (imageURL) + (data?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             cell.imgView.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -525,6 +530,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 vc.ProductID = data?.id ?? 0
                 vc.selectedOfferId = ID
+                vc.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
 
@@ -575,6 +581,7 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 vc.ProductID = self?.filtertheme?[indexPath.row].id ?? 0
                 vc.selectedOfferId = ID
+                vc.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             
@@ -608,41 +615,39 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
        return CGSize(width: collectionView.frame.width, height: 260)
-//        if setValue == "Location" {
-//            return filterlocations?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
-//        } else if setValue == "Category" {
-//            return filterCategory?[indexPath.row].offers?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
-//        } else if setValue == "Cuisines" {
-//            return filtercusin?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) :CGSize(width: collectionView.frame.width, height: 260)
-//        } else {
-//            return filtertheme?[indexPath.row].timeSlots?.count == 0 ? CGSize(width: collectionView.frame.width, height: 260) : CGSize(width: collectionView.frame.width, height: 260)
-//        }
+
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if setValue == "Location" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterlocations?[indexPath.row].id ?? 0
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else if setValue == "Category" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterCategory?[indexPath.row].id ?? 0
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else if setValue == "Cuisines" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filtercusin?[indexPath.row].id ?? 0
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterHighilyRatedBarsRestos?[indexPath.row].id ?? 0
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
-        } else if setValue == "A-Z"{
+        } else if setValue == "A-Z" || setValue == "A-Z Bar" || setValue == "A-Z Club"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterAllBarsRestos?[indexPath.row].id ?? 0
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filtertheme?[indexPath.row].id ?? 0
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -691,5 +696,36 @@ func blurEffect(image: UIImageView) {
     let processedImage = UIImage(cgImage: cgimg!)
     image.image = processedImage
 }
+
+
+
+import Foundation
+
+func isRestaurantClosed(now: Date, openingTime: String, closingTime: String) -> Bool {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm"
+    
+    guard let openTime = formatter.date(from: openingTime),
+          let closeTime = formatter.date(from: closingTime) else {
+        return true // Return true if there's an issue with parsing times
+    }
+    
+    // Convert now to hours and minutes only for comparison
+    let calendar = Calendar.current
+    let nowComponents = calendar.dateComponents([.hour, .minute], from: now)
+    let nowHour = nowComponents.hour ?? 0
+    let nowMinute = nowComponents.minute ?? 0
+    
+    // Construct Date objects for comparison
+    let nowDate = calendar.date(bySettingHour: nowHour, minute: nowMinute, second: 0, of: now) ?? Date()
+    
+    // Check if the current time is within opening and closing times
+    if nowDate >= openTime && nowDate <= closeTime {
+        return false // Restaurant is open
+    } else {
+        return true // Restaurant is closed
+    }
+}
+
 
 

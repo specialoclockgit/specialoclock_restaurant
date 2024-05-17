@@ -91,6 +91,7 @@ class mapViewController: UIViewController, GMSMapViewDelegate  {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let itemDetailsVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             itemDetailsVC.ProductID = self.nearBy[selectedindex].id ?? 0
+            itemDetailsVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(itemDetailsVC, animated: true)
         }
     }
@@ -229,6 +230,7 @@ extension mapViewController : GMUClusterRendererDelegate {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let itemDetailsVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 itemDetailsVC.ProductID = databody?.id ?? 0
+                itemDetailsVC.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(itemDetailsVC, animated: true)
         }
             vc.modalTransitionStyle = .crossDissolve

@@ -99,6 +99,7 @@ struct menuProductModalBody: Codable {
 // MARK: - Offerdetails
 struct Offerdetails: Codable {
     var id, restrorantBarID: Int?
+    var ageRestriction: Int?
     var offerName, description: String?
     var menuID: Int?
     var menuName, actualPrice, discountedPrice, offerPrice: String?
@@ -110,6 +111,7 @@ struct Offerdetails: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id
+        case ageRestriction = "age_restriction"
         case restrorantBarID = "restrorant_bar_id"
         case offerName = "offer_name"
         case description
@@ -132,6 +134,7 @@ struct Offerdetails: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decodeIfPresent(Int.self, forKey: .id)
         self.restrorantBarID = try container.decodeIfPresent(Int.self, forKey: .restrorantBarID)
+        self.ageRestriction = try container.decodeIfPresent(Int.self, forKey: .ageRestriction)
         self.offerName = try container.decodeIfPresent(String.self, forKey: .offerName)
         self.description = try container.decodeIfPresent(String.self, forKey: .description)
         self.menuID = try container.decodeIfPresent(Int.self, forKey: .menuID)

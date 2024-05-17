@@ -105,10 +105,12 @@ extension homeSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, U
          if setvalue == "Popular"{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = all_bars_restos[indexPath.row].id ?? 0
+             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = highily_rated_bars_restos[indexPath.row].id ?? 0
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

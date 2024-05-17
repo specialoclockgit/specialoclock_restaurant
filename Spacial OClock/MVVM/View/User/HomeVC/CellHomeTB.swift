@@ -68,7 +68,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             return objArray[collView.tag].objArray?.count ?? 0
         }else if objArray[collView.tag].name == "Theme" {
             return objArray[collView.tag].objArray?.count ?? 0
-        }else if objArray[collView.tag].name == "A-Z" {
+        }else if objArray[collView.tag].name == "A-Z" || objArray[collView.tag].name == "A-Z Bar" || objArray[collView.tag].name == "A-Z Club"{
             return objArray[collView.tag].objArray?.count ?? 0
         } else {
             return 0
@@ -138,6 +138,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 vc.ProductID = self.heishtresto[indexPath.row].id ?? 0
                 vc.selectedOfferId = restId
+                vc.hidesBottomBarWhenPushed = true
                 super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
             }
 
@@ -159,7 +160,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             let newRestoCount = count == 0 ? "\(count) Restaurants" : count == 1 ? "0\(count) Restaurant" : count < 9 ? "0\(count) Restaurants" : "\(count) Restaurants"
             cell.lblTotalRestaurant.text = Store.screenType == 2 ? (newBarsCount) : (newRestoCount)
             
-        } else if objArray[collView.tag].name == "A-Z" {
+        } else if objArray[collView.tag].name == "A-Z" || objArray[collView.tag].name == "A-Z Bar" || objArray[collView.tag].name == "A-Z Club"{
             cell.view1.isHidden = true
             cell.view2.isHidden = false
             cell.lblRestName.text = allresto[indexPath.row].name ?? ""
@@ -175,6 +176,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
                 let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
                 vc.ProductID = self.allresto[indexPath.row].id ?? 0
                 vc.selectedOfferId = restId
+                vc.hidesBottomBarWhenPushed = true
                 super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
             }
 
@@ -189,7 +191,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if objArray[collView.tag].name == "A-Z" {
+        if objArray[collView.tag].name == "A-Z" || objArray[collView.tag].name == "A-Z Bar" || objArray[collView.tag].name == "A-Z Club"{
             return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 260)
         } else if objArray[collView.tag].name == "Popular" || objArray[collView.tag].name == "Popular Bar" || objArray[collView.tag].name == "Popular Club"{
             return CGSize(width: (collectionView.frame.size.width / 1.2) , height: 260)
@@ -239,6 +241,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
         else if objArray[collView.tag].name == "Popular" || objArray[collView.tag].name == "Popular Bar" || objArray[collView.tag].name == "Popular Club"{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
             vc.ProductID = heishtresto[indexPath.row].id ?? 0
+            vc.hidesBottomBarWhenPushed = true
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }else if objArray[collView.tag].name == "Theme" {
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
@@ -251,8 +254,8 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         } else{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
+            vc.hidesBottomBarWhenPushed = true
             vc.ProductID = allresto[indexPath.row].id ?? 0
-            
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
     }

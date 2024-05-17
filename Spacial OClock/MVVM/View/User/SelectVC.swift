@@ -62,6 +62,7 @@ class SelectVC: UIViewController {
     @IBAction func btnBar(_ sender: UIButton){
         selectStatus = 2
         restoselctStatus = 3
+        continueBtn.backgroundColor = UIColor.init(named: "themeOrange")
         userBgImage.image = UIImage(named: "userUnselected")
         restroBgImage.image = UIImage(named: "restroUnselected")
         clubBgImage.image = UIImage(named: "clubUnselected")

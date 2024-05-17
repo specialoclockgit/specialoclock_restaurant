@@ -93,10 +93,11 @@ class RestoProfileVC: UIViewController, UIGestureRecognizerDelegate {
 //        }
 //        self.navigationController?.pushViewController(screen, animated: true)
     }
-    @IBAction func btnPreviewAct(sender : UIButton){
+    @IBAction func btnPreviewAct(sender : UIButton) {
         let main = UIStoryboard.init(name: "Main", bundle: nil)
         let screen = main.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
         screen.ProductID = datagetApi?.id ?? 0
+        screen.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(screen, animated: true)
     }
 }

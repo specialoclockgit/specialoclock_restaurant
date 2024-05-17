@@ -23,6 +23,7 @@ class SearchVC: UIViewController {
     var type = Int()
     var country = String()
     var city = String()
+    var state = String()
     var latitude = Double()
     var longitude = Double()
     
@@ -34,9 +35,14 @@ class SearchVC: UIViewController {
     
     //MARK: - FUNCTIONS
     func search_list(){
-        viewmodal.homeApi(type: type, country: "", city: city, state: "", lat: latitude, long: longitude,timezone: "asdf") { data in
-            self.allresto = data?.all_bars_restos ?? []
-            self.filterdata = data?.all_bars_restos ?? []
+        viewmodal.homeApi(type: type, country: country, city: city, state: state, lat: latitude, long: longitude,timezone: TimeZone.current.identifier) { data in
+            if self.type == 1 {
+                self.allresto = data?.all_bars_restos ?? []
+                self.filterdata = data?.all_bars_restos ?? []
+            }else {
+                self.allresto = (data?.atozListing?.atozbarListing ?? []) + (data?.atozListing?.atozclubListing ?? [])
+                self.filterdata = (data?.atozListing?.atozbarListing ?? []) + (data?.atozListing?.atozclubListing ?? [])
+            }
             self.searchCV.reloadData()
         }
     }
@@ -56,11 +62,8 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if filterdata?.count == 0{
             collectionView.setNoDataMessage("No result found")
-            //imgViewGif.image = UIImage.gif(name: "nodataFound")
-            //imgViewGif.isHidden = false
         }else{
             collectionView.backgroundView = nil
-           // imgViewGif.isHidden = true
             return filterdata?.count ?? 0
         }
         return 0
@@ -84,16 +87,19 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
         vc.ProductID = filterdata?[indexPath.row].id ?? 0
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 extension SearchVC : UITextFieldDelegate {
     //MARK: - Search
+   
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let resultString = txtFldSearch.text ?? ""
         if (resultString.count) > 1{
             if let searchText = txtFldSearch.text {
-                filterdata = allresto?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()}
+                filterdata = allresto?.filter {$0.name?.lowercased().prefix(searchText.count) ?? "" == searchText.lowercased()
+                }
             }
         }else{
             filterdata = allresto

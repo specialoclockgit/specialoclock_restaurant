@@ -48,21 +48,28 @@ struct HomeListBody: Codable {
     var nearby_restaurants: [NearbyRestaurant]?
     var all_bars_restos, highily_rated_bars_restos: [AllBarsResto]?
     var clubBarListing: ClubBarListing?
+    var atozListing : atozListing?
+    
     enum CodingKeys: String, CodingKey {
         case nearbyLocations = "nearby_locations"
         case location, cuisine, theme, banners
-        case nearby_restaurants
+        case nearby_restaurants, atozListing
         case all_bars_restos
         case highily_rated_bars_restos
         case clubBarListing
     }
-    
 }
 
 // MARK: - ClubBarListing
 struct ClubBarListing: Codable {
     var clubListing: [AllBarsResto]?
     var barListing: [AllBarsResto]?
+}
+
+// MARK: - atozListing
+struct atozListing: Codable {
+    var atozbarListing: [AllBarsResto]?
+    var atozclubListing: [AllBarsResto]?
 }
 
 

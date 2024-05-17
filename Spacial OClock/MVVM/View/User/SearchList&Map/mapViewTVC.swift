@@ -66,7 +66,7 @@ extension mapViewTVC : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             }
             cell.titleLbl.text = "\((celldata?.startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         } else {
-            cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 8.0)
+          //  cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 8.0)
             cell.titleLbl.text =  "\(celldata?.startTime ?? "")-\(celldata?.endTime ?? "")"
         }
         return cell
@@ -78,7 +78,12 @@ extension mapViewTVC : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.size.width / 3) - 6, height: 50)
+        if Store.screenType == 1 {
+            return CGSize(width: (collectionView.frame.size.width / 3) - 6, height: 50)
+        }else {
+            return CGSize(width: (collectionView.frame.size.width / 2) - 6, height: 50)
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 12

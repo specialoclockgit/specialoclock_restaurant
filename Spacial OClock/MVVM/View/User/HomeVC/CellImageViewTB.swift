@@ -15,87 +15,68 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var pgController : UIPageControl!
     var banners : [Banner]?
     var timer: Timer?
-    var currentIndex = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        collView.isPagingEnabled = true
         let nib = UINib(nibName: Cell.CellImageViewCB, bundle: nil)
         self.collView.register(nib, forCellWithReuseIdentifier: Cell.CellImageViewCB)
         collView.delegate = self
         collView.dataSource = self
-        
     }
     
     func initializeBannerData(resp:[Banner]?){
         self.banners = resp
         pgController.numberOfPages = resp?.count ?? 0
         collView.reloadData()
-        if let bannersCount = resp?.count, bannersCount > 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
-                self.startTimer()
-            }
-        }
+        self.startTimer()
     }
     
     func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
+        stopTimer()
+        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(scrollCollectionView), userInfo: nil, repeats: true)
     }
     
-    @objc func autoScroll() {
-        guard let bannersCount = banners?.count, bannersCount > 0 else {
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    @objc func scrollCollectionView() {
+        guard let collView = collView else {
             return
         }
         
-        let desiredOffset = CGPoint(x: collView.contentOffset.x + collView.frame.width, y: collView.contentOffset.y)
-        collView.setContentOffset(desiredOffset, animated: true)
-    }
-    
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        timer?.invalidate()
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        startTimer()
+        let contentOffset = collView.contentOffset
+        let boundsWidth = collView.bounds.size.width
+        
+        var nextPage = Int(contentOffset.x / boundsWidth) + 1
+        if nextPage >= collView.numberOfItems(inSection: 0) {
+            nextPage = 0
+        }
+        let newOffset = CGPoint(x: CGFloat(nextPage) * boundsWidth, y: contentOffset.y)
+        collView.setContentOffset(newOffset, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = scrollView.frame.width - (scrollView.contentInset.left*2)
-        let index = scrollView.contentOffset.x / width
+        let width = (scrollView.frame.width) - (scrollView.contentInset.left * 2)
+        let index = (scrollView.contentOffset.x) / width
         pgController.currentPage = Int(index)
-        currentIndex = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-        if currentIndex == (banners?.count ?? 0) - 1 && scrollView.contentOffset.x > CGFloat(currentIndex) * scrollView.frame.size.width {
-            collView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
-        }
     }
     
 }
 extension CellImageViewTB : UICollectionViewDelegate, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return banners?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellImageViewCB, for: indexPath) as! CellImageViewCB
+        guard let cell = collView.dequeueReusableCell(withReuseIdentifier: Cell.CellImageViewCB, for: indexPath) as? CellImageViewCB else { return UICollectionViewCell() }
         let imageIndex = (imageBaseURL) + (banners?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView.isDragging ||  collectionView.isDecelerating {
-            cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
-            UIView.animate(withDuration: 0.25, animations: {
-                cell.layer.transform = CATransform3DMakeScale(1,1,1)
-            })
-        }
-
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

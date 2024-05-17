@@ -21,6 +21,7 @@ class CellMenuTV: UITableViewCell {
     @IBOutlet weak var lblNewPrice : UILabel!
     @IBOutlet weak var desLbl: UILabel!
     @IBOutlet weak var dataStackVW: UIStackView!
+    @IBOutlet weak var offVw: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

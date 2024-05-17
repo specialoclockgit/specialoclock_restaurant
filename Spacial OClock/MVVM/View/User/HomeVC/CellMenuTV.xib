@@ -167,6 +167,7 @@
                 <outlet property="lblItemName" destination="8Ww-tQ-8RC" id="PKQ-Wm-n8C"/>
                 <outlet property="lblNewPrice" destination="jq6-ix-86I" id="BWL-0O-xXw"/>
                 <outlet property="lblPrePrice" destination="XUX-vp-ADb" id="Kq4-k3-MxF"/>
+                <outlet property="offVw" destination="DDu-Zp-0WU" id="pne-sl-As6"/>
                 <outlet property="viewCell" destination="rft-lS-GU0" id="E8u-fK-GTb"/>
             </connections>
             <point key="canvasLocation" x="165.21739130434784" y="72.65625"/>

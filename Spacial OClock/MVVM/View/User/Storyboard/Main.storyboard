@@ -5331,7 +5331,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9I3-vJ-89S">
                                                                 <rect key="frame" x="0.0" y="0.0" width="134" height="140"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DiningGreen" translatesAutoresizingMaskIntoConstraints="NO" id="7Rr-UL-zQM">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DiningGray" translatesAutoresizingMaskIntoConstraints="NO" id="7Rr-UL-zQM">
                                                                         <rect key="frame" x="19" y="6" width="96" height="96"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="96" id="VBb-W9-FfH"/>
@@ -5341,7 +5341,7 @@
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dine In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RnD-ia-nML">
                                                                         <rect key="frame" x="36" y="111" width="62.5" height="25.5"/>
                                                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
-                                                                        <nil key="textColor"/>
+                                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEH-Je-w16">
@@ -5378,7 +5378,7 @@
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drinks" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiC-7n-Koz">
                                                                         <rect key="frame" x="39" y="111" width="56" height="25.5"/>
                                                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
-                                                                        <nil key="textColor"/>
+                                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9c-AJ-sdf">
@@ -12035,7 +12035,7 @@ EE1lbnU
         <image name="BgOfferImg1" width="40" height="34"/>
         <image name="BgOrange" width="375" height="256"/>
         <image name="Clock" width="12" height="12"/>
-        <image name="DiningGreen" width="350" height="350"/>
+        <image name="DiningGray" width="112.66666412353516" height="112.66666412353516"/>
         <image name="Ellipse 119" width="135" height="135"/>
         <image name="Group 17008" width="29" height="29"/>
         <image name="Group 7059" width="192" height="192"/>

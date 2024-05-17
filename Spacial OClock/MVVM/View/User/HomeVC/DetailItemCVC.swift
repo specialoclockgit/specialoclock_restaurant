@@ -51,6 +51,7 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeOfferCVC", for: indexPath) as! HomeOfferCVC
         
         if screen == 1 {
+          //  cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 12.0)
             var percentage = String()
             if offerTimings?[indexPath.row].isFifty == 1 {
                 percentage = "-\(50)%"
@@ -61,7 +62,7 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
             }
             cell.titleLbl.text = "\((offerTimings?[indexPath.row].startTime?.components(separatedBy: " ").first ?? ""))\n\(percentage)"
         } else {
-            cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 8.0)
+         //   cell.titleLbl.font = UIFont(name: "Poppins-Medium", size: 9.0)
             cell.titleLbl.text = "\(offerTimings?[indexPath.row].offer?.openTime ?? "")-\(offerTimings?[indexPath.row].offer?.closeTime ?? "")"
             
         }
@@ -77,7 +78,14 @@ extension DetailItemCVC : SkeletonCollectionViewDataSource,SkeletonCollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width / 6) - 6, height: 64)
+        
+        if screen == 1 {
+            return CGSize(width: (collectionView.frame.size.width / 6) - 6, height: 60)
+        }else {
+            return CGSize(width: (collectionView.frame.size.width / 4) - 6, height: 60)
+        }
+        
+       // return CGSize(width: (collectionView.frame.width / 6) - 6, height: 64)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         6

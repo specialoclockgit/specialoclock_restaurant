@@ -160,7 +160,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         }
         product_detail()
         valueSelect = false
-        tabBarController?.tabBar.isHidden = true
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -183,13 +183,13 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             self.images = data?.images ?? []
             self.reviews = data?.reviews ?? []
             self.ourMenu = data?.ourMenu ?? []
-            if self.status == 1 {
+            if data?.type == 1 {
                 self.offer = data?.time_slots
             } else {
                 self.offer = data?.time_slots?.unique(map: {$0.offerID})
             }
             
-            self.collViewMenuHeight.constant = self.status == 1 ? 220 : 170
+            self.collViewMenuHeight.constant = data?.type == 1 ? 220 : 170
             let imageIndex = (imageURL) + (self.modal?.profileImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             self.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             self.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
@@ -266,7 +266,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].isFifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
                     let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
                     self.scrollView.setContentOffset(bottomOffset, animated: true)
-                    if self.status == 1 {
+                    if self.modal?.type == 1 {
                         self.slottime = self.offer?[self.isselectedoffer].startTime ?? ""
                         self.slotid = self.offer?[self.isselectedoffer].slot_id ?? 0
                         self.menuid = self.offer?[self.isselectedoffer].menuID ?? 0
@@ -521,9 +521,9 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             btnBookStatus = 0
             btnBook.setTitle("Book", for: .normal)
             //MARK: Set Menu tabel Data
-            if status == 0 {
+            if modal?.type == 0 {
                 product_detail()
-            }else if status == 1 {
+            }else  {
                 product_detail()
             }
             tbMenu.reloadData()
@@ -596,6 +596,15 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                         }
                     }
                     
+                    if restType == 3 {
+                        if productModal?.offerdetails?.ageRestriction == 1 {
+                            guard let isLegal = isAge18(from: Store.userDetails?.dob ?? "", withFormat: "dd/MM/yyyy"), isLegal else {
+                                CommonUtilities.shared.showAlert(message: "Bar bookings are available for 18+ only.")
+                                return
+                            }
+                        }
+                    }
+                    
                     let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NewBookingVC) as! NewBookingVC
                     screen.offerSelectePretns = self.offerpresents
                     screen.slotId = self.slotid
@@ -606,7 +615,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     screen.resto_id = ProductID
                     screen.offer_id = "\(self.offerID)"
                     screen.restrorant_bar_id = self.restrorant_bar_id
-                    screen.bookingType = Store.screenType == 1 ? .restaurant : .bar
+                    screen.bookingType = self.modal?.type == 1 ? .restaurant : .bar
                     screen.offerDiscount = self.offerDis
                     
                     screen.dateCallBack = { [weak self] datee in
@@ -681,45 +690,30 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collView{
             if images?.count == 0 {
-                collView.setNoDataMessageLbl("No Data found", txtColor: .black)
+                collView.setNoDataMessageLbl("No images found", txtColor: .black)
             }else{
                 collView.backgroundView = nil
                 return images?.count ?? 0
             }
         }
-        else if collectionView == collViewMenu
-        {
-            //new ourMenu old : offer
-            
-            if status == 1{
+        else if collectionView == collViewMenu {
                 if offer?.count == 0 {
-                    collViewMenu.setNoDataMessageLbl("No slots found", txtColor: .black)
-                }else{
+                    collViewMenu.setNoDataMessageLbl("No special's found", txtColor: .black)
+                } else {
                     collViewMenu.backgroundView = nil
                     return offer?.count ?? 0
                 }
-            }else{
-                if offer?.count == 0 {
-                    collViewMenu.setNoDataMessageLbl("No slots found", txtColor: .black)
-                }else{
-                    collViewMenu.backgroundView = nil
-                    return offer?.count ?? 0
-                }
-            }
-            
-            
-        }else if collectionView == viewFullMenu{
+        } else if collectionView == viewFullMenu{
             if modalfullmenu?.count == 0{
                 viewFullMenu.setNoDataMessageLbl("No full menu found", txtColor: .black)
-            }else{
+            } else {
                 viewFullMenu.backgroundView = nil
                 return modalfullmenu?.count ?? 0
             }
+        } else {
+            return 0
         }
-        else {
-            return 3
-        }
-        return 0
+       return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -731,7 +725,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
             return cell
         } else if collectionView == collViewMenu {
             let cell =  collViewMenu.dequeueReusableCell(withReuseIdentifier: Cell.CellMenuCV, for: indexPath) as! CellMenuCV
-            if status == 1{
+            if self.modal?.type == 1{
                 cell.lblSpecial.isHidden = false
                 if indexPath.row == isselectedoffer{
                     //self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
@@ -818,7 +812,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == collViewMenu {
-            if status == 1{
+            if self.modal?.type == 1{
                 return CGSize (width: (150) - 4 , height: 222.0)
             } else {
                 return CGSize (width: (150) - 4, height: 176)
@@ -882,7 +876,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
         if collectionView == collViewMenu {
             _ = indexPath.row
             self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
-            if status == 1 {
+            if self.modal?.type == 1 {
                 
                 if collectionView == collViewMenu{
                     isselectedoffer = indexPath.row
@@ -935,7 +929,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 
                 
                 //self.offerDis = (offer?[indexPath.row].is_fifty == 1 ? 50 : Int(offer?[indexPath.row].percentage ?? "0")) ?? 0
-            } else if status == 2 {
+            } else  {
                 if collectionView == collViewMenu {
                     isselectedoffer = indexPath.row
                     collViewMenu.reloadData()
@@ -1031,7 +1025,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             sectionV.layer.cornerRadius = 10
             let titleLbl = UILabel.init(frame: CGRect(x: 2, y: 10, width: tableView.frame.width-50, height: 20) )
             titleLbl.numberOfLines = 0
-            if status == 1{
+            if modal?.type == 1{
                 titleLbl.text = "Popular \(products?[section].menuTypeName?.trimWhiteSpace ?? "") Specials"
             }else{
                 titleLbl.text = products?[section].menuTypeName ?? ""
@@ -1083,7 +1077,7 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
             cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "placeholder (1)"))
             
-            if status == 1 {
+            if self.modal?.type == 1 {
                 cell.desLbl.text = ""
                 cell.itemNameTop.constant = 5
                 cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
@@ -1093,12 +1087,15 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                 cell.lblDiscount.text = "SAVE \(self.discount ?? 0)%"
                 let price = Double(products?[indexPath.row].price ?? "0") ?? 0
                 cell.lblPrePrice.text = "R\(String(format: "%.2f", price))"
+                cell.offVw.isHidden = false
             } else {
-                if  productModal?.offerdetails?.discountedPrice == "0" || productModal?.offerdetails?.actualPrice == "0" || productModal?.offerdetails?.actualPrice == "" {
-                    //products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" || products?[indexPath.row].actual_price == ""{
+               // if  productModal?.offerdetails?.discountedPrice == "0" || productModal?.offerdetails?.actualPrice == "0" || productModal?.offerdetails?.actualPrice == "" {
+                    if products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" || products?[indexPath.row].actual_price == ""{
                     cell.lblNewPrice.text = ""
                     cell.lblPrePrice.text = ""
                     cell.lblDiscount.text = ""
+                    cell.lblDiscount.isHidden = true
+                    cell.offVw.isHidden = true
                     cell.itemNameTop.constant = 14
                     cell.lblItemName.text = (products?[indexPath.row].productName?.capitalized ?? "")
                     cell.desLbl.text =  "" /*(self.offerDescription)*/
@@ -1107,17 +1104,22 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                     cell.desLbl.text = ""
                     cell.itemNameTop.constant = 5
                     cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
-                    cell.lblPrePrice.text =  "R\(productModal?.offerdetails?.actualPrice ?? "0")"
-                    //"\(products?[indexPath.row].actual_price ?? "0")"
-                    cell.lblNewPrice.text = "R\(productModal?.offerdetails?.discountedPrice ?? "0")"
-                    //"\(products?[indexPath.row].discounted_price ?? "0")"
-                    if let intValue1 = Int(productModal?.offerdetails?.actualPrice ?? ""), let intValue2 = Int(productModal?.offerdetails?.discountedPrice ?? "") {
-                        let result = intValue1 - intValue2
-                        cell.lblDiscount.text = "SAVE R\(result.description)"
-                        
+                    let prePrice =  Double(products?[indexPath.row].actual_price ?? "0") ?? 0
+                    //Double(productModal?.offerdetails?.actualPrice ?? "0") ?? 0
+                    cell.lblPrePrice.text =  "R\(String(format: "%.2f", prePrice))"
+                    let newPrice = Double(products?[indexPath.row].discounted_price ?? "0") ?? 0
+                    //Double(productModal?.offerdetails?.discountedPrice ?? "0") ?? 0
+                    cell.lblNewPrice.text = "R\(String(format: "%.2f", newPrice))"
+                
+                    if let intValue1 = Double(products?[indexPath.row].actual_price ?? ""), let intValue2 = Double(products?[indexPath.row].discounted_price ?? "") {
+                        let result = discountPercentage(actualPrice: intValue1, discountedPrice: intValue2)
+                        cell.lblDiscount.text = "SAVE \(result.description)%"
+                        cell.offVw.isHidden = false
+                    } else {
+                        cell.offVw.isHidden = true
+                        cell.lblDiscount.text = ""
                     }
                 }
-               // cell.lblDiscount.isHidden = true
             }
             
             return cell
@@ -1294,6 +1296,12 @@ func calCulateDiscount (actualPrice: Double,discount: Double) -> Double {
     return (finalAmount * 100).rounded() / 100
 }
 
+func discountPercentage(actualPrice: Double, discountedPrice: Double) -> Double {
+    let discount = actualPrice - discountedPrice
+    let discountPercentage = (discount / actualPrice) * 100
+    return Double(String(format: "%.2f", discountPercentage)) ?? 0.0
+}
+
 func degreesToRadians(_ degrees: Double) -> Double {
     return degrees * .pi / 180.0
 }
@@ -1399,20 +1407,21 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
             withArrow: true,
             arrowOrientation: coachMark.arrowOrientation
         )
+        let title = (self.modal?.type == 1 ? "restaurant" : self.modal?.type == 2 ? "Club" : "Bar" )
         if self.offer?.count == 0 {
             switch index {
             case 0:
-                coachViews.bodyView.hintLabel.text = "That's add to fav button. You can add this restaurant to favorites!"
+                coachViews.bodyView.hintLabel.text = "That's add to fav button. You can add this \(title) to favorites!"
                 coachViews.bodyView.nextLabel.text = "Ok!"
             case 1 :
                 coachViews.bodyView.hintLabel.text = "You can select date of booking by clicking here!"
                 coachViews.bodyView.nextLabel.text = "Ok!"
             default: break
             }
-        }else {
+        } else {
             switch index {
             case 0:
-                coachViews.bodyView.hintLabel.text = "That's add to fav button. You can add this restaurant to favorites!"
+                coachViews.bodyView.hintLabel.text = "That's add to fav button. You can add this \(title) to favorites!"
                 coachViews.bodyView.nextLabel.text = "Ok!"
             case 1 :
                 coachViews.bodyView.hintLabel.text = "You can select date of booking by clicking here!"

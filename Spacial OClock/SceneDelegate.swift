@@ -38,6 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             let tab = storyBoard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
                             tab.selectedIndex = 0
                             let eventDetailVC = storyBoard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                            eventDetailVC.hidesBottomBarWhenPushed = true
                             eventDetailVC.ProductID = Int(restaurantId) ?? 0
                             nav.viewControllers = [tab,eventDetailVC]
                             window?.rootViewController = nav
@@ -94,6 +95,7 @@ extension SceneDelegate {
                         let tab = storyBoard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
                         tab.selectedIndex = 0
                         let eventDetailVC = storyBoard.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
+                        eventDetailVC.hidesBottomBarWhenPushed = true
                         eventDetailVC.ProductID = Int(restaurantId) ?? 0
                         nav.viewControllers = [tab,eventDetailVC]
                         window?.rootViewController = nav

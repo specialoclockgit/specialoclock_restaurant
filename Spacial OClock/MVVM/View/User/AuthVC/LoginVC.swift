@@ -58,6 +58,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                    Store.autoLogin = true
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
                     CommonUtilities.shared.showAlert(message: "Login successfully", isSuccess: .success)
+                    Store.screenType = 1
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else {
                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
@@ -94,7 +95,6 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                     Store.autoLogin = true
                     CommonUtilities.shared.showAlert(message: "Login successfully", isSuccess: .success)
                     self.navigationController?.pushViewController(vc, animated: true)
-                    
                 }
             }
         }
