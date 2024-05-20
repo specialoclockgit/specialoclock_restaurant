@@ -8,12 +8,11 @@
 
 import UIKit
 
-public typealias parameters = [String:Any]
+public typealias parameters = [String : Any]
 let appName = "Special O'Clock"
 var DEVICE_TOKEN = "ios"
 
 var noInternetConnection = "No Internet Connection Available"
-
 //let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
 let baseURL = "https://app.specialoclock.com/api/"
 
@@ -26,7 +25,6 @@ let shareUrl = "https://app.specialoclock.com/api/share_restaurant/"
 let securitykey = "sk_Dac1t2GMfvvgO1+ZtLvOjwEhQluidxzVy9Av5fiV5kCZzCr+PjdB0ap0Qx6zCPkBDRS8gSGyFw=="
 let publishedkey = "pk_ndhUQm9z9VVAEDQAKUjM5nQ6F690crObNnPPobC36LUWJcUKQQC/aSzj9kqTQ22rurF2B6DvyiI="
 
-
 //MARK: - root vc
 var rootVC: UIViewController? {
     get {
@@ -38,7 +36,6 @@ var rootVC: UIViewController? {
 
 
 //MARK: - StoryBoards
-
 enum AppStoryboard : String {
     case Main      = "Main"
     var instance : UIStoryboard {

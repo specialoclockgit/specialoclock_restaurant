@@ -23,17 +23,9 @@ class MyInvoiceCellDetailVC: UIViewController {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var tbBookingDetail : UITableView!
     @IBOutlet weak var btnPayment : UIButton!
-    
+    @IBOutlet weak var tblHeight: NSLayoutConstraint!
     //MARK: Variables
     var checkStatus = Int()
-    var statusText = String()
-    var statusColor = String()
-    var transactionId = String()
-    var transactionDate = String()
-    var invoiceTime = String()
-    var invoiceDate = String()
-    var totalAmmount = String()
-    var invoiceNumber = String()
     var invoice_Id = String()
     var viewmodal = restoViewModal()
     var modal : invoiceDetailModalBody?
@@ -42,12 +34,25 @@ class MyInvoiceCellDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initialLoad()
         hideView()
         tbBookingDetail.delegate = self
         tbBookingDetail.dataSource = self
         invoice_Detail()
+        tbBookingDetail.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            if(keyPath == "contentSize"){
+                if let newvalue = change?[.newKey] {
+                    let newsize  = newvalue as! CGSize
+                    tblHeight.constant = newsize.height
+                }
+            }
+        }
     
     //MARK: - FUNCTION
     func invoice_Detail(){
@@ -64,7 +69,9 @@ class MyInvoiceCellDetailVC: UIViewController {
             self.lblInvoiceNumber.text = data?.invoice?.invoiceNumber ?? ""
             self.lblInvoiceDate.text = data?.invoice?.endDate ?? ""
             self.lblInvoiceTime.text = data?.invoice?.time ?? ""
-            self.lblTotalAmount.text = data?.invoice?.amount ?? ""
+            let totalAmount = data?.bookings?.map({Int($0.bookingAmount ?? "0") ?? 0}).reduce(0, +) ?? 0
+            self.lblTotalAmount.text =  totalAmount.description
+            //data?.invoice?.amount ?? ""
             self.tbBookingDetail.reloadData()
             
         }
@@ -134,16 +141,7 @@ extension MyInvoiceCellDetailVC : UITableViewDelegate , UITableViewDataSource{
     
 }
 extension MyInvoiceCellDetailVC {
-    func initialLoad(){
-        lblstatus.text = statusText
-        lblstatus.textColor = UIColor(named: statusColor)
-        lblTranscationId.text = transactionId
-        lblTranscationDate.text = invoiceDate
-        lblInvoiceTime.text = invoiceTime
-        lblInvoiceDate.text = invoiceDate
-        lblTotalAmount.text = totalAmmount
-        lblInvoiceNumber.text = invoiceNumber
-    }
+    
     func hideView(){
         if checkStatus == 0 {
             viewAlert.isHidden = false

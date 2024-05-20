@@ -32,25 +32,24 @@ class BookingVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
         if btnPast.titleLabel?.textColor == UIColor.white {
             currentpastAPI(status: 1)
         } else {
             currentpastAPI(status: 0)
         }
-         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
     }
 
     //MARK: - FUNCTIONS
     func currentpastAPI(status:Int){
+        bookingTV.backgroundView = nil
         bookingTV.showAnimatedGradientSkeleton()
         self.modal?.removeAll()
         self.bookingTV.reloadData()
         viewmodal.currentPast_API(type: status, genre: "0") { [weak self] dataa in
             self?.modal = dataa?.reversed()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self?.bookingTV.hideSkeleton()
-            }
+            self?.bookingTV.hideSkeleton()
             self?.bookingTV.reloadData()
         }
     }
@@ -86,11 +85,8 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if modal?.count == 0{
             tableView.setNoDataMessage("No booking found",yPosition: -120)
-            //self.imgView.image = UIImage.gif(name: "nodataFound")
-           // self.imgView.isHidden = false
-        }else{
+        } else {
             tableView.backgroundView = nil
-           // self.imgView.isHidden = true
             return modal?.count ?? 0
         }
         return 0
@@ -98,22 +94,7 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "bookingCell") as! bookingCell
-        if self.modal?[indexPath.row].status == 0{
-            cell.bookingStatuslbl.text = "Ongoing"
-            cell.bookingStatuslbl.textColor = .red
-        }else if self.modal?[indexPath.row].status == 1{
-            cell.bookingStatuslbl.text = "Completed"
-            cell.bookingStatuslbl.textColor = .systemGreen
-        }else{
-            cell.bookingStatuslbl.text = "Cancelled"
-            cell.bookingStatuslbl.textColor = .red
-        }
-        cell.bookingDatelbl.text = modal?[indexPath.row].bookingDate ?? ""
-        cell.bookingNumber.text = modal?[indexPath.row].bookingID ?? ""
-        cell.bookingTimelbl.text = modal?[indexPath.row].bookingSlot ?? ""
-        let imageIndex = (imageURL) + (modal?[indexPath.row].restoImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
-        cell.itemImg.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        cell.itemImg.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+        cell.bookingListing = modal?[indexPath.row]
         return cell
     }
     
@@ -125,7 +106,7 @@ extension BookingVC: SkeletonTableViewDelegate, SkeletonTableViewDataSource {
             screen.buttonColor = "themeOrange"
             screen.statusColor = "themeGreen"
             screen.statusVerify = 1
-        }else{
+        } else {
             screen.cancelid = modal?[indexPath.row].bookingID ?? ""
             screen.booking_id = modal?[indexPath.row].id ?? 0
             screen.buttonTitle = "Cancel Booking"
@@ -144,4 +125,27 @@ class bookingCell:UITableViewCell{
     @IBOutlet weak var bookingDatelbl: UILabel!
     @IBOutlet weak var bookingTimelbl: UILabel!
     @IBOutlet weak var bookingStatuslbl: UILabel!
+    
+    
+    var bookingListing: currentPastModalBody? {
+        didSet {
+            if bookingListing?.status == 0 {
+                bookingStatuslbl.text = "Ongoing"
+                bookingStatuslbl.textColor = .red
+            } else if bookingListing?.status == 1 {
+                bookingStatuslbl.text = "Completed"
+                bookingStatuslbl.textColor = .systemGreen
+            } else {
+                bookingStatuslbl.text = "Cancelled"
+                bookingStatuslbl.textColor = .red
+            }
+            bookingDatelbl.text = bookingListing?.bookingDate ?? ""
+            bookingNumber.text = bookingListing?.bookingID ?? ""
+            bookingTimelbl.text = bookingListing?.bookingSlot ?? ""
+            let imageIndex = (imageURL) + (bookingListing?.restoImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
+            itemImg.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            itemImg.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+        }
+    }
+    
 }

@@ -54,7 +54,7 @@ struct HomeListBody: Codable {
         case nearbyLocations = "nearby_locations"
         case location, cuisine, theme, banners
         case nearby_restaurants, atozListing
-        case all_bars_restos
+        case all_bars_restos,category
         case highily_rated_bars_restos
         case clubBarListing
     }

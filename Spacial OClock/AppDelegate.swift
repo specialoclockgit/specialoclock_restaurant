@@ -128,8 +128,7 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
             print("**********************")
             print(userInfo)
             let userInfos = userInfo["aps"] as?  [String:Any]
-            let Staustype = userInfos?["type"] as? Int
-            
+            let Staustype = userInfo["type"] as? Int
             if Store.userDetails?.role == 1 {
                 if let topVc = UIApplication.topViewController(), topVc.isKind(of: HomeVC.self) {
                     if Staustype == 0 {
@@ -150,14 +149,14 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                 if let topVc = UIApplication.topViewController(), topVc.isKind(of: RestoHomeVC.self) {
                     if Staustype == 7 || Staustype != 0{
                         completionHandler([.sound,.banner,.badge])
-                    }else {
+                    } else {
                         topVc.viewWillAppear(true)
-                        completionHandler([])
+                        completionHandler([.sound,.banner,.badge])
                     }
-                    
                 } else {
                     completionHandler([.sound,.banner,.badge])
                 }
+                
                 if let topVc = UIApplication.topViewController(), topVc.isKind(of: ChatVC.self) {
                     completionHandler([])
                 } else {
@@ -175,7 +174,7 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
             let mainStoryboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
             if let notificationType = userInfo["type"] as? Int {
                 
-                if Store.userDetails?.role == 1{
+                if Store.userDetails?.role == 1 {
                     
                     if notificationType == 0 {
                         let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
@@ -226,7 +225,7 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
                         UIApplication.shared.windows.first?.makeKeyAndVisible()
                     }
                 } else {
-                    if notificationType == 0{
+                    if notificationType == 0 {
                         let tabVC = storyboard.instantiateViewController(withIdentifier: "RestoTabBarVC") as! RestoTabBarVC
                         tabVC.selectedIndex = 0
                         let navigationController = UINavigationController(rootViewController: tabVC)

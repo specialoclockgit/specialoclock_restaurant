@@ -16,7 +16,7 @@ class restoViewModal : NSObject{
         if date != ""{
             param["date"] = date
         }
-        WebService.service(API.restro_home, param: param, service: .post) {
+        WebService.service(API.restro_home, param: param, service: .post,showHud: false) {
             (modaldata: homeModal, Data , json) in
             onsuccess(modaldata.body)
         }

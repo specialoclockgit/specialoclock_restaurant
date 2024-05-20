@@ -14,9 +14,9 @@ class RestoSettingVC: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var tableVW: UITableView!
     //MARK: - VARIABLES
-    var nameary = ["Notifications","Chat","Change Password", "Privacy Policy", "Terms and Conditions","My Review", "My Invoices", "Help & FAQ’s", "Contact Us", "Delete Account", "Logout"]
-    //"My Menu", "My Offers",
-    var image = ["bell","unlock","unlock","question","books","reviews", "invoice","helpCircle", "phone","delete-user-1","logout-1"]
+    var nameary = ["Notifications","Chat","Change Password", "Privacy Policy", "Terms and Conditions","My Review", "My Invoices", "Help & FAQ’s",  "Delete Account", "Logout"]
+    //"My Menu", "My Offers","Contact Us","phone",
+    var image = ["bell","unlock","unlock","question","books","reviews", "invoice","helpCircle", "delete-user-1","logout-1"]
     //"menu","specialOffer",
     var viewmodel = AuthViewModel()
     var isSelected = 0
@@ -74,7 +74,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         debugPrint(indexPath.row)
-        let status = UserDefaults.standard.status
+//        let status = UserDefaults.standard.status
         switch indexPath.row{
         case 0:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
@@ -140,11 +140,11 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let helpFAQScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.HelpFAQRestoVC) as! HelpFAQRestoVC
             self.navigationController?.pushViewController(helpFAQScreen, animated: true)
+//        case 7:
+//            let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+//            let contactUsScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.ContactUsRestoVC) as! ContactUsRestoVC
+//            self.navigationController?.pushViewController(contactUsScreen, animated: true)
         case 8:
-            let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-            let contactUsScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.ContactUsRestoVC) as! ContactUsRestoVC
-            self.navigationController?.pushViewController(contactUsScreen, animated: true)
-        case 9:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let deleteAcccount = StoryBoard.instantiateViewController(withIdentifier: Alert.AlertBottomVC) as! AlertBottomVC
             deleteAcccount.statuschange = 0
@@ -154,7 +154,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
                 SceneDelegate().setLoginRoot()
             }
             self.navigationController?.present(deleteAcccount, animated: true)
-        case 10:
+        case 9:
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let logOutScreen = StoryBoard.instantiateViewController(withIdentifier: Alert.AlertBottomVC) as! AlertBottomVC
             logOutScreen.statuschange = 4

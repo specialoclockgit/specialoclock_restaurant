@@ -133,7 +133,6 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
         } else {
             self.setListingData(type: type)
         }
-        
     }
     
     
@@ -157,6 +156,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
                 let obj = SectionModel(name: "Cuisines",objArray: objData?.cuisine ?? [],image: "soup")
                 self.sectionArray.append(obj)
             }
+            
             if type == 1 {
                 if objData?.highily_rated_bars_restos?.count ?? 0 != 0 {
                     if let filterArray = objData?.highily_rated_bars_restos?.filter({$0.avgRating != 0}), filterArray.count != 0 {
@@ -179,6 +179,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
                     }
                 }
             }
+            
             if objData?.banners?.count ?? 0 != 0 {
                 let obj = SectionModel(name: "Banner",objArray: objData?.banners ?? [],image: "")
                 self.sectionArray.append(obj)
@@ -211,7 +212,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
             self.mapTitleLbl.isHidden = false
             self.viewModel.homeData = objData
             self.gmsMapView.isHidden = false
-            self.tabBarController?.tabBar.isHidden  = false
+            self.tabBarController?.tabBar.isHidden = false
             self.tbHomeData.layoutSubviews()
             self.tbHomeData.reloadData()
         }

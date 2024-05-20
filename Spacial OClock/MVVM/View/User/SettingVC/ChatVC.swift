@@ -36,7 +36,7 @@ class ChatVC: UIViewController, UITextViewDelegate {
         msgTextView.delegate = self
         viewBottom.layer.cornerRadius = UIDevice.current.userInterfaceIdiom == .pad ? 30 : 25
         DispatchQueue.main.async {
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+            MBProgressHUD.showAdded(to: self.view, animated: true)
         }
     }
     
@@ -68,8 +68,7 @@ class ChatVC: UIViewController, UITextViewDelegate {
     @IBAction func btnClearChat(_ sender: UIButton) {
         if chatmodel?.count == 0 {
             CommonUtilities.shared.showAlert(message: "There is no message that needs deleting", isSuccess: .error)
-        }
-        else {
+        }  else {
             let alert = UIAlertController(title: "Delete", message: "Are you sure you want to clear all message?", preferredStyle: .alert)
             let ok = UIAlertAction(title: "Yes", style: .default, handler: { action in
                 SocketIOManager.sharedInstance.clearChatemitter(user2id: 1)
@@ -86,7 +85,7 @@ class ChatVC: UIViewController, UITextViewDelegate {
         }
         
         
-       
+        
     }
     
     @IBAction func btnAttachment(_ sender: Any) {
@@ -103,8 +102,7 @@ class ChatVC: UIViewController, UITextViewDelegate {
             self.heightConst.constant = 50
             scroolTOLast()
             self.view.layoutIfNeeded()
-        }
-        else {
+        }  else {
             CommonUtilities.shared.showAlert(message: "Please write a message to send", isSuccess: .error)
         }
     }
@@ -138,8 +136,7 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if chatmodel?.count == 0 {
             chatTbleView.setNoDataMessage("No message found", txtColor: .black)
-        }
-        else{
+        } else {
             chatTbleView.backgroundView = nil
             return chatmodel?.count ?? 0
         }
@@ -149,32 +146,13 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if Store.userDetails?.id ?? 0 != chatmodel?[indexPath.row].senderID ?? 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "receverTVC", for: indexPath) as! receverTVC
-            cell.receverView.layer.cornerRadius = 6
-            cell.receverView.clipsToBounds = true
-            cell.receverView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner,.layerMaxXMaxYCorner]
-            cell.lblRecever.text = chatmodel?[indexPath.row].message ?? ""
-            let isoDate =  self.chatmodel?[indexPath.row].createdAt ?? ""
-                   let dateFormatter = DateFormatter()
-                   dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                   let date = dateFormatter.date(from: isoDate)
-                   cell.lblTime.text = date?.toLocalTime().timeAgoSinceDate()
+            cell.receiverData = chatmodel?[indexPath.row]
             return cell
-        }
-        else {
+        } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "senderTVC", for: indexPath) as! senderTVC
-            cell.lblSenderMsg.text = chatmodel?[indexPath.row].message ?? ""
-            cell.senderView.layer.cornerRadius = 6
-            cell.senderView.clipsToBounds = true
-            cell.senderView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner,.layerMinXMaxYCorner]
-            let isoDate =  self.chatmodel?[indexPath.row].createdAt ?? ""
-                   let dateFormatter = DateFormatter()
-                   dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                   let date = dateFormatter.date(from: isoDate)
-            cell.lblSenderTime.text = date?.toLocalTime().timeAgoSinceDate()
+            cell.senderData = chatmodel?[indexPath.row]
             return cell
         }
-        
-        
     }
 }
 //MARK: - KEYBOARD HANDLING
@@ -229,7 +207,7 @@ extension ChatVC {
             }
             self.chatTbleView.reloadData()
             DispatchQueue.main.async {
-                    MBProgressHUD.hide(for: self.view, animated: true)
+                MBProgressHUD.hide(for: self.view, animated: true)
             }
         }
     }
@@ -245,14 +223,10 @@ extension ChatVC {
     
     private func sendMessageListener(){
         SocketIOManager.sharedInstance.sendMessageLisner { data in
-            
             let results = self.chatmodel?.filter { $0.id == data.id }
             if results?.isEmpty == true {
                 self.chatmodel?.append(data)
-                self.msgTextView.text = ""
-                
                 self.chatTbleView.reloadData()
-                
                 self.scroolTOLast()
             }
             
@@ -284,8 +258,8 @@ extension UITableView {
             imageView.contentMode = .scaleAspectFill
             imageView.sd_setImage(with: imageOrGifURL)
             view.addSubview(imageView)
-         //   imageView.layer.borderColor  = UIColor.red.cgColor
-           // imageView.layer.borderWidth = 2
+            //   imageView.layer.borderColor  = UIColor.red.cgColor
+            // imageView.layer.borderWidth = 2
             let messageLabel = UILabel()
             messageLabel.text = message
             messageLabel.textColor = txtColor
@@ -313,7 +287,7 @@ extension UITableView {
     }
 }
 
-//MARK: - UICOLLECTION VIEW 
+//MARK: - UICOLLECTION VIEW
 extension UICollectionView {
     func reloadData(completion: @escaping () -> ()) {
         UIView.animate(withDuration: 0, animations: { self.reloadData()})
@@ -340,8 +314,8 @@ extension UICollectionView {
             imageView.contentMode = .scaleAspectFill
             imageView.sd_setImage(with: imageOrGifURL)
             view.addSubview(imageView)
-         //   imageView.layer.borderColor  = UIColor.red.cgColor
-           // imageView.layer.borderWidth = 2
+            //   imageView.layer.borderColor  = UIColor.red.cgColor
+            // imageView.layer.borderWidth = 2
             let messageLabel = UILabel()
             messageLabel.text = message
             messageLabel.textColor = txtColor

@@ -7,7 +7,7 @@
 
 import UIKit
 import SwiftGifOrigin
-
+import SkeletonView
 class MyInvoiceVC: UIViewController {
     
     //MARK: Outlets
@@ -44,32 +44,36 @@ class MyInvoiceVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
 }
+
+
+
+
 extension MyInvoiceVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if modal?.count == 0{
             tableView.setNoDataMessage("No invoice found")
-            //imgViewGif.image = UIImage.gif(name: "nodataFound")
-           // imgViewGif.isHidden = false
+          
         }else{
             tableView.backgroundView = nil
-           // imgViewGif.isHidden = true
             return modal?.count ?? 0
         }
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tbInvoice.dequeueReusableCell(withIdentifier: Cell.CellMyInvoicePaidTV) as! CellMyInvoicePaidTV
-        if indexPath.row == 0 {
+       
+        if modal?[indexPath.row].status == 0 {
             let cellPending = tbInvoice.dequeueReusableCell(withIdentifier: Cell.CellMyInvoicePendingTV) as! CellMyInvoicePendingTV
-            cell.lblInvoiceDate.text = modal?[indexPath.row].startDate
-            cell.lblInvoiceTime.text = modal?[indexPath.row].time
-            cell.lblTotalAmmount.text = modal?[indexPath.row].amount
+            cellPending.lblInvoiceDate.text = modal?[indexPath.row].endDate
+            cellPending.lblInvoiceTime.text = modal?[indexPath.row].time
+            cellPending.lblTotalAmmount.text = modal?[indexPath.row].amount
+            cellPending.lblInvoiceNumber.text = modal?[indexPath.row].invoiceNumber
             return cellPending
         }else{
+            let cell = tbInvoice.dequeueReusableCell(withIdentifier: Cell.CellMyInvoicePaidTV) as! CellMyInvoicePaidTV
             cell.lblTransactionId.text = "\(modal?[indexPath.row].id ?? 0)"
             cell.lblInvoiceTime.text = modal?[indexPath.row].time
-            cell.lblInvoiceDate.text = modal?[indexPath.row].startDate
+            cell.lblInvoiceDate.text = modal?[indexPath.row].endDate
             cell.lblInvoiceNumber.text = modal?[indexPath.row].invoiceNumber
             cell.lblTotalAmmount.text = modal?[indexPath.row].amount
             return cell
@@ -82,13 +86,10 @@ extension MyInvoiceVC : UITableViewDelegate , UITableViewDataSource{
         debugPrint(indexPath.row)
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.MyInvoiceCellDetailVC) as! MyInvoiceCellDetailVC
         screen.invoice_Id = modal?[indexPath.row].invoiceNumber ?? ""
-        if indexPath.row == 0 {
+        if modal?[indexPath.row].status == 0 {
             screen.checkStatus = 0
-            screen.statusColor = "themeYellow"
         }else{
             screen.checkStatus = 1
-            screen.statusText = "Paid"
-            screen.statusColor = "themeGreen"
         }
         self.navigationController?.pushViewController(screen, animated: true)
     }

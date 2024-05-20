@@ -619,37 +619,22 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as? ItemDetailsVC else { return }
         if setValue == "Location" {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterlocations?[indexPath.row].id ?? 0
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
         } else if setValue == "Category" {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterCategory?[indexPath.row].id ?? 0
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
         } else if setValue == "Cuisines" {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filtercusin?[indexPath.row].id ?? 0
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
         } else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterHighilyRatedBarsRestos?[indexPath.row].id ?? 0
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
         } else if setValue == "A-Z" || setValue == "A-Z Bar" || setValue == "A-Z Club"{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filterAllBarsRestos?[indexPath.row].id ?? 0
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
             vc.ProductID = filtertheme?[indexPath.row].id ?? 0
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
         }
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

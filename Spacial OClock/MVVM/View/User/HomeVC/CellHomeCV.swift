@@ -49,14 +49,11 @@ class CellHomeCV: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
       
-       // bgView.applyBlurEffect(.dark)
         stackHeight.constant = 0
         viewReview.layer.cornerRadius = 10
-       // viewReview.layer.maskedCorners = [.layerMaxXMinYCorner , .layerMaxXMaxYCorner]
         let nib = UINib(nibName: "HomeOfferCVC", bundle: nil)
         collVw.register(nib, forCellWithReuseIdentifier: "HomeOfferCVC")
-       // initialLoad()
-        // Initialization code
+      
     }
     @IBAction func btnNectAct(sender : UIButton){
         cellDelegate?.btnNextTag(sender: sender)
