@@ -1089,7 +1089,6 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                 cell.lblPrePrice.text = "R\(String(format: "%.2f", price))"
                 cell.offVw.isHidden = false
             } else {
-               // if  productModal?.offerdetails?.discountedPrice == "0" || productModal?.offerdetails?.actualPrice == "0" || productModal?.offerdetails?.actualPrice == "" {
                     if products?[indexPath.row].discounted_price == "0" || products?[indexPath.row].actual_price == "0" || products?[indexPath.row].actual_price == ""{
                     cell.lblNewPrice.text = ""
                     cell.lblPrePrice.text = ""
@@ -1098,27 +1097,25 @@ extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
                     cell.offVw.isHidden = true
                     cell.itemNameTop.constant = 14
                     cell.lblItemName.text = (products?[indexPath.row].productName?.capitalized ?? "")
-                    cell.desLbl.text =  "" /*(self.offerDescription)*/
+                    cell.desLbl.text = "" /*(self.offerDescription)*/
                     
                 } else {
                     cell.desLbl.text = ""
                     cell.itemNameTop.constant = 5
                     cell.lblItemName.text = products?[indexPath.row].productName?.capitalized ?? ""
                     let prePrice =  Double(products?[indexPath.row].actual_price ?? "0") ?? 0
-                    //Double(productModal?.offerdetails?.actualPrice ?? "0") ?? 0
                     cell.lblPrePrice.text =  "R\(String(format: "%.2f", prePrice))"
                     let newPrice = Double(products?[indexPath.row].discounted_price ?? "0") ?? 0
-                    //Double(productModal?.offerdetails?.discountedPrice ?? "0") ?? 0
                     cell.lblNewPrice.text = "R\(String(format: "%.2f", newPrice))"
                 
-                    if let intValue1 = Double(products?[indexPath.row].actual_price ?? ""), let intValue2 = Double(products?[indexPath.row].discounted_price ?? "") {
-                        let result = discountPercentage(actualPrice: intValue1, discountedPrice: intValue2)
-                        cell.lblDiscount.text = "SAVE \(result.description)%"
-                        cell.offVw.isHidden = false
-                    } else {
+//                    if let intValue1 = Double(products?[indexPath.row].actual_price ?? ""), let intValue2 = Double(products?[indexPath.row].discounted_price ?? "") {
+//                        let result = discountPercentage(actualPrice: intValue1, discountedPrice: intValue2)
+//                        cell.lblDiscount.text = "SAVE \(result.description)%"
+//                        cell.offVw.isHidden = false
+//                    } else {
                         cell.offVw.isHidden = true
                         cell.lblDiscount.text = ""
-                    }
+                    //}
                 }
             }
             

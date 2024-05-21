@@ -249,6 +249,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     }
     
     func setDine(){
+        tfSearch.placeholder = "Location, cuisine, restaurant name"
         imgViewDinein.image = UIImage(named: "DiningGreen")
         imgViewDrinks.image = UIImage(named: "greyDrink")
         lblDrinks.textColor = UIColor.lightGray
@@ -261,6 +262,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     }
     
     func setDrink() {
+        tfSearch.placeholder = "Location, bar / club"
         imgViewDrinks.image = UIImage(named: "greenDrink")
         imgViewDinein.image = UIImage(named: "DiningGray")
         lblDineIn.textColor = UIColor.lightGray

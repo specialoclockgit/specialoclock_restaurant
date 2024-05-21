@@ -277,11 +277,11 @@ extension bookingDetailsVC : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80.0
     }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        DispatchQueue.main.async { [self] in
-           // heightTBItem.constant = tbItem.contentSize.height
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        DispatchQueue.main.async { [self] in
+//           // heightTBItem.constant = tbItem.contentSize.height
+//        }
+//    }
 }
 
 extension bookingDetailsVC{
@@ -355,13 +355,10 @@ extension bookingDetailsVC {
             if UIDevice().userInterfaceIdiom == .phone {
                 switch UIScreen.main.nativeBounds.height {
                 case 1136,1334,1920, 2208:
-                    print("")
                     self.replyBottom.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+3)
                 case 2436,2688,1792:
-                    print("")
                     self.replyBottom.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+10)
                 default:
-                    print("")
                     self.replyBottom.constant = (keyboardSize.height - self.view.safeAreaInsets.bottom+10)
                 }
             }
@@ -374,14 +371,11 @@ extension bookingDetailsVC {
 
 func convertDateToString(formatString:String) -> String {
     let dateString = formatString
-    
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    
     let date = dateFormatter.date(from: dateString)
     let outputFormatter = DateFormatter()
     outputFormatter.dateFormat = "MMM d, yyyy h:mm a"
-    
     return outputFormatter.string(from: date ?? Date())
     
 }
