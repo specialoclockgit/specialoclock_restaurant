@@ -31,11 +31,11 @@ class CellBookingRestoTB: UITableViewCell {
                 lblStatus.text = "Ongoing"
                 lblStatus.textColor = UIColor(named: "themeAlert")
                 lblBookingIDHeading.text = "Booking Number:"
-            }else if bookingListing?.status == 1{
+            } else if bookingListing?.status == 1 {
                 lblStatus.text = "Completed"
                 lblStatus.textColor = UIColor(named: "themeGreen")
                 lblBookingIDHeading.text = "Booking Id:"
-            }else{
+            } else {
                 lblStatus.text = "Cancelled"
                 lblStatus.textColor = UIColor(named: "themeAlert")
             }
@@ -45,7 +45,13 @@ class CellBookingRestoTB: UITableViewCell {
             lblUserIndex.text = bookingListing?.userName ?? ""
             lblBookingID.text = bookingListing?.bookingID
             lblBookingDate.text = bookingListing?.bookingDate
-            lblBookingTime.text = bookingListing?.bookingSlot
+            
+            if bookingListing?.restroType == 1 {
+                lblBookingTime.text = bookingListing?.bookingSlot ?? ""
+            } else {
+                lblBookingTime.text = "\(bookingListing?.offer?.openTime ?? "")-\(bookingListing?.offer?.closeTime ?? "")"
+            }
+        
         }
     }
     

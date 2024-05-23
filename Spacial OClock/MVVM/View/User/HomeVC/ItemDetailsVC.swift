@@ -263,7 +263,12 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
                     self.collViewMenu.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
                     self.viewButton.isHidden = Store.userDetails?.role == 1 ? false : true
                     self.selectedOfferId = 0
-                    self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].isFifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
+                    if self.modal?.type == 1 {
+                        self.menuProductAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].isFifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
+                    }else {
+                        self.menuProductForBarAPI(id: self.offer?[self.isselectedoffer].menuID ?? 0,index: 0,isfifty: self.offer?[self.isselectedoffer].isFifty ?? 0,offerID: self.offer?[self.isselectedoffer].offerID ?? 0)
+                    }
+                    
                     let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
                     self.scrollView.setContentOffset(bottomOffset, animated: true)
                     if self.modal?.type == 1 {
@@ -418,11 +423,42 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - MENU PRODUCT API
-    //    func menuProductForBarAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
-    //        viewmodal.menuProductForBarAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { resp in
-    //
-    //        }
-    //    }
+        func menuProductForBarAPI(id: Int,index:Int,isfifty:Int,offerID:Int){
+            viewmodal.menuProductForBarAPI(offerID:offerID,restoid: ProductID, menutypeid: id, isfifty:isfifty) { dataa in
+                self.productModal = dataa
+                self.offerpresents = Double(dataa?.products?.first?.offerPercentage ?? "0") ?? 0
+                self.products = dataa?.products ?? []
+                self.lblOfferDiscription.text = dataa?.offerdetails?.description?.capitalized ?? ""
+                self.numberofperson = dataa?.offerdetails?.numberOfUserPerBooking ?? 0
+                self.actualprice = "\(self.products?.first?.price ?? "0")"
+                self.pendingSlots = dataa?.offerdetails?.numberOfUserBook ?? 0
+                self.offerDesHeaderVw.isHidden = false
+                self.viewSV.isHidden = false
+                self.offerDesHeaderVw.backgroundColor = .systemGray5
+                self.lblPricingWarning.isHidden = false
+                self.tbMenu.reloadData()
+                self.collViewMenu.reloadData()
+                self.arrCheck.removeAll()
+                self.btnBook.isUserInteractionEnabled = true
+                self.btnBook.backgroundColor = .white
+                
+                
+                
+                for i in 0...(self.products?.count ?? 0){
+                    if i == 0 {
+                        if self.viewButton.isHidden == true {
+                            self.arrCheck.append(false)
+                        } else {
+                            self.arrCheck.append(true)
+                        }
+                        
+                    } else {
+                        self.arrCheck.append(false)
+                    }
+                    self.tbMenu.reloadData()
+                }
+            }
+        }
     
     
     func menuProductAPI(id: Int,index:Int,isfifty:Int,offerID:Int) {
@@ -909,8 +945,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                         
                         //self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
                     }
+                    if Store.screenType == 1 {
+                        menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
+                    }else {
+                        menuProductForBarAPI(id: id, index: indexPath.row, isfifty: offer?[indexPath.row].isFifty ?? 0, offerID: offerId)
+                    }
                     
-                    menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
                     
                 }
                 self.slottime = offer?[indexPath.row].startTime ?? ""
@@ -966,7 +1006,12 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
 //                    } else {
 //                        self.discount = Int(self.offer?[indexPath.row].percentage ?? "") ?? 0
                    // }
-                menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
+                    if Store.screenType == 1 {
+                        menuProductAPI(id: id,index: indexPath.row,isfifty: offer?[indexPath.row].isFifty ?? 0,offerID: offerId)
+                    }else {
+                        menuProductForBarAPI(id: id, index: indexPath.row, isfifty: offer?[indexPath.row].isFifty ?? 0, offerID: offerId)
+                    }
+               
                 }
                 self.slottime = offer?[indexPath.row].startTime ?? ""
                 self.slotid = offer?[indexPath.row].slot_id ?? 0

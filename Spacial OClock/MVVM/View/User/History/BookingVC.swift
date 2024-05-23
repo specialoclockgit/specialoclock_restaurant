@@ -141,7 +141,12 @@ class bookingCell:UITableViewCell{
             }
             bookingDatelbl.text = bookingListing?.bookingDate ?? ""
             bookingNumber.text = bookingListing?.bookingID ?? ""
-            bookingTimelbl.text = bookingListing?.bookingSlot ?? ""
+            if bookingListing?.restroType == 1 {
+                bookingTimelbl.text = bookingListing?.bookingSlot ?? ""
+            } else {
+                bookingTimelbl.text = "\(bookingListing?.offer?.openTime ?? "")-\(bookingListing?.offer?.closeTime ?? "")"
+            }
+            
             let imageIndex = (imageURL) + (bookingListing?.restoImage?.replacingOccurrences(of: " ", with: "%20") ?? "")
             itemImg.sd_imageIndicator = SDWebImageActivityIndicator.gray
             itemImg.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))

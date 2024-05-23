@@ -23,7 +23,8 @@ struct currentPastModalBody: Codable {
     let bookingID: String?
     let numberOfPeople, status, offerID: Int?
     let createdAt, updatedAt, restoImage, restoName: String?
-
+    var restroType: Int?
+    var offer: Offer?
     enum CodingKeys: String, CodingKey {
         case id
         case userID = "user_id"
@@ -35,7 +36,7 @@ struct currentPastModalBody: Codable {
         case numberOfPeople = "number_of_people"
         case status
         case offerID = "offer_id"
-        case createdAt, updatedAt, restoImage, restoName
+        case createdAt, updatedAt, restoImage, restoName, restroType, offer
     }
 }
 

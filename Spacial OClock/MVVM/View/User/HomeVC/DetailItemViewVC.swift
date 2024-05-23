@@ -50,7 +50,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     var tempAllBarsRestos : [AllBarsResto]?
     var allBarsRestos : [AllBarsResto]?
     var filterAllBarsRestos : [AllBarsResto]?
-    
+    var isSeperate = false
     var lblName = ""
     var setimage = ""
     var setValue = ""
@@ -59,8 +59,20 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
     var disableDatesArr : [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        clubVw.isHidden = Store.screenType == 1 ? true : false
-        barVw.isHidden = Store.screenType == 1 ? true : false
+        
+        if  Store.screenType == 1 {
+            clubVw.isHidden = true
+            barVw.isHidden = true
+        } else {
+            if isSeperate == false {
+                clubVw.isHidden = true
+                barVw.isHidden = true
+            } else {
+                clubVw.isHidden = false
+                barVw.isHidden = false
+            }
+        }
+         
         txtFldSearch.delegate = self
         self.type = Store.screenType ?? 1
         lblTwo.text = lblName
@@ -82,7 +94,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         } else if setValue == "Popular" || setValue == "Popular Bar" || setValue == "Popular Club"{
             if Store.screenType != 1 {
                 tempHighilyRatedBarsRestos = highilyRatedBarsRestos
-                let clubData = highilyRatedBarsRestos?.filter({$0.type == 2})
+                let clubData = setValue == "Popular Club" ? highilyRatedBarsRestos?.filter({$0.type == 2}) : highilyRatedBarsRestos?.filter({$0.type == 3})
                 highilyRatedBarsRestos = clubData
                 filterHighilyRatedBarsRestos = clubData
                 self.CollectionView.reloadData()
@@ -91,7 +103,7 @@ class DetailItemViewVC: UIViewController , SkeletonCollectionViewDataSource, Ske
         } else if setValue == "A-Z" || setValue == "A-Z Bar" || setValue == "A-Z Club"{
             if Store.screenType != 1 {
                 tempAllBarsRestos = allBarsRestos
-                let clubData = allBarsRestos?.filter({$0.type == 2})
+                let clubData = setValue == "A-Z Club" ? allBarsRestos?.filter({$0.type == 2}) : allBarsRestos?.filter({$0.type == 3})
                 allBarsRestos = clubData
                 filterAllBarsRestos = clubData
                 self.CollectionView.reloadData()

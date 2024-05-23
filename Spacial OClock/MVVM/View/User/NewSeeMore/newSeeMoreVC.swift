@@ -206,6 +206,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             vc.lblName = self.filterlocation[indexPath.row].locality_area ?? ""
             vc.setValue = "Location"
             vc.setimage = "pinPerson"
+            vc.isSeperate = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else if setvalue == "Cuisines" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
@@ -215,6 +216,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             vc.setValue = "Cuisines"
             vc.city = self.getcity
             vc.country = self.getcountry
+            vc.isSeperate = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else if setvalue == "Category" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
@@ -224,6 +226,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             vc.setValue = "Category"
             vc.city = self.getcity
             vc.country = self.getcountry
+            vc.isSeperate = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailItemViewVC") as! DetailItemViewVC
@@ -233,6 +236,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             vc.setimage = "mask"
             vc.city = self.getcity
             vc.country = self.getcountry
+            vc.isSeperate = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

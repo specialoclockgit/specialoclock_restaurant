@@ -149,11 +149,16 @@ class bookingDetailVC: UIViewController {
                 self.btnMain.isHidden = true
                 self.lblstatus.text = "Cancelled"
             }
-            if fetchdata?.restrorant?.type == 2 || fetchdata?.restrorant?.type == 3{
+            if fetchdata?.restrorant?.type == 2 || fetchdata?.restrorant?.type == 3 {
               
-               // self.bookingSlotStartEndTime.text = "Offer from \(fetchdata?.restrorant?.offers?.first?.openTime ?? "") to \(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
-                self.lblSpeOffer.text = fetchdata?.restrorant?.offers?.first?.menuName ?? ""
-                self.lblBookingtime.text = "\(fetchdata?.restrorant?.offers?.first?.openTime ?? "")-\(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
+              
+                if let offer = fetchdata?.restrorant?.offers?.first(where: {$0.id == fetchdata?.offerID ?? 0}) {
+                    self.lblSpeOffer.text = offer.menuName ?? ""
+                    //fetchdata?.restrorant?.offers?.first?.menuName ?? ""
+                    self.lblBookingtime.text = "\(offer.openTime ?? "")-\(offer.closeTime ?? "")"
+                    //"\(fetchdata?.restrorant?.offers?.first?.openTime ?? "")-\(fetchdata?.restrorant?.offers?.first?.closeTime ?? "")"
+                }
+                
                 self.discountVW.isHidden = true
             } else {
                 self.discountVW.isHidden = false

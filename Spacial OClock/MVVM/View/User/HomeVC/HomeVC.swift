@@ -457,6 +457,8 @@ extension HomeVC {
             vc.setimage = "Popular"
             vc.country = self.getcountry
             vc.city = self.getcity
+            vc.isSeperate = true
+            vc.isSeperate = true
             self.navigationController?.pushViewController(vc, animated: true)
         case "Popular Club" :
             guard let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as? DetailItemViewVC else { return }
@@ -467,6 +469,7 @@ extension HomeVC {
             vc.setimage = "Popular"
             vc.country = self.getcountry
             vc.city = self.getcity
+            vc.isSeperate = false
             self.navigationController?.pushViewController(vc, animated: true)
         case "Popular Bar" :
             guard let vc = storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as? DetailItemViewVC else { return }
@@ -477,6 +480,7 @@ extension HomeVC {
             vc.setimage = "Popular"
             vc.country = self.getcountry
             vc.city = self.getcity
+            vc.isSeperate = false
             self.navigationController?.pushViewController(vc, animated: true)
         case "Theme" :
             guard let screen = storyboard?.instantiateViewController(withIdentifier: "newSeeMoreVC") as? newSeeMoreVC else { return }
@@ -497,6 +501,7 @@ extension HomeVC {
             vc.setimage = "9411889"
             vc.country = self.getcountry
             vc.city = self.getcity
+            vc.isSeperate = true
             self.navigationController?.pushViewController(vc, animated: true)
             
         case "A-Z Club" :
@@ -508,6 +513,7 @@ extension HomeVC {
             vc.setimage = "9411889"
             vc.country = self.getcountry
             vc.city = self.getcity
+            vc.isSeperate = false
             self.navigationController?.pushViewController(vc, animated: true)
             
         case "A-Z Bar" :
@@ -519,6 +525,7 @@ extension HomeVC {
             vc.setimage = "9411889"
             vc.country = self.getcountry
             vc.city = self.getcity
+            vc.isSeperate = false
             self.navigationController?.pushViewController(vc, animated: true)
             
         default:

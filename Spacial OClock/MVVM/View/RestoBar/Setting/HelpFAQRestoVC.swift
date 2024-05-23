@@ -121,13 +121,10 @@ class HelpFAQRestoVC: UIViewController {
     @objc func plusBtnTapped(sender : UIButton){
         isSelected[sender.tag] = !isSelected[sender.tag]
         if self.selected == sender.tag{
-           
-           
             self.selected = -1
         }
         else{
             self.selected = sender.tag
-     
                 }
         tbHelpFAQ.reloadData()
     }
@@ -146,7 +143,7 @@ extension HelpFAQRestoVC : UITableViewDelegate , UITableViewDataSource{
         let data = datagetApi
         cell.lblQuestionHeading.text = data?[indexPath.row].question
         cell.lblContent.text = data?[indexPath.row].answer
-        cell.lblQuestionHeading.text = "Question "+(indexPath.row + 01 ).description
+        //cell.lblQuestionHeading.text = "Question "+(indexPath.row + 01 ).description
         if self.selected == indexPath.row {
             cell.Vw.isHidden = false
             cell.btnHideShow.isSelected = true

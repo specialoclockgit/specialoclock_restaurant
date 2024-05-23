@@ -217,6 +217,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.lblName = location[indexPath.row].locality_area ?? ""
             vc.setValue = "Location"
             vc.setimage = "pinPerson"
+            vc.isSeperate = true
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }else if objArray[collView.tag].name == "Category" {
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.DetailItemViewVC) as! DetailItemViewVC
@@ -226,6 +227,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setimage = "category_icon"
             vc.country = self.country
             vc.city = self.city
+            vc.isSeperate = true
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
         else if objArray[collView.tag].name == "Cuisines" {
@@ -236,6 +238,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setimage = "soup"
             vc.country = self.country
             vc.city = self.city
+            vc.isSeperate = true
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }
         else if objArray[collView.tag].name == "Popular" || objArray[collView.tag].name == "Popular Bar" || objArray[collView.tag].name == "Popular Club"{
@@ -251,6 +254,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.setimage = "mask"
             vc.country = self.country
             vc.city = self.city
+            vc.isSeperate = true
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         } else{
             let vc = super.viewContainingController()?.storyboard?.instantiateViewController(withIdentifier: ViewController.ItemDetailsVC) as! ItemDetailsVC
