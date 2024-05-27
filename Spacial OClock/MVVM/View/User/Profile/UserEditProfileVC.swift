@@ -18,7 +18,7 @@ class UserEditProfileVC: UIViewController {
     @IBOutlet weak var tfCountryCode : UITextField!
     @IBOutlet weak var tfEmail : UITextField!
     @IBOutlet weak var viewProfile : UIView!
-    
+    @IBOutlet weak var dobTf: UITextField!
     //MARK: PROPERTIES
     var viewmodel = AuthViewModel()
     var profileBody : GetprofileModelBody?
@@ -50,6 +50,7 @@ class UserEditProfileVC: UIViewController {
             self.tfEmail.text = data?.email ?? ""
             self.tfPhoneNumber.text = "\(data?.phone ?? 0)"
             self.tfCountryCode.text = "\(data?.countryCode ?? "")"
+            self.dobTf.text = data?.dob ?? ""
         }
     }
     
