@@ -741,7 +741,8 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                 }
         } else if collectionView == viewFullMenu{
             if modalfullmenu?.count == 0{
-                viewFullMenu.setNoDataMessageLbl("No full menu found", txtColor: .black)
+                viewFullMenu.setNoDataMessage("No full menu found")
+               // viewFullMenu.setNoDataMessageLbl("No full menu found", txtColor: .black)
             } else {
                 viewFullMenu.backgroundView = nil
                 return modalfullmenu?.count ?? 0
@@ -1035,13 +1036,16 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             if self.modalfullmenu?.count == 0 {
-                self.viewFCHeight.constant = 260
+                self.viewFCHeight.constant = 300
             }else{
-                self.viewFCHeight.constant = self.viewFullMenu.contentSize.height
+                self.viewFCHeight.constant = self.viewFullMenu.contentSize.height + 20
             }
+            self.view.layoutIfNeeded()
+            self.viewFullMenu.layoutIfNeeded()
         }
     }
 }
+
 extension ItemDetailsVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tbMenu {

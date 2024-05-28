@@ -58,7 +58,7 @@ class bookingDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         keyboardHandling()
-        tabBarController?.tabBar.isHidden = true
+      
         initialLoad()
         tbItem.delegate = self
         tbItem.dataSource = self

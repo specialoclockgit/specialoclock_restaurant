@@ -29,7 +29,7 @@ class BookingRestoVC: UIViewController, UIGestureRecognizerDelegate {
         tbBooking.delegate = self
         tbBooking.dataSource =  self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        tabBarController?.tabBar.isHidden = false
+    
     }
     
     //MARK: - FUCNTIONS
@@ -90,6 +90,7 @@ extension BookingRestoVC : UITableViewDelegate , UITableViewDataSource {
         screen.restoid = modal?[indexPath.row].id ?? 0
         screen.status = modal?[indexPath.row].status ?? 0
         screen.booking_id = modal?[indexPath.row].bookingID ?? ""
+        screen.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(screen, animated: true)
     }
     

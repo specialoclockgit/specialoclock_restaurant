@@ -327,6 +327,7 @@ extension UICollectionView {
             imageView.translatesAutoresizingMaskIntoConstraints = false
             messageLabel.translatesAutoresizingMaskIntoConstraints = false
             
+        
             NSLayoutConstraint.activate([
                 imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: yPosition), // Adjust this value for vertical positioning
