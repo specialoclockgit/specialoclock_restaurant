@@ -69,10 +69,10 @@ class ChatVC: UIViewController, UITextViewDelegate {
         if chatmodel?.count == 0 {
             CommonUtilities.shared.showAlert(message: "There is no message that needs deleting", isSuccess: .error)
         }  else {
-            let alert = UIAlertController(title: "Delete", message: "Are you sure you want to clear all message?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Delete", message: "Are you sure you want to clear all messages?", preferredStyle: .alert)
             let ok = UIAlertAction(title: "Yes", style: .default, handler: { action in
                 SocketIOManager.sharedInstance.clearChatemitter(user2id: 1)
-                CommonUtilities.shared.showAlert(message: "Messages clear successfully", isSuccess: .success)
+                CommonUtilities.shared.showAlert(message: "Messages cleared successfully", isSuccess: .success)
             })
             alert.addAction(ok)
             let cancel = UIAlertAction(title: "No", style: .default, handler: { action in

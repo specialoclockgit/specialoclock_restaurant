@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         sleep(3)
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-        GMSServices.provideAPIKey("AIzaSyA-Ga7BvTYtT6KGYYoMWfolfoPj7CswuL0")
-        GMSPlacesClient.provideAPIKey("AIzaSyCIVy1w4jCuYDgqDjfNGU-uqxgJb_OjM4g")
+        GMSServices.provideAPIKey("AIzaSyDCrI90hdhuFOhZrxmJafhTpsxCScDRpOw")
+        GMSPlacesClient.provideAPIKey("AIzaSyDCrI90hdhuFOhZrxmJafhTpsxCScDRpOw")
         SocketIOManager.sharedInstance.connectMySocket()
         
         DispatchQueue.global().async {

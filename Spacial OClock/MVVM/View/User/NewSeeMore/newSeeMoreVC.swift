@@ -205,7 +205,7 @@ extension newSeeMoreVC: UICollectionViewDelegate, UICollectionViewDataSource, CH
             vc.city = self.filterlocation[indexPath.row].city ?? ""
             vc.lblName = self.filterlocation[indexPath.row].locality_area ?? ""
             vc.setValue = "Location"
-            vc.setimage = "pinPerson"
+            vc.setimage = "PIN"
             vc.isSeperate = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else if setvalue == "Cuisines" {

@@ -235,7 +235,7 @@ class bookingDetailsVC: UIViewController {
             let vw = self.storyboard?.instantiateViewController(withIdentifier: "ReportUserReasonVC") as! ReportUserReasonVC
             vw.callBack = { [weak self] val in
                 if val.trimWhiteSpace.isEmpty {
-                    CommonUtilities.shared.showAlert(message: "Please enter reason", isSuccess: .error)
+                    CommonUtilities.shared.showAlert(message: "Please enter a reason", isSuccess: .error)
                 } else {
                     self?.viewmodal.homeReportUser(restoid: self?.modalDetail?.bookingID ?? "", reason: val) { response in
                         if response?.code == 200 {

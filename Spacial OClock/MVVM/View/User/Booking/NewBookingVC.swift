@@ -122,7 +122,7 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         
         
         if noOfPerson.trimmingCharacters(in: .whitespaces).isEmpty == true{
-            CommonUtilities.shared.showAlert(message: "Please select number of people")
+            CommonUtilities.shared.showAlert(message: "Please select the number of people")
         } else {
             self.viewmodal.booking_API(bookingDate: self.oldDateSelect, slotid: self.slotId, numberofPeople: noOfPerson , restoid: self.restrorant_bar_id, offerid: self.offer_id, persents: self.offerSelectePretns.description,offerDiscount: self.offerDiscount) { data in
                 let screen = self.storyboard?.instantiateViewController(withIdentifier: ViewController.CustomTopAlertVC) as! CustomTopAlertVC

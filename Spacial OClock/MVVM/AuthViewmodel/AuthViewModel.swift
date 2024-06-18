@@ -95,7 +95,7 @@ class AuthViewModel : NSObject {
     //MARK: - VERIFICATION OTP
     func otpverification(otp:String, onSuccess :@escaping()->()){
         if otp.count < 4 {
-            CommonUtilities.shared.showAlert(message: "Please enter otp", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter the OTP", isSuccess: .error)
         }else{
             let param : parameters = ["otp":otp]
             WebService.service(API.verify_otp, param: param, service: .post){
@@ -117,7 +117,7 @@ class AuthViewModel : NSObject {
     //MARK: Forgot Password
     func ForgotPassword(email: String, onSuccess : @escaping (()->())) {
         if  email.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter email", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your email", isSuccess: .error)
         }else{
             let param: parameters = ["email" : email]
             print(param)
@@ -170,17 +170,17 @@ class AuthViewModel : NSObject {
     //  MARK: - CHANGE PASSWORD
     func changePasswordapicall(oldpassword: String, newpassword: String, confirmpassword: String, onsuccess: @escaping (()->())){
         if oldpassword.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter old password", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your old password", isSuccess: .error)
         }else if oldpassword == newpassword{
-            CommonUtilities.shared.showAlert(message: "Old password and new password should not be same", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Old password and new password should not be the same", isSuccess: .error)
         }else if newpassword.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter new password", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your new password", isSuccess: .error)
         }else if newpassword.count <= 5{
-            CommonUtilities.shared.showAlert(message: "Please enter password minimum 6 characters", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter a password with a minimum of 6 characters", isSuccess: .error)
         }else if confirmpassword.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter confirm  password", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please confirm your password", isSuccess: .error)
         }else if confirmpassword != newpassword{
-            CommonUtilities.shared.showAlert(message: "New password and confirm password should be same", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "New password and confirmation password should be the same", isSuccess: .error)
         }else{
             let param : parameters = ["old_password":oldpassword,
                                       "new_password":newpassword,
@@ -199,7 +199,7 @@ class AuthViewModel : NSObject {
         if name.trimmingCharacters(in: .whitespaces).isEmpty{
             CommonUtilities.shared.showAlert(message: "Please enter name", isSuccess: .error)
         }else if email.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter email", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your email", isSuccess: .error)
         }else if email.isValidEmail{
             CommonUtilities.shared.showAlert(message: "Please enter valid email", isSuccess: .error)
         }else if message.trimmingCharacters(in: .whitespaces).isEmpty{
@@ -284,10 +284,10 @@ class AuthViewModel : NSObject {
             CommonUtilities.shared.showAlert(message: "Select your location", isSuccess: .error)
             return false
         } else if opentime.trimmingCharacters(in: .whitespaces).isEmpty {
-            CommonUtilities.shared.showAlert(message: "Enter open time", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Enter opening time", isSuccess: .error)
             return false
         } else if closetime.trimmingCharacters(in: .whitespaces).isEmpty {
-            CommonUtilities.shared.showAlert(message: "Enter close time", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Enter closing time", isSuccess: .error)
             return false
         }
 //        else if themesrestrorantid.trimmingCharacters(in: .whitespaces).isEmpty{
@@ -299,7 +299,7 @@ class AuthViewModel : NSObject {
 //            return false
 //        }
         else if shortdescription.trimmingCharacters(in: .whitespaces).isEmpty {
-            CommonUtilities.shared.showAlert(message: "Enter your short description", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Enter a short description", isSuccess: .error)
             return false
         } else if category.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Select your category", isSuccess: .error)
@@ -368,9 +368,9 @@ class AuthViewModel : NSObject {
         if name.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your name", isSuccess: .error)
         }else if phone.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter mobile number", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your mobile number", isSuccess: .error)
         }else if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol){
-            CommonUtilities.shared.showAlert(message: "Please enter valid mobile number",isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter a valid mobile number",isSuccess: .error)
         }else {
             let jsonEncoder = JSONEncoder()
             do {

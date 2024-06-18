@@ -57,12 +57,12 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                 if Store.userDetails?.isOtpVerified == 1 {
                    Store.autoLogin = true
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
-                    CommonUtilities.shared.showAlert(message: "Login successfully", isSuccess: .success)
+                    CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
                     Store.screenType = 1
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else {
                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
-                   CommonUtilities.shared.showAlert(message: "Please verify otp", isSuccess: .error)
+                   CommonUtilities.shared.showAlert(message: "Please verify the OTP", isSuccess: .error)
                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             }else{
@@ -89,11 +89,11 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                     UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if Store.userDetails?.is_approved == 0{
-                    CommonUtilities.shared.showAlert(message: "Your Business approval is pending from admin.", isSuccess: .error)
+                    CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
                 }else {
                     let vc = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC)as! RestoTabBarVC
                     Store.autoLogin = true
-                    CommonUtilities.shared.showAlert(message: "Login successfully", isSuccess: .success)
+                    CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }

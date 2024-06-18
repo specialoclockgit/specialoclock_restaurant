@@ -332,7 +332,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         if date == todayDateString {
             if dateArr.contains(todayDateString){
                 if checkDatesAreInSequence(array: dateArr) {
-                    showPopupForDisableDate(date: date,msg: "Sorry we are not available till \(dateArr.last ?? "")")
+                    showPopupForDisableDate(date: date,msg: "Sorry we are not available until \(dateArr.last ?? "")")
                     // CommonUtilities.shared.showAlert(message: "Closed until \(dateArr.last ?? ""). Please select further date")
                 } else {
                     showPopupForDisableDate(date:date,msg: "Sorry we are closed today")
@@ -395,7 +395,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         formatter.dateFormat = "dd/MM/yyyy"
         if self.disableDatedArr.contains(formatter.string(from: datePicker.date)){
             if checkDatesAreInSequence(array: self.disableDatedArr) {
-                showPopupForDisableDate(date: (formatter.string(from: datePicker.date)),msg: "Sorry we are not available till \(self.disableDatedArr.last ?? "")")
+                showPopupForDisableDate(date: (formatter.string(from: datePicker.date)),msg: "Sorry we are not available until \(self.disableDatedArr.last ?? "")")
             } else {
                 if isToday(dateString: formatter.string(from: datePicker.date)){
                     showPopupForDisableDate(date: (formatter.string(from: datePicker.date)), msg: "Sorry we are closed today")
@@ -616,7 +616,7 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
         if btnBookStatus == 0 {
             
             if isselectedoffer == -1 {
-                CommonUtilities.shared.showAlert(message: "Please select offer first", isSuccess: .error)
+                CommonUtilities.shared.showAlert(message: "Please select an offer first", isSuccess: .error)
             } else if self.pendingSlots != 0 {
                 if disableDatedArr.contains(txtFldDate.text ?? "") {
                     showPopupForDisableDate(date:txtFldDate.text ?? "" ,msg: "Sorry we are not available on the selected date")
@@ -1457,23 +1457,23 @@ extension ItemDetailsVC: CoachMarksControllerDelegate, CoachMarksControllerDataS
         if self.offer?.count == 0 {
             switch index {
             case 0:
-                coachViews.bodyView.hintLabel.text = "That's add to fav button. You can add this \(title) to favorites!"
+                coachViews.bodyView.hintLabel.text = "Tap here to add a \(title) to your favorites!"
                 coachViews.bodyView.nextLabel.text = "Ok!"
             case 1 :
-                coachViews.bodyView.hintLabel.text = "You can select date of booking by clicking here!"
+                coachViews.bodyView.hintLabel.text = "Tap here to select the date of booking!"
                 coachViews.bodyView.nextLabel.text = "Ok!"
             default: break
             }
         } else {
             switch index {
             case 0:
-                coachViews.bodyView.hintLabel.text = "That's add to fav button. You can add this \(title) to favorites!"
+                coachViews.bodyView.hintLabel.text = "Tap here to add a \(title) to your favorites!"
                 coachViews.bodyView.nextLabel.text = "Ok!"
             case 1 :
-                coachViews.bodyView.hintLabel.text = "You can select date of booking by clicking here!"
+                coachViews.bodyView.hintLabel.text = "Tap here to select the date of booking!"
                 coachViews.bodyView.nextLabel.text = "Ok!"
             case 2 :
-                coachViews.bodyView.hintLabel.text = "Tap here to select special!"
+                coachViews.bodyView.hintLabel.text = "Tap here to select a special!"
                 coachViews.bodyView.nextLabel.text = "Ok!"
             default: break
             }

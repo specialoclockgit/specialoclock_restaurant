@@ -216,7 +216,7 @@ extension CellHomeTB : UICollectionViewDelegate , UICollectionViewDataSource , U
             vc.city = location[indexPath.row].city ?? ""
             vc.lblName = location[indexPath.row].locality_area ?? ""
             vc.setValue = "Location"
-            vc.setimage = "pinPerson"
+            vc.setimage = "PIN"
             vc.isSeperate = true
             super.viewContainingController()?.navigationController?.pushViewController(vc, animated: true)
         }else if objArray[collView.tag].name == "Category" {

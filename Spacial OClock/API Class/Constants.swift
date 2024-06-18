@@ -205,7 +205,7 @@ enum constantMessages:String {
     case emptyPhone       = "Please enter your phone number"
     case emptyEmail       = "Please enter your email"
     case emptyPassword    = "Please enter your password"
-    case emptyOldPass     = "Please enter old password"
+    case emptyOldPass     = "Please enter your old password"
 //    case emptyNewPassword = "Please enter your password"
     case emptyCPassword   = "Please enter confirm password"
     case passwordMismatch = "Password and confirm password didn't match"

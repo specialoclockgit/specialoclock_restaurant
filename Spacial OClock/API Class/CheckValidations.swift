@@ -41,10 +41,10 @@ class CheckValidations: NSObject{
             CommonUtilities.shared.showAlert(message: "Please select your country code", isSuccess: .error)
             return false
         }else if phone.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter mobile number", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter your mobile number", isSuccess: .error)
             return false
         }else if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol){
-            CommonUtilities.shared.showAlert(message: "Please enter valid mobile number",isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter a valid mobile number",isSuccess: .error)
             return false
         }
 //        else if phone.count <= 9{
@@ -55,16 +55,16 @@ class CheckValidations: NSObject{
             CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
             return false
         }else if password.count <= 5{
-            CommonUtilities.shared.showAlert(message: "Please enter password minimum 6 characters", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please enter a password with a minimum of 6 characters", isSuccess: .error)
             return false
         }else if confirmpassword.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please enter your confirm password", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please confirm your password", isSuccess: .error)
             return false
         }else if password != confirmpassword{
-            CommonUtilities.shared.showAlert(message: "Password and confirm password should be same", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Password and confirmation password should be the same", isSuccess: .error)
             return false
         }else if isselected == false {
-            CommonUtilities.shared.showAlert(message: "Please select terms & conditions", isSuccess: .error)
+            CommonUtilities.shared.showAlert(message: "Please accept the terms & conditions", isSuccess: .error)
             return false
         }
         return true
@@ -74,7 +74,7 @@ class CheckValidations: NSObject{
     //MARK: Login VALIDATION
         class func loginValidation(email:UITextField,password:UITextField)-> Bool {
             if email.text!.isBlank {
-                CommonUtilities.shared.showAlert(message: "Please enter email", isSuccess: .error)
+                CommonUtilities.shared.showAlert(message: "Please enter your email", isSuccess: .error)
                 return false
             }
             else if !email.text!.isValidemail {
@@ -82,7 +82,7 @@ class CheckValidations: NSObject{
                 return false
             }
             else if password.text!.isBlank {
-                CommonUtilities.shared.showAlert(message: "Please enter password", isSuccess: .error)
+                CommonUtilities.shared.showAlert(message: "Please enter your password", isSuccess: .error)
                 return false
             }
             return true

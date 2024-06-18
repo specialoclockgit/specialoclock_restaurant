@@ -22,8 +22,8 @@ class RestoVerificationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                CommonUtilities.shared.showAlert(Title: "Please enter otp 1111", message:  "\(String(describing: ""))", isSuccess: .success, duration: 2)
-                       }
+                
+            }
  
     @IBAction func btnSendAgain(_ sender: Any) {
 //        viewmodel.resendOtp {
