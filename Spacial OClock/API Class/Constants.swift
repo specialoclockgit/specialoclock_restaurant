@@ -1,6 +1,6 @@
 //
 //  Constants.swift
-//  
+//
 //
 //  Created by apple on 21/03/24.
 //  Copyright © 2019 apple. All rights reserved.
@@ -44,13 +44,13 @@ enum AppStoryboard : String {
 }
 
 enum API: String{
-//user module
+    //user module
     case signup              = "signup"
     case login
     case forgot_password
     case privacypolicy       = "get_content/2"
     case termsAndCondition   = "get_content/1"
-//    case helpandFaq          = "get_content/3"
+    //    case helpandFaq          = "get_content/3"
     case file_upload  =  "file_upload"
     case delete_account
     case change_password
@@ -70,17 +70,17 @@ enum API: String{
     case fetch_app_availability
     case location_listing
     
-
-//    MARK: - USER
+    
+    //    MARK: - USER
     case user_home
-
-//subject module
+    
+    //subject module
     case subjectList         = "subjet_listing"
     case chapterList         = "chapter_listing"
     case lessonListing       = "lesson_listing"
     case searchSubject       = "search_subject"
     case videoStatus         = "watchVideo"
-//room module
+    //room module
     case usersList           = "users_listing"
     case users               = "users_listings"
     case search_user         = "search_user"
@@ -90,7 +90,7 @@ enum API: String{
     case addParticipants     = "AddParticipants"
     case leaveRoom           = "leaveGroup"
     case deleteRoom          = "delete_room"
-//Quiz
+    //Quiz
     case quizList            = "quizList"
     case roomQuiz            = "room_qiuz_list"
     case createQuiz          = "roomQuiz"
@@ -168,7 +168,7 @@ enum DefaultKeys: String {
     case long
     case sociallogin
     case screenType
-   
+    
 }
 
 
@@ -206,7 +206,7 @@ enum constantMessages:String {
     case emptyEmail       = "Please enter your email"
     case emptyPassword    = "Please enter your password"
     case emptyOldPass     = "Please enter your old password"
-//    case emptyNewPassword = "Please enter your password"
+    //    case emptyNewPassword = "Please enter your password"
     case emptyCPassword   = "Please enter confirm password"
     case passwordMismatch = "Password and confirm password didn't match"
     case emptyOtp         = "Please enter OTP"
@@ -231,7 +231,7 @@ enum constantMessages:String {
     case invalidCPassword = "Confirm password must be same"
     case invalidOtp       = "Please enter correct OTP"
     case invalidImage     = "You cannot select more than five images"
-        
+    
     case blockedUser      = "Please Unblock this user before sending message"
     case blockedByUser    = "You have been blocked by this user"
     case callRejected     = "Call rejected"
@@ -246,17 +246,17 @@ enum constantMessages:String {
 //MARK: SHOW SWIFTY MESSAGE
 
 func goToLogin() {
-   let login = AppStoryboard.Main.instance.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-   let navigationController = UINavigationController.init(rootViewController: login)
-   navigationController.isNavigationBarHidden = true
-   rootVC = navigationController
+    let login = AppStoryboard.Main.instance.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+    let navigationController = UINavigationController.init(rootViewController: login)
+    navigationController.isNavigationBarHidden = true
+    rootVC = navigationController
 }
-   func goToHome() {
-        let tabVC = AppStoryboard.Main.instance.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
-       let navigationController = UINavigationController.init(rootViewController: tabVC)
-       navigationController.isNavigationBarHidden = true
-       rootVC = navigationController
-   }
+func goToHome() {
+    let tabVC = AppStoryboard.Main.instance.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
+    let navigationController = UINavigationController.init(rootViewController: tabVC)
+    navigationController.isNavigationBarHidden = true
+    rootVC = navigationController
+}
 
 func isToday(dateString: String) -> Bool {
     let dateFormatter = DateFormatter()
@@ -271,24 +271,24 @@ func isToday(dateString: String) -> Bool {
 
 func checkDatesAreInSequence(array: [String]) -> Bool {
     let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "dd/MM/yyyy"
-      let dates = array.compactMap { dateFormatter.date(from: $0) }
-      
-      guard dates.count > 1 else {
-          return false
-      }
-      
-      for i in 0..<(dates.count - 1) {
-          let calendar = Calendar.current
-          if let nextDate = calendar.date(byAdding: .day, value: 1, to: dates[i]) {
-              if nextDate != dates[i + 1] {
-                  return false
-              }
-          } else {
-              return false
-          }
-      }
-      return true
+    dateFormatter.dateFormat = "dd/MM/yyyy"
+    let dates = array.compactMap { dateFormatter.date(from: $0) }
+    
+    guard dates.count > 1 else {
+        return false
+    }
+    
+    for i in 0..<(dates.count - 1) {
+        let calendar = Calendar.current
+        if let nextDate = calendar.date(byAdding: .day, value: 1, to: dates[i]) {
+            if nextDate != dates[i + 1] {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    return true
 }
 
 func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
@@ -319,7 +319,7 @@ func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
                 } else {
                     // If there are no more closed dates, return the next day after the last closed date
                     let nextAvailableDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
-                    dateFormatter.dateFormat = "dd/MM/yyyy" 
+                    dateFormatter.dateFormat = "dd/MM/yyyy"
                     return dateFormatter.string(from: nextAvailableDate)
                 }
             }
@@ -335,31 +335,31 @@ func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
 
 func formatDate(inputDate: String) -> String? {
     let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "dd/MM/yyyy"
-      
-      guard let date = dateFormatter.date(from: inputDate) else {
-          return nil
-      }
-      
-      dateFormatter.dateFormat = "MMMM"
-      let formattedDate = dateFormatter.string(from: date)
-      
-      let dayFormatter = DateFormatter()
-      dayFormatter.dateFormat = "dd"
-      let day = dayFormatter.string(from: date)
-      
-      var ordinalSuffix = "th"
-      let lastTwoDigits = Int(day)! % 100
-      if lastTwoDigits >= 11 && lastTwoDigits <= 13 {
-          ordinalSuffix = "th"
-      } else {
-          switch Int(day)! % 10 {
-          case 1: ordinalSuffix = "st"
-          case 2: ordinalSuffix = "nd"
-          case 3: ordinalSuffix = "rd"
-          default: break
-          }
-      }
-      
-      return "\(day)\(ordinalSuffix) \(formattedDate)"
+    dateFormatter.dateFormat = "dd/MM/yyyy"
+    
+    guard let date = dateFormatter.date(from: inputDate) else {
+        return nil
+    }
+    
+    dateFormatter.dateFormat = "MMMM"
+    let formattedDate = dateFormatter.string(from: date)
+    
+    let dayFormatter = DateFormatter()
+    dayFormatter.dateFormat = "dd"
+    let day = dayFormatter.string(from: date)
+    
+    var ordinalSuffix = "th"
+    let lastTwoDigits = Int(day)! % 100
+    if lastTwoDigits >= 11 && lastTwoDigits <= 13 {
+        ordinalSuffix = "th"
+    } else {
+        switch Int(day)! % 10 {
+        case 1: ordinalSuffix = "st"
+        case 2: ordinalSuffix = "nd"
+        case 3: ordinalSuffix = "rd"
+        default: break
+        }
+    }
+    
+    return "\(day)\(ordinalSuffix) \(formattedDate)"
 }

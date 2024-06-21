@@ -187,7 +187,9 @@
 		EB9FCCB92B624BCB009946C5 /* RestroHomeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */; };
 		EBA2C29D2B83541A0053269F /* mapViewTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C29C2B83541A0053269F /* mapViewTVC.swift */; };
 		EBAB7ADE2BB6CCA80037676D /* MultiImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */; };
+		EBCE792F2C25A5EB006B8DF3 /* Specialoclockanimation.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = EBCE792E2C25A35F006B8DF3 /* Specialoclockanimation.mp4 */; };
 		EBCFA7B62BE380B300D108FB /* Special.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCFA7B52BE380B300D108FB /* Special.png */; };
+		EBE6795A2C258CCA00631C00 /* WalkthroughVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE679592C258CCA00631C00 /* WalkthroughVideoVC.swift */; };
 		EBE6CAA92B9B1E7C006D726B /* AvailabilityDatePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */; };
 		EBE82B332BA95F9200D4EC92 /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */; };
 		EBEE940C2B88C44700A32DDA /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE940B2B88C44700A32DDA /* NavigationVC.swift */; };
@@ -493,7 +495,9 @@
 		EB9FCCB82B624BCB009946C5 /* RestroHomeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroHomeTVC.swift; sourceTree = "<group>"; };
 		EBA2C29C2B83541A0053269F /* mapViewTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewTVC.swift; sourceTree = "<group>"; };
 		EBAB7ADD2BB6CCA80037676D /* MultiImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiImageVC.swift; sourceTree = "<group>"; };
+		EBCE792E2C25A35F006B8DF3 /* Specialoclockanimation.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Specialoclockanimation.mp4; sourceTree = "<group>"; };
 		EBCFA7B52BE380B300D108FB /* Special.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Special.png; sourceTree = "<group>"; };
+		EBE679592C258CCA00631C00 /* WalkthroughVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughVideoVC.swift; sourceTree = "<group>"; };
 		EBE6CAA82B9B1E7C006D726B /* AvailabilityDatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityDatePopupVC.swift; sourceTree = "<group>"; };
 		EBE82B322BA95F9200D4EC92 /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
 		EBEE940B2B88C44700A32DDA /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
@@ -941,6 +945,7 @@
 		C284FB2C2A402A0D006949B4 = {
 			isa = PBXGroup;
 			children = (
+				EBCE792E2C25A35F006B8DF3 /* Specialoclockanimation.mp4 */,
 				EB3703D62BE0FA480088A6FE /* nodataFound.gif */,
 				EBCFA7B52BE380B300D108FB /* Special.png */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
@@ -1087,6 +1092,7 @@
 		C29CDAF12A42B9010035E03D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EBE679542C258A0D00631C00 /* Walkthrough */,
 				C29CDAF22A42B9170035E03D /* User */,
 				C284FB6D2A402D81006949B4 /* RestoBar */,
 			);
@@ -1223,6 +1229,14 @@
 				ECB020672ADEBC0A002D2C07 /* selectDateVC.swift */,
 			);
 			path = Booking;
+			sourceTree = "<group>";
+		};
+		EBE679542C258A0D00631C00 /* Walkthrough */ = {
+			isa = PBXGroup;
+			children = (
+				EBE679592C258CCA00631C00 /* WalkthroughVideoVC.swift */,
+			);
+			path = Walkthrough;
 			sourceTree = "<group>";
 		};
 		EBE82B312BA95F7D00D4EC92 /* Location */ = {
@@ -1512,6 +1526,7 @@
 				EB4EFC1A2BF34A2C00A167D4 /* HomeHeaderTVC.xib in Resources */,
 				A5AB0E2B2A56842B00BB2BF4 /* CellBookingRestoTB.xib in Resources */,
 				A55779D92A559159002B2FC2 /* HeaderMyOfferCell.xib in Resources */,
+				EBCE792F2C25A5EB006B8DF3 /* Specialoclockanimation.mp4 in Resources */,
 				A5046FE62A4D838900C23627 /* HeaderMenuTB.xib in Resources */,
 				A51DBFF62A5292E1007535D7 /* CellBreakfastTB.xib in Resources */,
 				A529D2E42A5FC63400E416CD /* CellBarOfferTV.xib in Resources */,
@@ -1795,6 +1810,7 @@
 				ECBC37BE2AC40E8A00ADEDC7 /* themeRestolistModal.swift in Sources */,
 				ECA1A4CD2B170D5F007748F3 /* rstoCurrentModal.swift in Sources */,
 				8B0BDF252A80F10E00A28BD2 /* UIImageViewExtension.swift in Sources */,
+				EBE6795A2C258CCA00631C00 /* WalkthroughVideoVC.swift in Sources */,
 				8B9154722A86224F00CCB83E /* EditProfileModel.swift in Sources */,
 				A55779D12A557A2D002B2FC2 /* SelectCardVC.swift in Sources */,
 				2A1C50652A9F1DD000FBE41A /* HomeViewModel.swift in Sources */,

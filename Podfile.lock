@@ -5,6 +5,7 @@ PODS:
   - AppAuth/Core (1.6.2)
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
+  - CHIPageControl/Jaloro (0.2)
   - Cosmos (23.0.0)
   - DropDown (2.3.13)
   - FacebookCore (0.9.0):
@@ -108,6 +109,7 @@ PODS:
   - WaterfallLayout (0.2)
 
 DEPENDENCIES:
+  - CHIPageControl/Jaloro
   - Cosmos (~> 23.0)
   - DropDown
   - FacebookLogin
@@ -138,6 +140,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - CHIPageControl
     - Cosmos
     - DropDown
     - FacebookCore
@@ -178,6 +181,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  CHIPageControl: a787bf7205c9b7e7fbfc412be36c5e8636b68f86
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
@@ -216,6 +220,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   WaterfallLayout: 030e04b041e5c6c47ae2c1eaa685c60289fab0b1
 
-PODFILE CHECKSUM: 518f553687d97428bd2b4982f6cff7fe7aedd67a
+PODFILE CHECKSUM: 4a70bf59fd1b345e480d1461d29488cab4a14dd6
 
 COCOAPODS: 1.12.0

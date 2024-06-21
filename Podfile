@@ -34,7 +34,7 @@ target 'Spacial OClock' do
   pod 'Instructions', '~> 2.2.0'
   pod 'Google-Maps-iOS-Utils'
   pod 'INSPhotoGallery'
-  
+  pod 'CHIPageControl/Jaloro'
   target 'Spacial OClockTests' do
     inherit! :search_paths
     # Pods for testing
