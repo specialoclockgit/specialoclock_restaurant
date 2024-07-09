@@ -31,8 +31,10 @@ class DeleteAccountPopUp: UIViewController {
 
     // MARK: - Actions
     @IBAction func yesBtn(_ sender: UIButton) {
-        self.dismiss(animated: true)
-        callBack?()
+        self.dismiss(animated: true){
+            self.callBack?()
+        }
+        
     }
     
     @IBAction func noBtn(_ sender: UIButton) {

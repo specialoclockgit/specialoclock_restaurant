@@ -13,8 +13,8 @@ let appName = "Special O'Clock"
 var DEVICE_TOKEN = "ios"
 
 var noInternetConnection = "No Internet Connection Available"
-//let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
-let baseURL = "https://app.specialoclock.com/api/"
+let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
+//let baseURL = "https://app.specialoclock.com/api/"
 
 let imageURL = "https://app.specialoclock.com/"
 let imageBaseURL =  "https://app.specialoclock.com/assets/images/"
@@ -47,6 +47,7 @@ enum API: String{
     //user module
     case signup              = "signup"
     case login
+    case socialLogin         = "social_login"
     case forgot_password
     case privacypolicy       = "get_content/2"
     case termsAndCondition   = "get_content/1"
@@ -143,32 +144,12 @@ enum API: String{
 
 //MARK: - User Default keys
 enum DefaultKeys: String {
-    case restoStatus
-    case Authorization
-    case userId
-    case loginvalue
-    case email
-    case remember
-    case password
-    case userDetails
-    case autoLogin
-    case deviceToken
-    case rememberMe
-    case security_key
     case auth_key
-    case filter_data
-    case user_type
-    case first
-    case profileImg
-    case social_login
-    case pushKitToken
-    case isComing
-    case roomId
-    case lat
-    case long
-    case sociallogin
+    case socialLogin
+    case deviceToken
+    case autoLogin
+    case userDetails
     case screenType
-    
 }
 
 

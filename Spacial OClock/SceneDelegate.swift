@@ -117,13 +117,7 @@ extension SceneDelegate {
                 nav.isNavigationBarHidden = true
                 UIApplication.shared.windows.first?.rootViewController = nav
             }
-//            else{
-//                let storyb = UIStoryboard(name: "Main", bundle: nil)
-//                let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-//                let nav = UINavigationController.init(rootViewController: vc)
-//                nav.isNavigationBarHidden = true
-//                UIApplication.shared.windows.first?.rootViewController = nav
-//            }
+
         }else{
             if Store.autoLogin == true {
                 let homeStoryboard = UIStoryboard.init(name: "RestoBar", bundle: nil)
@@ -132,13 +126,7 @@ extension SceneDelegate {
                 nav.isNavigationBarHidden = true
                 UIApplication.shared.windows.first?.rootViewController = nav
             }
-            //else{
-//                let storyb = UIStoryboard(name: "Main", bundle: nil)
-//                let vc = storyb.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-//                let nav = UINavigationController.init(rootViewController: vc)
-//                nav.isNavigationBarHidden = true
-//                UIApplication.shared.windows.first?.rootViewController = nav
-          //  }
+
         }
     }
     
@@ -176,21 +164,7 @@ extension SceneDelegate {
         UIApplication.shared.windows.first?.rootViewController = nav
     }
 
-//    //MARK: Resto View Controller
-//    func RestoHome(){
-//        let mainStoryBoard = UIStoryboard(name: "RestoBar", bundle: nil)
-//        let redViewController = mainStoryBoard.instantiateViewController(withIdentifier: ViewController.RestoWalkThroughVC) as! RestoWalkThroughVC
-//        let nav = UINavigationController.init(rootViewController: redViewController)
-//        nav.isNavigationBarHidden = true
-//        UIApplication.shared.windows.first?.rootViewController = nav
-//    }
-//    func RestoLogin(){
-//        let mainStoryBoard = UIStoryboard(name: "RestoBar", bundle: nil)
-//        let redViewController = mainStoryBoard.instantiateViewController(withIdentifier: ViewController.RestoLoginVC) as! RestoLoginVC
-//        let nav = UINavigationController.init(rootViewController: redViewController)
-//        nav.isNavigationBarHidden = true
-//        UIApplication.shared.windows.first?.rootViewController = nav
-//    }
+
 }
 
 

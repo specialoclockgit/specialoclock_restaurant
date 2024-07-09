@@ -13,7 +13,7 @@ target 'Spacial OClock' do
   pod 'SKCountryPicker'
   pod 'SVPinView', '~> 1.0'
   pod 'SDWebImage'
-  pod 'NVActivityIndicatorView'
+  #pod 'NVActivityIndicatorView'
   pod 'MBProgressHUD'
   pod 'GooglePlaces'
   pod 'SwiftGifOrigin'
@@ -35,6 +35,7 @@ target 'Spacial OClock' do
   pod 'Google-Maps-iOS-Utils'
   pod 'INSPhotoGallery'
   pod 'CHIPageControl/Jaloro'
+  
   target 'Spacial OClockTests' do
     inherit! :search_paths
     # Pods for testing

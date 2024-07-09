@@ -17,25 +17,17 @@ class WalkThroughVC: UIViewController {
     
     //MARK: - Variables
     var imgAray = ["img2","img1","img3"]
-    
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         if UserDefaults.standard.value(forKey: "AppInstalled") as? Bool == true {
             let storyb = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyb.instantiateViewController(withIdentifier: "SelectVC") as! SelectVC
             self.navigationController?.pushViewController(vc, animated: false)
         }
         
-        
-        if #available(iOS 14.0, *) {
-            pgContl.backgroundStyle = .minimal
-            pgContl.preferredIndicatorImage = UIImage(named: "pgCntrlIndicator")
-        } else {
-            // Fallback on earlier versions
-        }
+        pgContl.backgroundStyle = .minimal
+        pgContl.preferredIndicatorImage = UIImage(named: "pgCntrlIndicator")
 
     }
 

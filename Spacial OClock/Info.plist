@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key> NSLocationWhenInUseUsageDescription</key>
-	<string>Special O'Clock need location access to find nearby restaurants and bars</string>
+	<string>Special O&apos;Clock need location access to find nearby restaurants and bars</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -12,6 +12,14 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.live.specialOClockUser</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.816990070701-il1nmsu3lcaspkh3al1mimocesi7fedn</string>
 			</array>
 		</dict>
 	</array>
@@ -39,5 +47,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>GIDClientID</key>
+	<string>816990070701-il1nmsu3lcaspkh3al1mimocesi7fedn.apps.googleusercontent.com</string>
 </dict>
 </plist>

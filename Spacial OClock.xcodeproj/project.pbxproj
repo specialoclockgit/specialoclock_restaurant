@@ -176,6 +176,8 @@
 		C2ED899F2A4985F100EFCBD5 /* bookingDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED899E2A4985F100EFCBD5 /* bookingDetailVC.swift */; };
 		C2ED89A32A498DDF00EFCBD5 /* bookingDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */; };
 		EB053BBD2BC3F1D800961E6E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */; };
+		EB0D0B6C2C3D354E00C4943D /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB0D0B6B2C3D354E00C4943D /* credentials.plist */; };
+		EB0D0B742C3D485600C4943D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0D0B732C3D485600C4943D /* KeychainHelper.swift */; };
 		EB25739F2BE21913001C5766 /* ClusterResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25739E2BE21913001C5766 /* ClusterResultVC.swift */; };
 		EB3703D72BE0FA480088A6FE /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB3703D62BE0FA480088A6FE /* nodataFound.gif */; };
 		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
@@ -484,6 +486,8 @@
 		C2ED89A22A498DDF00EFCBD5 /* bookingDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookingDetailTVC.swift; sourceTree = "<group>"; };
 		E74806E53F726B16FD851B1F /* Pods-Spacial OClockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClockTests.debug.xcconfig"; path = "Target Support Files/Pods-Spacial OClockTests/Pods-Spacial OClockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB053BBC2BC3F1D800961E6E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		EB0D0B6B2C3D354E00C4943D /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
+		EB0D0B732C3D485600C4943D /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		EB25739E2BE21913001C5766 /* ClusterResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterResultVC.swift; sourceTree = "<group>"; };
 		EB3703D62BE0FA480088A6FE /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
@@ -946,6 +950,7 @@
 			isa = PBXGroup;
 			children = (
 				EBCE792E2C25A35F006B8DF3 /* Specialoclockanimation.mp4 */,
+				EB0D0B6B2C3D354E00C4943D /* credentials.plist */,
 				EB3703D62BE0FA480088A6FE /* nodataFound.gif */,
 				EBCFA7B52BE380B300D108FB /* Special.png */,
 				8B0BDF162A80EFCE00A28BD2 /* Fonts */,
@@ -971,6 +976,7 @@
 		C284FB372A402A0D006949B4 /* Spacial OClock */ = {
 			isa = PBXGroup;
 			children = (
+				EB0D0B722C3D458200C4943D /* SocialLoginHelper */,
 				ECC5A0282AC54B92008E7A72 /* Socket */,
 				2AB8FFE32AA0523600A856B5 /* Spacial OClock.entitlements */,
 				8B0BDF1A2A80F10E00A28BD2 /* API Class */,
@@ -1229,6 +1235,22 @@
 				ECB020672ADEBC0A002D2C07 /* selectDateVC.swift */,
 			);
 			path = Booking;
+			sourceTree = "<group>";
+		};
+		EB0D0B6F2C3D457D00C4943D /* Apple */ = {
+			isa = PBXGroup;
+			children = (
+				EB0D0B732C3D485600C4943D /* KeychainHelper.swift */,
+			);
+			path = Apple;
+			sourceTree = "<group>";
+		};
+		EB0D0B722C3D458200C4943D /* SocialLoginHelper */ = {
+			isa = PBXGroup;
+			children = (
+				EB0D0B6F2C3D457D00C4943D /* Apple */,
+			);
+			path = SocialLoginHelper;
 			sourceTree = "<group>";
 		};
 		EBE679542C258A0D00631C00 /* Walkthrough */ = {
@@ -1524,6 +1546,7 @@
 				EB3703D72BE0FA480088A6FE /* nodataFound.gif in Resources */,
 				EB3F4CAE2BD7D18000DF6FC7 /* WindowForMap.xib in Resources */,
 				EB4EFC1A2BF34A2C00A167D4 /* HomeHeaderTVC.xib in Resources */,
+				EB0D0B6C2C3D354E00C4943D /* credentials.plist in Resources */,
 				A5AB0E2B2A56842B00BB2BF4 /* CellBookingRestoTB.xib in Resources */,
 				A55779D92A559159002B2FC2 /* HeaderMyOfferCell.xib in Resources */,
 				EBCE792F2C25A5EB006B8DF3 /* Specialoclockanimation.mp4 in Resources */,
@@ -1798,6 +1821,7 @@
 				A529D2DB2A5FBCE300E416CD /* BarMenuDetailItemsVC.swift in Sources */,
 				A5AB0E2A2A56842B00BB2BF4 /* CellBookingRestoTB.swift in Sources */,
 				ECA77A822B0B236700FC2285 /* LocationManager1.swift in Sources */,
+				EB0D0B742C3D485600C4943D /* KeychainHelper.swift in Sources */,
 				C29CDB072A42BB930035E03D /* ChangePasswordVC.swift in Sources */,
 				C29CDAFF2A42BB1D0035E03D /* ForgotPasswordVC.swift in Sources */,
 				ECAF86C82AC69ABC0071BFF3 /* SocketIOManager.swift in Sources */,
@@ -2121,7 +2145,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.live.specialOClockUser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ClientUserProfile;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ClockRestoProfile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2171,7 +2195,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.live.specialOClockUser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ClientUserProfile;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ClockRestoProfile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

@@ -15,13 +15,17 @@ class SettingsVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK: - Variables
     var arrImg = ["notification","unlock","Group 7127","question","books","outline","delete-user-1","logout-1"]
     var arrName = ["Notification","Change Password","Chat with Admin","Privacy Policy","Terms and Conditions","Help & FAQ's","Delete Account","Logout"]
-    //"Contact Us","phone",
     var viewModel = AuthViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         settingTV.tableFooterView = UIView()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        if Store.sociallogin == true {
+            arrImg.remove(at: 1)
+            arrName.remove(at: 1)
+        }
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
@@ -43,10 +47,10 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
         } else {
             cell.swichBtn.isOn = false
         }
-        if indexPath.row == 0{
+        if arrName[indexPath.row] == "Notification"{
             cell.swichBtn.isHidden = false
             cell.arrowImg.isHidden = true
-        }else if indexPath.row == 8 {
+        }else if arrName[indexPath.row] == "Logout" {
             cell.swichBtn.isHidden = true
             cell.arrowImg.isHidden = true
         }else{
@@ -65,78 +69,64 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0{
+        switch arrName[indexPath.row] {
+        case "Notification" :
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let notificationVC =  StoryBoard.instantiateViewController(withIdentifier: ViewController.NotificationRestoVC) as! NotificationRestoVC
             self.navigationController?.pushViewController(notificationVC, animated: true)
-//            let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.NotificationVC) as! NotificationVC
-//            self.navigationController?.pushViewController(screen, animated: true)
-        }else if indexPath.row == 1{
+            
+        case "Change Password" :
             let vc = storyboard?.instantiateViewController(withIdentifier: "ChangePasswordVC")as! ChangePasswordVC
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 2{
+        case "Chat with Admin" :
             let vc = storyboard?.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
             self.navigationController?.pushViewController(vc, animated: true)
-        }
-        else if indexPath.row == 3{
+        case "Privacy Policy" :
             let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
             vc.status = 1
             vc.titleLbl = "Privacy policy"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 4{
+        case "Terms and Conditions" :
             let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
             vc.status = 0
             vc.titleLbl = "Terms & Conditions"
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if indexPath.row == 5 {
+        case "Help & FAQ's" :
             let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let vc = storyBoard.instantiateViewController(withIdentifier: ViewController.HelpFAQRestoVC) as! HelpFAQRestoVC
             self.navigationController?.pushViewController(vc, animated: true)
-        }
-//        else if indexPath.row == 6 {
-//            let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-//            let vc = storyBoard.instantiateViewController(withIdentifier: "ContactUsRestoVC") as! ContactUsRestoVC
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }
-        else if indexPath.row == 6 {
+        
+        
+        case "Delete Account" :
             let vc = storyboard?.instantiateViewController(withIdentifier: "DeleteAccountPopUp")as! DeleteAccountPopUp
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 0
             vc.callBack = {
                 self.viewModel.deleteAccountApi(onsuccess: { [weak self] in
+                    guard let self = self else { return }
                     SceneDelegate().LoginRoot()
-//                    self?.dismiss(animated: true, completion: nil)
-//                    let stry = UIStoryboard(name: "Main", bundle: nil)
-//                    let vc = stry.instantiateViewController(identifier: "LoginVC") as! LoginVC
-//                    let nav1 = UINavigationController()
-//                    nav1.navigationBar.isHidden = true
-//                    nav1.viewControllers = [vc]
-//                    self?.view.window?.rootViewController = nav1
                 })
             }
             self.navigationController?.present(vc, animated: true)
             
-        }else if indexPath.row == 7{
+        case "Logout" :
             let vc = storyboard?.instantiateViewController(withIdentifier: "DeleteAccountPopUp")as! DeleteAccountPopUp
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 1
             vc.callBack = {
                 self.viewModel.logoutapicall { [weak self] in
+                    guard let self = self else { return }
                     SceneDelegate().LoginRoot()
                 }
             }
             self.navigationController?.present(vc, animated: true)
-        }
-    }
-    
-    @objc func notificationbtn(_ sender : UISwitch){
-        let cell = settingTV.cellForRow(at: IndexPath.init(row: 0, section: 0)) as! settingCell
-        if cell.swichBtn.isOn {
-            setNotification()
-        }else {
-            setNotification()
-        }
         
+        default:
+            print(indexPath.row)
+        }
+}
+    @objc func notificationbtn(_ sender : UISwitch){
+        setNotification()
     }
     
     func setNotification() {

@@ -11,95 +11,49 @@ import Foundation
 class Store {
     
     class var authKey: String?{
-        set{
+        set {
             Store.saveValue(newValue, .auth_key)
-        }get{
+        } get {
             return Store.getValue(.auth_key) as? String
         }
     }
-    class var password: String?{
-        set{
-            Store.saveValue(newValue, .auth_key)
-        }get{
-            return Store.getValue(.auth_key) as? String
-        }
-    }
+   
     class var sociallogin: Bool?{
-        set{
-            Store.saveValue(newValue, .sociallogin)
-        }get{
-            return Store.getValue(.sociallogin) as? Bool
+        set {
+            Store.saveValue(newValue, .socialLogin)
+        } get {
+            return Store.getValue(.socialLogin) as? Bool
         }
     }
     
     class var deviceToken: String?{
-        set{
+        set {
             Store.saveValue(newValue, .deviceToken)
-        }
-        get{
+        } get {
             return Store.getValue(.deviceToken) as? String
         }
     }
-    class var lat: Double?{
-        set{
-            Store.saveValue(newValue, .lat)
-        }
-        get{
-            return Store.getValue(.lat) as? Double
-        }
-    }
-    class var long: Double?{
-        set{
-            Store.saveValue(newValue, .long)
-        }
-        get{
-            return Store.getValue(.long) as? Double
-        }
-    }
+    
     
     class var autoLogin: Bool{
-        set{
+        set {
             Store.saveValue(newValue, .autoLogin)
-        }get{
+        } get {
             return Store.getValue(.autoLogin) as? Bool ?? false
         }
     }
     class var userDetails: SignupBody? {
-        set{
+        set {
             Store.saveUserDetails(newValue, .userDetails)
-        }
-        get{
+        } get{
             return Store.getUserDetails(.userDetails)
         }
     }
 
-    class var isfromsecure: String?{
-        set {
-            Store.saveValue(newValue, .loginvalue)
-        }get{
-            return Store.getValue(.loginvalue) as? String
-        }
-    }
-    
-    
-    
-    class var status: String? {
-        set{
-            Store.saveUserDetails(newValue, .restoStatus)
-
-        }
-        get{
-            return Store.getUserDetails(.restoStatus)
-        }
-    }
-    
-    
     class var screenType: Int? {
-        set{
+        set {
             Store.saveValue(newValue, .screenType)
-
-        }
-        get{
+        } get{
             return Store.getValue(.screenType) as? Int ?? 1
         }
     }

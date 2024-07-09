@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 //import Kingfisher
-import NVActivityIndicatorView
+//import NVActivityIndicatorView
 
 //MARK: EXTENSION UI-TEXT-FIELD PASSWORD HIDE - SHOW
 extension UITextField {

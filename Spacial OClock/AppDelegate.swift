@@ -9,14 +9,9 @@ import UIKit
 import IQKeyboardManagerSwift
 import GooglePlaces
 import GoogleMaps
+import GoogleSignIn
 @main
-/*
- 
- hardin@gmail.com
- pass: 12345678
- 
- 
- */
+
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     
     private let locationManager = CLLocationManager()
@@ -29,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         GMSServices.provideAPIKey("AIzaSyDCrI90hdhuFOhZrxmJafhTpsxCScDRpOw")
         GMSPlacesClient.provideAPIKey("AIzaSyDCrI90hdhuFOhZrxmJafhTpsxCScDRpOw")
         SocketIOManager.sharedInstance.connectMySocket()
-        
         DispatchQueue.global().async {
             if CLLocationManager.locationServicesEnabled() {
                 DispatchQueue.main.async {

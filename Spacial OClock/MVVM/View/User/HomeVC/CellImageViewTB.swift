@@ -25,6 +25,7 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         collView.dataSource = self
     }
     
+  
     func initializeBannerData(resp:[Banner]?){
         self.banners = resp
         pgController.numberOfPages = resp?.count ?? 0
@@ -43,6 +44,7 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
     }
     
     @objc func scrollCollectionView() {
+        
         guard let collView = collView else {
             return
         }
@@ -62,9 +64,12 @@ class CellImageViewTB: UITableViewCell,UIScrollViewDelegate {
         let width = (scrollView.frame.width) - (scrollView.contentInset.left * 2)
         let index = (scrollView.contentOffset.x) / width
         pgController.currentPage = Int(index)
+//        for cell: CellImageViewCB in collView.visibleCells as! [CellImageViewCB] {
+//            cell.parallaxTheImageViewScrollOffset(offsetPoint: self.collView.contentOffset, scrollDirection: .horizontal)
+//        }
     }
-    
 }
+
 extension CellImageViewTB : UICollectionViewDelegate, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -76,6 +81,7 @@ extension CellImageViewTB : UICollectionViewDelegate, UICollectionViewDataSource
         let imageIndex = (imageBaseURL) + (banners?[indexPath.row].image?.replacingOccurrences(of: " ", with: "%20") ?? "")
         cell.img.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.img.sd_setImage(with: URL(string: imageIndex), placeholderImage: UIImage(named: "rectAlbum"))
+            //cell.parallaxTheImageViewScrollOffset(offsetPoint: self.collView.contentOffset, scrollDirection: .horizontal)
         return cell
     }
     

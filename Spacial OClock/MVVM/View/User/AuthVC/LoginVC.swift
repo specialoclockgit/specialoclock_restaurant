@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import GoogleSignIn
+import AuthenticationServices
 
 class LoginVC: UIViewController, UIGestureRecognizerDelegate {
-    
+  
     //MARK: - OUTLETS
     @IBOutlet weak var btnRemember: UIButton!
     @IBOutlet weak var viewMain: UIView!
@@ -42,7 +44,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     }
 
     @IBAction func btnSignIn(_ sender: UIButton){
-        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: 0, timeZone: TimeZone.current.identifier) {
+        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: 0, timeZone: TimeZone.current.identifier) { 
             if self.btnRemember.isSelected == true {
                 UserDefaults.standard.set(self.txtEmail.text!, forKey: "loginEmail")
                 UserDefaults.standard.set(self.txtPassword.text!, forKey: "loginPassword")
@@ -56,10 +58,17 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
             if Store.userDetails?.role == 1{
                 if Store.userDetails?.isOtpVerified == 1 {
                    Store.autoLogin = true
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
                     CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
                     Store.screenType = 1
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                    let navigationController = UINavigationController(rootViewController: tabVC)
+                    navigationController.navigationBar.isHidden = true
+                    navigationController.viewControllers = [tabVC]
+                    UIApplication.shared.windows.first?.rootViewController = navigationController
+                    UIApplication.shared.windows.first?.makeKeyAndVisible()
+                    
+                    
                 }else {
                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
                    CommonUtilities.shared.showAlert(message: "Please verify the OTP", isSuccess: .error)
@@ -90,11 +99,14 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if Store.userDetails?.is_approved == 0{
                     CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
-                }else {
-                    let vc = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC)as! RestoTabBarVC
-                    Store.autoLogin = true
+                } else {
                     CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
+                    let navigationController = UINavigationController(rootViewController: tabVC)
+                    navigationController.navigationBar.isHidden = true
+                    navigationController.viewControllers = [tabVC]
+                    UIApplication.shared.windows.first?.rootViewController = navigationController
+                    UIApplication.shared.windows.first?.makeKeyAndVisible()
                 }
             }
         }
@@ -121,17 +133,73 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         sender.isSelected = !sender.isSelected
     }
 
+    @IBAction func googleSiginAction(_ sender: UIButton){
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { results, error in
+            guard error == nil else { return }
+            self.viewmodel.socialLoginAPI(socialId: results?.user.userID ?? "", socialType: 2, email: results?.user.fetcherAuthorizer.userEmail ?? "", role: self.selectStatus) {
+                if Store.userDetails?.role == 1{
+                    
+                    Store.autoLogin = true
+                    CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
+                    Store.screenType = 1
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                    let navigationController = UINavigationController(rootViewController: tabVC)
+                    navigationController.navigationBar.isHidden = true
+                    navigationController.viewControllers = [tabVC]
+                    UIApplication.shared.windows.first?.rootViewController = navigationController
+                    UIApplication.shared.windows.first?.makeKeyAndVisible()
+                    
+                    
+                }else{
+                    let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+                    if Store.userDetails?.isCompleted != 1{
+                        let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
+                        vc.btnCheckStatus = self.restoselctStatus
+                        if self.restoselctStatus == 1{
+                            vc.heading = "Restaurant Profile"
+                            vc.name = "Restaurant Name"
+                            UserDefaults.standard.set("Restaurant", forKey: "name")
+                        }else  if self.restoselctStatus == 2{
+                            vc.heading = "Club Profile"
+                            vc.name = "Club Name"
+                            UserDefaults.standard.set("Club", forKey: "name")
+                        }else {
+                            vc.heading = "Bar Profile"
+                            vc.name = "Bar Name"
+                            UserDefaults.standard.set("Bar", forKey: "name")
+                        }
+                        UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else if Store.userDetails?.is_approved == 0{
+                        CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
+                    } else {
+                        Store.autoLogin = true
+                        CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
+                        let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
+                        let navigationController = UINavigationController(rootViewController: tabVC)
+                        navigationController.navigationBar.isHidden = true
+                        navigationController.viewControllers = [tabVC]
+                        UIApplication.shared.windows.first?.rootViewController = navigationController
+                        UIApplication.shared.windows.first?.makeKeyAndVisible()
+                    }
+                }
+            }
+        }
+    }
+    @IBAction func fbSiginAction(_ sender: UIButton){
+        
+    }
+    @IBAction func appleSiginAction(_ sender: UIButton){
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
+    }
     
-//
-//    @objc btnName(sender: UIButton){
-//        let cell = cellForRow(at: IndexPath(row: sender.tag, section: 0)as! cellName
-//        sender.isSelected = !sender.isSelected
-//        if sender.isSelected{
-//            btn.setImage(UIImage(named: "imgName"), for: .normal)
-//        }else{
-//            btn.setImage(UIImage(named: "imgName"), for: .normal)
-//        }
-//    }
+    
    
 }
 
@@ -146,4 +214,52 @@ extension LoginVC{
         viewMain.layer.cornerRadius = 40
         viewMain.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
+}
+extension LoginVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let userIdentifier = appleIDCredential.user
+            
+            if KeychainHelper.fetch("userIdentifier") == nil {
+                KeychainHelper.save("userIdentifier", value: userIdentifier)
+            }
+            
+            if let fullName = appleIDCredential.fullName {
+                let fullNameString = "\(fullName.givenName ?? "") \(fullName.familyName ?? "")"
+                if KeychainHelper.fetch("fullName") == nil {
+                    KeychainHelper.save("fullName", value: fullNameString)
+                }
+            }
+            
+            if let email = appleIDCredential.email {
+                if KeychainHelper.fetch("email") == nil {
+                    KeychainHelper.save("email", value: email)
+                }
+            }
+        }
+        
+        if let userId = KeychainHelper.fetch("userIdentifier") {
+            print("Fetched userIdentifier: \(userId)")
+        }
+
+        if let fullName = KeychainHelper.fetch("fullName") {
+            print("Fetched fullName: \(fullName)")
+        }
+
+        if let email = KeychainHelper.fetch("email") {
+            print("Fetched email: \(email)")
+        }
+        
+        
+    }
+    
+       func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+           print("Sign in with Apple error: \(error.localizedDescription)")
+       }
+
 }

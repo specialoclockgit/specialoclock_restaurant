@@ -461,6 +461,17 @@ class AuthViewModel : NSObject {
             onSuccess(userData.body)
         }
     }
+    
+    // MARK: Social Login
+    func socialLoginAPI(socialId: String,socialType: Int,email: String,role: Int,onSuccess: @escaping(()->())){
+        let params : parameters = ["social_id":socialId,"social_type":socialType,"email":email,"role":role,"timezone":TimeZone.current.identifier,"device_type":1,"device_token":DEVICE_TOKEN]
+        WebService.service(.socialLogin,param: params,service: .post) { (resp: SignupModel, data, any) in
+            Store.authKey = resp.body?.token ?? ""
+            Store.userDetails = resp.body
+            onSuccess()
+        }
+    }
+
 }
 
 

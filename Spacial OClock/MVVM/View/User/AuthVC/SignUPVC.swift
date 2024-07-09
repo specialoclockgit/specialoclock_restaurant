@@ -50,7 +50,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
        // selectStatus = 1
-        Store.status = "\(restoselctStatus)"
+     
         tfName.delegate = self
         tfPhone.delegate = self
         tfEmail.delegate = self
