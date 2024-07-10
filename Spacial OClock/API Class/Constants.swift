@@ -13,8 +13,8 @@ let appName = "Special O'Clock"
 var DEVICE_TOKEN = "ios"
 
 var noInternetConnection = "No Internet Connection Available"
-let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
-//let baseURL = "https://app.specialoclock.com/api/"
+//let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
+let baseURL = "https://app.specialoclock.com/api/"
 
 let imageURL = "https://app.specialoclock.com/"
 let imageBaseURL =  "https://app.specialoclock.com/assets/images/"
@@ -53,6 +53,7 @@ enum API: String{
     case termsAndCondition   = "get_content/1"
     //    case helpandFaq          = "get_content/3"
     case file_upload  =  "file_upload"
+    case check_social_exists
     case delete_account
     case change_password
     case verify_otp

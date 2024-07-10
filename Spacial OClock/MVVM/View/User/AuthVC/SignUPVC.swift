@@ -31,6 +31,9 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var btnRestaurant : UIButton!
     @IBOutlet weak var dobVw: UIView!
     @IBOutlet weak var dobTf: UITextField!
+    @IBOutlet weak var passVw: UIView!
+    @IBOutlet weak var confirmPassVw: UIView!
+    
     //MARK: Variables
     var viewmodel = AuthViewModel()
     var locationManager : CLLocationManager!
@@ -38,19 +41,18 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     var isselected = false
     var lat : Double?
     var long : Double?
-    var imgString:String?
     var Location = String()
     var countryCode = String()
     var image = [FileuploadModelBody]()
     var selectStatus = Int()
     var restoselctStatus = Int()
     let datePicker = UIDatePicker()
-    
+    var socialLoginBody : SocialLoginModel?
+    var socialType = SocialType.Google
+    var isFromSocial = false
     //MARK: ViewLife Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-       // selectStatus = 1
-     
         tfName.delegate = self
         tfPhone.delegate = self
         tfEmail.delegate = self
@@ -59,6 +61,12 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         dobVw.isHidden = selectStatus == 1 ? false : true
         uiSet()
         showDatePicker()
+        if isFromSocial {
+            self.setSocialLoginData()
+        }else {
+            self.signUpBtn.setTitle("Sign Up", for: .normal)
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
@@ -68,7 +76,6 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
         self.requestLocationPermission()
     }
     
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -77,7 +84,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     @objc func appMovedToBackground() {
         print("appMovedToBackground")
     }
-
+    
     @objc func appMovedToForeground() {
         print("appMovedToForeground")
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -87,18 +94,41 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     
     
     //MARK: - Function
-    func uiSet(){
+    private func uiSet() {
         tapGesture()
         view.hideKeyboardWhenTappedAround()
         viewButton.isHidden = true
-
     }
-
     
-    override func viewWillAppear(_ animated: Bool) {
+    private func setSocialLoginData() {
+        CommonUtilities.shared.showAlert(message: "Please complete your profile details.")
+        self.passVw.isHidden = true
+        self.confirmPassVw.isHidden = true
+        self.tfName.text = socialLoginBody?.userFullName ?? ""
+        self.tfEmail.text = socialLoginBody?.email ?? ""
+        self.tfEmail.isUserInteractionEnabled = false
+        switch socialType {
+        case .FaceBook:
+            self.signUpBtn.setTitle("Continue with Facebook", for: .normal)
+        case .Google:
+            self.signUpBtn.setTitle("Continue with Google", for: .normal)
+        case .Apple:
+            self.signUpBtn.setTitle("Continue with Apple", for: .normal)
+        }
         
+        
+        if socialLoginBody?.userImage != "" {
+            self.imgProfile.sd_setImage(with: URL(string: socialLoginBody?.userImage?.replacingOccurrences(of: " ", with: "%20") ?? ""),placeholderImage: UIImage(named: "placeholder (1)")) { (img, err, type, urll) in
+                if let img = img {
+                    self.viewmodel.fileUploadedAPI(type: "image", image: img) { [weak self] imageData in
+                        self?.isImageSelected = true
+                        self?.image = imageData ?? [FileuploadModelBody]()
+                    }
+                }
+            }
+        }
     }
-    //MARK: - Function
+    
     
     // MARK: - Actions
     @IBAction func btnProfile(_ sender : UIButton){
@@ -108,20 +138,17 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
             self.viewmodel.fileUploadedAPI(type: "image", image: image) { [weak self] imageData in
                 self?.image = imageData ?? [FileuploadModelBody]()
                 self?.isImageSelected = true
-                
-                if self?.checkFilledDeatils(isImage: self?.isImageSelected ?? false, name: self?.tfName.text ?? "", email: self?.tfEmail.text ?? "", phone: self?.tfPhone.text ?? "", dob: self?.dobTf.text ?? "", pass: self?.tfPassword.text ?? "", conPass: self?.tfConfirmPass.text ?? "",isSelected: self?.isselected ?? false) == true{
-                    print("True")
+                if self?.checkFilledDeatils(isImage: self?.isImageSelected ?? false, name: self?.tfName.text ?? "", email: self?.tfEmail.text ?? "", phone: self?.tfPhone.text ?? "", dob: self?.dobTf.text ?? "", pass: self?.tfPassword.text ?? "", conPass: self?.tfConfirmPass.text ?? "",isSelected: self?.isselected ?? false) == true {
                     self?.signUpBtn.isUserInteractionEnabled = true
                     self?.signUpBtn.backgroundColor = UIColor(named: "themeOrange")
-                }else {
-                    print("false")
+                } else {
                     self?.signUpBtn.isUserInteractionEnabled = false
                     self?.signUpBtn.backgroundColor = .lightGray
                 }
-                
             }
         }
     }
+    
     @IBAction func btnResto(_ sender: UIButton) {
         selectStatus = 2
         restaurantBtn.setTitleColor(UIColor.white, for: .normal)
@@ -148,11 +175,10 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func btnCountryPicker(_ sender : UIButton){
-        let countryController = CountryPickerWithSectionViewController.presentController(on: self) { [weak self] (country: Country) in
+        CountryPickerWithSectionViewController.presentController(on: self) { [weak self] (country: Country) in
             guard let self = self else { return }
             self.tfCountry.text = country.dialingCode
             self.countryCode = country.countryCode
-            print(self.countryCode)
         }
     }
     
@@ -173,15 +199,59 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func btnSignUp(_ sender: UIButton) {
-        
-        self.viewmodel.signUpapi(isImage: self.isImageSelected, image: self.image , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location, role: self.selectStatus,dob: self.dobTf.text ?? "") {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
-            vc.btnCheckStatus = self.selectStatus
-            vc.restoselctStatus = self.restoselctStatus
-            self.navigationController?.pushViewController(vc, animated: true)
+        if !isFromSocial {
+            self.viewmodel.signUpapi(isImage: self.isImageSelected, image: self.image , name: self.tfName.text ?? "", email: self.tfEmail.text ?? "", country_code: self.tfCountry.text ?? "",countrySymbol:self.countryCode, phone: self.tfPhone.text ?? "", password: self.tfPassword.text ?? "", confirmpassword: self.tfConfirmPass.text ?? "", devicetype: 1, isselected: self.isselected, longitude:Double( self.long ?? 0) , latitude: Double(self.lat ?? 0), location: self.Location, role: self.selectStatus,dob: self.dobTf.text ?? "") {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
+                vc.btnCheckStatus = self.selectStatus
+                vc.restoselctStatus = self.restoselctStatus
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        } else {
+            
+                self.viewmodel.socialLoginAPI(socialId: socialLoginBody?.userId ?? "", socialType: socialType.rawValue, email: self.tfEmail.text ?? "", role: self.selectStatus, latitude: Double(self.lat ?? 0), longitude: Double( self.long ?? 0), location: self.Location, image: self.image, name: self.tfName.text ?? "", dob: dobTf.text ?? "",phone: tfPhone.text ?? "",countryCode: self.tfCountry.text ?? "") {
+                  
+                    if self.selectStatus == 1 {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerifypopUpVC") as! VerifypopUpVC
+                        vc.modalPresentationStyle = .overFullScreen
+                        vc.callBack = {
+                            Store.sociallogin = true
+                            Store.autoLogin = true
+                            Store.screenType = 1
+                            let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+                            let redViewController = mainStoryBoard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                            let nav = UINavigationController.init(rootViewController: redViewController)
+                            nav.isNavigationBarHidden = true
+                            UIApplication.shared.windows.first?.rootViewController = nav
+                            
+                        }
+                        self.navigationController?.present(vc, animated: true)
+                    }
+                    
+                    //MARK: - RESTO SIDE 2
+                    else {
+                        let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+                        let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC") as! restoCreateVC
+                        vc.btnCheckStatus = self.restoselctStatus
+                        if self.restoselctStatus == 1 {
+                            vc.heading = "Restaurant Profile"
+                            vc.name = "Restaurant Name"
+                            UserDefaults.standard.set("Restaurant", forKey: "name")
+                        }else if  self.restoselctStatus == 2 {
+                            vc.heading = "Club Profile"
+                            vc.name = "Club Name"
+                            UserDefaults.standard.set("Club", forKey: "name")
+                        } else {
+                            vc.heading = "Bar Profile"
+                            vc.name = "Bar Name"
+                            UserDefaults.standard.set("Bar", forKey: "name")
+                        }
+                        UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                }
+            }
         }
-    }
-    
+   
     @IBAction func termSConditionsBtn(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "TermsConditionVC")as! TermsConditionVC
         vc.status = 0
@@ -225,7 +295,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
 extension SignUPVC {
     
     func checkFilledDeatils(isImage:Bool,name:String,email:String,phone:String,dob:String,pass:String,conPass:String,isSelected:Bool) -> Bool{
-
+        
         if name.trimmingCharacters(in: .whitespaces).isEmpty{
             return false
         }
@@ -240,12 +310,15 @@ extension SignUPVC {
                 return false
             }
         }
-        if pass.trimmingCharacters(in: .whitespaces).isEmpty{
-            return false
+        if !isFromSocial {
+            if pass.trimmingCharacters(in: .whitespaces).isEmpty{
+                return false
+            }
+            if conPass.trimmingCharacters(in: .whitespaces).isEmpty{
+                return false
+            }
         }
-        if conPass.trimmingCharacters(in: .whitespaces).isEmpty{
-            return false
-        }
+        
         if isSelected == false {
             return false
         }
@@ -369,12 +442,12 @@ extension SignUPVC: UITextFieldDelegate {
             currentString.replacingCharacters(in: range, with: string) as String
             return newString.length() <= 30
         }
-   
+        
         
         return true
     }
     
-   
+    
     
 }
 //MARK: - CAMERA ACCSESS

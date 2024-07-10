@@ -10,7 +10,7 @@ import GoogleSignIn
 import AuthenticationServices
 
 class LoginVC: UIViewController, UIGestureRecognizerDelegate {
-  
+    
     //MARK: - OUTLETS
     @IBOutlet weak var btnRemember: UIButton!
     @IBOutlet weak var viewMain: UIView!
@@ -42,9 +42,9 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
-
-    @IBAction func btnSignIn(_ sender: UIButton){
-        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: 0, timeZone: TimeZone.current.identifier) { 
+    
+    @IBAction func btnSignIn(_ sender: UIButton) {
+        self.viewmodel.loginApicall(email: txtEmail.text ?? "", password: txtPassword.text ?? "", device_type: 2, role: 0, timeZone: TimeZone.current.identifier) {
             if self.btnRemember.isSelected == true {
                 UserDefaults.standard.set(self.txtEmail.text!, forKey: "loginEmail")
                 UserDefaults.standard.set(self.txtPassword.text!, forKey: "loginPassword")
@@ -54,10 +54,10 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                 UserDefaults.standard.set("", forKey: "loginPassword")
                 UserDefaults.standard.set(false, forKey: "rememberMe")
             }
-
+            
             if Store.userDetails?.role == 1{
                 if Store.userDetails?.isOtpVerified == 1 {
-                   Store.autoLogin = true
+                    Store.autoLogin = true
                     CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
                     Store.screenType = 1
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -70,9 +70,9 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                     
                     
                 }else {
-                   let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
-                   CommonUtilities.shared.showAlert(message: "Please verify the OTP", isSuccess: .error)
-                   self.navigationController?.pushViewController(vc, animated: true)
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
+                    CommonUtilities.shared.showAlert(message: "Please verify the OTP", isSuccess: .error)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             }else{
                 let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
@@ -116,6 +116,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         let vc = storyboard?.instantiateViewController(withIdentifier: "SignUPVC")as! SignUPVC
         vc.selectStatus = self.selectStatus
         vc.restoselctStatus = self.restoselctStatus
+        vc.isFromSocial = false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -124,72 +125,88 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnEyeAct(_ sender : UIButton){
-         sender.isSelected == false ? ( txtPassword.isSecureTextEntry = false) : (txtPassword.isSecureTextEntry = true)
+        sender.isSelected == false ? ( txtPassword.isSecureTextEntry = false) : (txtPassword.isSecureTextEntry = true)
         sender.isSelected = !sender.isSelected
         
     }
-
+    
     @IBAction func onClickRememberMe(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
     }
-
+    
     @IBAction func googleSiginAction(_ sender: UIButton){
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { results, error in
             guard error == nil else { return }
-            self.viewmodel.socialLoginAPI(socialId: results?.user.userID ?? "", socialType: 2, email: results?.user.fetcherAuthorizer.userEmail ?? "", role: self.selectStatus) {
-                if Store.userDetails?.role == 1{
-                    
-                    Store.autoLogin = true
-                    CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
-                    Store.screenType = 1
-                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
-                    let navigationController = UINavigationController(rootViewController: tabVC)
-                    navigationController.navigationBar.isHidden = true
-                    navigationController.viewControllers = [tabVC]
-                    UIApplication.shared.windows.first?.rootViewController = navigationController
-                    UIApplication.shared.windows.first?.makeKeyAndVisible()
-                    
-                    
-                }else{
-                    let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-                    if Store.userDetails?.isCompleted != 1{
-                        let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
-                        vc.btnCheckStatus = self.restoselctStatus
-                        if self.restoselctStatus == 1{
-                            vc.heading = "Restaurant Profile"
-                            vc.name = "Restaurant Name"
-                            UserDefaults.standard.set("Restaurant", forKey: "name")
-                        }else  if self.restoselctStatus == 2{
-                            vc.heading = "Club Profile"
-                            vc.name = "Club Name"
-                            UserDefaults.standard.set("Club", forKey: "name")
-                        }else {
-                            vc.heading = "Bar Profile"
-                            vc.name = "Bar Name"
-                            UserDefaults.standard.set("Bar", forKey: "name")
-                        }
-                        UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }else if Store.userDetails?.is_approved == 0{
-                        CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
-                    } else {
+            
+            self.viewmodel.checkSocialExistAPI(socialId: results?.user.userID ?? "", socialType: 2) { [weak self] response in
+                guard let self = self else { return }
+                if response?.code == 410 {
+                    let resultData = SocialLoginModel(userImage: results?.user.profile?.imageURL(withDimension: 120)?.absoluteString, userFullName: results?.user.profile?.givenName ?? "", email: results?.user.fetcherAuthorizer.userEmail ?? "", userId: results?.user.userID ?? "")
+                    guard let vc = self.storyboard?.instantiateViewController(identifier: "SignUPVC") as? SignUPVC else { return }
+                    vc.socialType = .Google
+                    vc.isFromSocial = true
+                    vc.socialLoginBody = resultData
+                    vc.selectStatus = self.selectStatus
+                    vc.restoselctStatus = self.restoselctStatus
+                    self.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    if Store.userDetails?.role == 1{
+                        Store.sociallogin = true
                         Store.autoLogin = true
                         CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
-                        let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
+                        Store.screenType = 1
+                        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
                         let navigationController = UINavigationController(rootViewController: tabVC)
                         navigationController.navigationBar.isHidden = true
                         navigationController.viewControllers = [tabVC]
                         UIApplication.shared.windows.first?.rootViewController = navigationController
                         UIApplication.shared.windows.first?.makeKeyAndVisible()
+                        
+                        
+                    }else{
+                        let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+                        if Store.userDetails?.isCompleted != 1{
+                            let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
+                            vc.btnCheckStatus = self.restoselctStatus
+                            if self.restoselctStatus == 1{
+                                vc.heading = "Restaurant Profile"
+                                vc.name = "Restaurant Name"
+                                UserDefaults.standard.set("Restaurant", forKey: "name")
+                            }else  if self.restoselctStatus == 2{
+                                vc.heading = "Club Profile"
+                                vc.name = "Club Name"
+                                UserDefaults.standard.set("Club", forKey: "name")
+                            }else {
+                                vc.heading = "Bar Profile"
+                                vc.name = "Bar Name"
+                                UserDefaults.standard.set("Bar", forKey: "name")
+                            }
+                            UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }else if Store.userDetails?.is_approved == 0{
+                            CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
+                        } else {
+                            Store.autoLogin = true
+                            Store.sociallogin = true
+                            CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
+                            let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
+                            let navigationController = UINavigationController(rootViewController: tabVC)
+                            navigationController.navigationBar.isHidden = true
+                            navigationController.viewControllers = [tabVC]
+                            UIApplication.shared.windows.first?.rootViewController = navigationController
+                            UIApplication.shared.windows.first?.makeKeyAndVisible()
+                        }
                     }
                 }
             }
         }
     }
+    
     @IBAction func fbSiginAction(_ sender: UIButton){
         
     }
+    
     @IBAction func appleSiginAction(_ sender: UIButton){
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -200,7 +217,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
-   
+    
 }
 
 extension LoginVC{
@@ -241,25 +258,91 @@ extension LoginVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
                     KeychainHelper.save("email", value: email)
                 }
             }
+            
+            var socialData = SocialLoginModel(userImage: "", userFullName: "", email: "", userId: "")
+            if let userId = KeychainHelper.fetch("userIdentifier") {
+                print("Fetched userIdentifier: \(userId)")
+                socialData.userId = userId
+                socialData.userImage = ""
+            }
+            
+            if let fullName = KeychainHelper.fetch("fullName") {
+                print("Fetched fullName: \(fullName)")
+                socialData.userFullName = fullName
+            }
+            
+            if let email = KeychainHelper.fetch("email") {
+                print("Fetched email: \(email)")
+                socialData.email = email
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
+                self.viewmodel.checkSocialExistAPI(socialId: socialData.userId, socialType: 3) { [weak self] response in
+                    guard let self = self else { return }
+                    if response?.code == 410 {
+                        guard let vc = self.storyboard?.instantiateViewController(identifier: "SignUPVC") as? SignUPVC else { return }
+                        vc.socialType = .Apple
+                        vc.isFromSocial = true
+                        vc.socialLoginBody = socialData
+                        vc.selectStatus = self.selectStatus
+                        vc.restoselctStatus = self.restoselctStatus
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    } else {
+                        if Store.userDetails?.role == 1{
+                            Store.sociallogin = true
+                            Store.autoLogin = true
+                            CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
+                            Store.screenType = 1
+                            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                            let navigationController = UINavigationController(rootViewController: tabVC)
+                            navigationController.navigationBar.isHidden = true
+                            navigationController.viewControllers = [tabVC]
+                            UIApplication.shared.windows.first?.rootViewController = navigationController
+                            UIApplication.shared.windows.first?.makeKeyAndVisible()
+                            
+                            
+                        } else {
+                            let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+                            if Store.userDetails?.isCompleted != 1{
+                                let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
+                                vc.btnCheckStatus = self.restoselctStatus
+                                if self.restoselctStatus == 1{
+                                    vc.heading = "Restaurant Profile"
+                                    vc.name = "Restaurant Name"
+                                    UserDefaults.standard.set("Restaurant", forKey: "name")
+                                }else  if self.restoselctStatus == 2{
+                                    vc.heading = "Club Profile"
+                                    vc.name = "Club Name"
+                                    UserDefaults.standard.set("Club", forKey: "name")
+                                }else {
+                                    vc.heading = "Bar Profile"
+                                    vc.name = "Bar Name"
+                                    UserDefaults.standard.set("Bar", forKey: "name")
+                                }
+                                UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
+                                self.navigationController?.pushViewController(vc, animated: true)
+                            }else if Store.userDetails?.is_approved == 0{
+                                CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
+                            } else {
+                                Store.autoLogin = true
+                                Store.sociallogin = true
+                                CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
+                                let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
+                                let navigationController = UINavigationController(rootViewController: tabVC)
+                                navigationController.navigationBar.isHidden = true
+                                navigationController.viewControllers = [tabVC]
+                                UIApplication.shared.windows.first?.rootViewController = navigationController
+                                UIApplication.shared.windows.first?.makeKeyAndVisible()
+                            }
+                        }
+                    }
+                }
+            }
         }
-        
-        if let userId = KeychainHelper.fetch("userIdentifier") {
-            print("Fetched userIdentifier: \(userId)")
-        }
-
-        if let fullName = KeychainHelper.fetch("fullName") {
-            print("Fetched fullName: \(fullName)")
-        }
-
-        if let email = KeychainHelper.fetch("email") {
-            print("Fetched email: \(email)")
-        }
-        
-        
     }
     
-       func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-           print("Sign in with Apple error: \(error.localizedDescription)")
-       }
-
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("Sign in with Apple error: \(error.localizedDescription)")
+    }
+    
 }

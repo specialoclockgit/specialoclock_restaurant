@@ -4,6 +4,26 @@
 //
 //  Created by cqlpc on 07/08/23.
 //
+enum SocialType: String {
+    case FaceBook = "1"
+    case Google = "2"
+    case Apple = "3"
+}
+//MARK: Social Login Model
+struct SocialLoginModel {
+    var userImage: String?
+    var userFullName: String?
+    var email: String?
+    var userId: String
+    
+    init(userImage: String? = nil, userFullName: String? = nil, email: String? = nil, userId: String) {
+        self.userImage = userImage
+        self.userFullName = userFullName
+        self.email = email
+        self.userId = userId
+    }
+}
+
 
 // MARK: - SignupModel
 struct SignupModel: Codable {

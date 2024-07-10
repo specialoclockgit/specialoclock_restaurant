@@ -163,6 +163,7 @@ class AuthViewModel : NSObject {
         WebService.service(API.delete_account, service: .post) {
             (modaldata: CommonModel , Data, Json) in
             Store.userDetails = nil
+            Store.sociallogin = false
             Store.autoLogin = false
             onsuccess()
         }
@@ -231,6 +232,9 @@ class AuthViewModel : NSObject {
     func logoutapicall(onsuccess: @escaping (()->())){
         WebService.service(API.logout, service: .post) {
             (modaldata: CommonModel, Data , json) in
+            Store.userDetails = nil
+            Store.autoLogin = false
+            Store.sociallogin = false
             onsuccess()
         }
         
@@ -463,15 +467,43 @@ class AuthViewModel : NSObject {
     }
     
     // MARK: Social Login
-    func socialLoginAPI(socialId: String,socialType: Int,email: String,role: Int,onSuccess: @escaping(()->())){
-        let params : parameters = ["social_id":socialId,"social_type":socialType,"email":email,"role":role,"timezone":TimeZone.current.identifier,"device_type":1,"device_token":DEVICE_TOKEN]
-        WebService.service(.socialLogin,param: params,service: .post) { (resp: SignupModel, data, any) in
-            Store.authKey = resp.body?.token ?? ""
+    func socialLoginAPI(socialId: String,socialType: String,email: String,role: Int,latitude:Double,longitude:Double,location:String,image: [FileuploadModelBody], name : String,dob:String,phone:String,countryCode:String,onSuccess: @escaping(()->())){
+        let jsonEncoder = JSONEncoder()
+        do {
+            let jsonData = try jsonEncoder.encode(image)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            guard let json = jsonString else{return}
+            
+            var params : parameters = ["social_id":socialId,"social_type":socialType,"email":email,"role":role,"timezone":TimeZone.current.identifier,"device_type":1,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"name":name,"country_code":countryCode ,"phone":phone]
+            
+            if let imageData = image.first?.fileName, imageData != "" {
+                params["image"] = json
+            }
+            if role == 1 {
+                params["dob"] = dob
+            }
+            
+            WebService.service(.socialLogin,param: params,service: .post) { (resp: SignupModel, data, any) in
+                Store.authKey = resp.body?.token ?? ""
+                Store.userDetails = resp.body
+                onSuccess()
+            }
+            
+        }catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    //MARK: Check Social Exists
+    func checkSocialExistAPI(socialId: String,socialType: Int,onSuccess:@escaping((SignupModel?)->())){
+        let params : parameters = ["social_id":socialId, "social_type":socialType]
+        WebService.service(.check_social_exists,param: params,service: .post) { (resp: SignupModel, data, any) in
             Store.userDetails = resp.body
-            onSuccess()
+            Store.authKey = resp.body?.token ?? ""
+            onSuccess(resp)
         }
     }
-
 }
 
 

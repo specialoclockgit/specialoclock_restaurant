@@ -102,8 +102,7 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 0
             vc.callBack = {
-                self.viewModel.deleteAccountApi(onsuccess: { [weak self] in
-                    guard let self = self else { return }
+                self.viewModel.deleteAccountApi(onsuccess: {
                     SceneDelegate().LoginRoot()
                 })
             }
@@ -114,8 +113,7 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource{
             vc.modalPresentationStyle = .overFullScreen
             vc.status = 1
             vc.callBack = {
-                self.viewModel.logoutapicall { [weak self] in
-                    guard let self = self else { return }
+                self.viewModel.logoutapicall {
                     SceneDelegate().LoginRoot()
                 }
             }

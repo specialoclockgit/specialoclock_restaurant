@@ -159,38 +159,21 @@ struct WebService {
                             let jsonSer = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers) as! [String: Any]
                             print(jsonSer)
                             let codeInt = jsonSer["code"] as? Int ?? 0
-                           
                             let code = "\(codeInt)"
-                            
-//                            if let httpResponse = jsonResponse as? HTTPURLResponse {
-//                                print("statusCode: \(httpResponse.statusCode)")
-////                                if api == API.imageUplaod {
-////                                    code = "\(httpResponse.statusCode)"
-////                                }
-//                            }
-                            if code == "403"{
+                            if code == "403" {
                                 DispatchQueue.main.async {
-                                    if UIApplication.shared.isRegisteredForRemoteNotifications
-                                    {
-                                        UIApplication.shared.unregisterForRemoteNotifications()
-                                        UIApplication.shared.registerForRemoteNotifications()
-                                    }
                                     if let message = jsonSer["message"] as? String{
-                                        //WebService.showAlert(message)
                                         CommonUtilities.shared.showAlert(message: message)
                                     }
                                     SceneDelegate().LoginRoot()
                                 }
-                            }
-                            else if code != "200" {
+                            }  else if code == "400"{
                                 DispatchQueue.main.async {
-                                    if let errorMessage = jsonSer["msg"] as? String {
-                                        WebService.showAlert(errorMessage)
-                                    }else if let message = jsonSer["message"] as? String{
-                                        WebService.showAlert(message)
+                                    if let message = jsonSer["message"] as? String{
+                                        CommonUtilities.shared.showAlert(message: message)
                                     }
                                 }
-                            }else{
+                            } else{
                                 let decoder = JSONDecoder()
                                 let model = try decoder.decode(Model.self, from: jsonData)
                                 DispatchQueue.main.async {
