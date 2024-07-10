@@ -25,7 +25,7 @@ class UserEditProfileVC: UIViewController {
     var countryCode = String()
     var image = [FileuploadModelBody]()
     var isImage = false
-    
+    var callBack: (()->())?
     //MARK: VIEW LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +48,7 @@ class UserEditProfileVC: UIViewController {
             self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: data?.image ?? "")
             self.tfName.text = data?.name.capitalized ?? ""
             self.tfEmail.text = data?.email ?? ""
-            self.tfPhoneNumber.text = "\(data?.phone ?? 0)"
+            self.tfPhoneNumber.text = data?.phone.description
             self.tfCountryCode.text = "\(data?.countryCode ?? "")"
             self.dobTf.text = data?.dob ?? ""
         }
@@ -75,6 +75,7 @@ class UserEditProfileVC: UIViewController {
     }
     
     @IBAction func btnBackAct(sender : UIButton){
+        self.callBack?()
         self.navigationController?.popViewController(animated: true)
     }
     

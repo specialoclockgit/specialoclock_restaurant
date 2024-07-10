@@ -371,11 +371,13 @@ class AuthViewModel : NSObject {
         
         if name.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your name", isSuccess: .error)
-        }else if phone.trimmingCharacters(in: .whitespaces).isEmpty{
+        }else if countryCode.trimmingCharacters(in: .whitespaces).isEmpty{
+            CommonUtilities.shared.showAlert(message: "Please select your country code", isSuccess: .error)
+        }else if phone.trimmingCharacters(in: .whitespaces).isEmpty || phone == "0"{
             CommonUtilities.shared.showAlert(message: "Please enter your mobile number", isSuccess: .error)
-        }else if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol){
+        } else if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol) {
             CommonUtilities.shared.showAlert(message: "Please enter a valid mobile number",isSuccess: .error)
-        }else {
+        } else {
             let jsonEncoder = JSONEncoder()
             do {
                 let jsonData = try jsonEncoder.encode(image)
@@ -387,10 +389,9 @@ class AuthViewModel : NSObject {
                    param["image"] = json
                 }
                 
-                print(param)
                 WebService.service(API.edit_profile, param: param,service: .post) {
-                    (modaldata: EditProfileModel, data, json) in
-                    Store.userDetails?.image = modaldata.body.image
+                    (modaldata: SignupModel, data, json) in
+                    Store.userDetails = modaldata.body
                     OnSuccess()
                 }
             } catch {
@@ -467,20 +468,17 @@ class AuthViewModel : NSObject {
     }
     
     // MARK: Social Login
-    func socialLoginAPI(socialId: String,socialType: String,email: String,role: Int,latitude:Double,longitude:Double,location:String,image: [FileuploadModelBody], name : String,dob:String,phone:String,countryCode:String,onSuccess: @escaping(()->())){
+    func socialLoginAPI(socialId: String,socialType: String,email: String,role: Int,latitude:Double,longitude:Double,location:String,image: [FileuploadModelBody], name : String,onSuccess: @escaping(()->())){
         let jsonEncoder = JSONEncoder()
         do {
             let jsonData = try jsonEncoder.encode(image)
             let jsonString = String(data: jsonData, encoding: .utf8)
             guard let json = jsonString else{return}
             
-            var params : parameters = ["social_id":socialId,"social_type":socialType,"email":email,"role":role,"timezone":TimeZone.current.identifier,"device_type":1,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"name":name,"country_code":countryCode ,"phone":phone]
+            var params : parameters = ["social_id":socialId,"social_type":socialType,"email":email,"role":role,"timezone":TimeZone.current.identifier,"device_type":1,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"name":name]
             
             if let imageData = image.first?.fileName, imageData != "" {
                 params["image"] = json
-            }
-            if role == 1 {
-                params["dob"] = dob
             }
             
             WebService.service(.socialLogin,param: params,service: .post) { (resp: SignupModel, data, any) in

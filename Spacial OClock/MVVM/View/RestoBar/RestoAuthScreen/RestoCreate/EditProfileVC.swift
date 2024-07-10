@@ -23,7 +23,7 @@ class EditProfileVC: UIViewController {
     var viewmodel = AuthViewModel()
     var imageData = [FileuploadModelBody]()
     var isImage = false
-    
+    var callBack : (()->())?
     //MARK: VIEW LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +34,7 @@ class EditProfileVC: UIViewController {
     
     //MARK: Button Action
     @IBAction func btnBackAct(sender : UIButton) {
+        self.callBack?()
         self.navigationController?.popViewController(animated: true)
     }
     

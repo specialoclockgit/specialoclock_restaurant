@@ -215,10 +215,26 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
             self.tabBarController?.tabBar.isHidden = false
             self.tbHomeData.layoutSubviews()
             self.tbHomeData.reloadData()
+            self.checkProfileCompleted()
+
         }
     }
     
-    
+    private func checkProfileCompleted(){
+        if Store.userDetails?.name == "" || Store.userDetails?.dob == ""{
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "CompleteProfilePopupVC") as? CompleteProfilePopupVC else { return }
+            vc.callBack = { [weak self] in
+                guard let vc = self?.storyboard?.instantiateViewController(withIdentifier: "UserEditProfileVC") as? UserEditProfileVC else { return }
+                vc.callBack = { [weak self] in
+                    self?.checkProfileCompleted()
+                }
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .overFullScreen
+            self.navigationController?.present(vc, animated: true)
+        }
+    }
     
     
     //MARK: - ACTIONS
