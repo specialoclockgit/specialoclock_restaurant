@@ -26,6 +26,8 @@ class UserEditProfileVC: UIViewController {
     var image = [FileuploadModelBody]()
     var isImage = false
     var callBack: (()->())?
+    let datePicker = UIDatePicker()
+    
     //MARK: VIEW LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,7 @@ class UserEditProfileVC: UIViewController {
         tfPhoneNumber.delegate = self
         tfName.delegate = self
         setData()
+        setupDatePicker()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,9 +51,13 @@ class UserEditProfileVC: UIViewController {
             self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: data?.image ?? "")
             self.tfName.text = data?.name.capitalized ?? ""
             self.tfEmail.text = data?.email ?? ""
-            self.tfPhoneNumber.text = data?.phone.description
             self.tfCountryCode.text = "\(data?.countryCode ?? "")"
             self.dobTf.text = data?.dob ?? ""
+            self.dobTf.isUserInteractionEnabled = data?.dob.isEmpty == true ? true : false
+            if let phone = data?.phone, phone != 0 {
+                self.tfPhoneNumber.text = phone.description
+            }
+            
         }
     }
     
@@ -66,7 +73,7 @@ class UserEditProfileVC: UIViewController {
     }
     
     @IBAction func btnCountryPicker(_ sender : UIButton){
-        let countryController = CountryPickerWithSectionViewController.presentController(on: self) { [weak self] (country: Country) in
+     CountryPickerWithSectionViewController.presentController(on: self) { [weak self] (country: Country) in
             guard let self = self else { return }
             self.tfCountryCode.text = country.dialingCode
             self.countryCode = country.countryCode
@@ -75,12 +82,13 @@ class UserEditProfileVC: UIViewController {
     }
     
     @IBAction func btnBackAct(sender : UIButton){
-        self.callBack?()
         self.navigationController?.popViewController(animated: true)
+        self.callBack?()
     }
     
     @IBAction func btnSaveAct(_ sender : UIButton) {
-        viewmodel.editprofile(isImage:self.isImage, name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "",countrySymbol: self.countryCode,countryCode: self.tfCountryCode.text ?? "", email: tfEmail.text ?? "", image: self.image) {
+        viewmodel.editprofile(isImage:self.isImage, name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "",countrySymbol: self.countryCode,countryCode: self.tfCountryCode.text ?? "", email: tfEmail.text ?? "", image: self.image,dob: dobTf.text ?? "") {
+            CommonUtilities.shared.showAlert(message: "Profile updated successfully", isSuccess: .success)
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -105,4 +113,36 @@ extension UserEditProfileVC: UITextFieldDelegate {
         }
         return true
     }
+}
+extension UserEditProfileVC {
+    //MARK: - DatePicker 1
+    func setupDatePicker(){
+        datePicker.datePickerMode = .date
+        datePicker.maximumDate = Date()
+        datePicker.preferredDatePickerStyle = .wheels
+        //ToolBar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker))
+        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+        dobTf.inputAccessoryView = toolbar
+        dobTf.inputView = datePicker
+    }
+    
+    @objc func donedatePicker(){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        dobTf.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+        
+       
+    }
+    
+    @objc func cancelDatePicker(){
+        self.view.endEditing(true)
+    }
+    
+    
 }

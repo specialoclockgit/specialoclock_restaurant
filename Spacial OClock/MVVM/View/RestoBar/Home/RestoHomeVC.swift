@@ -56,10 +56,29 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
                 }
                 self.tableVW.hideSkeleton()
                 self.tableVW.reloadData()
-                
+                self.checkProfileCompleted()
             }
         }
     }
+    
+    private func checkProfileCompleted() {
+        if Store.userDetails?.name == "" || Store.userDetails?.phone == 0{
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            guard let vc = storyBoard.instantiateViewController(withIdentifier: "CompleteProfilePopupVC") as? CompleteProfilePopupVC else { return }
+            vc.callBack = { [weak self] in
+                let storyBoard = UIStoryboard(name: "RestoBar", bundle: nil)
+                guard let vc = storyBoard.instantiateViewController(withIdentifier: "EditProfileVC") as? EditProfileVC else { return }
+                vc.callBack = { [weak self] in
+                    self?.checkProfileCompleted()
+                }
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .overFullScreen
+            self.navigationController?.present(vc, animated: true)
+        }
+    }
+    
     
     //MARK: - ACTIONS
     override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +166,7 @@ extension RestoHomeVC: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.bookingDetailsVC) as! bookingDetailsVC
         screen.restoid = filterdata?[indexPath.row].id ?? 0

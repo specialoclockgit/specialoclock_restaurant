@@ -367,23 +367,40 @@ class AuthViewModel : NSObject {
     
     
     //MARK: - EDITPROFILE API
-    func editprofile(isImage:Bool, name:String, phone: String,countrySymbol: String,countryCode: String, email: String, image: [FileuploadModelBody], OnSuccess: @escaping (()->())) {
+    func editprofile(isImage:Bool, name:String, phone: String,countrySymbol: String,countryCode: String, email: String, image: [FileuploadModelBody],dob:String, OnSuccess: @escaping (()->())) {
         
         if name.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter your name", isSuccess: .error)
-        }else if countryCode.trimmingCharacters(in: .whitespaces).isEmpty{
-            CommonUtilities.shared.showAlert(message: "Please select your country code", isSuccess: .error)
-        }else if phone.trimmingCharacters(in: .whitespaces).isEmpty || phone == "0"{
+            return
+        }
+        if Store.userDetails?.role == 1 {
+            if countryCode.trimmingCharacters(in: .whitespaces).isEmpty{
+               CommonUtilities.shared.showAlert(message: "Please select your country code", isSuccess: .error)
+                return
+           }
+        }
+        
+         if phone.trimmingCharacters(in: .whitespaces).isEmpty || phone == "0"{
             CommonUtilities.shared.showAlert(message: "Please enter your mobile number", isSuccess: .error)
-        } else if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol) {
+             return
+        }
+         if phone.count < AuthViewModel.getCountryBasedMobileNumberRange(code: countrySymbol) {
             CommonUtilities.shared.showAlert(message: "Please enter a valid mobile number",isSuccess: .error)
-        } else {
+             return
+        }
+        if Store.userDetails?.role == 1 {
+            if dob.trimmingCharacters(in: .whitespaces).isEmpty {
+                CommonUtilities.shared.showAlert(message: "Please enter your date of birth", isSuccess: .error)
+                 return
+            }
+        }
+        
             let jsonEncoder = JSONEncoder()
             do {
                 let jsonData = try jsonEncoder.encode(image)
                 let jsonString = String(data: jsonData, encoding: .utf8)
                 guard let json = jsonString else{return}
-                var param: parameters = ["name":name, "phone":phone, "email":email,"country_code":countryCode]
+                var param: parameters = ["name":name, "phone":phone, "email":email,"country_code":countryCode,"dob": dob]
                 
                 if isImage == true {
                    param["image"] = json
@@ -398,7 +415,7 @@ class AuthViewModel : NSObject {
                 print("error--\(error.localizedDescription)")
             }
         }
-    }
+    
    
     
     //MARK: Profile
@@ -475,7 +492,11 @@ class AuthViewModel : NSObject {
             let jsonString = String(data: jsonData, encoding: .utf8)
             guard let json = jsonString else{return}
             
-            var params : parameters = ["social_id":socialId,"social_type":socialType,"email":email,"role":role,"timezone":TimeZone.current.identifier,"device_type":1,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location,"name":name]
+            var params : parameters = ["social_id":socialId,"social_type":socialType,"email":email,"role":role,"timezone":TimeZone.current.identifier,"device_type":1,"device_token":DEVICE_TOKEN,"latitude":latitude, "longitude":longitude,"location":location]
+            
+            if name != ""{
+                params["name"] = name
+            }
             
             if let imageData = image.first?.fileName, imageData != "" {
                 params["image"] = json

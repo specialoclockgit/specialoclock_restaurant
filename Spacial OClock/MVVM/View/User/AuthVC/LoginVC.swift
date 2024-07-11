@@ -152,7 +152,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func btnSignUp(_ sender: UIButton){
-        let vc = storyboard?.instantiateViewController(withIdentifier: "SignUPVC")as! SignUPVC
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SignUPVC") as! SignUPVC
         vc.selectStatus = self.selectStatus
         vc.restoselctStatus = self.restoselctStatus
         self.navigationController?.pushViewController(vc, animated: true)
@@ -304,72 +304,60 @@ extension LoginVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
                 print("Fetched email: \(email)")
                 socialData.email = email
             }
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//                self.viewmodel.checkSocialExistAPI(socialId: socialData.userId, socialType: 3) { [weak self] response in
-//                    guard let self = self else { return }
-//                    if response?.code == 410 {
-//                        guard let vc = self.storyboard?.instantiateViewController(identifier: "SignUPVC") as? SignUPVC else { return }
-//                        vc.socialType = .Apple
-//                        vc.isFromSocial = true
-//                        vc.socialLoginBody = socialData
-//                        vc.selectStatus = self.selectStatus
-//                        vc.restoselctStatus = self.restoselctStatus
-//                        self.navigationController?.pushViewController(vc, animated: true)
-//                    } else {
-//                        if Store.userDetails?.role == 1{
-//                            Store.sociallogin = true
-//                            Store.autoLogin = true
-//                            CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
-//                            Store.screenType = 1
-//                            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                            let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
-//                            let navigationController = UINavigationController(rootViewController: tabVC)
-//                            navigationController.navigationBar.isHidden = true
-//                            navigationController.viewControllers = [tabVC]
-//                            UIApplication.shared.windows.first?.rootViewController = navigationController
-//                            UIApplication.shared.windows.first?.makeKeyAndVisible()
-//                            
-//                            
-//                        } else {
-//                            let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-//                            if Store.userDetails?.isCompleted != 1{
-//                                let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
-//                                vc.btnCheckStatus = self.restoselctStatus
-//                                if self.restoselctStatus == 1{
-//                                    vc.heading = "Restaurant Profile"
-//                                    vc.name = "Restaurant Name"
-//                                    UserDefaults.standard.set("Restaurant", forKey: "name")
-//                                }else  if self.restoselctStatus == 2{
-//                                    vc.heading = "Club Profile"
-//                                    vc.name = "Club Name"
-//                                    UserDefaults.standard.set("Club", forKey: "name")
-//                                }else {
-//                                    vc.heading = "Bar Profile"
-//                                    vc.name = "Bar Name"
-//                                    UserDefaults.standard.set("Bar", forKey: "name")
-//                                }
-//                                UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
-//                                self.navigationController?.pushViewController(vc, animated: true)
-//                            }else if Store.userDetails?.is_approved == 0{
-//                                CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
-//                            } else {
-//                                Store.autoLogin = true
-//                                Store.sociallogin = true
-//                                CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
-//                                let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
-//                                let navigationController = UINavigationController(rootViewController: tabVC)
-//                                navigationController.navigationBar.isHidden = true
-//                                navigationController.viewControllers = [tabVC]
-//                                UIApplication.shared.windows.first?.rootViewController = navigationController
-//                                UIApplication.shared.windows.first?.makeKeyAndVisible()
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                
+                self.viewmodel.socialLoginAPI(socialId: socialData.userId ?? "", socialType: "3", email: socialData.email ?? "", role: self.selectStatus, latitude: self.lat ?? 0, longitude: self.long ?? 0, location: self.Location, image: [FileuploadModelBody](), name: socialData.userFullName ?? "") {
+                    if Store.userDetails?.role == 1 {
+                        Store.sociallogin = true
+                        Store.autoLogin = true
+                        CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
+                        Store.screenType = 1
+                        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let tabVC = mainStoryboard.instantiateViewController(withIdentifier: "TabbarVC") as! TabbarVC
+                        let navigationController = UINavigationController(rootViewController: tabVC)
+                        navigationController.navigationBar.isHidden = true
+                        navigationController.viewControllers = [tabVC]
+                        UIApplication.shared.windows.first?.rootViewController = navigationController
+                        UIApplication.shared.windows.first?.makeKeyAndVisible()
+                    } else {
+                        let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+                        if Store.userDetails?.isCompleted != 1{
+                            let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
+                            vc.btnCheckStatus = self.restoselctStatus
+                            if self.restoselctStatus == 1{
+                                vc.heading = "Restaurant Profile"
+                                vc.name = "Restaurant Name"
+                                UserDefaults.standard.set("Restaurant", forKey: "name")
+                            }else  if self.restoselctStatus == 2{
+                                vc.heading = "Club Profile"
+                                vc.name = "Club Name"
+                                UserDefaults.standard.set("Club", forKey: "name")
+                            }else {
+                                vc.heading = "Bar Profile"
+                                vc.name = "Bar Name"
+                                UserDefaults.standard.set("Bar", forKey: "name")
+                            }
+                            UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }else if Store.userDetails?.is_approved == 0{
+                            CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
+                        } else {
+                            Store.autoLogin = true
+                            Store.sociallogin = true
+                            CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
+                            let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
+                            let navigationController = UINavigationController(rootViewController: tabVC)
+                            navigationController.navigationBar.isHidden = true
+                            navigationController.viewControllers = [tabVC]
+                            UIApplication.shared.windows.first?.rootViewController = navigationController
+                            UIApplication.shared.windows.first?.makeKeyAndVisible()
+                        }
+                    }
+                }
+                
+            }
         }
     }
-    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Sign in with Apple error: \(error.localizedDescription)")
     }

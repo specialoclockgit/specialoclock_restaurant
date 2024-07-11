@@ -10,7 +10,7 @@ struct SocialLoginModel {
     var userImage: String?
     var userFullName: String?
     var email: String?
-    var userId: String
+    var userId: String?
     
     init(userImage: String? = nil, userFullName: String? = nil, email: String? = nil, userId: String) {
         self.userImage = userImage

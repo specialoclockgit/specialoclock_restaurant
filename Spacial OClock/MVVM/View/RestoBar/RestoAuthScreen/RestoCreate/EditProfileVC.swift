@@ -50,21 +50,28 @@ class EditProfileVC: UIViewController {
     
    
     @IBAction func btnSaveAct(_ sender : UIButton) {
-        viewmodel.editprofile(isImage:self.isImage, name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "",countrySymbol: getdataApi?.countryCode ?? "",countryCode: getdataApi?.countryCode ?? "", email: tfEmail.text ?? "", image: self.imageData) {
+        viewmodel.editprofile(isImage:self.isImage, name: tfName.text ?? "", phone: tfPhoneNumber.text ?? "",countrySymbol: getdataApi?.countryCode ?? "",countryCode: getdataApi?.countryCode ?? "", email: tfEmail.text ?? "", image: self.imageData, dob: "") {
             self.navigationController?.popViewController(animated: true)
         }
     }
 }
 
-extension EditProfileVC{
-    func initialLoad(){
-        tfName.text = getdataApi?.name.capitalized ?? ""
-        tfEmail.text = getdataApi?.email ?? ""
-        tfEmail.isUserInteractionEnabled = false
-        tfPhoneNumber.text = getdataApi?.phone.description ?? ""
-        imgProfile.layer.cornerRadius = imgProfile.frame.height / 2
-        viewProfile.layer.cornerRadius = viewProfile.frame.height / 2
-        self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: getdataApi?.image.replacingOccurrences(of: " ", with: "%20") ?? "")
-        view.hideKeyboardWhenTappedAround()
+extension EditProfileVC {
+    func initialLoad() {
+        self.viewmodel.ProfileAPI { data in
+            self.getdataApi = data
+            self.tfName.text = self.getdataApi?.name.capitalized ?? ""
+            self.tfEmail.text = self.getdataApi?.email ?? ""
+            self.tfEmail.isUserInteractionEnabled = false
+            self.imgProfile.layer.cornerRadius = self.imgProfile.frame.height / 2
+            self.viewProfile.layer.cornerRadius = self.viewProfile.frame.height / 2
+            self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: self.getdataApi?.image.replacingOccurrences(of: " ", with: "%20") ?? "")
+            self.view.hideKeyboardWhenTappedAround()
+            
+            if let phone = self.getdataApi?.phone,phone != 0 {
+                self.tfPhoneNumber.text = phone.description
+            }
+            
+        }
     }
 }
