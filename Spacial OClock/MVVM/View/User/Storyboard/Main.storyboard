@@ -12015,14 +12015,14 @@ EE1lbnU
                                                             <rect key="frame" x="42.5" y="60" width="127" height="101.5"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem lpsum" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBJ-VU-vky">
-                                                            <rect key="frame" x="30" y="-9.5" width="152" height="67.5"/>
-                                                            <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="24"/>
+                                                            <rect key="frame" x="30" y="-1.5" width="152" height="64.5"/>
+                                                            <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="23"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RS8-t1-D4t">
-                                                            <rect key="frame" x="30" y="68" width="152" height="21"/>
-                                                            <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RS8-t1-D4t">
+                                                            <rect key="frame" x="30" y="69" width="152" height="20"/>
+                                                            <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -12037,7 +12037,7 @@ EE1lbnU
                                                         <constraint firstItem="lsT-jD-QRU" firstAttribute="leading" secondItem="4eM-jW-gCd" secondAttribute="leading" id="OnC-vv-dyB"/>
                                                         <constraint firstAttribute="trailing" secondItem="rBJ-VU-vky" secondAttribute="trailing" constant="30" id="P2l-XH-yi4"/>
                                                         <constraint firstItem="9vv-tj-dLk" firstAttribute="centerX" secondItem="4eM-jW-gCd" secondAttribute="centerX" id="T0V-EK-3mc"/>
-                                                        <constraint firstItem="RS8-t1-D4t" firstAttribute="top" secondItem="rBJ-VU-vky" secondAttribute="bottom" constant="10" id="TbW-40-UPg"/>
+                                                        <constraint firstItem="RS8-t1-D4t" firstAttribute="top" secondItem="rBJ-VU-vky" secondAttribute="bottom" constant="6" id="TbW-40-UPg"/>
                                                         <constraint firstAttribute="trailing" secondItem="RS8-t1-D4t" secondAttribute="trailing" constant="30" id="X5c-Na-lgB"/>
                                                         <constraint firstItem="9vv-tj-dLk" firstAttribute="width" secondItem="4eM-jW-gCd" secondAttribute="width" multiplier="0.6" id="YNw-Lh-SHc"/>
                                                         <constraint firstItem="RS8-t1-D4t" firstAttribute="leading" secondItem="4eM-jW-gCd" secondAttribute="leading" constant="30" id="Zzo-p5-aCG"/>
@@ -12435,8 +12435,8 @@ EE1lbnU
         <image name="cross-48" width="48" height="48"/>
         <image name="detailImage" width="340" height="252"/>
         <image name="elements-checkBox-off" width="48" height="48"/>
-        <image name="eye" catalog="system" width="32" height="32"/>
-        <image name="eye.slash" catalog="system" width="32" height="32"/>
+        <image name="eye" catalog="system" width="128" height="79"/>
+        <image name="eye.slash" catalog="system" width="128" height="95"/>
         <image name="favourite" width="32" height="33"/>
         <image name="favourite0" width="51" height="38.666667938232422"/>
         <image name="fbNew" width="100" height="100"/>
