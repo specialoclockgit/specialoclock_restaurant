@@ -522,6 +522,15 @@ class AuthViewModel : NSObject {
             onSuccess(resp)
         }
     }
+    
+    
+    //MARK: Add Card API
+    func addCardAPI(nameOnCard: String,cardNo: String,expiryMonth: String,expiryYear: String,cvv: String,cardType: String,onSuccess: @escaping(()->())){
+        let params : parameters = ["name_on_card": nameOnCard,"card_number": cardNo,"expiry_month": expiryMonth,"expiry_year": expiryYear,"cvv": cvv,"card_type": cardType]
+        WebService.service(.add_card,param: params) { (resp: CommonModel, data, any) in
+            onSuccess()
+        }
+    }
 }
 
 

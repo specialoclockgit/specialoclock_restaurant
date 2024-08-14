@@ -179,6 +179,7 @@
 		EB0D0B6C2C3D354E00C4943D /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB0D0B6B2C3D354E00C4943D /* credentials.plist */; };
 		EB0D0B742C3D485600C4943D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0D0B732C3D485600C4943D /* KeychainHelper.swift */; };
 		EB25739F2BE21913001C5766 /* ClusterResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25739E2BE21913001C5766 /* ClusterResultVC.swift */; };
+		EB3455EA2C6C851C00750A80 /* AddCardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3455E92C6C851C00750A80 /* AddCardVC.swift */; };
 		EB3703D72BE0FA480088A6FE /* nodataFound.gif in Resources */ = {isa = PBXBuildFile; fileRef = EB3703D62BE0FA480088A6FE /* nodataFound.gif */; };
 		EB37A1AB2BC51BDA0062F641 /* HomeOfferCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */; };
 		EB37A1AC2BC51BDA0062F641 /* HomeOfferCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */; };
@@ -490,6 +491,7 @@
 		EB0D0B6B2C3D354E00C4943D /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		EB0D0B732C3D485600C4943D /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		EB25739E2BE21913001C5766 /* ClusterResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterResultVC.swift; sourceTree = "<group>"; };
+		EB3455E92C6C851C00750A80 /* AddCardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardVC.swift; sourceTree = "<group>"; };
 		EB3703D62BE0FA480088A6FE /* nodataFound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nodataFound.gif; sourceTree = "<group>"; };
 		EB37A1A92BC51BDA0062F641 /* HomeOfferCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOfferCVC.swift; sourceTree = "<group>"; };
 		EB37A1AA2BC51BDA0062F641 /* HomeOfferCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeOfferCVC.xib; sourceTree = "<group>"; };
@@ -1092,6 +1094,7 @@
 				A5FD2E792A53FB6D00682FFA /* ImagePicker */,
 				A5046FDC2A4D61A500C23627 /* Extension */,
 				A500C5F12A4BF63600F4D33D /* Model */,
+				EB3455E82C6C850800750A80 /* PaymentModule */,
 				C29CDAF12A42B9010035E03D /* View */,
 			);
 			path = MVVM;
@@ -1254,6 +1257,14 @@
 				EB0D0B6F2C3D457D00C4943D /* Apple */,
 			);
 			path = SocialLoginHelper;
+			sourceTree = "<group>";
+		};
+		EB3455E82C6C850800750A80 /* PaymentModule */ = {
+			isa = PBXGroup;
+			children = (
+				EB3455E92C6C851C00750A80 /* AddCardVC.swift */,
+			);
+			path = PaymentModule;
 			sourceTree = "<group>";
 		};
 		EBE679542C258A0D00631C00 /* Walkthrough */ = {
@@ -1901,6 +1912,7 @@
 				ECBEF6A22B204D650064D8F7 /* ReportUserReasonVC.swift in Sources */,
 				ECA1A4CA2B170C53007748F3 /* BookingRestoVC.swift in Sources */,
 				A5A8CF452A581296006F23ED /* RestoVerificationAlertVC.swift in Sources */,
+				EB3455EA2C6C851C00750A80 /* AddCardVC.swift in Sources */,
 				ECA600372AD7D03A00C97493 /* AvalSlotModal.swift in Sources */,
 				A53B4A902A4EB77800E79265 /* NewBookingVC.swift in Sources */,
 				ECB699712B19B09100344356 /* EditRestaurentModel.swift in Sources */,

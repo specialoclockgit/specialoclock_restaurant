@@ -9,6 +9,8 @@ import UIKit
 import GoogleSignIn
 import AuthenticationServices
 import CoreLocation
+import SafariServices
+
 
 class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
@@ -31,6 +33,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK: - VIEW LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         initialLoad()
         txtEmail.keyboardType = .emailAddress
         UserDefaults.standard.setValue(true, forKey: "AppInstalled")
@@ -118,27 +121,31 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                 if Store.userDetails?.isOtpVerified != 1{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
                     self.navigationController?.pushViewController(vc, animated: true)
-                } else if Store.userDetails?.isCompleted != 1{
+                } else if Store.userDetails?.isCompleted != 1 {
                     let vc = storyBoard.instantiateViewController(withIdentifier: "restoCreateVC")as! restoCreateVC
                     vc.btnCheckStatus = self.restoselctStatus
-                    if self.restoselctStatus == 1{
+                    if self.restoselctStatus == 1 {
                         vc.heading = "Restaurant Profile"
                         vc.name = "Restaurant Name"
                         UserDefaults.standard.set("Restaurant", forKey: "name")
-                    }else  if self.restoselctStatus == 2{
+                    } else  if self.restoselctStatus == 2 {
                         vc.heading = "Club Profile"
                         vc.name = "Club Name"
                         UserDefaults.standard.set("Club", forKey: "name")
-                    }else {
+                    } else {
                         vc.heading = "Bar Profile"
                         vc.name = "Bar Name"
                         UserDefaults.standard.set("Bar", forKey: "name")
                     }
                     UserDefaults.standard.set(self.restoselctStatus, forKey: "status")
                     self.navigationController?.pushViewController(vc, animated: true)
-                }else if Store.userDetails?.is_approved == 0{
+                } else if Store.userDetails?.is_approved == 0 {
                     CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
+                } else if Store.userDetails?.isCardAdded == 0 {
+                    let vc = storyBoard.instantiateViewController(withIdentifier: "AddCardVC")as! AddCardVC
+                    self.navigationController?.pushViewController(vc, animated: true)
                 } else {
+                    Store.autoLogin = true
                     CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
                     let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
                     let navigationController = UINavigationController(rootViewController: tabVC)
@@ -214,7 +221,10 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                                 self.navigationController?.pushViewController(vc, animated: true)
                             }else if Store.userDetails?.is_approved == 0{
                                 CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
-                            } else {
+                            } else if Store.userDetails?.isCardAdded == 0 {
+                                let vc = storyBoard.instantiateViewController(withIdentifier: "AddCardVC")as! AddCardVC
+                                self.navigationController?.pushViewController(vc, animated: true)
+                            }else {
                                 Store.autoLogin = true
                                 Store.sociallogin = true
                                 CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
@@ -341,6 +351,9 @@ extension LoginVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
                             self.navigationController?.pushViewController(vc, animated: true)
                         }else if Store.userDetails?.is_approved == 0{
                             CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
+                        } else if Store.userDetails?.isCardAdded == 0 {
+                            let vc = storyBoard.instantiateViewController(withIdentifier: "AddCardVC")as! AddCardVC
+                            self.navigationController?.pushViewController(vc, animated: true)
                         } else {
                             Store.autoLogin = true
                             Store.sociallogin = true

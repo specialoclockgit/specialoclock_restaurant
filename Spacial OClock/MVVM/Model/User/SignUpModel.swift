@@ -45,7 +45,7 @@ struct SignupBody: Codable {
     var selfieImage: String?
     var isSelfieStatus, isOtpVerified: Int?
     var image, verifyImage: String?
-    var isImageVerified: Int?
+    var isImageVerified,isCardAdded: Int?
     var location, latitude, longitude: String?
     var loginTime, bussinesstype: Int?
     var notes, interests: String?
@@ -53,7 +53,7 @@ struct SignupBody: Codable {
     var createdAt, updatedAt, token: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, is_approved
+        case id, name, is_approved, isCardAdded
         case bussinesstype = "bussiness_type"
         case aboutMe = "about_me"
         case nickName = "nick_name"

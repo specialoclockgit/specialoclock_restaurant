@@ -13,8 +13,9 @@ let appName = "Special O'Clock"
 var DEVICE_TOKEN = "ios"
 
 var noInternetConnection = "No Internet Connection Available"
-let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
-//let baseURL = "https://app.specialoclock.com/api/"
+//let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
+
+let baseURL = "https://app.specialoclock.com/api/"
 
 let imageURL = "https://app.specialoclock.com/"
 let imageBaseURL =  "https://app.specialoclock.com/assets/images/"
@@ -43,16 +44,16 @@ enum AppStoryboard : String {
     }
 }
 
-enum API: String{
+enum API: String {
     //user module
-    case signup              = "signup"
+    case signup               = "signup"
     case login
-    case socialLogin         = "social_login"
+    case socialLogin          = "social_login"
     case forgot_password
-    case privacypolicy       = "get_content/2"
-    case termsAndCondition   = "get_content/1"
-    //    case helpandFaq          = "get_content/3"
-    case file_upload  =  "file_upload"
+    case privacypolicy        = "get_content/2"
+    case termsAndCondition    = "get_content/1"
+    //    case helpandFaq               = "get_content/3"
+    case file_upload          =  "file_upload"
     case check_social_exists
     case delete_account
     case change_password
@@ -71,18 +72,12 @@ enum API: String{
     case get_content
     case fetch_app_availability
     case location_listing
-    
-    
-    //    MARK: - USER
     case user_home
-    
-    //subject module
     case subjectList         = "subjet_listing"
     case chapterList         = "chapter_listing"
     case lessonListing       = "lesson_listing"
     case searchSubject       = "search_subject"
     case videoStatus         = "watchVideo"
-    //room module
     case usersList           = "users_listing"
     case users               = "users_listings"
     case search_user         = "search_user"
@@ -92,7 +87,6 @@ enum API: String{
     case addParticipants     = "AddParticipants"
     case leaveRoom           = "leaveGroup"
     case deleteRoom          = "delete_room"
-    //Quiz
     case quizList            = "quizList"
     case roomQuiz            = "room_qiuz_list"
     case createQuiz          = "roomQuiz"
@@ -123,8 +117,6 @@ enum API: String{
     case fetch_available_slots
     case fetch_menu_gallery
     case fetch_restos_by_category
-    
-    //RESTO
     case restro_home
     case fetch_notifications
     case menu_listing
@@ -141,6 +133,7 @@ enum API: String{
     case report_booking
     case fetch_bardata_by_menutype
     case reply_review
+    case add_card
 }
 
 //MARK: - User Default keys

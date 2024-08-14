@@ -223,6 +223,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     private func checkProfileCompleted() {
         if Store.userDetails?.name == "" || Store.userDetails?.dob == ""{
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "CompleteProfilePopupVC") as? CompleteProfilePopupVC else { return }
+            vc.accessibilityHint = "Home"
             vc.callBack = { [weak self] in
                 guard let vc = self?.storyboard?.instantiateViewController(withIdentifier: "UserEditProfileVC") as? UserEditProfileVC else { return }
                 vc.callBack = { [weak self] in

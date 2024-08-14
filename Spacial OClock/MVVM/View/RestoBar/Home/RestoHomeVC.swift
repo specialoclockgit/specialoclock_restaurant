@@ -62,9 +62,10 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func checkProfileCompleted() {
-        if Store.userDetails?.name == "" || Store.userDetails?.phone == 0{
+       if Store.userDetails?.name == "" || Store.userDetails?.phone == 0{
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
             guard let vc = storyBoard.instantiateViewController(withIdentifier: "CompleteProfilePopupVC") as? CompleteProfilePopupVC else { return }
+            vc.accessibilityHint = "Home"
             vc.callBack = { [weak self] in
                 let storyBoard = UIStoryboard(name: "RestoBar", bundle: nil)
                 guard let vc = storyBoard.instantiateViewController(withIdentifier: "EditProfileVC") as? EditProfileVC else { return }
@@ -76,7 +77,7 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .overFullScreen
             self.navigationController?.present(vc, animated: true)
-        }
+       }
     }
     
     
