@@ -11,6 +11,30 @@ import SwiftMessages
 
 class CheckValidations: NSObject{
     
+    
+    class func validateAddCard(name:String,cvv:String,cardNo:String,expiry:String) -> Bool {
+        let trimmedString = cardNo.components(separatedBy: .whitespaces).joined()
+        
+        if cardNo.trimmingCharacters(in: .whitespaces).isEmpty {
+            CommonUtilities.shared.showAlert(message: "Please enter card number")
+            return false
+        } else if trimmedString.count != 16 {
+            CommonUtilities.shared.showAlert(message: "Please enter valid card number")
+            return false
+        } else if expiry.trimmingCharacters(in: .whitespaces).isEmpty {
+            CommonUtilities.shared.showAlert(message: "Please enter card expiry month and year")
+            return false
+        } else if cvv.trimmingCharacters(in: .whitespaces).isEmpty {
+            CommonUtilities.shared.showAlert(message: "Please enter card CVV")
+            return false
+        } else if name.trimmingCharacters(in: .whitespaces).isEmpty {
+            CommonUtilities.shared.showAlert(message: "Please enter card holder name")
+            return false
+        }
+        return true
+    }
+    
+    
 //     MARK: - SIGNUP -  VALDATION BAR Resturant
     
     class  func validationSignUp(isImage:Bool,name : String, email: String,country_code: String,countrySymbol:String, phone:String,password:String, confirmpassword: String,devicetype: Int, isselected:Bool) -> Bool{

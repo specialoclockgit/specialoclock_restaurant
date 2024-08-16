@@ -45,7 +45,7 @@ struct SignupBody: Codable {
     var selfieImage: String?
     var isSelfieStatus, isOtpVerified: Int?
     var image, verifyImage: String?
-    var isImageVerified,isCardAdded: Int?
+    var isImageVerified, isCardAdded: Int?
     var location, latitude, longitude: String?
     var loginTime, bussinesstype: Int?
     var notes, interests: String?

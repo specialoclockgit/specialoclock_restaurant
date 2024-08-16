@@ -142,6 +142,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                 } else if Store.userDetails?.is_approved == 0 {
                     CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
                 } else if Store.userDetails?.isCardAdded == 0 {
+                    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyBoard.instantiateViewController(withIdentifier: "AddCardVC")as! AddCardVC
                     self.navigationController?.pushViewController(vc, animated: true)
                 } else {
@@ -222,7 +223,8 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
                             }else if Store.userDetails?.is_approved == 0{
                                 CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
                             } else if Store.userDetails?.isCardAdded == 0 {
-                                let vc = storyBoard.instantiateViewController(withIdentifier: "AddCardVC")as! AddCardVC
+                                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = storyBoard.instantiateViewController(withIdentifier: "AddCardVC") as! AddCardVC
                                 self.navigationController?.pushViewController(vc, animated: true)
                             }else {
                                 Store.autoLogin = true
@@ -352,6 +354,7 @@ extension LoginVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
                         }else if Store.userDetails?.is_approved == 0{
                             CommonUtilities.shared.showAlert(message: "Your business account approval is pending. You will be notified once the process is complete.", isSuccess: .error)
                         } else if Store.userDetails?.isCardAdded == 0 {
+                            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                             let vc = storyBoard.instantiateViewController(withIdentifier: "AddCardVC")as! AddCardVC
                             self.navigationController?.pushViewController(vc, animated: true)
                         } else {

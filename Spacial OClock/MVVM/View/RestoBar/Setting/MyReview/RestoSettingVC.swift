@@ -26,6 +26,10 @@ class RestoSettingVC: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        if Store.autoLogin == true {
+            nameary.remove(at: 2)
+            image.remove(at: 2)
+        }
     }
    
     override func viewWillAppear(_ animated: Bool) {
@@ -73,28 +77,27 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
         return 60.0
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        debugPrint(indexPath.row)
-//        let status = UserDefaults.standard.status
-        switch indexPath.row{
-        case 0:
+
+        switch nameary[indexPath.row]{
+        case "Notifications":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let notificationVC =  StoryBoard.instantiateViewController(withIdentifier: ViewController.NotificationRestoVC) as! NotificationRestoVC
             self.navigationController?.pushViewController(notificationVC, animated: true)
-        case 1:
+        case "Chat":
             let StoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
             let notificationVC =  StoryBoard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
             self.navigationController?.pushViewController(notificationVC, animated: true)
-        case 2:
+        case "Change Password":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let chnagePassScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.ChangePasswordRestoVC) as! ChangePasswordRestoVC
             self.navigationController?.pushViewController(chnagePassScreen, animated: true)
-        case 3:
+        case "Privacy Policy":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let privacyScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.PrivacyVC) as! PrivacyVC
             privacyScreen.heading = "Privacy Policy"
             self.navigationController?.pushViewController(privacyScreen, animated: true)
             
-        case 4:
+        case "Terms and Conditions":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let termScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.PrivacyVC) as! PrivacyVC
             termScreen.heading = "Terms and Conditions"
@@ -121,12 +124,12 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
 //                self.navigationController?.pushViewController(barOfferScreen, animated: true)
 //            }
             
-        case 5:
+        case "My Review":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let reviewScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyReviewVC) as! MyReviewVC
             self.navigationController?.pushViewController(reviewScreen, animated: true)
             debugPrint("My reviews")
-        case 6:
+        case "My Invoices":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let invoiceScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.MyInvoiceVC) as! MyInvoiceVC
             self.navigationController?.pushViewController(invoiceScreen, animated: true)
@@ -136,7 +139,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
 //            let manageCScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.RestoCardListVC) as! RestoCardListVC
 //            self.navigationController?.pushViewController(manageCScreen, animated: true)
 //            debugPrint("Manage Card")
-        case 7:
+        case "Help & FAQ’s":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let helpFAQScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.HelpFAQRestoVC) as! HelpFAQRestoVC
             self.navigationController?.pushViewController(helpFAQScreen, animated: true)
@@ -144,7 +147,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
 //            let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
 //            let contactUsScreen = StoryBoard.instantiateViewController(withIdentifier: ViewController.ContactUsRestoVC) as! ContactUsRestoVC
 //            self.navigationController?.pushViewController(contactUsScreen, animated: true)
-        case 8:
+        case "Delete Account":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let deleteAcccount = StoryBoard.instantiateViewController(withIdentifier: Alert.AlertBottomVC) as! AlertBottomVC
             deleteAcccount.statuschange = 0
@@ -154,7 +157,7 @@ extension RestoSettingVC: UITableViewDelegate, UITableViewDataSource{
                 SceneDelegate().setLoginRoot()
             }
             self.navigationController?.present(deleteAcccount, animated: true)
-        case 9:
+        case "Logout":
             let StoryBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
             let logOutScreen = StoryBoard.instantiateViewController(withIdentifier: Alert.AlertBottomVC) as! AlertBottomVC
             logOutScreen.statuschange = 4

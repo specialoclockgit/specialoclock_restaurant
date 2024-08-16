@@ -22,11 +22,8 @@ class CommonUtilities {
                 alert.dismiss(animated: true, completion: nil)
                 }
                })
-            
             alert.addAction(ok)
-            
             DispatchQueue.main.async {
-
                 if let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first{
                     DispatchQueue.main.async {
                         window.rootViewController!.present(alert, animated: true)
@@ -36,7 +33,7 @@ class CommonUtilities {
         }
     }
     
- func showAlert( Title :String = "", message: String , isSuccess : Theme,  duration: TimeInterval = 3){
+ func showAlert( Title :String = "", message: String , isSuccess : Theme,  duration: TimeInterval = 3) {
         SwiftMessages.hideAll()
         DispatchQueue.main.async {
             let warning = MessageView.viewFromNib(layout: .cardView)

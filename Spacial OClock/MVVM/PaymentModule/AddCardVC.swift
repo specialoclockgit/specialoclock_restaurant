@@ -58,21 +58,24 @@ import UIKit
         expiryDate_TF.inputView = monthPickerView
     }
  
-    @IBAction func btnSave(_ sender: UIButton) {
-        let expiry = expiryDate_TF.text?.split(separator: "-")
-        viewModel.addCardAPI(nameOnCard: holderName_TF.text ?? "", cardNo: cardNo_TF.text ?? "", expiryMonth: (expiry![0]).description, expiryYear: (expiry![1]).description, cvv: CVV_TF.text ?? "", cardType: cardType.description) {
-            let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
-            Store.autoLogin = true
-            CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
-            let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
-            let navigationController = UINavigationController(rootViewController: tabVC)
-            navigationController.navigationBar.isHidden = true
-            navigationController.viewControllers = [tabVC]
-            UIApplication.shared.windows.first?.rootViewController = navigationController
-            UIApplication.shared.windows.first?.makeKeyAndVisible()
-        }
-    }
-     
+     @IBAction func btnSave(_ sender: UIButton) {
+         let expiry = expiryDate_TF.text?.split(separator: "-")
+         
+         if CheckValidations.validateAddCard(name: holderName_TF.text ?? "", cvv: CVV_TF.text ?? "", cardNo: cardNo_TF.text ?? "", expiry: expiryDate_TF.text ?? "") {
+             
+             viewModel.addCardAPI(nameOnCard: holderName_TF.text ?? "", cardNo: cardNo_TF.text ?? "", expiryMonth: (expiry![0]).description, expiryYear: (expiry![1]).description, cvv: CVV_TF.text ?? "", cardType: cardType.description) {
+                 let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
+                 Store.autoLogin = true
+                 CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
+                 let tabVC = storyBoard.instantiateViewController(withIdentifier: ViewController.RestoTabBarVC) as! RestoTabBarVC
+                 let navigationController = UINavigationController(rootViewController: tabVC)
+                 navigationController.navigationBar.isHidden = true
+                 navigationController.viewControllers = [tabVC]
+                 UIApplication.shared.windows.first?.rootViewController = navigationController
+                 UIApplication.shared.windows.first?.makeKeyAndVisible()
+             }
+         }
+     }
      
      func GetCardImage(_ cardName:String) -> UIImage {
             if cardName == "Amex" {
