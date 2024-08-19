@@ -63,7 +63,7 @@ import UIKit
          
          if CheckValidations.validateAddCard(name: holderName_TF.text ?? "", cvv: CVV_TF.text ?? "", cardNo: cardNo_TF.text ?? "", expiry: expiryDate_TF.text ?? "") {
              
-             viewModel.addCardAPI(nameOnCard: holderName_TF.text ?? "", cardNo: cardNo_TF.text ?? "", expiryMonth: (expiry![0]).description, expiryYear: (expiry![1]).description, cvv: CVV_TF.text ?? "", cardType: cardType.description) {
+             viewModel.addCardAPI(nameOnCard: holderName_TF.text ?? "", cardNo: cardNo_TF.text?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "") ?? "", expiryMonth: (expiry![0]).description, expiryYear: (expiry![1]).description, cvv: CVV_TF.text ?? "", cardType: cardType.description) {
                  let storyBoard = UIStoryboard.init(name: "RestoBar", bundle: nil)
                  Store.autoLogin = true
                  CommonUtilities.shared.showAlert(message: "Logged in successfully", isSuccess: .success)
