@@ -64,12 +64,12 @@ class LocationsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         cellHeader.viewHeader.layer.cornerRadius = 10.0
         cellHeader.btnHeader.addTarget(self, action: #selector(btnHeaderTarget), for: .touchUpInside)
         cellHeader.btnHeader.tag = section
-        if dataArr?[section].isSelected == true{
+        if dataArr?[section].isSelected == true {
             cellHeader.btnArrow.setImage(UIImage.init(named: "arrowIcon1"), for: .normal)
             cellHeader.btnHeader.isSelected = true
             cellHeader.viewHeader.backgroundColor = .systemGray5
             cellHeader.lblSubHeading.isHidden = false
-        }else{
+        } else {
             cellHeader.btnArrow.setImage(UIImage.init(named: "arrowDefault"), for: .normal)
             cellHeader.btnHeader.isSelected = false
             cellHeader.viewHeader.backgroundColor = .systemGray6
@@ -81,10 +81,7 @@ class LocationsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
-    
-    
 
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return dataArr?[section].states?.count ?? 0
     }
@@ -100,26 +97,27 @@ class LocationsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         cell.layoutIfNeeded()
         cell.tblListVw.reloadData()
         cell.tblListVwHeight.constant = cell.tblListVw.contentSize.height
-        if dataArr?[indexPath.section].isSelected == true{
+        
+        if dataArr?[indexPath.section].isSelected == true {
             cell.titleVw.isHidden = false
-       }else {
+        } else {
             cell.titleVw.isHidden = true
         }
         
         cell.tblListVw.isHidden = dataArr?[indexPath.section].states?[indexPath.row].isSelected ?? false
-         
+        
         if dataArr?[indexPath.section].states?[indexPath.row].isSelected == true {
             cell.tblListVw.isHidden = false
             cell.titleVw.backgroundColor = .systemGray6
             cell.imgVw.image = UIImage.init(named: "arrowIcon1")
-        }else {
+        } else {
             cell.titleVw.backgroundColor = .white
             cell.imgVw.image = UIImage.init(named: "arrowDefault")
             cell.tblListVw.isHidden = true
         }
         
-    
-        cell.callBack = { [weak self] city, lat, long in
+        
+        cell.callBack = { [weak self] (city, lat, long) in
             self?.callBack?(self?.dataArr?[indexPath.section].country ?? "",self?.dataArr?[indexPath.section].states?[indexPath.row].state ?? "",city,lat,long)
             self?.navigationController?.popViewController(animated: true)
         }

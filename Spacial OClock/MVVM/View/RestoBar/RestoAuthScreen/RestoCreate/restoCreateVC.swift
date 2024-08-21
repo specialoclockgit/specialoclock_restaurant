@@ -249,7 +249,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
             timePicker.minuteInterval = 30
         } else {
         }
-        
+        timePicker.calendar = Calendar(identifier: .gregorian)
+        timePicker.locale = Locale(identifier: "en")
         let toolbar = UIToolbar();
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneteTime1));
@@ -264,6 +265,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
     @objc func doneteTime1(){
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         tfOpenTime.text = formatter.string(from: timePicker.date)
         openTime =  formatter.string(from: timePicker.date)
         print(tfOpenTime ?? "")
@@ -282,6 +285,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
             // Fallback on earlier versions
         }
         //ToolBar
+        timePicker2.locale = Locale(identifier: "en")
+        timePicker2.calendar = Calendar(identifier: .gregorian)
         let toolbar = UIToolbar();
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneteTime2));
@@ -297,6 +302,8 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         //        formatter.dateFormat = "HH:mm a"
         tfCloseTime.text = formatter.string(from: timePicker2.date)
         CloseTime =  formatter.string(from: timePicker2.date)

@@ -28,6 +28,8 @@ class receverTVC: UITableViewCell {
             let isoDate =  receiverData?.createdAt ?? ""
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            dateFormatter.locale = Locale(identifier: "en")
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
             let date = dateFormatter.date(from: isoDate)
             lblTime.text = date?.toLocalTime().timeAgoSinceDate()
         }

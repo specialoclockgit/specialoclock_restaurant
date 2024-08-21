@@ -45,7 +45,8 @@ extension UIViewController{
         if let dateStr = date
         {
             let dateFormatter = DateFormatter()
-            dateFormatter.locale = NSLocale.current
+            dateFormatter.locale = Locale(identifier: "en")
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
             dateFormatter.dateFormat = currentFormat.rawValue
             dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             let date = dateFormatter.date(from: dateStr)
@@ -58,7 +59,8 @@ extension UIViewController{
         if let date = date
         {
             let dateFormatter = DateFormatter()
-            dateFormatter.locale = NSLocale.current
+            dateFormatter.locale = Locale(identifier: "en")
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
             dateFormatter.timeZone = TimeZone.current
             dateFormatter.dateFormat = format.rawValue
             let strDate = dateFormatter.string(from: date)
@@ -73,6 +75,8 @@ extension String {
     func convertToDateFormate(current: String, convertTo: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = current
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         guard let date = dateFormatter.date(from: self) else {
             return self
         }
@@ -229,6 +233,8 @@ extension String {
     func timeZoneDateFormatter(timeZone :String = "UTC", localFormat:String = "MM-dd-yyyy EEE,HH:mm:ss" , serverFormat:String = "yyyy-MM-dd,HH:mm:ss") -> (date:Date?,dateTimeStr:String?,timeStr:String?){
         
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         dateFormatter.dateFormat = serverFormat
         dateFormatter.timeZone = TimeZone(abbreviation: timeZone)
         let date = dateFormatter.date(from: self)// create date from string
@@ -301,6 +307,8 @@ extension Date {
         let dateFormatter = DateFormatter()
         //        dateFormatter.locale = Locale.current
         dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         let date = dateFormatter.string(from: self)
         return date
     }
@@ -311,7 +319,8 @@ extension String {
     func toUTCDate(withFormat format: String = "yyyy-MM-dd HH:mm:ss")-> Date?{
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.locale = .none
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         dateFormatter.dateFormat = format
         dateFormatter.calendar = .current
         let date = dateFormatter.date(from: self)
@@ -492,7 +501,7 @@ extension UITextField
         return (type, valid)
     }
     
-    func matchesRegex(regex: String!, text: String!) -> Bool {
+    func    matchesRegex(regex: String!, text: String!) -> Bool {
         do {
             let regex = try NSRegularExpression(pattern: regex, options: [.caseInsensitive])
             let nsString = text as NSString
@@ -612,7 +621,8 @@ extension UIButton{
 func isAge18(from dateString: String, withFormat format: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = format
-    
+    dateFormatter.locale = Locale(identifier: "en")
+    dateFormatter.calendar = Calendar(identifier: .gregorian)
     if let date = dateFormatter.date(from: dateString) {
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: date, to: Date())

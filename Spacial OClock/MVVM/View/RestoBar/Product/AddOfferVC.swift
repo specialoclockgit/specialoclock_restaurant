@@ -175,6 +175,8 @@ extension AddOfferVC {
     @objc func handleDatePicker(sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         sender.minimumDate = NSDate() as Date
         let thisYear = Calendar.current.component(.year, from: Date())
         sender.maximumDate = Calendar.current.date(from: DateComponents(year: thisYear+1))

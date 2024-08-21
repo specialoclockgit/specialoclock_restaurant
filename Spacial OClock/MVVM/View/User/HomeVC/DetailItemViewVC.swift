@@ -325,6 +325,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy"
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.calendar = Calendar(identifier: .gregorian)
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
                     blurEffect(image: cell.imgView)
@@ -391,6 +393,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy"
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.calendar = Calendar(identifier: .gregorian)
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
                    blurEffect(image: cell.imgView)
@@ -443,6 +447,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy"
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.calendar = Calendar(identifier: .gregorian)
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString) {
                    blurEffect(image: cell.imgView)
@@ -498,6 +504,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy"
+                dateFormatter.calendar = Calendar(identifier: .gregorian)
+                dateFormatter.locale = Locale(identifier: "en")
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
                     blurEffect(image: cell.imgView)
@@ -550,6 +558,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy"
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.calendar = Calendar(identifier: .gregorian)
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
                     blurEffect(image: cell.imgView)
@@ -601,6 +611,8 @@ extension DetailItemViewVC: UICollectionViewDelegate, UICollectionViewDataSource
                 let disableDatesArr = disable_dates.components(separatedBy: ",")
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy"
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.calendar = Calendar(identifier: .gregorian)
                 let todayDateString = dateFormatter.string(from: Date())
                 if disableDatesArr.contains(todayDateString){
                     blurEffect(image: cell.imgView)
@@ -701,7 +713,8 @@ import Foundation
 func isRestaurantClosed(now: Date, openingTime: String, closingTime: String) -> Bool {
     let formatter = DateFormatter()
     formatter.dateFormat = "HH:mm"
-    
+    formatter.locale = Locale(identifier: "en")
+    formatter.calendar = Calendar(identifier: .gregorian)
     guard let openTime = formatter.date(from: openingTime),
           let closeTime = formatter.date(from: closingTime) else {
         return true // Return true if there's an issue with parsing times

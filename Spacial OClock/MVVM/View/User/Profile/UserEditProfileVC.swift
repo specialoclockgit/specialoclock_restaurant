@@ -120,6 +120,8 @@ extension UserEditProfileVC {
         datePicker.datePickerMode = .date
         datePicker.maximumDate = Date()
         datePicker.preferredDatePickerStyle = .wheels
+        datePicker.locale = Locale(identifier: "en")
+        datePicker.calendar = Calendar(identifier: .gregorian)
         //ToolBar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -134,6 +136,8 @@ extension UserEditProfileVC {
     @objc func donedatePicker(){
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         dobTf.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
         

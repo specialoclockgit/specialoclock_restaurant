@@ -15,7 +15,6 @@ import UIKit
     @IBOutlet weak var expiryDate_TF: UITextField!
     @IBOutlet weak var cardNo_TF: UITextField!
     
-    let datePicker = UIDatePicker()
     let Months = ["January","Febrary","March","April","May","June","July","August","September","October","November","December"]
     var arrMonthCode = ["01","02","03","04","05","06","07","08","09","10","11","12"]
     var monthPickerView = UIPickerView()
@@ -99,8 +98,7 @@ import UIKit
      
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        //FOR HELP :- https://github.com/orucanil/StringFormatter
+    
         
         guard let text = textField.text else {
             return true
@@ -134,18 +132,16 @@ import UIKit
         let lastText = (text as NSString).replacingCharacters(in: range, with: string) as String
         
         if cardNo_TF == textField {
-            textField.text = lastText.format("nnnn nnnn nnnn nnnn", oldString: text)
+            textField.text = lastText.format("nnnn nnnn nnnn nnnn nnnn", oldString: text)
             return false
         } else if expiryDate_TF == textField {
             textField.text = lastText.format("nn-nnnn", oldString: text)
             return false
         }else if CVV_TF == textField {
-            textField.text = lastText.format("nnn", oldString: text)
+            textField.text = lastText.format("nnnn", oldString: text)
             return false
         }
-        
-        
-        
+    
         return true
     }
     

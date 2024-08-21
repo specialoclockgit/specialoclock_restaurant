@@ -45,6 +45,8 @@ class RestoHomeVC: UIViewController, UIGestureRecognizerDelegate {
         self.tableVW.showAnimatedGradientSkeleton()
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         selectedDate = date == "" ? formatter.string(from: Date()) : date
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) {
             self.viewmodel.homeRestoAPI(restobarID: Store.userDetails?.restoid ?? 0,date: self.selectedDate ?? "") { dataa in

@@ -317,7 +317,8 @@ extension bookingDetailsVC{
 func convertTimeFormat(_ timeString: String) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "HH:mm"
-    
+    dateFormatter.locale = Locale(identifier: "en")
+    dateFormatter.calendar = Calendar(identifier: .gregorian)
     if let time = dateFormatter.date(from: timeString) {
         dateFormatter.dateFormat = "hh:mm a"
         return dateFormatter.string(from: time)
@@ -327,6 +328,8 @@ func convertTimeFormat(_ timeString: String) -> String? {
 }
 func isDateTimePassed(dateTimeString: String) -> Bool {
     let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "en")
+    dateFormatter.calendar = Calendar(identifier: .gregorian)
     dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
     
     if let dateTime = dateFormatter.date(from: dateTimeString) {
@@ -373,8 +376,12 @@ func convertDateToString(formatString:String) -> String {
     let dateString = formatString
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    dateFormatter.locale = Locale(identifier: "en")
+    dateFormatter.calendar = Calendar(identifier: .gregorian)
     let date = dateFormatter.date(from: dateString)
     let outputFormatter = DateFormatter()
+    outputFormatter.locale = Locale(identifier: "en")
+    outputFormatter.calendar = Calendar(identifier: .gregorian)
     outputFormatter.dateFormat = "MMM d, yyyy h:mm a"
     return outputFormatter.string(from: date ?? Date())
     

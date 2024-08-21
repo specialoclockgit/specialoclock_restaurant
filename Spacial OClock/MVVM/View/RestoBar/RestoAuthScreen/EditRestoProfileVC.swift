@@ -236,7 +236,8 @@ class EditRestoProfileVC: UIViewController {
             timePicker.preferredDatePickerStyle = .wheels
         } else {
         }
-        
+        timePicker.locale = Locale(identifier: "en")
+        timePicker.calendar = Calendar(identifier: .gregorian)
         let toolbar = UIToolbar();
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneteTime1));
@@ -251,6 +252,8 @@ class EditRestoProfileVC: UIViewController {
     @objc func doneteTime1(){
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm a"
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         //        formatter.dateFormat = "HH:mm a"
         tfOpen.text = formatter.string(from: timePicker.date)
         openTime =  formatter.string(from: timePicker.date)
@@ -263,7 +266,8 @@ class EditRestoProfileVC: UIViewController {
     
     func ShowtimePicker2() {
         timePicker2.datePickerMode = .time
-        
+        timePicker2.locale = Locale(identifier: "en")
+        timePicker2.calendar = Calendar(identifier: .gregorian)
         if #available(iOS 14.0, *) {
             timePicker2.preferredDatePickerStyle = .wheels
         } else {
@@ -285,6 +289,8 @@ class EditRestoProfileVC: UIViewController {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm a"
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         //        formatter.dateFormat = "HH:mm a"
         tfClose.text = formatter.string(from: timePicker2.date)
         CloseTime =  formatter.string(from: timePicker2.date)

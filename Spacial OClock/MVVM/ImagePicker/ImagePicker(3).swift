@@ -18,8 +18,6 @@ class ImagePicker: NSObject, UIImagePickerControllerDelegate,UINavigationControl
            let image = cropper.originalImage.cropped(withCropperState: state) {
             cropperState = state
             self.pickImageCallback?(image)
-            print(cropper.isCurrentlyInInitialState)
-            print(image)
         }
         rootVC?.dismiss(animated: true, completion: nil)
     }
@@ -99,26 +97,18 @@ class ImagePicker: NSObject, UIImagePickerControllerDelegate,UINavigationControl
             picker.dismiss(animated: false) {
                 rootVC?.present(cropper, animated: false, completion: nil)
             }
-        }
-        else
-        {
+        } else {
             if let media =  info[UIImagePickerController.InfoKey.mediaURL] as? URL {
-                do
-                {
+                do {
                     guard let image = info[.originalImage] as? UIImage else{ return}
                     self.pickImageCallback?(image)
                     self.pathUrl?(media)
                     picker.delegate = nil
-                }
-                catch
-                {
+                }   catch {
                     print("Unable to load data: \(error)")
                 }
-            }
-            else
-            {
+            }  else {
                 image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-                
                 let cropper = CropperViewController(originalImage: image)
                 cropper.delegate = self
                 picker.dismiss(animated: true) {
@@ -129,7 +119,5 @@ class ImagePicker: NSObject, UIImagePickerControllerDelegate,UINavigationControl
     }
     
     
-    @objc func imagePickerController(_ picker: UIImagePickerController, pickedImage: UIImage?) {
-    }
     
 }

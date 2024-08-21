@@ -74,10 +74,10 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblUserLOcation: UILabel!
     @IBOutlet weak var lblOpenClose: UILabel!
     @IBOutlet weak var favIconVw: UIView!
+    
     //MARK: Variable
     lazy var coachMarksController = CoachMarksController()
     weak var snapshotDelegate: CoachMarksControllerDelegate?
-    
     var lat : Double?
     var long : Double?
     var discount : Int?
@@ -116,13 +116,14 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     var restoid = Int()
     var offerDis = Int()
     var offerpresents = Double()
-    lazy var disableDatedArr : [String] = []
+    var disableDatedArr : [String] = []
     var selectedOfferId : Int?
+    
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         self.timeZone = TimeZone.current.identifier
-        print(timeZone)
         viewFullMenu.delegate = self
         viewFullMenu.dataSource = self
         fetchdata()
@@ -171,6 +172,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     func string(format: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = format
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         return formatter.string(from: self.currentDate)
     }
     
@@ -328,6 +331,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     private func showAlertForTodayOff(date:String,dateArr:[String]){
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         let todayDateString = dateFormatter.string(from: Date())
         if date == todayDateString {
             if dateArr.contains(todayDateString){
@@ -379,6 +384,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
             datePicker.preferredDatePickerStyle = .wheels
             datePicker.sizeToFit()
         }
+        datePicker.calendar = Calendar(identifier: .gregorian)
+        datePicker.locale = Locale(identifier: "en")
         let toolbar = UIToolbar();
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker))
@@ -393,6 +400,8 @@ class ItemDetailsVC: UIViewController, UITextFieldDelegate {
     @objc func donedatePicker(){
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         if self.disableDatedArr.contains(formatter.string(from: datePicker.date)){
             if checkDatesAreInSequence(array: self.disableDatedArr) {
                 showPopupForDisableDate(date: (formatter.string(from: datePicker.date)),msg: "Sorry we are not available until \(self.disableDatedArr.last ?? "")")
@@ -784,7 +793,7 @@ extension ItemDetailsVC : UICollectionViewDelegate , UICollectionViewDataSource 
                     cell.percentageVw.backgroundColor = UIColor(named: "themeOrange")
                 }
                 let data = offer?[indexPath.row]
-                cell.lblMenuSchedule.text = data?.offer?.menuName ?? ""
+                cell.lblMenuSchedule.text = data?.offer?.menuName?.replacingOccurrences(of: " Special", with: "") ?? ""
                 cell.lblTime.text = data?.startTime ?? ""
                 if let isFifty = data?.isFifty {
                     

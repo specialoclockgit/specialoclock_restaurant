@@ -68,7 +68,28 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
         tbHomeData.delegate = self
         tbHomeData.dataSource = self
         self.isSelected = true
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden  = false
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        self.tbHomeData.layoutSubviews()
+        self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.requestLocationPermission()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.first?.view == self.view {
+            self.dismiss(animated: true)
+        }
     }
     
     deinit {
@@ -81,25 +102,10 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
     
     @objc func appMovedToForeground() {
         print("appMovedToForeground")
-    self.locationManagerDidChangeAuthorization(self.locationManager)
-       
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden  = false
-        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        self.tbHomeData.layoutSubviews()
-        self.imgProfile.showIndicator(baseUrl: imageURL, imageUrl: Store.userDetails?.image ?? "")
+       self.locationManagerDidChangeAuthorization(self.locationManager)
     }
     
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.requestLocationPermission()
-    }
-    
+    //MARK: Location Permission Req
     func requestLocationPermission() {
         if locationManager == nil {
             locationManager = CLLocationManager()
@@ -109,14 +115,7 @@ class HomeVC: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate 
         locationManager.requestWhenInUseAuthorization()
         
     }
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if touches.first?.view == self.view {
-            self.dismiss(animated: true)
-        }
-    }
-    
+  
     
     func setData(type: Int) {
         if self.lblLocation.text == "" {

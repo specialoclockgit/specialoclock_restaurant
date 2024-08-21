@@ -7,49 +7,63 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7A854EE8-4DF6-4EB3-BA1B-200DBA01ED88"
+            uuid = "D1DBB2D6-CA75-4A63-9695-C8BEF97B0775"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/HomeVC/ItemDetailsVC.swift"
+            filePath = "Spacial OClock/MVVM/View/RestoBar/Home/bookingDetailsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "643"
-            endingLineNumber = "643"
-            landmarkName = "btnBookAct(_:)"
-            landmarkType = "7">
+            startingLineNumber = "334"
+            endingLineNumber = "334"
+            landmarkName = "isDateTimePassed(dateTimeString:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "D1DBB2D6-CA75-4A63-9695-C8BEF97B0775 - 66aaca567d5c4e39"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.isDateTimePassed(dateTimeString: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlm2/Documents/Ajay%20Git/specialoclockuser/Spacial%20OClock/MVVM/View/RestoBar/Home/bookingDetailsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "335"
+                  endingLineNumber = "335">
+               </Location>
+               <Location
+                  uuid = "D1DBB2D6-CA75-4A63-9695-C8BEF97B0775 - 66aaca567d5c4e39"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Spacial_OClock.isDateTimePassed(dateTimeString: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "Spacial OClock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cqlm2/Documents/Ajay%20Git/specialoclockuser/Spacial%20OClock/MVVM/View/RestoBar/Home/bookingDetailsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "335"
+                  endingLineNumber = "335">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "42CF4C44-151C-4441-BF89-844F3CC15DE8"
+            uuid = "3233E31A-D296-4874-9BD5-B91BED6C2ACD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/HomeVC/DetailItemViewVC.swift"
+            filePath = "Spacial OClock/MVVM/View/RestoBar/Home/bookingDetailsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9B065D17-9108-4B20-9BCC-3B5EFB07593C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spacial OClock/MVVM/View/User/HomeVC/ItemDetailsVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
-            landmarkName = "menuProductForBarAPI(id:index:isfifty:offerID:)"
-            landmarkType = "7">
+            startingLineNumber = "340"
+            endingLineNumber = "340"
+            landmarkName = "isDateTimePassed(dateTimeString:)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

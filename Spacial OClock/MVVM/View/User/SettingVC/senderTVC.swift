@@ -27,6 +27,8 @@ class senderTVC: UITableViewCell {
             let isoDate =  senderData?.createdAt ?? ""
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            dateFormatter.locale = Locale(identifier: "en")
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
             let date = dateFormatter.date(from: isoDate)
             lblSenderTime.text = date?.toLocalTime().timeAgoSinceDate()
         }

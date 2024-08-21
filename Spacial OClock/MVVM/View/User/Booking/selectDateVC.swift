@@ -50,6 +50,8 @@ extension selectDateVC{
         //Current Year and current month
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         let monthString = dateFormatter.string(from: Date())
         
         dateFormatter.dateFormat = "yyyy"
@@ -65,6 +67,8 @@ extension selectDateVC :FSCalendarDelegate, FSCalendarDataSource, FSCalendarDele
         
         let df = DateFormatter()
         df.dateFormat = "dd/MM/yyyy"
+        df.locale = Locale(identifier: "en")
+        df.calendar = Calendar(identifier: .gregorian)
         let now = df.string(from: date)
         self.dismiss(animated: true){
             self.callBack?(now)

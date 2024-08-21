@@ -83,6 +83,8 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         let result = formatter.string(from: date)
         let calenderDate = formatter.date(from: oldDateSelect)
         viewFSCalendar.select(calenderDate)
@@ -149,6 +151,8 @@ class NewBookingVC: UIViewController, UITextFieldDelegate {
     private func updateMonthAndYearLabels(for date: Date) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         let monthString = dateFormatter.string(from: date)
         
         dateFormatter.dateFormat = "yyyy"
@@ -190,7 +194,8 @@ extension NewBookingVC : FSCalendarDelegate , FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         df.dateFormat = "dd/MM/yyyy"
-        df.locale = Locale.current
+        df.locale = Locale(identifier: "en")
+        df.calendar = Calendar(identifier: .gregorian)
         currentDate = df.string(from: date)
         self.navigationController?.popViewController(animated: true)
         self.dateCallBack?(currentDate )
@@ -248,6 +253,8 @@ extension NewBookingVC{
         //Current Year and current month
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         let monthString = dateFormatter.string(from: Date())
         
         dateFormatter.dateFormat = "yyyy"

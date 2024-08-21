@@ -16,9 +16,8 @@ var noInternetConnection = "No Internet Connection Available"
 //let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
 
 let baseURL = "https://app.specialoclock.com/api/"
-
 let imageURL = "https://app.specialoclock.com/"
-let imageBaseURL =  "https://app.specialoclock.com/assets/images/"
+let imageBaseURL = "https://app.specialoclock.com/assets/images/"
 let menuImgURL = "https://app.specialoclock.com/uploads/"
 let productImgURL = "https://app.specialoclock.com/assets/img/"
 let shareUrl = "https://app.specialoclock.com/api/share_restaurant/"
@@ -38,7 +37,7 @@ var rootVC: UIViewController? {
 
 //MARK: - StoryBoards
 enum AppStoryboard : String {
-    case Main      = "Main"
+    case Main = "Main"
     var instance : UIStoryboard {
         return UIStoryboard(name: self.rawValue, bundle: Bundle.main)
     }
@@ -52,7 +51,7 @@ enum API: String {
     case forgot_password
     case privacypolicy        = "get_content/2"
     case termsAndCondition    = "get_content/1"
-    //    case helpandFaq               = "get_content/3"
+    //case helpandFaq               = "get_content/3"
     case file_upload          =  "file_upload"
     case check_social_exists
     case delete_account
@@ -166,7 +165,7 @@ enum dateFormat:String{
 
 
 
-//MARK:-  constant messages or Alert Messages
+//MARK:-  Constant messages or Alert Messages
 
 enum constantMessages:String {
     
@@ -181,7 +180,6 @@ enum constantMessages:String {
     case emptyEmail       = "Please enter your email"
     case emptyPassword    = "Please enter your password"
     case emptyOldPass     = "Please enter your old password"
-    //    case emptyNewPassword = "Please enter your password"
     case emptyCPassword   = "Please enter confirm password"
     case passwordMismatch = "Password and confirm password didn't match"
     case emptyOtp         = "Please enter OTP"
@@ -198,7 +196,6 @@ enum constantMessages:String {
     case emptyImageOrVideo = "Please add an image or a video"
     case emptyTitle       = "Please add a title"
     case emptyDescription = "Please add description"
-    
     case acceptTerms      = "Please accept Terms and Conditions"
     case invalidGroup     = "You need to add atleast two user to create room"
     case invalidPhone     = "Please enter valid phone number"
@@ -206,7 +203,6 @@ enum constantMessages:String {
     case invalidCPassword = "Confirm password must be same"
     case invalidOtp       = "Please enter correct OTP"
     case invalidImage     = "You cannot select more than five images"
-    
     case blockedUser      = "Please Unblock this user before sending message"
     case blockedByUser    = "You have been blocked by this user"
     case callRejected     = "Call rejected"
@@ -236,7 +232,8 @@ func goToHome() {
 func isToday(dateString: String) -> Bool {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
-    
+    dateFormatter.calendar = Calendar(identifier: .gregorian)
+    dateFormatter.locale = Locale(identifier: "en")
     if let date = dateFormatter.date(from: dateString) {
         return Calendar.current.isDateInToday(date)
     } else {
@@ -247,6 +244,8 @@ func isToday(dateString: String) -> Bool {
 func checkDatesAreInSequence(array: [String]) -> Bool {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
+    dateFormatter.locale = Locale(identifier: "en")
+    dateFormatter.calendar = Calendar(identifier: .gregorian)
     let dates = array.compactMap { dateFormatter.date(from: $0) }
     
     guard dates.count > 1 else {
@@ -269,7 +268,8 @@ func checkDatesAreInSequence(array: [String]) -> Bool {
 func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
-    
+    dateFormatter.locale = Locale(identifier: "en")
+    dateFormatter.calendar = Calendar(identifier: .gregorian)
     guard let selected = dateFormatter.date(from: selectedDate) else {
         return nil
     }
@@ -311,7 +311,8 @@ func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
 func formatDate(inputDate: String) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
-    
+    dateFormatter.locale = Locale(identifier: "en")
+    dateFormatter.calendar = Calendar(identifier: .gregorian)
     guard let date = dateFormatter.date(from: inputDate) else {
         return nil
     }
@@ -321,6 +322,8 @@ func formatDate(inputDate: String) -> String? {
     
     let dayFormatter = DateFormatter()
     dayFormatter.dateFormat = "dd"
+    dayFormatter.locale = Locale(identifier: "en")
+    dayFormatter.calendar = Calendar(identifier: .gregorian)
     let day = dayFormatter.string(from: date)
     
     var ordinalSuffix = "th"

@@ -47,6 +47,8 @@ class AuthViewModel : NSObject {
         selectedImageArr.removeAll()
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat.fullDate.rawValue
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = Calendar(identifier: .gregorian)
         let date = formatter.string(from: Date())
         let imageInfo : ImageStructInfo
         
@@ -127,9 +129,8 @@ class AuthViewModel : NSObject {
         }
     }
     
-    //MARK: cms
+    //MARK: CMS
     func cmsAPI(type: Int, onSuccess:@escaping ((CMSModel)->())) {
-        
         WebService.service(.get_content,urlAppendId: type, service: .get, showHud: true) {
             (userData: CMSModel, data, json) in
             onSuccess(userData)
@@ -461,6 +462,8 @@ class AuthViewModel : NSObject {
         for i in 0..<image.count {
             let formatter = DateFormatter()
             formatter.dateFormat = dateFormat.fullDate.rawValue
+            formatter.locale = Locale(identifier: "en")
+            formatter.calendar = Calendar(identifier: .gregorian)
             let date = formatter.string(from: Date())
             uploadImages.append(ImageStructInfo.init(fileName: "Img\(date).jpeg", file_type: "image/jpg", data: image[i].toData(), key: "image", image: image[i]))
         }

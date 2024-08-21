@@ -18,7 +18,7 @@ class CheckValidations: NSObject{
         if cardNo.trimmingCharacters(in: .whitespaces).isEmpty {
             CommonUtilities.shared.showAlert(message: "Please enter card number")
             return false
-        } else if trimmedString.count != 16 {
+        } else if trimmedString.count < 16 {
             CommonUtilities.shared.showAlert(message: "Please enter valid card number")
             return false
         } else if expiry.trimmingCharacters(in: .whitespaces).isEmpty {
