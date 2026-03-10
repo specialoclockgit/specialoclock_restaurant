@@ -15,12 +15,12 @@ var DEVICE_TOKEN = "ios"
 var noInternetConnection = "No Internet Connection Available"
 //let baseURL = "http://192.168.1.80:9999/api/" /*-> sachin local*/
 
-let baseURL = "https://app.specialoclock.com/api/"
-let imageURL = "https://app.specialoclock.com/"
-let imageBaseURL = "https://app.specialoclock.com/assets/images/"
-let menuImgURL = "https://app.specialoclock.com/uploads/"
-let productImgURL = "https://app.specialoclock.com/assets/img/"
-let shareUrl = "https://app.specialoclock.com/api/share_restaurant/"
+let baseURL = "https://api.specialoclock.com/api/"
+let imageURL = "https://api.specialoclock.com/"
+let imageBaseURL = "https://api.specialoclock.com/assets/images/"
+let menuImgURL = "https://api.specialoclock.com/uploads/"
+let productImgURL = "https://api.specialoclock.com/assets/img/"
+let shareUrl = "https://api.specialoclock.com/api/share_restaurant/"
 
 let securitykey = "sk_Dac1t2GMfvvgO1+ZtLvOjwEhQluidxzVy9Av5fiV5kCZzCr+PjdB0ap0Qx6zCPkBDRS8gSGyFw=="
 let publishedkey = "pk_ndhUQm9z9VVAEDQAKUjM5nQ6F690crObNnPPobC36LUWJcUKQQC/aSzj9kqTQ22rurF2B6DvyiI="
@@ -304,7 +304,6 @@ func nextAvailableDate(selectedDate: String, closedDates: [String]) -> String? {
     // If no available date found, return nil
     return nil
 }
-
 
 
 

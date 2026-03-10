@@ -17,8 +17,8 @@ class WalkthroughVideoVC: UIViewController {
     @IBOutlet weak var pgController: CHIPageControlJaloro!
     var selectIndex = 0
     var visibleIndex = 0
-    var imgArr = [UIImage(named: ""),UIImage(named: "walk2"),UIImage(named: "walk3"),UIImage(named: "walk4")]
-    var titleArr = ["","User Signup Process","Signup as Restaurant, Bar or Club","Join Our Growing Network"]
+    var imgArr = [UIImage(named: "initial"),UIImage(named: "walk2"),UIImage(named: "walk3"),UIImage(named: "walk4")]
+    var titleArr = ["Welcome! 👋","User Signup Process","Signup as Restaurant, Bar or Club","Join Our Growing Network"]
     var subtitleArr = ["Welcome to Special O’Clock! We help you find the best discounts and specials at restaurants, bars and clubs.","Join Special O’Clock as a user to start enjoying exclusive deals at your favorite spots. Select 'User' and follow the steps to create your account. Discovering great deals has never been easier!","Join Special O’Clock as a restaurant, bar, or club to offer your special deals and attract more customers during off-peak times. Select your business type, complete the signup process, and become part of a community dedicated to making every moment special. Increase your visibility and fill those empty seats!","Become a partner with Special O’Clock and take advantage of our platform to attract more customers during off-peak hours. List your special deals and offers, increase your visibility, and fill your tables with ease."]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +63,7 @@ extension WalkthroughVideoVC : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WalkthroughVideoCVC", for: indexPath) as! WalkthroughVideoCVC
-        cell.imgVw.image = indexPath.row == 0 ? UIImage(named: "") : UIImage(named: "walkBg")
+        cell.imgVw.image = indexPath.row == 0 ? UIImage(named: "walkBg") : UIImage(named: "walkBg")
        
         cell.titleLbl.text = titleArr[indexPath.row]
         cell.subTitleLbl.text = subtitleArr[indexPath.row]
