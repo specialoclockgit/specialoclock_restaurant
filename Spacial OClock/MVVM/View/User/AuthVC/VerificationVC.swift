@@ -18,6 +18,7 @@ class VerificationVC: UIViewController {
     var btnCheckStatus = Int()
     var viewmodel = AuthViewModel()
     var otpVerify : String?
+    var countryName : String?
     var restoselctStatus = Int()
     
     //MARK: VIEW LIFE CYCLE
@@ -64,6 +65,7 @@ class VerificationVC: UIViewController {
                 if self.restoselctStatus == 1 {
                     vc.heading = "Restaurant Profile"
                     vc.name = "Restaurant Name"
+                    vc.country = self.countryName ?? ""
                     UserDefaults.standard.set("Restaurant", forKey: "name")
                 }else if  self.restoselctStatus == 2 {
                     vc.heading = "Club Profile"

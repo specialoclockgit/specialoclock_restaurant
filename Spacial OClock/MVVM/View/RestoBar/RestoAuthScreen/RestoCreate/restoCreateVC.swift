@@ -84,6 +84,9 @@ class restoCreateVC: UIViewController, UITextFieldDelegate {
         tfCategory.delegate = self
         tfLocation.delegate = self
         tfCity.delegate = self
+        
+        tfLocation.text = self.country
+        
         self.setupThemeApi()
         self.setupCuisineApi()
         self.setupCategoryApi()
@@ -346,6 +349,7 @@ extension restoCreateVC{
 //        let check =  UserDefaults.standard.status
         if btnCheckStatus == 1 {
             lblName.text = "Restaurant Name"
+            
             viewCategory.isHidden = true
         }else if btnCheckStatus == 2 {
             lblName.text = "Club Name"

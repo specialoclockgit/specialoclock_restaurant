@@ -170,6 +170,7 @@ class SignUPVC: UIViewController, UIGestureRecognizerDelegate {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC")as! VerificationVC
                 vc.btnCheckStatus = self.selectStatus
                 vc.restoselctStatus = self.restoselctStatus
+                vc.countryName = self.tfCountry.text
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         

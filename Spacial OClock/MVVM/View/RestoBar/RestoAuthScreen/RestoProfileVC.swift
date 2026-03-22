@@ -82,25 +82,29 @@ class RestoProfileVC: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func btnEdit(_ sender: UIButton) {
-        let StoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        /*let StoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
         let notificationVC =  StoryBoard.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
-        self.navigationController?.pushViewController(notificationVC, animated: true)
-//        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.EditRestoProfileVC) as! EditRestoProfileVC
-//        if Store.userDetails?.bussinesstype == 1 {
-//            screen.heading = "Edit Restaurant Profile"
-//        }else{
-//            screen.heading = "Edit Bar Profile"
-//        }
-//        self.navigationController?.pushViewController(screen, animated: true)
+        self.navigationController?.pushViewController(notificationVC, animated: true)*/
+        let screen = storyboard?.instantiateViewController(withIdentifier: ViewController.EditRestoProfileVC) as! EditRestoProfileVC
+        if Store.userDetails?.bussinesstype == 1 {
+            screen.heading = "Edit Restaurant Profile"
+        }else{
+            screen.heading = "Edit Bar Profile"
+        }
+        self.navigationController?.pushViewController(screen, animated: true)
     }
+    
     @IBAction func btnPreviewAct(sender : UIButton) {
-        let main = UIStoryboard.init(name: "Main", bundle: nil)
+       /* let main = UIStoryboard.init(name: "Main", bundle: nil)
         let screen = main.instantiateViewController(withIdentifier: "ItemDetailsVC") as! ItemDetailsVC
         screen.ProductID = datagetApi?.id ?? 0
         screen.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(screen, animated: true)
+        self.navigationController?.pushViewController(screen, animated: true)*/
+         let screen = storyboard?.instantiateViewController(withIdentifier: "ScheduleVC") as! ScheduleVC
+         self.navigationController?.pushViewController(screen, animated: true)
     }
 }
+
 extension RestoProfileVC{
     func initialLoad(){
         if Store.userDetails?.bussinesstype == 1{

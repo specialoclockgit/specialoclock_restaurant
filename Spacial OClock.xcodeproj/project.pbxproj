@@ -277,6 +277,9 @@
 		ECCEDB3F2AF112A600DA8D8D /* allMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCEDB3E2AF112A600DA8D8D /* allMenuVC.swift */; };
 		ECCEDB412AF1130900DA8D8D /* allMenuCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCEDB402AF1130900DA8D8D /* allMenuCVC.swift */; };
 		ECE802692ABD83F3004CC589 /* favListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE802682ABD83F3004CC589 /* favListModal.swift */; };
+		F32289622F67FAD100CC6442 /* EditRestaurantVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32289612F67FAD100CC6442 /* EditRestaurantVC.swift */; };
+		F331C6422F6D6D130010C2BC /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331C6412F6D6D100010C2BC /* ScheduleVC.swift */; };
+		F3A74B742F69369400443B55 /* EditRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A74B732F69368A00443B55 /* EditRestaurantViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -589,6 +592,9 @@
 		ECCEDB3E2AF112A600DA8D8D /* allMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allMenuVC.swift; sourceTree = "<group>"; };
 		ECCEDB402AF1130900DA8D8D /* allMenuCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allMenuCVC.swift; sourceTree = "<group>"; };
 		ECE802682ABD83F3004CC589 /* favListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favListModal.swift; sourceTree = "<group>"; };
+		F32289612F67FAD100CC6442 /* EditRestaurantVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRestaurantVC.swift; sourceTree = "<group>"; };
+		F331C6412F6D6D100010C2BC /* ScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
+		F3A74B732F69368A00443B55 /* EditRestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRestaurantViewController.swift; sourceTree = "<group>"; };
 		FFB2FFBD55D1FD8B4740B383 /* Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; path = "Target Support Files/Pods-Spacial OClock-Spacial OClockUITests/Pods-Spacial OClock-Spacial OClockUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -815,6 +821,7 @@
 		A5A8CF3B2A580D68006F23ED /* RestoAuthScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F331C6412F6D6D100010C2BC /* ScheduleVC.swift */,
 				C284FB6A2A402D47006949B4 /* RestoCreate */,
 				A5A8CF3C2A580D7E006F23ED /* RestoLoginVC.swift */,
 				A5A8CF3E2A580E7C006F23ED /* RestoForgotpassVC.swift */,
@@ -1027,6 +1034,7 @@
 		C284FB6D2A402D81006949B4 /* RestoBar */ = {
 			isa = PBXGroup;
 			children = (
+				F32289602F67FAA500CC6442 /* EditRestaurant */,
 				ECBEF69E2B204CFD0064D8F7 /* popup */,
 				A58CCCA32A5EB4E600DFA478 /* WalkThrough */,
 				A5A8CF3B2A580D68006F23ED /* RestoAuthScreen */,
@@ -1423,6 +1431,15 @@
 			path = Menu;
 			sourceTree = "<group>";
 		};
+		F32289602F67FAA500CC6442 /* EditRestaurant */ = {
+			isa = PBXGroup;
+			children = (
+				F3A74B732F69368A00443B55 /* EditRestaurantViewController.swift */,
+				F32289612F67FAD100CC6442 /* EditRestaurantVC.swift */,
+			);
+			path = EditRestaurant;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1813,9 +1830,11 @@
 				ECAF62EE2B1DBBB400BF242E /* CHTCollectionViewWaterfallLayout.swift in Sources */,
 				A500C5F02A4BF54700F4D33D /* HomeVC.swift in Sources */,
 				A5046FF62A4DC1A500C23627 /* HelpQAVC.swift in Sources */,
+				F331C6422F6D6D130010C2BC /* ScheduleVC.swift in Sources */,
 				8BEFA24A2A8496F400FE1E35 /* ContactUsModel.swift in Sources */,
 				ECC5A02E2AC5B145008E7A72 /* locationByRestoModal.swift in Sources */,
 				ECA1A4D72B1713A6007748F3 /* PrivacyVC.swift in Sources */,
+				F3A74B742F69369400443B55 /* EditRestaurantViewController.swift in Sources */,
 				ECB020652ADE6594002D2C07 /* mapViewController.swift in Sources */,
 				A5A8CF3A2A5800F3006F23ED /* PaymentCenterAlertVC.swift in Sources */,
 				ECCEDB3C2AF10EE300DA8D8D /* allMenuModal.swift in Sources */,
@@ -1825,6 +1844,7 @@
 				C29CDB112A42BC350035E03D /* FavouritesVC.swift in Sources */,
 				EC0484E92B174BE300BFDF4B /* getInvoiceListModal.swift in Sources */,
 				8BEFA24E2A84A05000FE1E35 /* NotificationStatusModel.swift in Sources */,
+				F32289622F67FAD100CC6442 /* EditRestaurantVC.swift in Sources */,
 				A5C036C02A5FFC6C00B038CD /* PreviewVC.swift in Sources */,
 				ECB6996F2B19ABDB00344356 /* RestoEditProfileCVC.swift in Sources */,
 				C2661A8D2A4B156C00EEE266 /* CellHomeTB.swift in Sources */,
