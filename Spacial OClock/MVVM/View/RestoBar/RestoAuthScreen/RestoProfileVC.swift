@@ -101,6 +101,7 @@ class RestoProfileVC: UIViewController, UIGestureRecognizerDelegate {
         screen.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(screen, animated: true)*/
          let screen = storyboard?.instantiateViewController(withIdentifier: "ScheduleVC") as! ScheduleVC
+        screen.restaurantBarID = self.datagetApi?.id ?? 0
          self.navigationController?.pushViewController(screen, animated: true)
     }
 }
